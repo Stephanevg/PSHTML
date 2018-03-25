@@ -1,7 +1,49 @@
 # PSHTML
 Module to generate HTML markup language within a DSL
 
-# Todo
+# Example
+
+PSHTML allow people to write a HTML document using powershell-like syntax, which makes building a webpage easier, and less cumbersome.
+
+## Basic example.
+```Powershell
+
+html {
+
+    head{
+
+        title "woop title"
+        link "css/normalize.css" "stylesheet"
+    }
+
+    body{
+
+        Header {
+            h1 "This is h1 Title in header"
+            div {
+                p {
+                    "This is simply a paragraph in a div."
+                }
+            }
+        }
+    
+        
+            p {
+                h1 "This is h1"
+                h2 "This is h2"
+                h3 "This is h3"
+                h4 "This is h4"
+                h5 "This is h5"
+                h6 "This is h6"
+                strong "plop";"Woop"
+            }
+    }
+    
+}
+
+```
+
+# Todo List
 
 There is a lot to accomplish before making this module available to the public. 
 
@@ -15,6 +57,12 @@ I plan the following most important milestones:
     - [ ] Forms
     - [ ] Textual semantic
 
+In parallel to this, I want to add the support for the following attributes (as a first step):
+- [ ] Class
+- [ ] Id
+- [ ] Style
+
+
 Eventually, the following components will also be added:
  - [ ] Scripts
  - [ ] Include Sections
@@ -25,6 +73,7 @@ Eventually, the following components will also be added:
 
 ## Root
 - [X] ```<html>```
+    - [ ] Add support for lang attribute
 ## MetdaData
 - [X] ```<head>```
 - [X] ```<title>```
@@ -57,7 +106,8 @@ Eventually, the following components will also be added:
 
 ## blocs
 - [X] ```<div>```
-- [X] ```<p>```
+- [ ] ```<p>```
+    - [ ] Add support for title attribute
 - [ ] ```<hr>```
 - [ ] ```<pre>```
 - [ ] ```<blockquote>```
@@ -135,6 +185,7 @@ Eventually, the following components will also be added:
 - [ ] ```<legend>```
 - [ ] ```<label>```
 - [ ] ```<input>```
+    - [ ] Add support for disabled attribut
 - [ ] ```<button>```
 - [ ] ```<select>```
 - [ ] ```<datalist>```
