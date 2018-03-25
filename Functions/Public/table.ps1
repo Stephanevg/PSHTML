@@ -1,6 +1,5 @@
-Function Get-P {
+Function Get-Table {
     Param(
-        
 
         [Parameter(
             ValueFromPipeline = $true,
@@ -11,7 +10,7 @@ Function Get-P {
         $ChildItem
     )
     Process{
-        "<p>"
+        "<table>"
        
 
         if($ChildItem){
@@ -19,7 +18,7 @@ Function Get-P {
         }
             
 
-        '</p>'
+        '</Table>'
     }
     
     
