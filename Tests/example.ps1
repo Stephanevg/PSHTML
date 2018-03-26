@@ -1,4 +1,4 @@
-$a = html {
+$Document = html {
 
     head{
 
@@ -9,6 +9,7 @@ $a = html {
     body{
 
         Header {
+            img "https://i0.wp.com/powershelldistrict.com/wp-content/uploads/2016/01/logo_pd_quadri.png" "logo powershell" -height 100 -width 400
             h1 "This is h1 Title in header"
             div {
                 p {
@@ -28,6 +29,7 @@ $a = html {
                 strong "plop";"Woop"
             }
             p{
+               
                 table{
                     caption "This is a table generated with PSHTML"
                     thead {
@@ -56,6 +58,13 @@ $a = html {
                     }
                 }
             }
+        p{
+            
+            a {
+                "This links point to PowershellDistrict"
+            } -href "http://powershellDistrict.com"
+
+        }
         Footer {
                 h6 "This is h1 Title in Footer"
         }
@@ -64,12 +73,4 @@ $a = html {
 }
 
 
-html {
-    head {
-        title "Woop"
-
-    }
-    body{
-
-    }
-}
+$Document > "PSHTML_Example.html"
