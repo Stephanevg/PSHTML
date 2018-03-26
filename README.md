@@ -134,7 +134,7 @@ Eventually, the following components will also be added:
 - [X] ```<col>```
 
 ## Textual semantic
-- [ ] ```<a>```
+- [X] ```<a>```
 - [ ] ```<em>```
 - [ ] ```<strong>```
 - [ ] ```<small>```
@@ -203,4 +203,12 @@ Eventually, the following components will also be added:
 - [ ] ```<command>```
 - [ ] ```<menu>```
 
+## Basic functionality:
 
+(almost) Each HTML tag should have 'at least' the following attributes available:
+- Class
+- ID
+- Style
+
+Also, to add more flexibility to the end user, it should be possible to pass a hashtable to add custom / more attributes to the html tag.
+    Question? Should they be added to additional ones? or either manually defined ones, or HashTable. (Controlled via ParameterSets)
