@@ -13,13 +13,10 @@ Function li {
         [String]$Class,
 
         [Parameter(Position = 2)]
-        [String]$Id,
+        [String]$value,
 
         [Parameter(Position = 3)]
         [String]$Style,
-
-        [Parameter(Position = 4)]
-        [String]$Title,
 
         [Hashtable]$CustomAttributes
     )
@@ -31,9 +28,8 @@ Function li {
         foreach ($entry in $PSBoundParameters.Keys){
             switch($entry){
                 "Class" {$attr += "Class=$class ";Break}
-                "id" {$attr += "Id=$Id ";Break}
+                "value" {$attr += "value=$value ";Break}
                 "style" {$attr += "style=`"$Style`" ";Break}
-                "Title" {$attr += "title=`"$Title`" ";Break}
                 "CustomAttributes" {
 
                     Foreach($key in $CustomAttributes.Keys){
