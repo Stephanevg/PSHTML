@@ -1,4 +1,4 @@
-Function Get-Caption {
+Function Caption {
     Param(
         [String]
         $Content

@@ -1,4 +1,4 @@
-Function Get-Link {
+Function Link {
     Param(
         [Parameter(Mandatory=$true)]
         [String]

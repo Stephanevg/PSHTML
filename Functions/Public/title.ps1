@@ -1,4 +1,4 @@
-Function Get-Title {
+Function Title {
     Param(
         [String]
         $Content

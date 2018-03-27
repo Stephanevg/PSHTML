@@ -1,4 +1,4 @@
-Function Get-Tr {
+Function Tr {
     Param(
 
         [Parameter(

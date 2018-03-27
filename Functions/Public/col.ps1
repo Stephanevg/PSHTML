@@ -1,4 +1,4 @@
-Function Get-Link {
+Function Col {
     Param(
         [int]
         $span,

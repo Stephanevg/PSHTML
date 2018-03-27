@@ -1,4 +1,4 @@
-Function Get-H2 {
+Function H2 {
     Param(
         [String]
         $Content

@@ -1,4 +1,4 @@
-Function Get-Html {
+Function Html {
     Param(
         [Parameter(
             ValueFromPipeline = $true,

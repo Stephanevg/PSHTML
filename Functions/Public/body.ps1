@@ -1,4 +1,4 @@
-Function Get-Body {
+Function Body {
     Param(
         [scriptblock]
         $ChildItem

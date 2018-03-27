@@ -1,4 +1,4 @@
-Function Get-Div {
+Function Div {
     Param(
 
         [Parameter(

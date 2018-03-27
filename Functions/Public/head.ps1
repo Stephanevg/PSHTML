@@ -1,4 +1,4 @@
-Function Get-Head {
+Function Head {
     Param(
         [Parameter(
             ValueFromPipeline = $true,

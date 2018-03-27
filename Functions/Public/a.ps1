@@ -1,4 +1,4 @@
-Function Get-a {
+Function a {
     Param(
 
         [scriptblock]

@@ -1,4 +1,4 @@
-Function Get-Th {
+Function Th {
     Param(
         [String]
         $Content

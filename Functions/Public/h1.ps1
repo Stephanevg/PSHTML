@@ -1,4 +1,4 @@
-Function Get-H1 {
+Function H1 {
     <#
     .SYNOPSIS
     Create a h1 title in an HTML document.

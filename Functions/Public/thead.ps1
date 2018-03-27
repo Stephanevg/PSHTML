@@ -1,4 +1,4 @@
-Function Get-Thead {
+Function Thead {
     Param(
 
         [Parameter(

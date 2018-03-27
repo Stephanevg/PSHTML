@@ -1,4 +1,4 @@
-Function Get-Tfoot {
+Function Tfoot {
     Param(
 
         [Parameter(

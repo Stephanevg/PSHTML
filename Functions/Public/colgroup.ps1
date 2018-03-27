@@ -1,4 +1,4 @@
-Function Get-Colgroup {
+Function Colgroup {
     <#
     The <colgroup> tag is useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.
     #>

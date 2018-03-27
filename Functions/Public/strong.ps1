@@ -1,4 +1,4 @@
-Function Get-Strong {
+Function Strong {
     Param(
         [String]$Content
 

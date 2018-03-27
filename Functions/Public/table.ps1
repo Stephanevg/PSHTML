@@ -1,4 +1,4 @@
-Function Get-Table {
+Function Table {
     Param(
 
         [Parameter(

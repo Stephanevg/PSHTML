@@ -1,4 +1,4 @@
-Function Get-P {
+Function P {
     
     Param(
 

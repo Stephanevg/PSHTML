@@ -1,4 +1,4 @@
-Function Get-Footer {
+Function Footer {
     Param(
         [Parameter(
             ValueFromPipeline = $true,
