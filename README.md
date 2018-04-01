@@ -109,8 +109,8 @@ Eventually, the following components will also be added:
 
 ## Scripts
 
-- [ ] ```<script>```
-- [ ] ```<noscript>```	
+- [X] ```<script>```
+- [X] ```<noscript>```	
 
 ## Sections
 - [X] ```<body>```
@@ -190,7 +190,7 @@ Eventually, the following components will also be added:
 
 
 ## include sections
-- [ ] ```<img>```
+- [X] ```<img>```
 - [ ] ```<iframe>```
 - [ ] ```<object>```
 - [ ] ```<param>```
@@ -199,8 +199,8 @@ Eventually, the following components will also be added:
 - [ ] ```<source>```
 - [ ] ```<track>```
 - [ ] ```<canvas>```
-- [ ] ```<map>```
-- [ ] ```<area>```
+- [X] ```<map>```
+- [X] ```<area>```
 - [ ] ```<svg>```
 - [ ] ```<math>```
 
@@ -226,7 +226,7 @@ Eventually, the following components will also be added:
 
 - [ ] ```<detail>```
 - [ ] ```<command>```
-- [ ] ```<menu>```
+- [ ] ~~```<menu>```~~ --> This feature will not be implemented, since this feature is only avaible in Firefox.
 
 ## Function Design:
 
