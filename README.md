@@ -109,25 +109,25 @@ Eventually, the following components will also be added:
 
 ## Scripts
 
-- [ ] ```<script>```
-- [ ] ```<noscript>```	
+- [X] ```<script>```
+- [X] ```<noscript>```	
 
 ## Sections
 - [X] ```<body>```
-- [ ] ```<section>```
-- [ ] ```<nav>```
-- [ ] ```<article>```
-- [ ] ```<aside>```
+- [X] ```<section>```
+- [X] ```<nav>```
+- [X] ```<article>```
+- [X] ```<aside>```
 - [X] ```<h1>```
 - [X] ```<h2>```
 - [X] ```<h3>```
 - [X] ```<h4>```
 - [X] ```<h5>```
 - [X] ```<h6>```
-- [ ] ```<hgroup>``` (Really needed?)
+- [ ] ~~```<hgroup>```~~ 'Functionallity still in beta'
 - [X] ```<header>```
 - [X] ```<footer>```
-- [ ] ```<address>```
+- [X] ```<address>```
 
 ## blocs
 - [X] ```<div>```
@@ -190,8 +190,8 @@ Eventually, the following components will also be added:
 
 
 ## include sections
-- [ ] ```<img>```
-- [ ] ```<iframe>```
+- [X] ```<img>```
+- [ ] ~~```<iframe>```~~ 'Not supported in HTML 5'
 - [ ] ```<object>```
 - [ ] ```<param>```
 - [ ] ```<video>```
@@ -199,8 +199,8 @@ Eventually, the following components will also be added:
 - [ ] ```<source>```
 - [ ] ```<track>```
 - [ ] ```<canvas>```
-- [ ] ```<map>```
-- [ ] ```<area>```
+- [X] ```<map>```
+- [X] ```<area>```
 - [ ] ```<svg>```
 - [ ] ```<math>```
 
@@ -226,7 +226,7 @@ Eventually, the following components will also be added:
 
 - [ ] ```<detail>```
 - [ ] ```<command>```
-- [ ] ```<menu>```
+- [ ] ~~```<menu>```~~ --> This feature will not be implemented, since this feature is only avaible in Firefox.
 
 ## Function Design:
 
