@@ -114,20 +114,20 @@ Eventually, the following components will also be added:
 
 ## Sections
 - [X] ```<body>```
-- [ ] ```<section>```
-- [ ] ```<nav>```
-- [ ] ```<article>```
-- [ ] ```<aside>```
+- [X] ```<section>```
+- [X] ```<nav>```
+- [X] ```<article>```
+- [X] ```<aside>```
 - [X] ```<h1>```
 - [X] ```<h2>```
 - [X] ```<h3>```
 - [X] ```<h4>```
 - [X] ```<h5>```
 - [X] ```<h6>```
-- [ ] ```<hgroup>``` (Really needed?)
+- [ ] ~~```<hgroup>```~~ 'Functionallity still in beta'
 - [X] ```<header>```
 - [X] ```<footer>```
-- [ ] ```<address>```
+- [X] ```<address>```
 
 ## blocs
 - [X] ```<div>```
@@ -191,7 +191,7 @@ Eventually, the following components will also be added:
 
 ## include sections
 - [X] ```<img>```
-- [ ] ```<iframe>```
+- [ ] ~~```<iframe>```~~ 'Not supported in HTML 5'
 - [ ] ```<object>```
 - [ ] ```<param>```
 - [ ] ```<video>```
