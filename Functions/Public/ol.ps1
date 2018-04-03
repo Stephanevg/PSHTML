@@ -127,7 +127,7 @@ Function ol {
             if ($entry -eq 'content'){
                 continue
             }
-            $attr += "$($entry)=`"$($boundParams[$entry])`" "
+            $attr += '{0}="{1}" ' -f $entry,$boundParams[$entry]
 
         }
 
@@ -140,7 +140,7 @@ Function ol {
         if($Attributes){
             Foreach($key in $Attributes.Keys){
 
-                $attr += "$($key)=$($Attributes[$key]) "
+                $attr += '{0}="{1}" ' -f $key,$Attributes[$key] 
      
             }
         }
