@@ -18,29 +18,50 @@ Function li {
         [Parameter(Position = 3)]
         [String]$Style,
 
-        [Hashtable]$CustomAttributes
+        [Hashtable]$Attributes
     )
     Process{
 
         
 
         $attr = ""
-        foreach ($entry in $PSBoundParameters.Keys){
-            switch($entry){
-                "Class" {$attr += "Class=$class ";Break}
-                "value" {$attr += "value=$value ";Break}
-                "style" {$attr += "style=`"$Style`" ";Break}
-                "CustomAttributes" {
+        $boundParams = $PSBoundParameters
+        $CommonParameters = @(
+            "Debug",
+            "ErrorAction",
+            "ErrorVariable",
+            "InformationAction",
+            "InformationVariable",
+            "OutVariable",
+            "OutBuffer",
+            "PipelineVariable",
+            "Verbose",
+            "WarningAction",
+            "WarningVariable",
+            "Attributes"
+        )
 
-                    Foreach($key in $CustomAttributes.Keys){
+        foreach ($cp in $CommonParameters){
 
-                        $attr += "$($key)=$($CustomAttributes[$key]) "
-             
-                    }
+            $null = $boundParams.Remove($cp)
+        }
 
-                }
-                default{}
+        foreach ($entry in $boundParams.Keys){
+            if ($entry -eq 'content'){
+                continue
             }
+            $attr += "$($entry)=`"$($boundParams[$entry])`" "
+
+        }
+
+        if($Attributes){
+
+            Foreach($key in $Attributes.Keys){
+
+                $attr += '{0}="{1}" ' -f $key,$Attributes[$key]
+     
+            }
+           
         }
 
         $counter = 0

@@ -17,29 +17,50 @@ Function ol {
         [string]
         $type,
 
-        [Hashtable]$CustomAttributes
+        [Hashtable]$Attributes
     )
 
     $attr = ""
-        foreach ($entry in $PSBoundParameters.Keys){
-            switch($entry){
-                "start" {$attr += "start=$start ";Break}
-                "type" {$attr += "type=`"$type`" ";Break}
-                "CustomAttributes" {
+        $boundParams = $PSBoundParameters
+        $CommonParameters = @(
+            "Debug",
+            "ErrorAction",
+            "ErrorVariable",
+            "InformationAction",
+            "InformationVariable",
+            "OutVariable",
+            "OutBuffer",
+            "PipelineVariable",
+            "Verbose",
+            "WarningAction",
+            "WarningVariable"
+        )
 
-                    Foreach($key in $CustomAttributes.Keys){
+        foreach ($cp in $CommonParameters){
 
-                        $attr += "$($key)=$($CustomAttributes[$key]) "
-             
-                    }
-
-                }
-                default{}
-            }
+            $null = $boundParams.Remove($cp)
         }
+
+        foreach ($entry in $boundParams.Keys){
+            if ($entry -eq 'content'){
+                continue
+            }
+            $attr += "$($entry)=`"$($boundParams[$entry])`" "
+
+        }
+
+        $boundParams.Remove("childitem")
 
         if($reversed){
             $attr += "reversed=`"true`" "
+        }
+
+        if($Attributes){
+            Foreach($key in $Attributes.Keys){
+
+                $attr += "$($key)=$($Attributes[$key]) "
+     
+            }
         }
         
         if($attr){
