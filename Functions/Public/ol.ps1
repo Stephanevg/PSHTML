@@ -1,4 +1,85 @@
 Function ol {
+
+    <#
+    .SYNOPSIS
+    Generates ol HTML tag.
+    
+    .EXAMPLE
+    
+    ol {
+        
+    }
+
+    Generates the following code:
+
+    <article>
+        <h1>This is blog post number 1</h1>
+        <p>
+            This is content of blog post 1
+        </p>
+    </article>
+    
+    .EXAMPLE
+    
+    It is also possible to use regular powershell logic inside a scriptblock. The example below, generates a article element
+    based on values located in a powershell object. The content is generated dynamically through the usage of a foreach loop.
+
+    $objs = @()
+    $objs += new-object psobject -property @{"title"="this is title 2";content="this is the content of article 2"}
+    $objs += new-object psobject -property @{"title"="this is title 3";content="this is the content of article 3"}
+    $objs += new-object psobject -property @{"title"="this is title 4";content="this is the content of article 4"}
+    $objs += new-object psobject -property @{"title"="this is title 5";content="this is the content of article 5"}
+    $objs += new-object psobject -property @{"title"="this is title 6";content="this is the content of article 6"}
+
+    body {
+
+        foreach ($article in $objs){
+            article {
+                h2 $article.title
+                p{
+                    $article.content
+                }
+            }
+        }
+    }
+
+    Generates the following code:
+
+        <body>
+            <article>
+                <h2>this is title 2</h2>
+                <p>
+                this is the content of article 2
+                </p>
+            </article>
+            <article>
+                <h2>this is title 3</h2>
+                <p>
+                this is the content of article 3
+                </p>
+            </article>
+            <article>
+                <h2>this is title 4</h2>
+                <p>
+                this is the content of article 4
+                </p>
+            </article>
+            <article>
+                <h2>this is title 5</h2>
+                <p>
+                this is the content of article 5
+                </p>
+            </article>
+            <article>
+                <h2>this is title 6</h2>
+                <p>
+                this is the content of article 6
+                </p>
+            </article>
+        </body>
+
+    #>
+
     Param(
 
         [Parameter(
@@ -6,7 +87,7 @@ Function ol {
             Mandatory = $false
         )]
         [scriptblock]
-        $ChildItem,
+        $content,
 
         [switch]
         $reversed,
@@ -14,7 +95,7 @@ Function ol {
         [string]
         $start,
 
-        [string]
+        [string]    
         $type,
 
         [Hashtable]$Attributes
@@ -33,7 +114,8 @@ Function ol {
             "PipelineVariable",
             "Verbose",
             "WarningAction",
-            "WarningVariable"
+            "WarningVariable",
+            "Attributes"
         )
 
         foreach ($cp in $CommonParameters){
@@ -70,8 +152,8 @@ Function ol {
         }
        
 
-        if($ChildItem){
-            $ChildItem.Invoke()
+        if($content){
+            $content.Invoke()
         }
             
 
