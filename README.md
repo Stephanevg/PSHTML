@@ -5,7 +5,10 @@ Module to generate HTML markup language within a DSL
 
 PSHTML allow people to write a HTML document using powershell-like syntax, which makes building a webpage easier, and less cumbersome.
 
-## Basic example.
+## A few Basic examples
+
+### Basic page
+
 ```Powershell
 
 html {
@@ -42,6 +45,28 @@ html {
 }
 
 ```
+
+### Generating a (very) basic form
+
+```PowerShell
+form "MyPage.php" post _self -Content {
+
+    input "text" "FirstName"
+    input "text" "LastName"
+    input submit "MySubmit"
+}
+```
+
+Which generates the following code:
+
+```html
+<form action="MyPage.php" method="post" target="_self" >
+<input type="text" name="FirstName" >
+<input type="text" name="LastName" >
+<input type="submit" name="MySubmit" >
+</form>
+```
+
 
 # Todo List
 
@@ -84,25 +109,25 @@ Eventually, the following components will also be added:
 
 ## Scripts
 
-- [ ] ```<script>```
-- [ ] ```<noscript>```	
+- [X] ```<script>```
+- [X] ```<noscript>```	
 
 ## Sections
 - [X] ```<body>```
-- [ ] ```<section>```
-- [ ] ```<nav>```
-- [ ] ```<article>```
-- [ ] ```<aside>```
+- [X] ```<section>```
+- [X] ```<nav>```
+- [X] ```<article>```
+- [X] ```<aside>```
 - [X] ```<h1>```
 - [X] ```<h2>```
 - [X] ```<h3>```
 - [X] ```<h4>```
 - [X] ```<h5>```
 - [X] ```<h6>```
-- [ ] ```<hgroup>``` (Really needed?)
+- [ ] ~~```<hgroup>```~~ 'Functionallity still in beta'
 - [X] ```<header>```
 - [X] ```<footer>```
-- [ ] ```<address>```
+- [X] ```<address>```
 
 ## blocs
 - [X] ```<div>```
@@ -165,8 +190,8 @@ Eventually, the following components will also be added:
 
 
 ## include sections
-- [ ] ```<img>```
-- [ ] ```<iframe>```
+- [X] ```<img>```
+- [ ] ~~```<iframe>```~~ 'Not supported in HTML 5'
 - [ ] ```<object>```
 - [ ] ```<param>```
 - [ ] ```<video>```
@@ -174,17 +199,17 @@ Eventually, the following components will also be added:
 - [ ] ```<source>```
 - [ ] ```<track>```
 - [ ] ```<canvas>```
-- [ ] ```<map>```
-- [ ] ```<area>```
+- [X] ```<map>```
+- [X] ```<area>```
 - [ ] ```<svg>```
 - [ ] ```<math>```
 
 ## Forms
-- [ ] ```<form>```
+- [X] ```<form>```
 - [ ] ```<fieldset>```
 - [ ] ```<legend>```
 - [ ] ```<label>```
-- [ ] ```<input>```
+- [X] ```<input>```
     - [ ] Add support for disabled attribut
 - [ ] ```<button>```
 - [ ] ```<select>```
@@ -201,14 +226,21 @@ Eventually, the following components will also be added:
 
 - [ ] ```<detail>```
 - [ ] ```<command>```
-- [ ] ```<menu>```
+- [ ] ~~```<menu>```~~ --> This feature will not be implemented, since this feature is only avaible in Firefox.
 
-## Basic functionality:
+## Function Design:
 
-(almost) Each HTML tag should have 'at least' the following attributes available:
+
+### Passing attributes
+
+Every HTML tag (PSHTML Function) should have 'at least' the following attributes available:
 - Class
 - ID
 - Style
 
-Also, to add more flexibility to the end user, it should be possible to pass a hashtable to add custom / more attributes to the html tag.
-    Question? Should they be added to additional ones? or either manually defined ones, or HashTable. (Controlled via ParameterSets)
+these are - in my opinion- the most commonly used attributes in HTML.
+
+### Additional Attributes
+
+Each function will have an additional parameter called: ```Attributes``` of type HashTable.
+It will allow to add ad
