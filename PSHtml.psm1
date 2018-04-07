@@ -25,3 +25,5 @@ foreach ($public in $PublicFunctions){
         write-warning $_
     }
 }
+
+New-Alias -Name Include -Value 'Get-HTMLTemplate' -Description "Include parts of PSHTML documents using Templates"
