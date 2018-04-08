@@ -105,7 +105,7 @@ Function ol {
 
         }
 
-        $boundParams.Remove("childitem")
+        $boundParams.Remove("childitem") | Out-Null
 
         if($reversed){
             $attr += "reversed=`"true`" "
@@ -118,8 +118,6 @@ Function ol {
      
             }
         }
-        
-        Write-Host "bla"
 
         if($attr){
             "<ol $attr>" 
