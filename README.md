@@ -46,7 +46,74 @@ html {
 
 ```
 
-### Generating a (very) basic form
+
+## Templates
+
+Since version 0.4 it is possible to build websites using templates. The following example showcase how this works:
+
+```Example04/Example04.ps1``` contains the following sample code:
+
+### Example04/Example04.ps1
+
+```powershell
+
+
+html{
+    Header{
+        h1 "This is an example generated using PSHTML Templates"
+    }
+    Body{
+
+        include -name Body
+
+    }
+    Footer{
+        Include -Name Footer
+    }
+}
+
+```
+
+Assuming that ```Example4/body.ps1``` and ```Example/Footer.ps1``` contains the following ```pshtml```code:
+
+### body.ps1
+
+```powershell
+
+    h2 "This comes from a template file"
+
+```
+
+### footer.ps1
+
+```powershell
+div {
+    h4 "This is the footer from a template"
+    p{
+        "Copyright from template"
+    }
+}
+```
+
+Would generate the following code:
+
+```html
+
+    <header>
+        <h1>This is an example generated using PSHTML Templates</h1>
+    </header>
+    <body>
+        <h2>This comes from a template file</h2>
+    </body>
+    <footer>
+        <div>
+            <h4>This is the footer from a template</h4>
+        </div>
+    </footer>
+</html>
+
+```
+## Generating a (very) basic form
 
 ```PowerShell
 form "MyPage.php" post _self -Content {
@@ -61,13 +128,11 @@ Which generates the following code:
 
 ```html
 <form action="MyPage.php" method="post" target="_self" >
-<input type="text" name="FirstName" >
-<input type="text" name="LastName" >
-<input type="submit" name="MySubmit" >
+    <input type="text" name="FirstName" >
+    <input type="text" name="LastName" >
+    <input type="submit" name="MySubmit" >
 </form>
 ```
-
-
 # Todo List
 
 There is a lot to accomplish before making this module available to the public. 
@@ -233,7 +298,7 @@ Eventually, the following components will also be added:
 
 ### Passing attributes
 
-Every HTML tag (PSHTML Function) should have 'at least' the following attributes available:
+- [ ] Every HTML tag (PSHTML Function) should have 'at least' the following attributes available:
 - Class
 - ID
 - Style
@@ -242,5 +307,5 @@ these are - in my opinion- the most commonly used attributes in HTML.
 
 ### Additional Attributes
 
-Each function will have an additional parameter called: ```Attributes``` of type HashTable.
-It will allow to add ad
+- [ ] Each function has an additional parameter called: ```Attributes``` of type HashTable.
+It will allow to add additional html tags without having to list ALL the existing attributes, and offer flexibility for custom and or special htmls attributes.
