@@ -18,19 +18,19 @@ html{
 #Generates the following HTML code
 
         <html>
-    <body>
+            <body>
 
-h2 "This comes a template file"
-</body>
-<footer>
-div {
-    h4 "This is the footer from a template"
-    p{
-        CopyRight from template
-    }
-}
-</footer>
-</html>
+            h2 "This comes a template file"
+            </body>
+            <footer>
+            div {
+                h4 "This is the footer from a template"
+                p{
+                    CopyRight from template
+                }
+            }
+            </footer>
+        </html>
     #>
     [CmdletBinding()]
     Param(
@@ -61,8 +61,8 @@ div {
         write-verbose "Template file found at $($Template.FullName)"
     }
 
-    $content = Get-Content $Template.FullName
-
+    $Rawcontent = Get-Content $Template.FullName
+    $Content = [scriptBlock]::Create($Rawcontent).Invoke()
     return $content
 
 }
