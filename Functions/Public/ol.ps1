@@ -24,59 +24,33 @@ Function ol {
     
     .EXAMPLE
     
-    It is also possible to use regular powershell logic inside a scriptblock. The example below, generates multiple ol elements. 
-    Where every ol has an li tag in it showing service whch name starts with "s".
+    It is also possible to use regular powershell logic inside a scriptblock. The example below, generates an ol element with multiple li Elements. 
+    Where every li tag contains a name of a service that starts with "s".
 
     $Services = Get-Service | ?{$_.name.Startswith("s")}
-
-    
-
-    body {
-
-        foreach ($article in $objs){
-            article {
-                h2 $article.title
-                p{
-                    $article.content
-                }
-            }
+ 
+    ol {
+        foreach($p in $test){
+            li -content "$p" -Class "classy" -value "asdf" -Style "whatever" -Attributes @{name='asdf'}
         }
     }
 
     Generates the following code:
 
-        <body>
-            <article>
-                <h2>this is title 2</h2>
-                <p>
-                this is the content of article 2
-                </p>
-            </article>
-            <article>
-                <h2>this is title 3</h2>
-                <p>
-                this is the content of article 3
-                </p>
-            </article>
-            <article>
-                <h2>this is title 4</h2>
-                <p>
-                this is the content of article 4
-                </p>
-            </article>
-            <article>
-                <h2>this is title 5</h2>
-                <p>
-                this is the content of article 5
-                </p>
-            </article>
-            <article>
-                <h2>this is title 6</h2>
-                <p>
-                this is the content of article 6
-                </p>
-            </article>
-        </body>
+    <ol>
+        <li Class="classy" value="asdf" Style="whatever" name="asdf" >
+            @{Name=seclogon}
+        </li>
+        <li Class="classy" value="asdf" Style="whatever" name="asdf" >
+            @{Name=shpamsvc}
+        </li>
+        <li Class="classy" value="asdf" Style="whatever" name="asdf" >
+            @{Name=smphost}
+        </li>
+        <li Class="classy" value="asdf" Style="whatever" name="asdf" >
+            @{Name=spectrum}
+        </li>
+    </ol>
 
     #>
 
