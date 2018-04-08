@@ -1,7 +1,7 @@
 Function Noscript {
     <#
     .SYNOPSIS
-    Generates script HTML tag.
+    Generates Noscript HTML tag.
     
     .EXAMPLE
     Noscript "Your browser doesn`'t support javascript"

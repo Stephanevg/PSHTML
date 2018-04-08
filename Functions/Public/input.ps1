@@ -15,7 +15,7 @@ Function input {
 
         #Need to add the other ones from --> https://www.w3schools.com/tags/tag_input.asp
         [Parameter(Mandatory=$true,Position = 0)]
-        [ValidateSet("button","checkbox","submit","email","radio","password","text")]
+        [ValidateSet("button","checkbox","color","date","datetime-local","email","file","hidden","image","month","number","password","radio","range","reset","search","submit","tel","text","time","url","week")]
         [String]$type,
 
         [Parameter(Mandatory=$true,Position = 1)]
