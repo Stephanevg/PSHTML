@@ -119,9 +119,11 @@ Function ol {
             }
         }
         
+        Write-Host "bla"
+
         if($attr){
             "<ol $attr>" 
-        }else{
+        } else{
             "<ol>"
         }
        
