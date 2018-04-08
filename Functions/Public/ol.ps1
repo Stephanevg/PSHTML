@@ -6,30 +6,30 @@ Function ol {
     
     .EXAMPLE
     
-    ol {
-        
+    ol -reversed -start 1 -type "typo" -Attributes @{Name="Kevin" ; whatever="floats your boat"} -content {
+        li -content "Test entry" -Class "classy" -value 0 -Style "stylish" -Attributes @{Name="Johnny" ; bibop="bopib"}
+        li "Test entry 2"
     }
 
     Generates the following code:
 
-    <article>
-        <h1>This is blog post number 1</h1>
-        <p>
-            This is content of blog post 1
-        </p>
-    </article>
+    <ol reversed="True" start="1" type="typo" reversed="true" Name="Kevin" whatever="floats your boat">
+        <li Class="classy" value="0" Style="stylish" bibop="bopib" Name="Johnny">
+            Test entry
+        </li>
+        <li>
+            Test entry 2
+        </li>
+    </ol>
     
     .EXAMPLE
     
-    It is also possible to use regular powershell logic inside a scriptblock. The example below, generates a article element
-    based on values located in a powershell object. The content is generated dynamically through the usage of a foreach loop.
+    It is also possible to use regular powershell logic inside a scriptblock. The example below, generates multiple ol elements. 
+    Where every ol has an li tag in it showing service whch name starts with "s".
 
-    $objs = @()
-    $objs += new-object psobject -property @{"title"="this is title 2";content="this is the content of article 2"}
-    $objs += new-object psobject -property @{"title"="this is title 3";content="this is the content of article 3"}
-    $objs += new-object psobject -property @{"title"="this is title 4";content="this is the content of article 4"}
-    $objs += new-object psobject -property @{"title"="this is title 5";content="this is the content of article 5"}
-    $objs += new-object psobject -property @{"title"="this is title 6";content="this is the content of article 6"}
+    $Services = Get-Service | ?{$_.name.Startswith("s")}
+
+    
 
     body {
 

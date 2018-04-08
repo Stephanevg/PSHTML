@@ -1,5 +1,5 @@
-ol -reversed -start 1 -type "typo" -CustomAttributes @{Name="Kevin" ; whatever="floats your boat"} -ChildItem {
-    li -content "Test entry" -Class "classy" -value 0 -Style "stylish" -customAttributes @{Name="Kevin" ; bibop="bopib"}
+ol -reversed -start 1 -type "typo" -Attributes @{Name="Kevin" ; whatever="floats your boat"} -content {
+    li -content "Test entry" -Class "classy" -value 0 -Style "stylish" -Attributes @{Name="Kevin" ; bibop="bopib"}
     li "Test entry 2"
 }
 
