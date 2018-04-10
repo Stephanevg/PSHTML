@@ -19,8 +19,9 @@ Context "Testing PSHTML"{
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
+        $Title = "MyTitle"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $string = p {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $string = p {"woop"} -title $Title -Attributes $CustomAtt -Style $Style -Class $class -id $id
        
         if($string -is [array]){
             $string = $String -join "" 
@@ -34,6 +35,10 @@ Context "Testing PSHTML"{
 
         it "Testing content in child element"{
             $string -match "^.*>woop<.*" | should be $true
+        }
+
+        it "Testing Primary parameters: Title"{
+            $string -match '^<p.*title="MyTitle".*>' | should be $true
         }
 
         it "Testing common parameters: Class"{
@@ -60,7 +65,7 @@ Context "Testing PSHTML"{
         
     }
     
-    Describe "Testing h5 - String" {
+    Describe "Testing p - String" {
      
         it 'Should not fail when passing String' {
             {h5 "woop"} | should not throw
