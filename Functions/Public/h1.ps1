@@ -41,7 +41,7 @@ Function H1 {
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Style,
-
+        
         [Hashtable]$Attributes
     )
 
