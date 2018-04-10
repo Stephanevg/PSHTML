@@ -16,7 +16,7 @@ Function figure {
         .NOTES
         Current version 1.0
         History:
-            2018.04.01;bateskevin;Creation.
+           2018.04.01;bateskevinhanevg;Creation.
 
     #>
 

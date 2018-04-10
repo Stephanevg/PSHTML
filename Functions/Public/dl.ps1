@@ -12,11 +12,10 @@ Function dl {
     .EXAMPLE
     dl -Class "class" -Id "something" -Style "color:red;"
 
-    .Notes
-    Author: Kevin Bates
-    Version: 0.1.0
-    History:
-        @bateskevin;v0.1.0;40/10/2018;creation
+    .NOTES
+    Current version 1.0
+       History:
+           2018.04.01;bateskevinhanevg;Creation.
 
     #>
     [CmdletBinding()]

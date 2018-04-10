@@ -15,11 +15,10 @@ Function figcaption {
     .EXAMPLE
     figcaption "woop3" -Class "class" -Id "something" -Style "color:red;"
 
-    .Notes
-    Author: Kevin Bates
-    Version: 0.1.0
-    History:
-        @bateskevin;1.0;40/10/2018;creation
+    .NOTES
+    Current version 1.0
+       History:
+           2018.04.01;bateskevinhanevg;Creation.
 
     #>
     [Cmdletbinding()]
