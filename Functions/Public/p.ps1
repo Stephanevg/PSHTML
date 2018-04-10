@@ -54,7 +54,7 @@ Function P {
                 "id" {$attr += "Id=$Id ";Break}
                 "style" {$attr += "style=`"$Style`" ";Break}
                 "Title" {$attr += "title=`"$Title`" ";Break}
-                "CustomAttributes" {
+                "Attributes" {
 
                     Foreach($key in $Attributes.Keys){
 

@@ -1,45 +1,94 @@
 Function a {
+    <#
+        .SYNOPSIS
+        Generates a a HTML tag.
+        
+        .EXAMPLE
+        The following exapmles show cases how to create an empty a, with a class, an ID, and, custom attributes.
+        a -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}
+
+        Generates the following code:
+
+        <a Class="myclass1 MyClass2" Id="myid" custom1="val1" custom2="val2"  >
+        </a>
+        
+
+        .NOTES
+        Current version 1.0
+        History:
+            2018.04.10;Stephanevg; Added parameters
+            2018.04.01;Stephanevg;Creation.
+
+    #>
+
     Param(
 
+        [Parameter(
+            ValueFromPipeline = $true,
+            Mandatory = $false,
+            Position = 0
+        )]
         [scriptblock]
-        $ChildItem,
+        $Content,
+
+        [Parameter(Position = 1)]
+        [String]$Class,
+
+        [Parameter(Position = 2)]
+        [String]$Id,
+
+        [Parameter(Position = 3)]
+        [String]$Style,
+
+        [Parameter(Position = 4)]
+        [Hashtable]$Attributes,
 
         [Parameter(Mandatory = $true)]
         [String]$href,
 
-        [String]$Class,
-
-        [String]$Id,
-
-        [String]$Style,
-
         [ValidateSet("_self","_blank","_parent","_top")]
         [String]$Target = "_self"
     )
+    Process{
 
-    $Attributes = ""
-    foreach ($entry in $PSBoundParameters.Keys){
-        switch($entry){
-            "Class" {$Attributes = $Attributes + "Class=$class ";Break}
-            "id" {$Attributes = $Attributes + "Id=$Id ";Break}
-            "style" {$Attributes = $Attributes + "style=`"$Style`" ";Break}
-            "href" {$Attributes = $Attributes + "href=$href ";Break}
-            "target" {$Attributes = $Attributes + "target=`"$target`" ";Break}
-            default{}
+
+        $attr = ""
+        $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        if($CustomParameters){
+            
+            foreach ($entry in $CustomParameters){
+
+                
+                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+    
+            }
+                
         }
+
+        if($Attributes){
+            foreach($entry in $Attributes.Keys){
+               
+                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            }
+        }
+
+        if($attr){
+            "<a {0} >"  -f $attr
+        }else{
+            "<a>"
+        }
+        
+      
+
+        if($Content){
+            $Content.Invoke()
+        }
+            
+
+        '</a>'
     }
-
-    if($Attributes){
-        "<a $Attributes>"  
-    }else{
-        "<a>"
-    }
-if($ChildItem){
-
-    $ChildItem.Invoke() 
-}
-
-    '</a>'
-
-
+    
+    
 }

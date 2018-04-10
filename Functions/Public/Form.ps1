@@ -13,7 +13,15 @@ Function Form {
     </form>
     
     .EXAMPLE
-    
+    The following Example show how to pass custom HTML tag and their values
+    form "/action_Page.php" post _self -attributes @{"Woop"="Wap";"sap"="sop"}
+
+    .NOTES
+    Current version 0.8
+    History:
+        2018.04.08;Stephanvg; Fixed custom Attributes display bug. Updated help
+        2018.04.01;Stephanevg;Fix disyplay bug.
+
     #>
     [CmdletBinding()]
     Param(
@@ -52,41 +60,34 @@ Function Form {
     Process{
 
         $attr = ""
-        $boundParams = $PSBoundParameters
-        $CommonParameters = @(
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "InformationAction",
-            "InformationVariable",
-            "OutVariable",
-            "OutBuffer",
-            "PipelineVariable",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable"
-        )
-
-        foreach ($cp in $CommonParameters){
-
-            $null = $boundParams.Remove($cp)
-        }
-
-        foreach ($entry in $boundParams.Keys){
-            if ($entry -eq 'content'){
-                continue
-            }
-            $attr += "$($entry)=`"$($boundParams[$entry])`" "
-
-        }
-
+        $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
         
+        if($CustomParameters){
+            
+            foreach ($entry in $CustomParameters){
+
+                
+                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+    
+            }
+                
+        }
+
+        if($Attributes){
+            foreach($entry in $Attributes.Keys){
+               
+                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            }
+        }
 
         if($attr){
-            "<form $attr>" 
+            "<form {0} >"  -f $attr
         }else{
             "<form>"
         }
+        
+      
 
         if($Content){
             $Content.Invoke()
@@ -99,4 +100,3 @@ Function Form {
     
 }
 
-form "/action_Page.php" post _self -ErrorAction Ignore -Verbose -Debug -WarningAction Ignore -InformationAction SilentlyContinue -WarningVariable wv 
