@@ -33,7 +33,7 @@ Function Form {
     .NOTES
     Current version 0.8
     History:
-        2018.04.08;Stephanvg; Fixed custom Attributes display bug. Updated help
+        2018.04.08;Stephanevg; Fixed custom Attributes display bug. Updated help
         2018.04.01;Stephanevg;Fix disyplay bug.
 
     #>
