@@ -13,22 +13,22 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
-    Describe "Testing aside" {
+    Describe "Testing colgroup" {
         
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $string = aside {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $string = colgroup {"woop"} -span 5 -Attributes $CustomAtt -Style $Style -Class $class -id $id
        
         if($string -is [array]){
             $string = $String -join "" 
         }
 
         it "Should contain opening and closing tags" {
-            $string -match '^<aside.*>' | should be $true
-            $string -match '.*</aside>$' | should be $true
+            $string -match '^<colgroup.*>' | should be $true
+            $string -match '.*</colgroup>$' | should be $true
             
         }
 
@@ -36,14 +36,19 @@ Context "Testing PSHTML"{
             $string -match "^.*>woop<.*" | should be $true
         }
         
-        it "Testing common parameters: Class"{
-            $string -match '^<aside.*class="myclass".*>' | should be $true
+        it "Testing parameters: Class"{
+            $string -match '^<colgroup.*span="5".*>' | should be $true
         }
+
+        it "Testing common parameters: Class"{
+            $string -match '^<colgroup.*class="myclass".*>' | should be $true
+        }
+
         it "Testing common parameters: ID"{
-            $string -match '^<aside.*id="myid".*>' | should be $true
+            $string -match '^<colgroup.*id="myid".*>' | should be $true
         }
         it "Testing common parameters: Style"{
-            $string -match '^<aside.*style=".+".*>' | should be $true
+            $string -match '^<colgroup.*style=".+".*>' | should be $true
         }
 
         it "Testing Attributes parameters"{
@@ -51,7 +56,7 @@ Context "Testing PSHTML"{
             foreach($at in $CustomAtt.Keys){
                 $val = $null
                 $val = $CustomAtt[$at]
-                $string -match "^<aside.*$at=`"$val`".*>" | should be $true
+                $string -match "^<colgroup.*$at=`"$val`".*>" | should be $true
             }
 
             

@@ -3,6 +3,20 @@ Function a {
         .SYNOPSIS
         Generates a a HTML tag.
         
+        .PARAMETER Class
+        Allows to specify one (or more) class(es) to assign the html element.
+        More then one class can be assigned by seperating them with a white space.
+
+        .PARAMETER Id
+        Allows to specify an id to assign the html element.
+        
+        .PARAMETER Style
+        Allows to specify in line CSS style to assign the html element.
+
+        .PARAMETER Content
+        Allows to add child element(s) inside the current opening and closing HTML tag(s). 
+    
+
         .EXAMPLE
         The following exapmles show cases how to create an empty a, with a class, an ID, and, custom attributes.
         a -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}

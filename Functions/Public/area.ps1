@@ -6,6 +6,20 @@ Function area {
     .DESCRIPTION
     The are tag must be used in a <map> element (Use the 'map' function)
     
+    .PARAMETER Class
+    Allows to specify one (or more) class(es) to assign the html element.
+    More then one class can be assigned by seperating them with a white space.
+
+    .PARAMETER Id
+    Allows to specify an id to assign the html element.
+    
+    .PARAMETER Style
+    Allows to specify in line CSS style to assign the html element.
+
+    .PARAMETER Content
+    Allows to add child element(s) inside the current opening and closing HTML tag(s). 
+    
+
     .EXAMPLE
     area -href "link.php" -alt "alternate description" -coords "0,0,10,10"
     
@@ -20,6 +34,11 @@ Function area {
 
     <area href="image.png"coords="0,0,20,20"shape="rect" >
 
+    .NOTES
+     Current version 1.0
+        History:
+            2018.04.10;Stephanevg; Added parameters
+            2018.04.01;Stephanevg;Creation.
 
     #>
     [CmdletBinding()]
@@ -63,36 +82,41 @@ Function area {
     Process{
 
         $attr = ""
-        $boundParams = $PSBoundParameters
-        $CommonParameters = @(
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "InformationAction",
-            "InformationVariable",
-            "OutVariable",
-            "OutBuffer",
-            "PipelineVariable",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable"
-        )
+        $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        if($CustomParameters){
+            
+            foreach ($entry in $CustomParameters){
 
-        foreach ($cp in $CommonParameters){
-
-            $null = $boundParams.Remove($cp)
-        }
-
-        foreach ($entry in $boundParams.Keys){
-            if($entry -eq "content"){
-                continue
+                
+                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+    
             }
-            #$attr += "$($entry)=`"$($boundParams[$entry])`" "
-            $attr += "{0}=`"{1}`" " -f $entry,$boundParams[$entry]
-
+                
         }
 
-        "<area {0} >"  -f $attr
+        if($Attributes){
+            foreach($entry in $Attributes.Keys){
+               
+                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            }
+        }
+
+        if($attr){
+            "<area {0} >"  -f $attr
+        }else{
+            "<area>"
+        }
+        
+      
+
+        if($Content){
+            $Content.Invoke()
+        }
+            
+
+        '</area>'
         
 
         

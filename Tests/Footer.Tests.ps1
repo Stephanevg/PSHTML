@@ -13,22 +13,22 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
-    Describe "Testing aside" {
+    Describe "Testing footer" {
         
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $string = aside {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $string = footer {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
        
         if($string -is [array]){
             $string = $String -join "" 
         }
 
         it "Should contain opening and closing tags" {
-            $string -match '^<aside.*>' | should be $true
-            $string -match '.*</aside>$' | should be $true
+            $string -match '^<footer.*>' | should be $true
+            $string -match '.*</footer>$' | should be $true
             
         }
 
@@ -37,13 +37,13 @@ Context "Testing PSHTML"{
         }
         
         it "Testing common parameters: Class"{
-            $string -match '^<aside.*class="myclass".*>' | should be $true
+            $string -match '^<footer.*class="myclass".*>' | should be $true
         }
         it "Testing common parameters: ID"{
-            $string -match '^<aside.*id="myid".*>' | should be $true
+            $string -match '^<footer.*id="myid".*>' | should be $true
         }
         it "Testing common parameters: Style"{
-            $string -match '^<aside.*style=".+".*>' | should be $true
+            $string -match '^<footer.*style=".+".*>' | should be $true
         }
 
         it "Testing Attributes parameters"{
@@ -51,7 +51,7 @@ Context "Testing PSHTML"{
             foreach($at in $CustomAtt.Keys){
                 $val = $null
                 $val = $CustomAtt[$at]
-                $string -match "^<aside.*$at=`"$val`".*>" | should be $true
+                $string -match "^<footer.*$at=`"$val`".*>" | should be $true
             }
 
             
