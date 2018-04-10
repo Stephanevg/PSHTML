@@ -1,19 +1,19 @@
-Function p {
+Function dt {
     <#
     .SYNOPSIS
-    Create a p tag in an HTML document.
+    Create a dt tag in an HTML document.
     
     .EXAMPLE
 
-    p 
+    dt 
     .EXAMPLE
-    p "woop1" -Class "class"
+    dt "woop1" -Class "class"
 
     .EXAMPLE
-    p "woop2" -Class "class" -Id "Something"
+    dt "woop2" -Class "class" -Id "Something"
 
     .EXAMPLE
-    p "woop3" -Class "class" -Id "something" -Style "color:red;"
+    dt "woop3" -Class "class" -Id "something" -Style "color:red;"
 
     .Notes
     Author: Kevin Bates
@@ -40,7 +40,7 @@ Function p {
         [AllowNull()]
         [String]$Style,
 
-        [String]$title
+        [String]$value
     )
 
         $attr = ""
@@ -68,13 +68,13 @@ Function p {
 
 if($attr){
     $return = @"
-    <p $attr>$Content</p>
+    <dt $attr>$Content</dt>
 "@
 
 }else{
 
     $return =     @"
-    <p>$Content</p>
+    <dt>$Content</dt>
 "@
 }
 

@@ -196,18 +196,18 @@ Eventually, the following components will also be added:
 
 ## blocs
 - [X] ```<div>```
-- [ ] ```<p>```
-    - [ ] Add support for title attribute
-- [ ] ```<hr>```
-- [ ] ```<pre>```
-- [ ] ```<blockquote>```
-- [ ] ```<ol>```
-- [ ] ```<ul>```
-- [ ] ```<li>```
-- [ ] ```<dl>```
-- [ ] ```<dt>```
-- [ ] ```<dd>```
-- [ ] ```<figure>```
+- [X] ```<p>```
+    - [X] Add support for title attribute
+- [X] ```<hr>```
+- [X] ```<pre>```
+- [X] ```<blockquote>```
+- [X] ```<ol>```
+- [X] ```<ul>```
+- [X] ```<li>```
+- [X] ```<dl>```
+- [X] ```<dt>```
+- [X] ```<dd>```
+- [X] ```<figure>```
 - [ ] ```<figcaption>```
 
 

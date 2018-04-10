@@ -1,19 +1,28 @@
-Function p {
+Function pre {
     <#
     .SYNOPSIS
-    Create a p tag in an HTML document.
+    Create a pre tag in an HTML document.
     
     .EXAMPLE
 
-    p 
+    pre 
     .EXAMPLE
-    p "woop1" -Class "class"
+    pre -Content @"
+
+        whatever 
+        it       is
+
+        you ne  ed
+    "@
 
     .EXAMPLE
-    p "woop2" -Class "class" -Id "Something"
+    pre -class "classy" -style "stylish" -Content @"
 
-    .EXAMPLE
-    p "woop3" -Class "class" -Id "something" -Style "color:red;"
+        whatever 
+        it       is
+
+        you ne  ed
+    "@
 
     .Notes
     Author: Kevin Bates
@@ -68,13 +77,17 @@ Function p {
 
 if($attr){
     $return = @"
-    <p $attr>$Content</p>
+    <pre $attr>
+        $Content
+    </pre>
 "@
 
 }else{
 
     $return =     @"
-    <p>$Content</p>
+    <pre>
+        $Content
+    </pre>
 "@
 }
 

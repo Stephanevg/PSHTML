@@ -1,19 +1,21 @@
-Function p {
+Function blockquote {
     <#
     .SYNOPSIS
-    Create a p tag in an HTML document.
-    
+    Create a blockquote tag in an HTML document.
+     
     .EXAMPLE
-
-    p 
-    .EXAMPLE
-    p "woop1" -Class "class"
-
-    .EXAMPLE
-    p "woop2" -Class "class" -Id "Something"
+    blockquote -cite "https://www.google.com" -Content @"
+        Google is a 
+        great website
+        to search for information
+    "@
 
     .EXAMPLE
-    p "woop3" -Class "class" -Id "something" -Style "color:red;"
+    blockquote -cite "https://www.google.com" -class "classy" -style "stylish" -Content @"
+        Google is a     
+        great website
+        to search for information
+    "@
 
     .Notes
     Author: Kevin Bates
@@ -29,6 +31,8 @@ Function p {
         [AllowNull()]
         [String]
         $Content,
+
+        [string]$cite,
 
         [AllowEmptyString()]
         [AllowNull()]
@@ -68,13 +72,17 @@ Function p {
 
 if($attr){
     $return = @"
-    <p $attr>$Content</p>
+    <blockquote $attr>
+        $Content
+    </blockquote>
 "@
 
 }else{
 
     $return =     @"
-    <p>$Content</p>
+    <blockquote>
+        $Content
+    </blockquote>
 "@
 }
 
