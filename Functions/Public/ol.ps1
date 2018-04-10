@@ -1,135 +1,97 @@
 Function ol {
-
     <#
     .SYNOPSIS
-    Generates ol HTML tag.
-    
+    Create a ol tag in an HTML document.
+     
     .EXAMPLE
-    
-    ol -reversed -start 1 -type "typo" -Attributes @{Name="Kevin" ; whatever="floats your boat"} -content {
-        li -content "Test entry" -Class "classy" -value 0 -Style "stylish" -Attributes @{Name="Johnny" ; bibop="bopib"}
-        li "Test entry 2"
-    }
+    ol
 
-    Generates the following code:
-
-    <ol reversed="True" start="1" type="typo" reversed="true" Name="Kevin" whatever="floats your boat">
-        <li Class="classy" value="0" Style="stylish" bibop="bopib" Name="Johnny">
-            Test entry
-        </li>
-        <li>
-            Test entry 2
-        </li>
-    </ol>
-    
     .EXAMPLE
-    
-    It is also possible to use regular powershell logic inside a scriptblock. The example below, generates an ol element with multiple li Elements. 
-    Where every li tag contains a name of a service that starts with "s".
+    ol -Content {li -Content "asdf"}
 
-    $Services = Get-Service | ?{$_.name.Startswith("s")}
- 
-    ol {
-        foreach($p in $test){
-            li -content "$p" -Class "classy" -value "asdf" -Style "whatever" -Attributes @{name='asdf'}
-        }
-    }
+    .EXAMPLE
+    ol -Class "class" -Id "something" -Style "color:red;"
 
-    Generates the following code:
-
-    <ol>
-        <li Class="classy" value="asdf" Style="whatever" name="asdf" >
-            @{Name=seclogon}
-        </li>
-        <li Class="classy" value="asdf" Style="whatever" name="asdf" >
-            @{Name=shpamsvc}
-        </li>
-        <li Class="classy" value="asdf" Style="whatever" name="asdf" >
-            @{Name=smphost}
-        </li>
-        <li Class="classy" value="asdf" Style="whatever" name="asdf" >
-            @{Name=spectrum}
-        </li>
-    </ol>
+    .Notes
+    Author: Kevin Bates
+    Version: 0.1.0
+    History:
+        @bateskevin;v0.1.0;40/10/2018;creation
 
     #>
-
+    [CmdletBinding()]
     Param(
+
+        [Parameter(Position = 1)]
+        [String]$Class,
+
+        [Parameter(Position = 2)]
+        [String]$Id,
+
+        [Parameter(Position = 3)]
+        [String]$Style,
+
+        [Parameter(Position = 4)]
+        [Hashtable]$Attributes,
+
+        [Parameter(Position = 5)]
+        [Switch]$reversed,
+
+        [Parameter(Position = 6)]
+        [string]$start,
 
         [Parameter(
             ValueFromPipeline = $true,
-            Mandatory = $false
+            Mandatory = $false,
+            Position = 7
         )]
         [scriptblock]
-        $content,
-
-        [switch]
-        $reversed,
-
-        [string]
-        $start,
-
-        [string]    
-        $type,
-
-        [Hashtable]$Attributes
+        $Content
     )
+    Process{
 
-    $attr = ""
-        $boundParams = $PSBoundParameters
-        $CommonParameters = @(
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "InformationAction",
-            "InformationVariable",
-            "OutVariable",
-            "OutBuffer",
-            "PipelineVariable",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable",
-            "Attributes"
-        )
-
-        foreach ($cp in $CommonParameters){
-
-            $null = $boundParams.Remove($cp)
-        }
-
-        foreach ($entry in $boundParams.Keys){
-            if ($entry -eq 'content'){
-                continue
-            }
-            $attr += '{0}="{1}" ' -f $entry,$boundParams[$entry]
-
-        }
-
-        $boundParams.Remove("childitem") | Out-Null
+        $Attr = ""
 
         if($reversed){
-            $attr += "reversed=`"true`" "
+            $Attr += "reversed " 
+        }
+
+        $CommonParameters = ("Attributes", "content","reversed") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        if($CustomParameters){
+            
+            foreach ($entry in $CustomParameters){
+
+                
+                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+                
+            }                
         }
 
         if($Attributes){
-            Foreach($key in $Attributes.Keys){
-
-                $attr += '{0}="{1}" ' -f $key,$Attributes[$key] 
-     
+            foreach($entry in $Attributes.Keys){
+               
+                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
             }
         }
 
         if($attr){
-            "<ol $attr>" 
-        } else{
+            "<ol {0} >"  -f $attr
+        }else{
             "<ol>"
         }
-       
+        
+      
 
-        if($content){
-            $content.Invoke()
+        if($Content){
+            $Content.Invoke()
         }
             
 
         '</ol>'
     }
+    
+    
+}
+
