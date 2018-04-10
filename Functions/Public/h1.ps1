@@ -13,60 +13,77 @@ Function H1 {
     h1 "woop2" -Class "class" -Id "MainTitle"
 
     .EXAMPLE
-    h1 "woop3" -Class "class" -Id "MaintTitle" -Style "color:red;"
+    h1 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
     Author: Stéphane van Gulick
-    Version: 0.3.0
+    Version: 1.0.0
     History:
-        @stephanevg;v0.1.0;03/25/2018;creation
-        @stephanevg;v0.3.0;03/25/2018;Added Styles, ID, CLASS attributes functionality
+        2018.04.08;Stephanevg; Updated to version 1.0: Updated content block to support string & ScriptBlock
+        2018.04.08;Stephanevg; Fixed custom Attributes display bug. Updated help
+        2018.03.25;@Stephanevg; Added Styles, ID, CLASS attributes functionality
+        2018.03.25;@Stephanevg; Creation
 
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$false)]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]
         $Content,
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class="",
+        [String]$Class,
 
         [String]$Id,
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Style
+        [String]$Style,
+
+        [Hashtable]$Attributes
     )
 
-    $Attributes = ""
-    $psparams = $PSBoundParameters
+    $attr = ""
+    $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+    $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+    
+    if($CustomParameters){
+        
+        foreach ($entry in $CustomParameters){
 
-    foreach ($entry in $psparams.Keys){
-        switch($entry){
-            "Class" {$Attributes = $Attributes + "Class=$class ";Break}
-            "id" {$Attributes = $Attributes + "Id=$Id ";Break}
-            "style" {$Attributes = $Attributes + "Style=`"$Style`" ";Break}
-            default{}
+            
+            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+
+        }
+            
+    }
+
+    if($Attributes){
+        foreach($entry in $Attributes.Keys){
+           
+            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
         }
     }
 
+    if($attr){
+        "<h1 {0} >"  -f $attr
+    }else{
+        "<h1>"
+    }
+    
+  
+    if($Content){
 
-if($Attributes){
-    $return = @"
-    <h1 $attributes>$Content</h1>
-"@
+        if($Content -is [System.Management.Automation.ScriptBlock]){
+            $Content.Invoke()
+        }else{
+            $Content
+        }
+    }
+        
 
-}else{
-
-    $return =     @"
-    <h1>$Content</h1>
-"@
-}
-
-return $return
+    '</h1>'
 
 }
