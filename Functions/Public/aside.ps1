@@ -48,49 +48,34 @@ Function aside {
     Process{
 
         $attr = ""
-        $boundParams = $PSBoundParameters
-        $CommonParameters = @(
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "InasideationAction",
-            "InasideationVariable",
-            "OutVariable",
-            "OutBuffer",
-            "PipelineVariable",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable"
-        )
+        $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        if($CustomParameters){
+            
+            foreach ($entry in $CustomParameters){
 
-        foreach ($cp in $CommonParameters){
-
-            $null = $boundParams.Remove($cp)
-        }
-
-        foreach ($entry in $boundParams.Keys){
-            if ($entry -eq 'content' -or $entry -eq 'attributes'){
-                continue
-            }
-            $attr += "$($entry)=`"$($boundParams[$entry])`" "
-
-        }
-
-        if ($Attributes){
-            foreach ($entry in $Attributes.Keys){
-
-                $attr += "$($entry)=`"$($Attributes[$entry])`" "
+                
+                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
     
             }
+                
         }
 
-        
+        if($Attributes){
+            foreach($entry in $Attributes.Keys){
+               
+                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            }
+        }
 
         if($attr){
-            "<aside $attr>" 
+            "<aside {0} >"  -f $attr
         }else{
             "<aside>"
         }
+        
+      
 
         if($Content){
             $Content.Invoke()

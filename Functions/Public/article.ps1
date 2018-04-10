@@ -3,6 +3,20 @@ Function article {
     .SYNOPSIS
     Generates article HTML tag.
     
+    .PARAMETER Class
+    Allows to specify one (or more) class(es) to assign the html element.
+    More then one class can be assigned by seperating them with a white space.
+
+    .PARAMETER Id
+    Allows to specify an id to assign the html element.
+    
+    .PARAMETER Style
+    Allows to specify in line CSS style to assign the html element.
+
+    .PARAMETER Content
+    Allows to add child element(s) inside the current opening and closing HTML tag(s). 
+    
+
     .EXAMPLE
     
     article {
@@ -79,7 +93,12 @@ Function article {
                 </p>
             </article>
         </body>
-
+        
+    .NOTES
+     Current version 1.0
+        History:
+            2018.04.10;Stephanevg; Added parameters
+            2018.04.01;Stephanevg;Creation.
     #>
     [CmdletBinding()]
     Param(
@@ -107,49 +126,34 @@ Function article {
     Process{
 
         $attr = ""
-        $boundParams = $PSBoundParameters
-        $CommonParameters = @(
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "InarticleationAction",
-            "InarticleationVariable",
-            "OutVariable",
-            "OutBuffer",
-            "PipelineVariable",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable"
-        )
+        $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        if($CustomParameters){
+            
+            foreach ($entry in $CustomParameters){
 
-        foreach ($cp in $CommonParameters){
-
-            $null = $boundParams.Remove($cp)
-        }
-
-        foreach ($entry in $boundParams.Keys){
-            if ($entry -eq 'content' -or $entry -eq 'attributes'){
-                continue
-            }
-            $attr += "$($entry)=`"$($boundParams[$entry])`" "
-
-        }
-
-        if ($Attributes){
-            foreach ($entry in $Attributes.Keys){
-
-                $attr += "$($entry)=`"$($Attributes[$entry])`" "
+                
+                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
     
             }
+                
         }
 
-        
+        if($Attributes){
+            foreach($entry in $Attributes.Keys){
+               
+                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            }
+        }
 
         if($attr){
-            "<article $attr>" 
+            "<article {0} >"  -f $attr
         }else{
             "<article>"
         }
+        
+      
 
         if($Content){
             $Content.Invoke()
