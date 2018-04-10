@@ -20,7 +20,8 @@ Context "Testing PSHTML"{
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $string = html {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $xmlns = "http://www.w3.org/1999/xhtml"
+        $string = html {"woop"} -xmlns $xmlns -Attributes $CustomAtt -Style $Style -Class $class -id $id
        
         if($string -is [array]){
             $string = $String -join "" 
@@ -36,6 +37,10 @@ Context "Testing PSHTML"{
             $string -match "^.*>woop<.*" | should be $true
         }
         
+        it "Testing Primary parameters: xmlns"{
+            $string -match '^<html.*xmlns="http://www.w3.org/1999/xhtml.*>' | should be $true
+        }
+
         it "Testing common parameters: Class"{
             $string -match '^<html.*class="myclass".*>' | should be $true
         }

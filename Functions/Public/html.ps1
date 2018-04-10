@@ -29,7 +29,7 @@ Function html {
     
     
     .NOTES
-    Current version 1.0
+    Current version 1.1.0
     History:
         2018.04.10;Stephanevg; Added parameters
         2018.04.01;Stephanevg;Creation.
@@ -56,7 +56,9 @@ Param(
     [String]$Style,
 
     [Parameter(Position = 4)]
-    [Hashtable]$Attributes 
+    [Hashtable]$Attributes,
+    
+    [String]$xmlns
 )
 $attr = ""
     $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
