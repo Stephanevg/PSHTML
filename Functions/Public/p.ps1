@@ -3,6 +3,19 @@ Function p {
     .SYNOPSIS
     Create a p tag in an HTML document.
     
+    .PARAMETER Class
+    Allows to specify one (or more) class(es) to assign the html element.
+    More then one class can be assigned by seperating them with a white space.
+
+    .PARAMETER Id
+    Allows to specify an id to assign the html element.
+    
+    .PARAMETER Style
+    Allows to specify in line CSS style to assign the html element.
+
+    .PARAMETER Content
+    Allows to add child element(s) inside the current opening and closing HTML tag(s). 
+
     .EXAMPLE
 
     p 
@@ -15,23 +28,35 @@ Function p {
     .EXAMPLE
     p "woop3" -Class "class" -Id "something" -Style "color:red;"
 
+    .EXAMPLE
+    p {
+        $Important = strong{"This is REALLY important"} 
+        "This is regular test in a paragraph " + $Important
+    }
+
+    Generates the following code
+
+    <p>
+    This is regular test in a paragraph <strong>"This is REALLY important"</strong>
+    </p>
+
     .NOTES
-    Current version 1.0
+    Current version 1.1.0
        History:
+           2018.04.10;Stephanevg;Updated content (removed string, added if for selection between scriptblock and string).
            2018.04.01;bateskevinhanevg;Creation.
 
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$false)]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]
         $Content,
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class="",
+        [String]$Class,
 
         [String]$Id,
 
@@ -39,7 +64,9 @@ Function p {
         [AllowNull()]
         [String]$Style,
 
-        [String]$title
+        [String]$title,
+
+        [Hashtable]$Attributes
     )
 
         $attr = ""
@@ -65,18 +92,23 @@ Function p {
         }
 
 
-if($attr){
-    $return = @"
-    <p $attr>$Content</p>
-"@
+        if($attr){
+            "<p {0} >"  -f $attr
+        }else{
+            "<p>"
+        }
+        
+      
 
-}else{
+        if($Content){
 
-    $return =     @"
-    <p>$Content</p>
-"@
-}
+            if($Content -is [System.Management.Automation.ScriptBlock]){
+                $Content.Invoke()
+            }else{
+                $Content
+            }
+        }
 
-return $return
+    "</p>"
 
 }

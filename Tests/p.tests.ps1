@@ -13,7 +13,7 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
-    Describe "Testing p" {
+    Describe "Testing p - Scriptblock" {
         
 
         $Class = "MyClass"
@@ -60,6 +60,30 @@ Context "Testing PSHTML"{
         
     }
     
+    Describe "Testing h5 - String" {
+     
+        it 'Should not fail when passing String' {
+            {h5 "woop"} | should not throw
+        }
+
+        
+
+        $String = p "woop"
+       
+        if($string -is [array]){
+            $string = $String -join "" 
+        }
+
+        it "Should contain opening and closing tags" {
+            $string -match '^<p.*>' | should be $true
+            $string -match '.*</p>$' | should be $true
+            
+        }
+
+        it "Testing content in child element"{
+            $string -match "^.*>woop<.*" | should be $true
+        }
+    }
 }
 
 Pop-Location
