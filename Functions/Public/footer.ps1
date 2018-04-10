@@ -47,7 +47,6 @@ Function Footer {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
         $Content,
 
         [Parameter(Position = 1)]
@@ -93,7 +92,12 @@ Function Footer {
       
 
         if($Content){
-            $Content.Invoke()
+
+            if($Content -is [System.Management.Automation.ScriptBlock]){
+                $Content.Invoke()
+            }else{
+                $Content
+            }
         }
             
 

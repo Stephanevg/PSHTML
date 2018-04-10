@@ -60,6 +60,30 @@ Context "Testing PSHTML"{
         
     }
     
+    Describe "Testing Footer - String" {
+     
+        it 'Should not fail when passing String' {
+            {h5 "woop"} | should not throw
+        }
+
+        
+
+        $String = Footer "woop"
+       
+        if($string -is [array]){
+            $string = $String -join "" 
+        }
+
+        it "Should contain opening and closing tags" {
+            $string -match '^<footer.*>' | should be $true
+            $string -match '.*</footer>$' | should be $true
+            
+        }
+
+        it "Testing content in child element"{
+            $string -match "^.*>woop<.*" | should be $true
+        }
+    }
 }
 
 Pop-Location
