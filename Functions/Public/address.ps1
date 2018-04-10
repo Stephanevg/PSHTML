@@ -21,6 +21,12 @@ Function address {
         twitter: <a href=http://twitter/stephanevg target="_blank" > @stephanevg </a>
     </address>
 
+    .NOTES
+     Current version 1.0
+        History:
+            2018.04.10;Stephanevg; Added parameters
+            2018.04.01;Stephanevg;Creation.
+
     #>
     [CmdletBinding()]
     Param(
@@ -48,49 +54,34 @@ Function address {
     Process{
 
         $attr = ""
-        $boundParams = $PSBoundParameters
-        $CommonParameters = @(
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "InaddressationAction",
-            "InaddressationVariable",
-            "OutVariable",
-            "OutBuffer",
-            "PipelineVariable",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable"
-        )
+        $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        if($CustomParameters){
+            
+            foreach ($entry in $CustomParameters){
 
-        foreach ($cp in $CommonParameters){
-
-            $null = $boundParams.Remove($cp)
-        }
-
-        foreach ($entry in $boundParams.Keys){
-            if ($entry -eq 'content' -or $entry -eq 'attributes'){
-                continue
-            }
-            $attr += "$($entry)=`"$($boundParams[$entry])`" "
-
-        }
-
-        if ($Attributes){
-            foreach ($entry in $Attributes.Keys){
-
-                $attr += "$($entry)=`"$($Attributes[$entry])`" "
+                
+                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
     
             }
+                
         }
 
-        
+        if($Attributes){
+            foreach($entry in $Attributes.Keys){
+               
+                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            }
+        }
 
         if($attr){
-            "<address $attr>" 
+            "<address {0} >"  -f $attr
         }else{
             "<address>"
         }
+        
+      
 
         if($Content){
             $Content.Invoke()

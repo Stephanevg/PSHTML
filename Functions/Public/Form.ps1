@@ -13,9 +13,6 @@ Function Form {
     </form>
     
     .EXAMPLE
-    #For pester test form "/action_Page.php" post _self -ErrorAction Ignore -Verbose -Debug -WarningAction Ignore -InformationAction SilentlyContinue -WarningVariable wv 
-    
-    .EXAMPLE
     The following Example show how to pass custom HTML tag and their values
     form "/action_Page.php" post _self -attributes @{"Woop"="Wap";"sap"="sop"}
 

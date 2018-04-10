@@ -1,4 +1,26 @@
 Function Div {
+    <#
+        .SYNOPSIS
+        Generates a DIV HTML tag.
+        
+        .EXAMPLE
+        The following exapmles show cases how to create an empty div, with a class, an ID, and, custom attributes.
+        div -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}
+
+        Generates the following code:
+
+        <div Class="myclass1 MyClass2" Id="myid" custom1="val1" custom2="val2"  >
+        </div>
+        
+
+        .NOTES
+        Current version 1.0
+        History:
+            2018.04.10;Stephanevg; Added parameters
+            2018.04.01;Stephanevg;Creation.
+
+    #>
+
     Param(
 
         [Parameter(
@@ -7,27 +29,55 @@ Function Div {
             Position = 0
         )]
         [scriptblock]
-        $ChildItem
+        $Content,
+
+        [Parameter(Position = 1)]
+        [String]$Class,
+
+        [Parameter(Position = 2)]
+        [String]$Id,
+
+        [Parameter(Position = 3)]
+        [String]$Style,
+
+        [Parameter(Position = 4)]
+        [Hashtable]$Attributes 
     )
     Process{
-        $Attributes = ""
-        foreach ($entry in $PSBoundParameters.Keys){
-            switch($entry){
-                "Class" {$Attributes = $Attributes + "class=$class ";Break}
-                "id" {$Attributes = $Attributes + "Id=$Id ";Break}
-                "style" {$Attributes = $Attributes + "style=`"$Style`" ";Break}
-                default{}
+
+
+        $attr = ""
+        $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        if($CustomParameters){
+            
+            foreach ($entry in $CustomParameters){
+
+                
+                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+    
             }
+                
         }
 
         if($Attributes){
-            "<div $Attributes>" 
+            foreach($entry in $Attributes.Keys){
+               
+                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            }
+        }
+
+        if($attr){
+            "<div {0} >"  -f $attr
         }else{
             "<div>"
         }
+        
+      
 
-        if($ChildItem){
-            $ChildItem.Invoke()
+        if($Content){
+            $Content.Invoke()
         }
             
 
