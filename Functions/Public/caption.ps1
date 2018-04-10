@@ -60,7 +60,7 @@ Function Caption {
         .LINK
             Information on the Caption HTML tag can be found here --> https://www.w3schools.com/tags/tag_caption.asp
         .NOTES
-        Current version 1.0
+        Current version 1.1.0
         History:
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
@@ -74,7 +74,6 @@ Function Caption {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
         $Content,
 
         [Parameter(Position = 1)]
@@ -124,7 +123,12 @@ Function Caption {
       
 
         if($Content){
-            $Content.Invoke()
+
+            if($Content -is [System.Management.Automation.ScriptBlock]){
+                $Content.Invoke()
+            }else{
+                $Content
+            }
         }
             
 
