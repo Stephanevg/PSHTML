@@ -1,19 +1,19 @@
-Function p {
+Function figcaption {
     <#
     .SYNOPSIS
-    Create a p tag in an HTML document.
+    Create a figcaption tag in an HTML document.
     
     .EXAMPLE
 
-    p 
+    figcaption 
     .EXAMPLE
-    p "woop1" -Class "class"
+    figcaption "woop1" -Class "class"
 
     .EXAMPLE
-    p "woop2" -Class "class" -Id "Something"
+    figcaption "woop2" -Class "class" -Id "Something"
 
     .EXAMPLE
-    p "woop3" -Class "class" -Id "something" -Style "color:red;"
+    figcaption "woop3" -Class "class" -Id "something" -Style "color:red;"
 
     .NOTES
     Current version 1.0
@@ -67,13 +67,13 @@ Function p {
 
 if($attr){
     $return = @"
-    <p $attr>$Content</p>
+    <figcaption $attr>$Content</figcaption>
 "@
 
 }else{
 
     $return =     @"
-    <p>$Content</p>
+    <figcaption>$Content</figcaption>
 "@
 }
 

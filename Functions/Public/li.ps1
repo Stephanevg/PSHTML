@@ -1,19 +1,19 @@
-Function p {
+Function li {
     <#
     .SYNOPSIS
-    Create a p tag in an HTML document.
+    Create a li tag in an HTML document.
     
     .EXAMPLE
 
-    p 
+    li 
     .EXAMPLE
-    p "woop1" -Class "class"
+    li "woop1" -Class "class"
 
     .EXAMPLE
-    p "woop2" -Class "class" -Id "Something"
+    li "woop2" -Class "class" -Id "Something"
 
     .EXAMPLE
-    p "woop3" -Class "class" -Id "something" -Style "color:red;"
+    li "woop3" -Class "class" -Id "something" -Style "color:red;"
 
     .NOTES
     Current version 1.0
@@ -39,7 +39,7 @@ Function p {
         [AllowNull()]
         [String]$Style,
 
-        [String]$title
+        [String]$value
     )
 
         $attr = ""
@@ -67,13 +67,13 @@ Function p {
 
 if($attr){
     $return = @"
-    <p $attr>$Content</p>
+    <li $attr>$Content</li>
 "@
 
 }else{
 
     $return =     @"
-    <p>$Content</p>
+    <li>$Content</li>
 "@
 }
 
