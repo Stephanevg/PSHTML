@@ -208,7 +208,7 @@ Eventually, the following components will also be added:
 - [X] ```<dt>```
 - [X] ```<dd>```
 - [X] ```<figure>```
-- [ ] ```<figcaption>```
+- [X] ```<figcaption>```
 
 
 ## Tables
