@@ -20,7 +20,7 @@ Context "Testing PSHTML"{
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $string = hr {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $string = hr -Attributes $CustomAtt -Style $Style -Class $class -id $id
        
         if($string -is [array]){
             $string = $String -join "" 
@@ -28,13 +28,10 @@ Context "Testing PSHTML"{
 
         it "Should contain opening and closing tags" {
             $string -match '^<hr.*>' | should be $true
-            $string -match '.*</hr>$' | should be $true
+            #$string -match '.*</hr>$' | should be $true
             
         }
 
-        it "Testing content in child element"{
-            $string -match "^.*>woop<.*" | should be $true
-        }
 
         it "Testing common parameters: Class"{
             $string -match '^<hr.*class="myclass".*>' | should be $true
