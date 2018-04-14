@@ -13,13 +13,21 @@ Function ul {
     ul -Class "class" -Id "something" -Style "color:red;"
 
     .NOTES
-    Current version 1.0
+    Current version 1.1
        History:
+           2018.04.14;stephanevg;fix Content bug. Upgraded to v1.1.
            2018.04.01;bateskevinhanevg;Creation.
 
     #>
     [CmdletBinding()]
     Param(
+
+        [Parameter(
+            ValueFromPipeline = $false,
+            Mandatory = $false,
+            Position = 0
+        )]
+        $Content,
 
         [Parameter(Position = 1)]
         [String]$Class,
@@ -37,15 +45,8 @@ Function ul {
         [Switch]$reversed,
 
         [Parameter(Position = 6)]
-        [string]$start,
-
-        [Parameter(
-            ValueFromPipeline = $true,
-            Mandatory = $false,
-            Position = 7
-        )]
-        [scriptblock]
-        $Content
+        [string]$start
+        
     )
     Process{
 
@@ -84,7 +85,12 @@ Function ul {
       
 
         if($Content){
-            $Content.Invoke()
+    
+            if($Content -is [System.Management.Automation.ScriptBlock]){
+                $Content.Invoke()
+            }else{
+                $Content
+            }
         }
             
 

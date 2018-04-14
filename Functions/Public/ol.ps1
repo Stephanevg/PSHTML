@@ -12,14 +12,34 @@ Function ol {
     .EXAMPLE
     ol -Class "class" -Id "something" -Style "color:red;"
 
+    .EXAMPLE
+
+    ol {li -Content "asdf"} -reversed -type a
+
+    #Generates the following content
+
+    <ol type="a" reversed >
+        <li>
+            asdf
+        </li>
+    </ol>
+
     .NOTES
-    Current version 1.0
+    Current version 1.1
        History:
-           2018.04.01;bateskevinhanevg;Creation.
+        2018.04.14;stephanevg;fix Content bug, Added parameter 'type'. Upgraded to v1.1.
+        2018.04.01;bateskevinhanevg;Creation.
 
     #>
     [CmdletBinding()]
     Param(
+
+        [Parameter(
+            ValueFromPipeline = $true,
+            Mandatory = $false,
+            Position = 0
+        )]
+        $Content,
 
         [Parameter(Position = 1)]
         [String]$Class,
@@ -37,44 +57,42 @@ Function ol {
         [Switch]$reversed,
 
         [Parameter(Position = 6)]
-        [string]$start,
+        [int]$start,
 
-        [Parameter(
-            ValueFromPipeline = $true,
-            Mandatory = $false,
-            Position = 7
-        )]
-        [scriptblock]
-        $Content
+        [ValidateSet("1","A","a","I","i")]
+        [Parameter(Position = 7)]
+        [String]$type
+
+
     )
     Process{
 
-        $Attr = ""
-
-        if($reversed){
-            $Attr += "reversed " 
-        }
-
-        $CommonParameters = ("Attributes", "content","reversed") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $attr = ""
+        $CommonParameters = ("Attributes", "Content","reversed") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
         
         if($CustomParameters){
             
             foreach ($entry in $CustomParameters){
-
+    
                 
                 $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+    
+            }
                 
-            }                
         }
 
+        if($reversed){
+            $attr += "reversed"
+        }
+    
         if($Attributes){
             foreach($entry in $Attributes.Keys){
                
                 $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
             }
         }
-
+    
         if($attr){
             "<ol {0} >"  -f $attr
         }else{
@@ -82,12 +100,16 @@ Function ol {
         }
         
       
-
         if($Content){
-            $Content.Invoke()
+    
+            if($Content -is [System.Management.Automation.ScriptBlock]){
+                $Content.Invoke()
+            }else{
+                $Content
+            }
         }
             
-
+    
         '</ol>'
     }
     
