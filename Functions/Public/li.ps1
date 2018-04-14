@@ -38,27 +38,36 @@ Function li {
     .NOTES
     Current version 1.1
        History:
-        2018.04.14;stephanevg;fix Content bug. Upgraded to v1.1.
+        2018.04.14;stephanevg;Added Attributes parameter. Upgraded to v1.1.1
+        2018.04.14;stephanevg;fix Content bug. Upgraded to v1.1.0
         2018.04.01;bateskevinhanevg;Creation.
 
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$false)]
+        
+        [Parameter(Mandatory=$false,Position=0)]
         [AllowEmptyString()]
         [AllowNull()]
         $Content,
 
+        [Parameter(Position = 1)]
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Class="",
 
+        [Parameter(Position = 2)]
         [String]$Id,
 
+        [Parameter(Position = 3)]
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Style,
 
+        [Parameter(Position = 4)]
+        [Hashtable]$Attributes,
+
+        [Parameter(Position = 5)]
         [int]$Value
     )
 
