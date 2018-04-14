@@ -169,7 +169,7 @@ Eventually, the following components will also be added:
 - [X] ```<title>```
 - [ ] ```<base>```
 - [X] ```<link>```
-- [ ] ```<meta>```
+- [X] ```<meta>```
 - [ ] ```<style>```
 
 ## Scripts
