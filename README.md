@@ -150,16 +150,16 @@ I plan the following most important milestones:
 
  - [ ] Provide basic functionality (Generating an HTML document) using the DSL. The following sections are the highest priority:
     - [X] Root
-    - [ ] Sections
+    - [X] Sections
     - [X] Tables
-    - [ ] blocs
+    - [X] blocs
     - [ ] Forms
     - [ ] Textual semantic
 
 In parallel to this, I want to add the support for the following attributes (as a first step):
-- [ ] Class
-- [ ] Id
-- [ ] Style
+- [X] Class
+- [X] Id
+- [X] Style
 
 
 Eventually, the following components will also be added:
