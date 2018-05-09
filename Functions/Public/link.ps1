@@ -42,14 +42,22 @@ Function Link {
         [String]
         $href,
 
-        $target,
-
+        [AllowEmptyString()]
+        [AllowNull()]
         $type,
 
         [Parameter(Mandatory=$true)]
         [Validateset("alternate","author","dns-prefetch","help","icon","license","next","pingback","preconnect","prefetch","preload","prerender","prev","search","stylesheet")]
         [string]
         $rel,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Integrity,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$CrossOrigin,
 
         [AllowEmptyString()]
         [AllowNull()]
