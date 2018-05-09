@@ -191,7 +191,7 @@ $Snover > "Example6.html"
 
 which results in the following HTML page:
 
-![screen shot of PSHTML results](/examples/Example6/tribute_snover.png)
+![screen shot of PSHTML results](/Examples/Example6/tribute_snover.png)
 
 ## Templates
 
