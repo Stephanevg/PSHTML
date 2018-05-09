@@ -172,14 +172,13 @@ Eventually, the following components will also be added:
 
 ## Root
 - [X] ```<html>```
-    - [ ] Add support for lang attribute
-## MetdaData
+## MetadaData
 - [X] ```<head>```
 - [X] ```<title>```
 - [ ] ```<base>```
 - [X] ```<link>```
 - [X] ```<meta>```
-- [ ] ```<style>```
+- [X] ```<style>```
 
 ## Scripts
 
