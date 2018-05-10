@@ -66,32 +66,6 @@ Context "Testing PSHTML"{
 
         
     }
-
-    Describe "Testing style - String" {
-     
-        it 'Should not fail when passing String' {
-            {style "woop"} | should not throw
-        }
-
-        
-
-        $String = style "woop"
-       
-        if($string -is [array]){
-            $string = $String -join "" 
-        }
-
-        it "Should contain opening and closing tags" {
-            $string -match '^<style.*>' | should be $true
-            $string -match '.*</style>$' | should be $true
-            
-        }
-
-        it "Testing content in child element"{
-            $string -match "^.*>woop<.*" | should be $true
-        }
-    }
-    
 }
 
 Pop-Location

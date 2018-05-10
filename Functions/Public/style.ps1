@@ -44,44 +44,40 @@ Function style {
     )
 
     $attr = ""
-    $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-    
-    if($CustomParameters){
+        $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
         
-        foreach ($entry in $CustomParameters){
-
-            
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-        }
-            
-    }
-
-    if($Attributes){
-        foreach($entry in $Attributes.Keys){
-           
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-        }
-    }
-
-    if($attr){
-        "<style {0} >"  -f $attr
-    }else{
-        "<style>"
-    }
-    
-  
-    if($Content){
-
-        if($Content -is [System.Management.Automation.ScriptBlock]){
-            $Content.Invoke()
-        }else{
-            $Content
-        }
-    }
         
 
-    '</style>'
+
+        $htmltagparams = @{}
+        $tagname = "style"
+        if($CustomParameters){
+            
+            foreach ($entry in $CustomParameters){
+
+                if($entry -eq "content"){
+
+                    
+                    $htmltagparams.$entry = $PSBoundParameters[$entry]
+                }else{
+                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                }
+                
+    
+            }
+
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams   
+        }
+
+    
 
 }
+
+
+
+$css = @"
+    "p {color:green;} 
+    h1 {color:orange;}"
+"@
+style {P{"woop"}} -media "print" -type "text/css"
