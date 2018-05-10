@@ -73,11 +73,3 @@ Function style {
     
 
 }
-
-
-
-$css = @"
-    "p {color:green;} 
-    h1 {color:orange;}"
-"@
-style {P{"woop"}} -media "print" -type "text/css"
