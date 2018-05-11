@@ -27,7 +27,7 @@ Function Set-HtmlTag {
         [HashTable]
         $Attributes,
 
-        [ValidateSet("block","Inline")]
+        [ValidateSet("void","NonVoid")]
         $TagType,
 
 
@@ -65,7 +65,7 @@ Function Set-HtmlTag {
             }
         }
 
-        if($TagType -eq "inline"){
+        if($TagType -eq "void"){
             $Closingtag = "/"
             if($attr){
                 "<{0} {1} {2}>"  -f $tagname,$attr,$Closingtag
@@ -73,7 +73,7 @@ Function Set-HtmlTag {
                 "<{0},{1}>" -f $tagname,$Closingtag
             }
         }else{
-
+            #tag is of type "non-void"
             
             if($attr){
                 "<{0} {1} >"  -f $tagname,$attr
