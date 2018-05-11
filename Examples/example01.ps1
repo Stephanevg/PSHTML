@@ -1,3 +1,5 @@
+
+import-module C:\Users\taavast3\OneDrive\Scripting\Repository\Projects\OpenSource\PSHTML\pshtml.psd1 -force
 $Document = html {
 
     head{
@@ -65,12 +67,13 @@ $Document = html {
             } -href "http://powershellDistrict.com"
 
         }
-        Footer {
-                h6 "This is h1 Title in Footer"
-        }
+        
     }
+    Footer {
+        h6 "This is h1 Title in Footer"
+}
     
 }
 
 
-$Document > "PSHTML_Example.html"
+$Document > .\PSHTML_Example.html
