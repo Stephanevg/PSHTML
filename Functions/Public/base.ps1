@@ -1,38 +1,38 @@
-Function style {
+Function base {
     <#
     .SYNOPSIS
-    Create a style title in an HTML document.
+    Create a base title in an HTML document.
     
+    .DESCRIPTION
+    The <base> tag specifies the base URL/target for all relative URLs in a document.
+
+    There can be at maximum one <base> element in a document, and it must be inside the <head> element.
+
     .EXAMPLE
 
-    style 
+    base 
     .EXAMPLE
-    style "woop1" -Class "class"
+    base "woop1" -Class "class"
 
     .EXAMPLE
-    $css = @"
-        "p {color:green;} 
-        h1 {color:orange;}"
-    "@
-    style {$css} -media "print" -type "text/css"
+    
 
     .Notes
     Author: Stéphane van Gulick
-    Version: 1.0.0
+    Version: 1.0.1
     History:
+        2018.05.11;@Stephanevg; fixed minor bugs
         2018.05.09;@Stephanevg; Creation
 
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$false)]
-        [AllowEmptyString()]
-        [AllowNull()]
-        $Content,
 
-        [String]$media,
+        [Parameter(Mandatory = $true)]
+        [String]$href,
 
-        [String]$Type,
+        [ValidateSet("_self","_blank","_parent","_top")]
+        [String]$Target = "_self",
 
         [AllowEmptyString()]
         [AllowNull()]
@@ -43,7 +43,7 @@ Function style {
         [Hashtable]$Attributes
     )
 
-    
+        $attr = ""
         $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
         
@@ -51,7 +51,7 @@ Function style {
 
 
         $htmltagparams = @{}
-        $tagname = "style"
+        $tagname = "base"
         if($CustomParameters){
             
             foreach ($entry in $CustomParameters){
@@ -73,3 +73,4 @@ Function style {
     
 
 }
+
