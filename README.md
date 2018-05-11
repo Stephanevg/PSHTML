@@ -155,6 +155,7 @@ I plan the following most important milestones:
     - [X] blocs
     - [ ] Forms
     - [ ] Textual semantic
+    - [X] Metadata
 
 In parallel to this, I want to add the support for the following attributes (as a first step):
 - [X] Class
@@ -175,7 +176,7 @@ Eventually, the following components will also be added:
 ## MetadaData
 - [X] ```<head>```
 - [X] ```<title>```
-- [ ] ```<base>```
+- [X] ```<base>```
 - [X] ```<link>```
 - [X] ```<meta>```
 - [X] ```<style>```
