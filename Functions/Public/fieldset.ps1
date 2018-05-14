@@ -1,20 +1,20 @@
-Function style {
+Function fieldset {
     <#
     .SYNOPSIS
-    Create a style title in an HTML document.
+    Create a fieldset title in an HTML document.
     
     .EXAMPLE
 
-    style 
+    fieldset 
     .EXAMPLE
-    style "woop1" -Class "class"
+    fieldset "woop1" -Class "class"
 
     .EXAMPLE
     $css = @"
         "p {color:green;} 
         h1 {color:orange;}"
     "@
-    style {$css} -media "print" -type "text/css"
+    fieldset {$css} -media "print" -type "text/css"
 
     .Notes
     Author: Stéphane van Gulick
@@ -30,9 +30,11 @@ Function style {
         [AllowNull()]
         $Content,
 
-        [String]$media,
+        [switch]$disabled,
 
-        [String]$Type,
+        [String]$form,
+
+        [String]$name,
 
         [AllowEmptyString()]
         [AllowNull()]
@@ -49,9 +51,8 @@ Function style {
         
         
 
-
         $htmltagparams = @{}
-        $tagname = "style"
+        $tagname = "fieldset"
         if($CustomParameters){
             
             foreach ($entry in $CustomParameters){
@@ -77,3 +78,4 @@ Function style {
     
 
 }
+

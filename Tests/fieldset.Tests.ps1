@@ -12,24 +12,24 @@ Write-Verbose "Importing module"
 
 import-module .\PSHTML -Force
 
-    Describe "Testing style - ScriptBlock" {
+    Describe "Testing fieldset - ScriptBlock" {
         
 
         $Class = "MyClass"
         $Id = "MyID"
-        $Style = "Background:green"
+        $fieldset = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $type = "text/css"
-        $media = "print"
-        $string = style {"woop"} -Attributes $CustomAtt -Class $class -id $id -Type $type -media $media
+        $form = "myform"
+        $name = "form01"
+        $string = fieldset {"woop"} -Attributes $CustomAtt -Class $class -id $id -form $form -name $name
        
         if($string -is [array]){
             $string = $String -join "" 
         }
 
         it "Should contain opening and closing tags" {
-            $string -match '^<style.*>' | should be $true
-            $string -match '.*</style>$' | should be $true
+            $string -match '^<fieldset.*>' | should be $true
+            $string -match '.*</fieldset>$' | should be $true
             
         }
 
@@ -37,19 +37,19 @@ import-module .\PSHTML -Force
             $string -match "^.*>woop<.*" | should be $true
         }
 
-        it "Testing common parameters: media"{
-            $string -match '^<style.*media="print".*>' | should be $true
+        it "Testing common parameters: form"{
+            $string -match "^<fieldset.*form=`"$form`".*>" | should be $true
         }
 
-        it "Testing common parameters: type"{
-            $string -match '^<style.*type="text/css".*>' | should be $true
+        it "Testing common parameters: name"{
+            $string -match '^<fieldset.*name="form01".*>' | should be $true
         }
 
         it "Testing common parameters: Class"{
-            $string -match '^<style.*class="myclass".*>' | should be $true
+            $string -match '^<fieldset.*class="myclass".*>' | should be $true
         }
         it "Testing common parameters: ID"{
-            $string -match '^<style.*id="myid".*>' | should be $true
+            $string -match '^<fieldset.*id="myid".*>' | should be $true
         }
 
         it "Testing Attributes parameters"{
@@ -57,7 +57,7 @@ import-module .\PSHTML -Force
             foreach($at in $CustomAtt.Keys){
                 $val = $null
                 $val = $CustomAtt[$at]
-                $string -match "^<style.*$at=`"$val`".*>" | should be $true
+                $string -match "^<fieldset.*$at=`"$val`".*>" | should be $true
             }
 
             
@@ -65,6 +65,5 @@ import-module .\PSHTML -Force
 
         
     }
-
 
 Pop-Location
