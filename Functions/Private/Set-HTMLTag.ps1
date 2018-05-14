@@ -21,7 +21,7 @@ Function Set-HtmlTag {
     [Cmdletbinding()]
     Param(
         
-        [system.web.ui.HtmlTextWriterTag]
+        #[system.web.ui.HtmlTextWriterTag]
         $TagName,
         
         [HashTable]
@@ -37,7 +37,7 @@ Function Set-HtmlTag {
         $attr = ""
         $CommonParameters = ("Attributes", "Content","tagname","tagtype") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
+        $par = $PSBoundParameters
         if($CustomParameters){
             
             foreach ($entry in $CustomParameters){
