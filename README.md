@@ -280,8 +280,8 @@ Eventually, the following components will also be added:
 
 ## Forms
 - [X] ```<form>```
-- [ ] ```<fieldset>```
-- [ ] ```<legend>```
+- [X] ```<fieldset>``` 2.0
+- [X] ```<legend>```
 - [ ] ```<label>```
 - [X] ```<input>```
     - [ ] Add support for disabled attribut
