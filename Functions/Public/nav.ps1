@@ -45,10 +45,24 @@ Function nav {
         </a>
     </nav>
 
+    .Notes
+    Author: Stéphane van Gulick
+    Version: 2.0.0
+    History:
+        2018.05.09;@Stephanevg; Creation
+        2018.05.21;@Stephanevg; Updated function to use New-HTMLTag
+
+
     #>
     [CmdletBinding()]
     Param(
 
+        [Parameter(
+            ValueFromPipeline = $true,
+            Mandatory = $true,
+            Position = 0
+        )]
+        [scriptblock]$Content,
 
         [Parameter(Position = 1)]
         [String]$Class,
@@ -60,72 +74,38 @@ Function nav {
         [String]$Style,
 
         [Parameter(Position = 4)]
-        [Hashtable]$Attributes,
+        [Hashtable]$Attributes
 
-        [Parameter(
-            ValueFromPipeline = $true,
-            Mandatory = $false,
-            Position = 5
-        )]
-        [scriptblock]
-        $Content
     )
-    Process{
+    $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+    $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
 
-        $attr = ""
-        $boundParams = $PSBoundParameters
-        $CommonParameters = @(
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "InnavationAction",
-            "InnavationVariable",
-            "OutVariable",
-            "OutBuffer",
-            "PipelineVariable",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable"
-        )
 
-        foreach ($cp in $CommonParameters){
-
-            $null = $boundParams.Remove($cp)
-        }
-
-        foreach ($entry in $boundParams.Keys){
-            if ($entry -eq 'content' -or $entry -eq 'attributes'){
-                continue
-            }
-            $attr += "$($entry)=`"$($boundParams[$entry])`" "
-
-        }
-
-        if ($Attributes){
-            foreach ($entry in $Attributes.Keys){
-
-                $attr += "$($entry)=`"$($Attributes[$entry])`" "
-    
-            }
-        }
-
+    $htmltagparams = @{}
+    $tagname = "nav"
+    if($CustomParameters){
         
+        foreach ($entry in $CustomParameters){
 
-        if($attr){
-            "<nav $attr>" 
-        }else{
-            "<nav>"
-        }
+            if($entry -eq "content"){
 
-        if($Content){
-            $Content.Invoke()
-        }
+                
+                $htmltagparams.$entry = $PSBoundParameters[$entry]
+            }else{
+                $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+            }
             
 
-        '</nav>'
+        }
+
+        if($Attributes){
+            $htmltagparams += $Attributes
+        }
+
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid  
     }
     
-    
+     
 }
 
 
