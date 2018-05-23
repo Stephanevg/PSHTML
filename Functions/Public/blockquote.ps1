@@ -20,7 +20,8 @@ Function blockquote {
     .NOTES
     Current version 1.0
        History:
-           2018.04.01;bateskevinhanevg;Creation.
+            2018.05.07;stephanevg;updated to version 1.0
+            2018.04.01;bateskevinhanevg;Creation.
 
     #>
     [Cmdletbinding()]
@@ -43,11 +44,14 @@ Function blockquote {
         [AllowNull()]
         [String]$Style,
 
-        [String]$title
+        [String]$title,
+
+        [Hashtable]$Attributes
     )
 
+
         $attr = ""
-        $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
         
         if($CustomParameters){
@@ -68,23 +72,19 @@ Function blockquote {
             }
         }
 
+        if($attr){
+            "<blockquote {0} >"  -f $attr
+        }else{
+            "<blockquote>"
+        }
+        
+      
 
-if($attr){
-    $return = @"
-    <blockquote $attr>
-        $Content
-    </blockquote>
-"@
+        if($Content){
+            $Content.Invoke()
+        }
+            
 
-}else{
-
-    $return =     @"
-    <blockquote>
-        $Content
-    </blockquote>
-"@
-}
-
-return $return
+        '</blockquote>'
 
 }

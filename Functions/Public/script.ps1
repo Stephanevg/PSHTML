@@ -30,18 +30,24 @@ Function script {
         [String]$type,
 
         [Parameter(Position =2)]
-        [String]$Class,
+        [String]$integrity,
 
-        [Parameter(Position = 3)]
-        [String]$Id,
+        [Parameter(Position =3)]
+        [String]$crossorigin,
 
         [Parameter(Position =4)]
-        [String]$Style,
+        [String]$Class,
 
         [Parameter(Position = 5)]
+        [String]$Id,
+
+        [Parameter(Position =6)]
+        [String]$Style,
+
+        [Parameter(Position = 7)]
         [Hashtable]$Attributes,
 
-        [Parameter(Position = 6)]
+        [Parameter(Position = 8)]
         [string]$content
 
     )
