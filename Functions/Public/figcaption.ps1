@@ -39,7 +39,9 @@ Function figcaption {
         [AllowNull()]
         [String]$Style,
 
-        [String]$title
+        [String]$title,
+
+        [Hashtable]$Attributes
     )
 
         $attr = ""
