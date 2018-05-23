@@ -39,44 +39,52 @@ Function dd {
         [AllowNull()]
         [String]$Style,
 
-        [String]$value
+        [String]$value,
+
+        [HashTable]$Attributes
+
+        
     )
 
-        $attr = ""
-        $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        if($CustomParameters){
-            
-            foreach ($entry in $CustomParameters){
-
-                
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+    $attr = ""
+    $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+    $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
     
-            }
-                
+    if($CustomParameters){
+        
+        foreach ($entry in $CustomParameters){
+
+            
+            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+
         }
+            
+    }
 
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-               
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-            }
+    if($Attributes){
+        foreach($entry in $Attributes.Keys){
+           
+            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
         }
+    }
 
+    if($attr){
+        "<dd {0} >"  -f $attr
+    }else{
+        "<dd>"
+    }
+    
+  
 
-if($attr){
-    $return = @"
-    <dd $attr>$Content</dd>
-"@
+    if($Content){
 
-}else{
+        if($Content -is [System.Management.Automation.ScriptBlock]){
+            $Content.Invoke()
+        }else{
+            $Content
+        }
+    }
+        
 
-    $return =     @"
-    <dd>$Content</dd>
-"@
-}
-
-return $return
-
+    '</dd>'
 }
