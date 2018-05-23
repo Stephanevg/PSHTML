@@ -39,7 +39,9 @@ Function dt {
         [AllowNull()]
         [String]$Style,
 
-        [String]$value
+        [String]$value,
+
+        [Hashtable]$Attributes
     )
 
         $attr = ""
