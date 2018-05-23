@@ -235,7 +235,7 @@ Eventually, the following components will also be added:
 ## Textual semantic
 - [X] ```<a>```
 - [ ] ```<em>```
-- [ ] ```<strong>```
+- [X] ```<strong>```
 - [ ] ```<small>```
 - [ ] ```<s>```
 - [ ] ```<cite>```
@@ -282,11 +282,12 @@ Eventually, the following components will also be added:
 - [X] ```<form>```
 - [X] ```<fieldset>``` 2.0
 - [X] ```<legend>```
-- [ ] ```<label>```
+- [X] ```<label>```
 - [X] ```<input>```
     - [ ] Add support for disabled attribut
-- [ ] ```<button>```
+- [X] ```<button>```
 - [ ] ```<select>```
+    - [ ] This commands overrides the 'select' alias which normally points to 'select-object'
 - [ ] ```<datalist>```
 - [ ] ```<optgroup>```
 - [ ] ```<option>```
@@ -317,4 +318,4 @@ these are - in my opinion- the most commonly used attributes in HTML.
 ### Additional Attributes
 
 - [ ] Each function has an additional parameter called: ```Attributes``` of type HashTable.
-It will allow to add additional html tags without having to list ALL the existing attributes, and offer flexibility for custom and or special htmls attributes.
+It will allow to add additional html tags without having to list ALL the existing attributes. It offers flexibility for custom and/or special htmls attributes.
