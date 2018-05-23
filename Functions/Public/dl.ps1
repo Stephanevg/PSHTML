@@ -1,13 +1,13 @@
 Function dl {
     <#
     .SYNOPSIS
-    Create a ol tag in an HTML document.
+    Create a dl tag in an HTML document.
      
     .EXAMPLE
     dl
 
     .EXAMPLE
-    dl -Content {dt -Content "Coffe";dd -Content "Black hot drink"}
+    dl -Content {dt -Content "Coffe";dl -Content "Black hot drink"}
 
     .EXAMPLE
     dl -Class "class" -Id "something" -Style "color:red;"
@@ -15,11 +15,18 @@ Function dl {
     .NOTES
     Current version 1.0
        History:
-           2018.04.01;bateskevinhanevg;Creation.
+            2018.05.01;Removed reversed as this is not supported.
+            2018.04.01;bateskevinhanevg;Creation.
 
     #>
     [CmdletBinding()]
     Param(
+
+        [Parameter(Mandatory=$false,position=0)]
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]
+        $Content,
 
         [Parameter(Position = 1)]
         [String]$Class,
@@ -34,47 +41,33 @@ Function dl {
         [Hashtable]$Attributes,
 
         [Parameter(Position = 5)]
-        [Switch]$reversed,
+        [string]$start
 
-        [Parameter(Position = 6)]
-        [string]$start,
-
-        [Parameter(
-            ValueFromPipeline = $true,
-            Mandatory = $false,
-            Position = 7
-        )]
-        [scriptblock]
-        $Content
     )
     Process{
 
-        $Attr = ""
-
-        if($reversed){
-            $Attr += "reversed " 
-        }
-
-        $CommonParameters = ("Attributes", "content","reversed") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $attr = ""
+        $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
         
         if($CustomParameters){
             
             foreach ($entry in $CustomParameters){
-
+    
                 
                 $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+    
+            }
                 
-            }                
         }
-
+    
         if($Attributes){
             foreach($entry in $Attributes.Keys){
                
                 $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
             }
         }
-
+    
         if($attr){
             "<dl {0} >"  -f $attr
         }else{
@@ -82,15 +75,19 @@ Function dl {
         }
         
       
-
+    
         if($Content){
-            $Content.Invoke()
+    
+            if($Content -is [System.Management.Automation.ScriptBlock]){
+                $Content.Invoke()
+            }else{
+                $Content
+            }
         }
             
-
+    
         '</dl>'
     }
     
     
 }
-
