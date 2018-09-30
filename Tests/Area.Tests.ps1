@@ -31,9 +31,9 @@ Context "Testing PSHTML"{
             $string = $String -join "" 
         }
 
-        it "Should contain opening and closing tags" {
+        it "Should contain opening (and voided closing) tag" {
             $string -match '^<area.*>' | should be $true
-            $string -match '.*</area>$' | should be $true
+            $string -match '.*<.*/>$' | should be $true
             
         }
 
