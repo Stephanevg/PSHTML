@@ -2,10 +2,15 @@ Function a {
     <#
         .SYNOPSIS
         Generates a <a> HTML tag.
+        The <a> tag defines a hyperlink, which is used to link from one page to another.
         
+        .DESCRIPTION
+
+        The most important attribute of the <a> element is the href attribute, which indicates the link's destination.
+
         .PARAMETER HREF
-            Specify where the link should point to.
-            
+            Specify where the link should point to (Destination).
+
         .PARAMETER TARGET
         
         Specify where the new page should open to.
