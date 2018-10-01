@@ -2,10 +2,10 @@ Function H1 {
     <#
     .SYNOPSIS
     Create a h1 title in an HTML document.
-    
+
     .EXAMPLE
 
-    h1 
+    h1
     .EXAMPLE
     h1 "woop1" -Class "class"
 
@@ -23,7 +23,8 @@ Function H1 {
         2018.04.08;Stephanevg; Fixed custom Attributes display bug. Updated help
         2018.03.25;@Stephanevg; Added Styles, ID, CLASS attributes functionality
         2018.03.25;@Stephanevg; Creation
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(
@@ -41,28 +42,28 @@ Function H1 {
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Style,
-        
+
         [Hashtable]$Attributes
     )
 
     $attr = ""
     $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-    
+    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+
     if($CustomParameters){
-        
+
         foreach ($entry in $CustomParameters){
 
-            
+
             $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
 
         }
-            
+
     }
 
     if($Attributes){
         foreach($entry in $Attributes.Keys){
-           
+
             $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
         }
     }
@@ -72,8 +73,8 @@ Function H1 {
     }else{
         "<h1>"
     }
-    
-  
+
+
     if($Content){
 
         if($Content -is [System.Management.Automation.ScriptBlock]){
@@ -82,7 +83,7 @@ Function H1 {
             $Content
         }
     }
-        
+
 
     '</h1>'
 

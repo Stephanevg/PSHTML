@@ -14,7 +14,7 @@ import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
     Describe "Testing p - Scriptblock" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
@@ -22,15 +22,15 @@ Context "Testing PSHTML"{
         $Title = "MyTitle"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
         $string = p {"woop"} -title $Title -Attributes $CustomAtt -Style $Style -Class $class -id $id
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<p.*>' | should be $true
             $string -match '.*</p>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{
@@ -59,30 +59,30 @@ Context "Testing PSHTML"{
                 $string -match "^<p.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
-    
+
     Describe "Testing p - String" {
-     
+
         it 'Should not fail when passing String' {
             {h5 "woop"} | should not throw
         }
 
-        
+
 
         $String = p "woop"
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<p.*>' | should be $true
             $string -match '.*</p>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{

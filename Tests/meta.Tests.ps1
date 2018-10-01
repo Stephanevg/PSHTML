@@ -14,23 +14,23 @@ import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
     Describe "Testing meta" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
         $string = meta -Attributes $CustomAtt -Style $Style -Class $class -id $id
-        
-       
+
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening tag" {
             $string -match '^<meta.*>' | should be $true
             #$string -match '.*</meta>$' | should be $true
-            
+
         }
 
         $Primary = $null
@@ -74,12 +74,12 @@ Context "Testing PSHTML"{
                 $string -match "^<meta.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
-    
+
 }
 
 Pop-Location

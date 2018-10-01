@@ -2,10 +2,10 @@ Function h5 {
     <#
     .SYNOPSIS
     Create a h5 title in an HTML document.
-    
+
     .EXAMPLE
 
-    h5 
+    h5
     .EXAMPLE
     h5 "woop1" -Class "class"
 
@@ -21,7 +21,8 @@ Function h5 {
     History:
         2018.04.08;Stephanevg; Updated to version 1.0: Updated content block to support string & ScriptBlock
         2018.03.25;@Stephanevg; Creation
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(
@@ -39,28 +40,28 @@ Function h5 {
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Style,
-        
+
         [Hashtable]$Attributes
     )
 
     $attr = ""
     $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-    
+    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+
     if($CustomParameters){
-        
+
         foreach ($entry in $CustomParameters){
 
-            
+
             $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
 
         }
-            
+
     }
 
     if($Attributes){
         foreach($entry in $Attributes.Keys){
-           
+
             $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
         }
     }
@@ -70,8 +71,8 @@ Function h5 {
     }else{
         "<h5>"
     }
-    
-  
+
+
     if($Content){
 
         if($Content -is [System.Management.Automation.ScriptBlock]){
@@ -80,7 +81,7 @@ Function h5 {
             $Content
         }
     }
-        
+
 
     '</h5>'
 

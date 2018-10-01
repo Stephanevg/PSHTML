@@ -2,14 +2,14 @@ Function li {
     <#
     .SYNOPSIS
     Create a li tag in an HTML document.
-    
+
     .DESCRIPTION
         he <li> tag defines a list item.
 
         The <li> tag is used in ordered lists(<ol>), unordered lists (<ul>), and in menu lists (<menu>).
     .EXAMPLE
 
-    li 
+    li
     .EXAMPLE
     li "woop1" -Class "class"
 
@@ -23,15 +23,15 @@ Function li {
 
     The following code snippet will get all the 'snoverism' from www.snoverisms.com and put them in an UL.
 
-        $Snoverisms += (Invoke-WebRequest -uri "http://snoverisms.com/page/2/").ParsedHtml.getElementsByTagName("p") | ? {$_.ClassName -ne "site-description"} | select innerhtml
+        $Snoverisms += (Invoke-WebRequest -uri "http://snoverisms.com/page/2/").ParsedHtml.getElementsByTagName("p") | Where-Object -FilterScript {$_.ClassName -ne "site-description"} | Select-Object -Property innerhtml
 
         ul -id "snoverism-list" -Content {
             Foreach ($snov in $Snoverisms){
-            
+
                 li -Class "snoverism" -content {
                     $snov.innerHTML
                 }
-            } 
+            }
         }
 
 
@@ -41,11 +41,12 @@ Function li {
         2018.04.14;stephanevg;Added Attributes parameter. Upgraded to v1.1.1
         2018.04.14;stephanevg;fix Content bug. Upgraded to v1.1.0
         2018.04.01;bateskevinhanevg;Creation.
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(
-        
+
         [Parameter(Mandatory=$false,Position=0)]
         [AllowEmptyString()]
         [AllowNull()]
@@ -73,22 +74,22 @@ Function li {
 
         $attr = ""
         $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
+        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+
         if($CustomParameters){
-            
+
             foreach ($entry in $CustomParameters){
 
-                
+
                 $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-    
+
             }
-                
+
         }
 
         if($Attributes){
             foreach($entry in $Attributes.Keys){
-               
+
                 $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
             }
         }
@@ -99,18 +100,18 @@ Function li {
         }else{
             "<li>"
         }
-        
-      
+
+
         if($Content){
-    
+
             if($Content -is [System.Management.Automation.ScriptBlock]){
                 $Content.Invoke()
             }else{
                 $Content
             }
         }
-            
-    
+
+
         '</li>'
 
 

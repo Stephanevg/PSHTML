@@ -1,4 +1,8 @@
 Function Thead {
+<#
+    .LINK
+    https://github.com/Stephanevg/PSHTML
+#>
     Param(
 
         [Parameter(
@@ -11,15 +15,15 @@ Function Thead {
     )
     Process{
         "<thead>"
-       
+
 
         if($ChildItem){
             $ChildItem.Invoke()
         }
-            
+
 
         '</thead>'
     }
-    
-    
+
+
 }

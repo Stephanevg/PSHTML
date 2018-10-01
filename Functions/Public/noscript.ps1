@@ -2,21 +2,21 @@ Function Noscript {
     <#
     .SYNOPSIS
     Generates Noscript HTML tag.
-    
+
     .EXAMPLE
     Noscript "Your browser doesn`'t support javascript"
-    
+
     Generates the following code:
 
     <noscript >Your browser doesn't support javascript</noscript>
-    
 
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(
 
-        
+
         [Parameter(Position = 1)]
         [string]$content,
 
@@ -66,11 +66,11 @@ Function Noscript {
 
         }
 
-        "<noscript {0}>{1}</noscript>"  -f $attr,$content 
-        
+        "<noscript {0}>{1}</noscript>"  -f $attr,$content
 
-        
+
+
     }#End process
-    
-    
+
+
 }

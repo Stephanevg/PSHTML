@@ -14,7 +14,7 @@ import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
     Describe "Testing Form" {
-        
+
         $Action = "action_Page.php"
         $Method = "post"
         $Target = "_self"
@@ -23,15 +23,15 @@ Context "Testing PSHTML"{
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
         $string = form $Action $Method $Target -Attributes $CustomAtt -Style $Style -Class $class -id $id
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<form.*>' | should be $true
             $string -match '.*</form>$' | should be $true
-            
+
         }
 
         it "Testing primary parameters: Action"{
@@ -64,12 +64,12 @@ Context "Testing PSHTML"{
                 $string -match "^<form.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
-    
+
 }
 
 Pop-Location
