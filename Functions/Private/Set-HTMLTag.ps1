@@ -1,7 +1,6 @@
 Function Set-HtmlTag {
     <#
-    
-    .synopsis
+    .Synopsis
         This function is the base function for all the html elements in pshtml.
 
     .Description
@@ -16,14 +15,14 @@ Function Set-HtmlTag {
     Current version 0.7
        History:
             2018.05.07;stephanevg;Creation
-
     #>
     [Cmdletbinding()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSProvideCommentHelp", "", Justification="Manipulation of text")]
     Param(
-        
+
         #[system.web.ui.HtmlTextWriterTag]
         $TagName,
-        
+
         [HashTable]
         $Attributes,
 
@@ -36,17 +35,17 @@ Function Set-HtmlTag {
 
         $attr = ""
         $CommonParameters = ("Attributes", "Content","tagname","tagtype") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
         $par = $PSBoundParameters
         if($CustomParameters){
-            
+
             foreach ($entry in $CustomParameters){
 
-                
+
                 $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-    
+
             }
-                
+
         }
 
         if($Attributes){
@@ -74,7 +73,7 @@ Function Set-HtmlTag {
             }
         }else{
             #tag is of type "non-void"
-            
+
             if($attr){
                 "<{0} {1} >"  -f $tagname,$attr
             }else{
@@ -82,20 +81,20 @@ Function Set-HtmlTag {
             }
 
             if($Attributes.Keys -contains "content"){
-    
+
                 if($Attributes['content'] -is [System.Management.Automation.ScriptBlock]){
                     $Attributes['content'].Invoke()
                 }else{
                     $Attributes['content']
                 }
             }
-                
-    
+
+
             "</{0}>" -f $tagname
         }
 
-        
-      
+
+
 
 
 }

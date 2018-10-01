@@ -29,8 +29,8 @@ html {
                 }
             }
         }
-    
-        
+
+
             p {
                 h1 "This is h1"
                 h2 "This is h2"
@@ -41,7 +41,7 @@ html {
                 strong "plop";"Woop"
             }
     }
-    
+
 }
 
 ```
@@ -144,7 +144,7 @@ Which generates the following code:
 ```
 # Todo List
 
-There is a lot to accomplish before making this module available to the public. 
+There is a lot to accomplish before making this module available to the public.
 
 I plan the following most important milestones:
 
@@ -184,7 +184,7 @@ Eventually, the following components will also be added:
 ## Scripts
 
 - [X] ```<script>```
-- [X] ```<noscript>```	
+- [X] ```<noscript>```
 
 ## Sections
 - [X] ```<body>```

@@ -13,7 +13,7 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
     Describe "Testing fieldset - ScriptBlock" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
@@ -22,15 +22,15 @@ import-module .\PSHTML -Force
         $form = "myform"
         $name = "form01"
         $string = fieldset {"woop"} -Attributes $CustomAtt -Class $class -id $id -form $form -name $name
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<fieldset.*>' | should be $true
             $string -match '.*</fieldset>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{
@@ -60,10 +60,10 @@ import-module .\PSHTML -Force
                 $string -match "^<fieldset.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
 
 Pop-Location

@@ -14,7 +14,7 @@ import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
     Describe "Testing area" {
-        
+
         $link = "action_Page.php"
         $Method = "post"
         $Target = "_self"
@@ -25,16 +25,18 @@ Context "Testing PSHTML"{
         $alt = "alternate description"
         $Coords = "0,0,10,10"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        
+
         $String = area -href $Link -alt $Alt -coords $Coords -target $Target -Class $Class -Style $Style -Attributes $CustomAtt -Id $Id
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening (and voided closing) tag" {
             $string -match '^<area.*>' | should be $true
+
             $string -match '.*<.*/>$' | should be $true
             
+
         }
 
         it "Testing primary parameters: href"{
@@ -67,12 +69,12 @@ Context "Testing PSHTML"{
                 $string -match "^<area.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
-    
+
 }
 
 Pop-Location

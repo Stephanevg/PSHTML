@@ -23,30 +23,30 @@ $Snover = Html {
 
         $AllLinks += @{
             "rel" = "stylesheet"
-            "href" = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
+            "href" = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
             "Integrity" = "sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
             "crossorigin"= "anonymous"
         }
 
         $ScriptParams = @()
-        
+
         $ScriptParams += @{
 
             "src" = "https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            "integrity"="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" 
+            "integrity"="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             "crossorigin"="anonymous"
         }
 
         $ScriptParams += @{
 
             "src" = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            "integrity"="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+            "integrity"="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             "crossorigin"="anonymous"
         }
 
         $scriptParams += @{
 
-            "src" = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
+            "src" = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             "integrity"="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             "crossorigin"="anonymous"
         }
@@ -77,54 +77,54 @@ $Snover = Html {
             div -Class "text-center" {
 
                 h1 "Tribute to Jeffrey Snover" -Class "Title"
-    
-                img -src "https://pbs.twimg.com/profile_images/618804166631145473/2q6yharL_400x400.jpg" -class "rounded-circle" -alt "Jeffrey Snover photo" -height "400" -width "400" 
-                
-        
+
+                img -src "https://pbs.twimg.com/profile_images/618804166631145473/2q6yharL_400x400.jpg" -class "rounded-circle" -alt "Jeffrey Snover photo" -height "400" -width "400"
+
+
             }
             div -id "Bio" {
                 $WikiRootSite = "https://en.wikipedia.org"
                 $Source = a {"Wikipedia"} -href $WikiRootSite
                 h2 "Biography"
                 h4 "Source --> $Source"
-    
+
                 #Gathering the biography information from Wikipedia
                 $wiki = Invoke-WebRequest -Uri ($WikiRootSite + "/wiki/Jeffrey_Snover")
-                $Output = $Wiki.ParsedHtml.getElementById("mw-content-text").children | ? {$_.ClassName -eq 'mw-parser-output'}
-                $Bio = $Output.Children | ? {$_.TagName -eq 'p'} | select Tagname,InnerHtml
-    
+                $Output = $Wiki.ParsedHtml.getElementById("mw-content-text").children | Where-Object -FilterScript {$_.ClassName -eq 'mw-parser-output'}
+                $Bio = $Output.Children | Where-Object -FilterScript {$_.TagName -eq 'p'} | Select-Object -Property Tagname,InnerHtml
+
                 foreach ($p in $bio){
                     if($p.InnerHtml -ne $null){
                         #The url are relative on Wiki website. Correcting it here so that the Links are still working
                         $Corrected = $p.innerHTML.Replace("/wiki/","$WikiRootSite/wiki/")
                         p{
-    
+
                             $Corrected
                         }
                     }
-                    
-    
+
+
                 }
-                
+
             }#End Accomplishements
             Div -id "Snoverisms" {
                 $SnoverismsSite = "http://snoverisms.com/"
-    
+
                 h2 "Snoverisms"
                 h4 "Source --> $SnoverismsSite"
-    
+
                 $Page = Invoke-WebRequest -Uri $SnoverismsSite
-                $Snoverisms = $Page.ParsedHtml.getElementsByTagName("p") | ? {$_.ClassName -ne "site-description"} | select innerhtml
-                $Snoverisms += (Invoke-WebRequest -uri "http://snoverisms.com/page/2/").ParsedHtml.getElementsByTagName("p") | ? {$_.ClassName -ne "site-description"} | select innerhtml
-    
+                $Snoverisms = $Page.ParsedHtml.getElementsByTagName("p") | Where-Object -FilterScript {$_.ClassName -ne "site-description"} | Select-Object -Property innerhtml
+                $Snoverisms += (Invoke-WebRequest -uri "http://snoverisms.com/page/2/").ParsedHtml.getElementsByTagName("p") | Where-Object -FilterScript {$_.ClassName -ne "site-description"} | Select-Object -Property innerhtml
+
                 ul -id "snoverism-list" -Content {
                     Foreach ($snov in $Snoverisms){
-                    
+
                         li -Class "snoverism" -content {
                             $snov.innerHTML
                         }
                     }
-                    
+
                 }#end of ul
             }
         }
