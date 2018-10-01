@@ -29,8 +29,8 @@ $Snover = Html {
 
             #Gathering the biography information from Wikipedia
             $wiki = Invoke-WebRequest -Uri ($WikiRootSite + "/wiki/Jeffrey_Snover")
-            $Output = $Wiki.ParsedHtml.getElementById("mw-content-text").children | ? {$_.ClassName -eq 'mw-parser-output'}
-            $Bio = $Output.Children | ? {$_.TagName -eq 'p'} | select Tagname,InnerHtml
+            $Output = $Wiki.ParsedHtml.getElementById("mw-content-text").children | Where-Object -FilterScript {$_.ClassName -eq 'mw-parser-output'}
+            $Bio = $Output.Children | Where-Object -FilterScript {$_.TagName -eq 'p'} | Select-Object -Property Tagname,InnerHtml
 
             foreach ($p in $bio){
                 if($p.InnerHtml -ne $null){
@@ -53,8 +53,8 @@ $Snover = Html {
             h4 "Source --> $SnoverismsSite"
 
             $Page = Invoke-WebRequest -Uri $SnoverismsSite
-            $Snoverisms = $Page.ParsedHtml.getElementsByTagName("p") | ? {$_.ClassName -ne "site-description"} | select innerhtml
-            $Snoverisms += (Invoke-WebRequest -uri "http://snoverisms.com/page/2/").ParsedHtml.getElementsByTagName("p") | ? {$_.ClassName -ne "site-description"} | select innerhtml
+            $Snoverisms = $Page.ParsedHtml.getElementsByTagName("p") | Where-Object -FilterScript {$_.ClassName -ne "site-description"} | Select-Object -Property innerhtml
+            $Snoverisms += (Invoke-WebRequest -uri "http://snoverisms.com/page/2/").ParsedHtml.getElementsByTagName("p") | Where-Object -FilterScript {$_.ClassName -ne "site-description"} | Select-Object -Property innerhtml
 
             ul -id "snoverism-list" -Content {
                 Foreach ($snov in $Snoverisms){

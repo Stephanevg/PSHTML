@@ -50,7 +50,7 @@ The following code snippet will get all the 'snoverism' from www.snoverisms.com 
 ```
 
 $Snoverisms += (Invoke-WebRequest -uri "http://snoverisms.com/page/2/").ParsedHtml.getElementsByTagName("p") | ?
-{$_.ClassName -ne "site-description"} | select innerhtml
+{$_.ClassName -ne "site-description"} | Select-Object -Property innerhtml
 
     ul -id "snoverism-list" -Content {
         Foreach ($snov in $Snoverisms){

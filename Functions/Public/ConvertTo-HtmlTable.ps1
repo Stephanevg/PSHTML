@@ -8,12 +8,12 @@ Function ConvertTo-HTMLTable {
         This cmdlet is intended to be used when powershell objects should be rendered in an HTML table format.
 
         .EXAMPLE
-        $service = Get-Service -Name Sens,wsearch,wscsvc | select DisplayName,Status,StartType
+        $service = Get-Service -Name Sens,wsearch,wscsvc | Select-Object -Property DisplayName,Status,StartType
         ConvertTo-HTMLtable -Object $service
 
         .EXAMPLE
 
-        $proc = Get-Process | select -First 2
+        $proc = Get-Process | Select-Object -First 2
         ConvertTo-HTMLtable -Object $proc
 
         .NOTES
