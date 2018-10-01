@@ -2,13 +2,9 @@ Function input {
     <#
     .SYNOPSIS
     Generates input HTML tag.
-    
-    .EXAMPLE
-    
-   
-    
-    .EXAMPLE
-    
+
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(
@@ -76,17 +72,17 @@ Function input {
 
         }
 
-        
+
 
         if ($attr) {
-            "<input $attr>" 
+            "<input $attr>"
         }
         else {
             throw "No attributes were defined for <input> element"
         }
 
-        
+
     }#End process
-    
-    
+
+
 }

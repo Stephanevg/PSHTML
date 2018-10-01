@@ -47,7 +47,7 @@ p "woop3" -Class "class" -Id "something" -Style "color:red;"
 p {
 ```
 
-$Important = strong{"This is REALLY important"} 
+$Important = strong{"This is REALLY important"}
     "This is regular test in a paragraph " + $Important
 }
 

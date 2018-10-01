@@ -18,7 +18,7 @@ html{
         div {
            p -Class "MyClass" {
                 "This is an alter"
-           } 
+           }
         }
     }
 }

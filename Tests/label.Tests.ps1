@@ -12,7 +12,7 @@ Write-Verbose "Importing module"
 
 import-module .\PSHTML -Force
     Describe "Testing label - ScriptBlock" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
@@ -20,15 +20,15 @@ import-module .\PSHTML -Force
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
 
         $string = label {"woop"} -Attributes $CustomAtt -Class $class -id $id
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<label.*>' | should be $true
             $string -match '.*</label>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{
@@ -50,10 +50,10 @@ import-module .\PSHTML -Force
                 $string -match "^<label.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
 
 

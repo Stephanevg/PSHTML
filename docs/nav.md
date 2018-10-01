@@ -55,7 +55,7 @@ nav -Content {
     foreach($page in $pages){
         a -href "\$($page)" -Target _blank
     }
-    
+
 } -Class "mainnavigation" -Style "border 1px"
 
 Generates the following code:

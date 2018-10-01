@@ -2,7 +2,7 @@ Function ol {
     <#
     .SYNOPSIS
     Create a ol tag in an HTML document.
-     
+
     .EXAMPLE
     ol
 
@@ -29,7 +29,8 @@ Function ol {
        History:
         2018.04.14;stephanevg;fix Content bug, Added parameter 'type'. Upgraded to v1.1.
         2018.04.01;bateskevinhanevg;Creation.
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(
@@ -69,50 +70,50 @@ Function ol {
 
         $attr = ""
         $CommonParameters = ("Attributes", "Content","reversed") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
+        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+
         if($CustomParameters){
-            
+
             foreach ($entry in $CustomParameters){
-    
-                
+
+
                 $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-    
+
             }
-                
+
         }
 
         if($reversed){
             $attr += "reversed"
         }
-    
+
         if($Attributes){
             foreach($entry in $Attributes.Keys){
-               
+
                 $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
             }
         }
-    
+
         if($attr){
             "<ol {0} >"  -f $attr
         }else{
             "<ol>"
         }
-        
-      
+
+
         if($Content){
-    
+
             if($Content -is [System.Management.Automation.ScriptBlock]){
                 $Content.Invoke()
             }else{
                 $Content
             }
         }
-            
-    
+
+
         '</ol>'
     }
-    
-    
+
+
 }
 
