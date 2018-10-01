@@ -9,9 +9,9 @@ Function Noscript {
     Generates the following code:
 
     <noscript >Your browser doesn't support javascript</noscript>
-    
 
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(

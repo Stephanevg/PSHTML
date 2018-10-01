@@ -39,7 +39,8 @@ Function Footer {
         History:
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
-
+        .LINK
+            https://github.com/Stephanevg/PSHTML
     #>
     Param(
         [Parameter(

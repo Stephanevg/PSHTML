@@ -16,7 +16,8 @@ Function script {
     Generates the following code:
 
     <script type="text/javascript">alert( 'Hello, world!' );</script>
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(

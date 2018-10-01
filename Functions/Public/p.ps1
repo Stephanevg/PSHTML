@@ -45,7 +45,8 @@ Function p {
        History:
            2018.04.10;Stephanevg;Updated content (removed string, added if for selection between scriptblock and string).
            2018.04.01;bateskevinhanevg;Creation.
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(

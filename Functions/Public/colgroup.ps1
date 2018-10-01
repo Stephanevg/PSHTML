@@ -45,10 +45,10 @@ Function Colgroup {
     .NOTES
     Current version 1.0
     History:
-        2018.04.08;Stephanvg; Updated to version 1.0
+        2018.04.08;Stephanevg; Updated to version 1.0
         2018.04.01;Stephanevg;Fix disyplay bug.
-
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     Param(
 

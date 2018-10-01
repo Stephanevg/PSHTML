@@ -34,7 +34,9 @@ Function aside {
             This is a paragraph inside the aside block
         </p>
     </aside>
-        
+
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(

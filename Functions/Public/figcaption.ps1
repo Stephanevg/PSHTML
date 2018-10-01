@@ -19,7 +19,8 @@ Function figcaption {
     Current version 1.0
        History:
            2018.04.01;bateskevinhanevg;Creation.
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(

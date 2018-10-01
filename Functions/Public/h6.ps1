@@ -21,7 +21,8 @@ Function h6 {
     History:
         2018.04.08;Stephanevg; Updated to version 1.0: Updated content block to support string & ScriptBlock
         2018.03.25;@Stephanevg; Creation
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(

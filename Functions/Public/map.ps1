@@ -16,8 +16,8 @@ Function map {
         <area href="map.png" coords="0,0,50,50" shape="circle" target="top" >
     </map>
     
-    .EXAMPLE
-    
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(

@@ -52,7 +52,8 @@ Function nav {
         2018.05.09;@Stephanevg; Creation
         2018.05.21;@Stephanevg; Updated function to use New-HTMLTag
 
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(

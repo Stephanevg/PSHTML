@@ -21,7 +21,8 @@ Function style {
     Version: 1.0.0
     History:
         2018.05.09;@Stephanevg; Creation
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(

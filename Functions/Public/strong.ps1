@@ -30,8 +30,8 @@ Function strong {
         2018.05.23;@Stephanevg; Updated function to use New-HTMLTag
         2018.05.09;@Stephanevg; Creation
         
-
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(

@@ -46,7 +46,8 @@ Function Col {
     History:
         2018.04.08;Stephanvg; Updated to version 1.0
         2018.04.01;Stephanevg;Fix disyplay bug.
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     Param(
         [Parameter(Position = 0)]

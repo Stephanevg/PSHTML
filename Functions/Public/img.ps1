@@ -39,7 +39,8 @@ Function img {
         History:
             2018.05.07;Stephanevg; Updated code to version 1.0
             2018.04.01;Stephanevg;Creation.
-
+        .LINK
+            https://github.com/Stephanevg/PSHTML
     #>
     
     Param(

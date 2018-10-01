@@ -23,7 +23,8 @@ Function H1 {
         2018.04.08;Stephanevg; Fixed custom Attributes display bug. Updated help
         2018.03.25;@Stephanevg; Added Styles, ID, CLASS attributes functionality
         2018.03.25;@Stephanevg; Creation
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(

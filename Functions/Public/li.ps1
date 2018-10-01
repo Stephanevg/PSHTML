@@ -41,7 +41,8 @@ Function li {
         2018.04.14;stephanevg;Added Attributes parameter. Upgraded to v1.1.1
         2018.04.14;stephanevg;fix Content bug. Upgraded to v1.1.0
         2018.04.01;bateskevinhanevg;Creation.
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(

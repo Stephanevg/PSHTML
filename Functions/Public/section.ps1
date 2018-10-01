@@ -38,7 +38,8 @@ Function section {
         This paragraph is part of section with id 'myid'
         </p>
     </section>
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(

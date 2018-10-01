@@ -16,16 +16,13 @@ Function tr {
     .PARAMETER Content
     Allows to add child element(s) inside the current opening and closing HTML tag(s). 
     
-
-    .EXAMPLE
-    
-    
     .NOTES
     Current version 0.8
     History:
         2018.04.08;Stephanevg; Fixed custom Attributes display bug. Updated help
         2018.04.01;Stephanevg;
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(

@@ -3,12 +3,8 @@ Function input {
     .SYNOPSIS
     Generates input HTML tag.
     
-    .EXAMPLE
-    
-   
-    
-    .EXAMPLE
-    
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(

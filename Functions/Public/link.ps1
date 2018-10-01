@@ -35,7 +35,8 @@ Function Link {
         2018.04.08;Stephanevg; Updated to version 1.0: Updated content block to support string & ScriptBlock
         2018.03.25;@Stephanevg; Added Styles, ID, CLASS attributes functionality
         2018.03.25;@Stephanevg; Creation
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     Param(
         [Parameter(Mandatory=$true)]

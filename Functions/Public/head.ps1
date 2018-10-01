@@ -35,17 +35,13 @@ Function head {
     .PARAMETER Content
     Allows to add child element(s) inside the current opening and closing HTML tag(s). 
 
-
-    .EXAMPLE
-
-
-    
     .NOTES
     Current version 1.0
     History:
         2018.04.10;Stephanevg; Added parameters
         2018.04.01;Stephanevg;Creation.
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
 #>
 Param(
     [Parameter(

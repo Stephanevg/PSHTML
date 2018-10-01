@@ -14,9 +14,6 @@ Function base {
     .EXAMPLE
     base "woop1" -Class "class"
 
-    .EXAMPLE
-    
-
     .Notes
     Author: Stéphane van Gulick
     Version: 1.0.1
@@ -24,6 +21,8 @@ Function base {
         2018.05.11;@Stephanevg; fixed minor bugs
         2018.05.09;@Stephanevg; Creation
 
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(
@@ -45,10 +44,7 @@ Function base {
 
         $attr = ""
         $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        
-
+        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
 
         $htmltagparams = @{}
         $tagname = "base"

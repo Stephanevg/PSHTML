@@ -20,6 +20,8 @@ Function ConvertTo-HTMLTable {
         Current version 0.6
         History:
            2018.05.09;stephanevg;Creation.
+        .LINK
+            https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(
@@ -32,7 +34,7 @@ Function ConvertTo-HTMLTable {
     
     Table{
         
-        $Properties = $object | get-member | where {$_.MemberType -eq 'property' -or $_.MemberType -eq 'NoteProperty'}
+        $Properties = $object | get-member | where-Object -FilterScript {$_.MemberType -eq 'property' -or $_.MemberType -eq 'NoteProperty'}
 
         thead {
             tr{

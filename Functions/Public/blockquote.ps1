@@ -22,7 +22,8 @@ Function blockquote {
        History:
             2018.05.07;stephanevg;updated to version 1.0
             2018.04.01;bateskevinhanevg;Creation.
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(

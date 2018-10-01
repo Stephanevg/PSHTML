@@ -58,13 +58,14 @@ Function Caption {
                 }
             }
         .LINK
-            Information on the Caption HTML tag can be found here --> https://www.w3schools.com/tags/tag_caption.asp
+            https://github.com/Stephanevg/PSHTML
         .NOTES
         Current version 1.1.0
         History:
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
-
+        
+        Information on the Caption HTML tag can be found here --> https://www.w3schools.com/tags/tag_caption.asp
     #>
 
     Param(
