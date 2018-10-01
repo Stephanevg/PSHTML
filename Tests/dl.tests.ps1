@@ -14,22 +14,22 @@ import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
     Describe "Testing dl" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
         $string = dl {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<dl.*>' | should be $true
             $string -match '.*</dl>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{
@@ -55,12 +55,12 @@ Context "Testing PSHTML"{
                 $string -match "^<dl.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
-    
+
 }
 
 Pop-Location

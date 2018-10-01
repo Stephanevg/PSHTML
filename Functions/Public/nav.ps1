@@ -2,9 +2,9 @@ Function nav {
     <#
     .SYNOPSIS
     Generates nav HTML tag.
-    
+
     .EXAMPLE
-    
+
     nav -Content {
         a -href "\home.html" -Target _blank
         a -href "\about.html" -Target _blank
@@ -20,9 +20,9 @@ Function nav {
         <a href=\blog.html target="_blank" ></a>
         <a href=\contact.html target="_blank" ></a>
     </nav>
-    
+
     .EXAMPLE
-    
+
     It is also possible to use regular powershell logic inside a scriptblock. The example below, generates a nav element
     based on values located in a array. The various links are build using a foreach loop.
 
@@ -31,7 +31,7 @@ Function nav {
         foreach($page in $pages){
             a -href "\$($page)" -Target _blank
         }
-        
+
     } -Class "mainnavigation" -Style "border 1px"
 
     Generates the following code:
@@ -52,7 +52,8 @@ Function nav {
         2018.05.09;@Stephanevg; Creation
         2018.05.21;@Stephanevg; Updated function to use New-HTMLTag
 
-
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     Param(
@@ -78,23 +79,23 @@ Function nav {
 
     )
     $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
 
 
     $htmltagparams = @{}
     $tagname = "nav"
     if($CustomParameters){
-        
+
         foreach ($entry in $CustomParameters){
 
             if($entry -eq "content"){
 
-                
+
                 $htmltagparams.$entry = $PSBoundParameters[$entry]
             }else{
                 $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
             }
-            
+
 
         }
 
@@ -102,10 +103,10 @@ Function nav {
             $htmltagparams += $Attributes
         }
 
-        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid  
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
     }
-    
-     
+
+
 }
 
 

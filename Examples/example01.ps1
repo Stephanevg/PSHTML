@@ -19,8 +19,8 @@ $Document = html {
                 }
             }
         }
-    
-        
+
+
             p {
                 h1 "This is h1"
                 h2 "This is h2"
@@ -31,7 +31,7 @@ $Document = html {
                 strong "plop";"Woop"
             }
             p{
-               
+
                 table{
                     caption "This is a table generated with PSHTML"
                     thead {
@@ -61,18 +61,18 @@ $Document = html {
                 }
             }
         p{
-            
+
             a {
                 "This links point to PowershellDistrict"
             } -href "http://powershellDistrict.com"
 
         }
-        
+
     }
     Footer {
         h6 "This is h1 Title in Footer"
 }
-    
+
 }
 
 

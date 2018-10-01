@@ -13,7 +13,7 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
     Describe "Testing style - ScriptBlock" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
@@ -22,15 +22,15 @@ import-module .\PSHTML -Force
         $type = "text/css"
         $media = "print"
         $string = style {"woop"} -Attributes $CustomAtt -Class $class -id $id -Type $type -media $media
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<style.*>' | should be $true
             $string -match '.*</style>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{
@@ -60,10 +60,10 @@ import-module .\PSHTML -Force
                 $string -match "^<style.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
 
 

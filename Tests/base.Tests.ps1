@@ -13,21 +13,21 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
     Describe "Testing base - ScriptBlock" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        
+
         $string = base -href "www.powershelldistrict.com" -Target _top -Attributes $CustomAtt -Class $class -id $id
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<base .*/>$' | should be $true
-            
+
         }
 
         it "Testing common parameters: href"{
@@ -57,10 +57,10 @@ import-module .\PSHTML -Force
                 $string -match "^<base.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
 
 Pop-Location

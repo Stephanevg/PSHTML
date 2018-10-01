@@ -1,28 +1,36 @@
-$ScriptPath = Split-Path $MyInvocation.MyCommand.Path
+<#
+.SYNOPSIS
+    PowerShell Module file for PSHTML
+.DESCRIPTION
+    This PowerShell module file will load all the functions present under Private and Public folder.
+.LINK
+    https://github.com/Stephanevg/PSHTML
+#>
 
-write-verbose "Loading Private Functions"
-$PrivateFunctions = gci "$ScriptPath\Functions\Private" -Filter *.ps1 | Select -Expand FullName
+# Retrieve parent folder
+$ScriptPath = Split-Path -Path $MyInvocation.MyCommand.Path
 
+write-verbose -Message "Loading Private Functions"
+$PrivateFunctions = Get-ChildItem -Path "$ScriptPath\Functions\Private" -Filter *.ps1 | Select-Object -ExpandProperty FullName
 
 foreach ($Private in $PrivateFunctions){
-    write-verbose "importing function $($function)"
+    write-verbose -Message "importing function $($function)"
     try{
         . $Private
     }catch{
-        write-warning $_
+        write-warning -Message $_
     }
 }
 
-write-verbose "Loading Private Functions"
-$PublicFunctions = gci "$ScriptPath\Functions\public" -Filter *.ps1 | Select -Expand FullName
-
+write-verbose -Message "Loading Private Functions"
+$PublicFunctions = Get-ChildItem -Path "$ScriptPath\Functions\public" -Filter *.ps1 | Select-Object -ExpandProperty FullName
 
 foreach ($public in $PublicFunctions){
     write-verbose "importing function $($function)"
     try{
         . $public
     }catch{
-        write-warning $_
+        write-warning -Message $_
     }
 }
 
