@@ -1,7 +1,6 @@
 Function Set-HtmlTag {
     <#
-
-    .synopsis
+    .Synopsis
         This function is the base function for all the html elements in pshtml.
 
     .Description
@@ -16,9 +15,9 @@ Function Set-HtmlTag {
     Current version 0.7
        History:
             2018.05.07;stephanevg;Creation
-
     #>
     [Cmdletbinding()]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSProvideCommentHelp", "", Justification="Manipulation of text")]
     Param(
 
         #[system.web.ui.HtmlTextWriterTag]
