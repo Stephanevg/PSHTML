@@ -1,7 +1,19 @@
 Function address {
     <#
     .SYNOPSIS
-    Generates address HTML tag.
+
+    Generates <address> HTML tag.
+    
+    
+    .DESCRIPTION
+    The <address> tag defines the contact information for the author/owner of a document or an article.
+
+    If the <address> element is inside the <body> element, it represents contact information for the document.
+
+    If the <address> element is inside an <article> element, it represents contact information for that article.
+
+    The text in the <address> element usually renders in italic. Most browsers will add a line break before and after the address element.
+
 
     .PARAMETER Class
     Allows to specify one (or more) class(es) to assign the html element.
@@ -36,8 +48,9 @@ Function address {
     </address>
 
     .NOTES
-     Current version 1.0
+     Current version 2.0
         History:
+            2018.09.30;Stephanevg; Updated to version 2.0
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
     .LINK
@@ -68,42 +81,37 @@ Function address {
     )
     Process{
 
-        $attr = ""
-        $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+
+        $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        $htmltagparams = @{}
+        $tagname = "address"
 
         if($CustomParameters){
 
             foreach ($entry in $CustomParameters){
 
+                if($entry -eq "content"){
 
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+                    
+                    $htmltagparams.$entry = $PSBoundParameters[$entry]
+                }else{
+                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                }
+                
+    
+            }
+
+            if($Attributes){
+                $htmltagparams += $Attributes
 
             }
 
-        }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-            }
-        }
-
-        if($attr){
-            "<address {0} >"  -f $attr
-        }else{
-            "<address>"
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid   
         }
 
 
-
-        if($Content){
-            $Content.Invoke()
-        }
-
-
-        '</address>'
     }
 
 
