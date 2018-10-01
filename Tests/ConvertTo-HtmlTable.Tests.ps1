@@ -20,7 +20,7 @@ Describe "Testing ConvertTo-HTMLTable" {
     $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
     $string = head {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
 
-    $string = Get-Service | Where-Object {$_.Status -eq "running" -and $_.StartType -eq "Automatic"} | Select-Object -Property DisplayName,Status,StartType -first 2 | ConvertTo-HTMLTable
+    $string = Get-Service | Where-Object -FilterScript {$_.Status -eq "running" -and $_.StartType -eq "Automatic"} | Select-Object -Property DisplayName,Status,StartType -first 2 | ConvertTo-HTMLTable
 
     if($string -is [array]){
         $string = $String -join ""
