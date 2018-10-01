@@ -15,15 +15,15 @@ Function Table {
     )
     Process{
         "<table>"
-       
+
 
         if($ChildItem){
             $ChildItem.Invoke()
         }
-            
+
 
         '</Table>'
     }
-    
-    
+
+
 }

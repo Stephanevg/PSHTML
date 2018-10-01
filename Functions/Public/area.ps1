@@ -5,32 +5,32 @@ Function area {
 
     .DESCRIPTION
     The are tag must be used in a <map> element (Use the 'map' function)
-    
+
     .PARAMETER Class
     Allows to specify one (or more) class(es) to assign the html element.
     More then one class can be assigned by seperating them with a white space.
 
     .PARAMETER Id
     Allows to specify an id to assign the html element.
-    
+
     .PARAMETER Style
     Allows to specify in line CSS style to assign the html element.
 
     .PARAMETER Content
-    Allows to add child element(s) inside the current opening and closing HTML tag(s). 
-    
+    Allows to add child element(s) inside the current opening and closing HTML tag(s).
+
 
     .EXAMPLE
     area -href "link.php" -alt "alternate description" -coords "0,0,10,10"
-    
-   Generates the following code: 
+
+   Generates the following code:
 
     <area href="link.php" alt="alternate description" coords="0,0,10,10" >
-    
+
     .EXAMPLE
     area -href image.png -coords "0,0,20,20" -shape rect
 
-    Generates the following code: 
+    Generates the following code:
 
     <area href="image.png"coords="0,0,20,20"shape="rect" >
 
@@ -45,7 +45,7 @@ Function area {
     [CmdletBinding()]
     Param(
 
-        
+
         [Parameter(Position =0)]
         [String]$href,
 
@@ -85,21 +85,21 @@ Function area {
         $attr = ""
         $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
+
         if($CustomParameters){
-            
+
             foreach ($entry in $CustomParameters){
 
-                
+
                 $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-    
+
             }
-                
+
         }
 
         if($Attributes){
             foreach($entry in $Attributes.Keys){
-               
+
                 $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
             }
         }
@@ -109,19 +109,19 @@ Function area {
         }else{
             "<area>"
         }
-        
-      
+
+
 
         if($Content){
             $Content.Invoke()
         }
-            
+
 
         '</area>'
-        
 
-        
+
+
     }#End process
-    
-    
+
+
 }

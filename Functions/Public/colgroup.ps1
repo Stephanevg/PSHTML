@@ -1,20 +1,20 @@
 Function Colgroup {
     <#
-    
+
     .SYNOPSIS
     Generates colgroup HTML tag.
 
     .DESCRIPTION
     The <colgroup> tag is useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.
 
-    
+
     .PARAMETER Class
     Allows to specify one (or more) class(es) to assign the html element.
     More then one class can be assigned by seperating them with a white space.
 
     .PARAMETER Id
     Allows to specify an id to assign the html element.
-    
+
     .PARAMETER Style
     Allows to specify in line CSS style to assign the html element.
 
@@ -30,7 +30,7 @@ Function Colgroup {
     </colgroup>
 
     .EXAMPLE
-    
+
     Colgroup {
         col -span 3 -Style "Background-color:red"
         col -Style "Backgroung-color:yellow"
@@ -76,27 +76,27 @@ Function Colgroup {
         [Parameter(Position = 5)]
         [Hashtable]$Attributes
 
-        
+
     )
     Process{
         $attr = ""
         $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
+
         if($CustomParameters){
-            
+
             foreach ($entry in $CustomParameters){
 
-                
+
                 $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-    
+
             }
-                
+
         }
 
         if($Attributes){
             foreach($entry in $Attributes.Keys){
-               
+
                 $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
             }
         }
@@ -106,16 +106,16 @@ Function Colgroup {
         }else{
             "<colgroup>"
         }
-        
-      
+
+
 
         if($Content){
             $Content.Invoke()
         }
-            
+
 
         '</colgroup>'
     }
-    
-    
+
+
 }

@@ -1,6 +1,6 @@
 Function Set-HtmlTag {
     <#
-    
+
     .synopsis
         This function is the base function for all the html elements in pshtml.
 
@@ -20,10 +20,10 @@ Function Set-HtmlTag {
     #>
     [Cmdletbinding()]
     Param(
-        
+
         #[system.web.ui.HtmlTextWriterTag]
         $TagName,
-        
+
         [HashTable]
         $Attributes,
 
@@ -39,14 +39,14 @@ Function Set-HtmlTag {
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
         $par = $PSBoundParameters
         if($CustomParameters){
-            
+
             foreach ($entry in $CustomParameters){
 
-                
+
                 $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-    
+
             }
-                
+
         }
 
         if($Attributes){
@@ -74,7 +74,7 @@ Function Set-HtmlTag {
             }
         }else{
             #tag is of type "non-void"
-            
+
             if($attr){
                 "<{0} {1} >"  -f $tagname,$attr
             }else{
@@ -82,20 +82,20 @@ Function Set-HtmlTag {
             }
 
             if($Attributes.Keys -contains "content"){
-    
+
                 if($Attributes['content'] -is [System.Management.Automation.ScriptBlock]){
                     $Attributes['content'].Invoke()
                 }else{
                     $Attributes['content']
                 }
             }
-                
-    
+
+
             "</{0}>" -f $tagname
         }
 
-        
-      
+
+
 
 
 }

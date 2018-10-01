@@ -2,10 +2,10 @@ Function dd {
     <#
     .SYNOPSIS
     Create a dd tag in an HTML document.
-    
+
     .EXAMPLE
 
-    dd 
+    dd
     .EXAMPLE
     dd "woop1" -Class "class"
 
@@ -44,27 +44,27 @@ Function dd {
 
         [HashTable]$Attributes
 
-        
+
     )
 
     $attr = ""
     $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
     $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-    
+
     if($CustomParameters){
-        
+
         foreach ($entry in $CustomParameters){
 
-            
+
             $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
 
         }
-            
+
     }
 
     if($Attributes){
         foreach($entry in $Attributes.Keys){
-           
+
             $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
         }
     }
@@ -74,8 +74,8 @@ Function dd {
     }else{
         "<dd>"
     }
-    
-  
+
+
 
     if($Content){
 
@@ -85,7 +85,7 @@ Function dd {
             $Content
         }
     }
-        
+
 
     '</dd>'
 }

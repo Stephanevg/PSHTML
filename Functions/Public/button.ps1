@@ -6,15 +6,15 @@ Function button {
     .DESCRIPTION
     Should be used in conjunction with a form attribute.
 
-    
+
     .EXAMPLE
 
-    button 
+    button
     .EXAMPLE
     button "woop1" -Class "class"
 
     .EXAMPLE
-    
+
     <form>
     <fieldset>
         <button>Personalia:</button>
@@ -44,41 +44,41 @@ Function button {
         [String]$Class,
 
         [String]$Id,
-        
+
         [Hashtable]$Attributes
     )
 
-    
+
         $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        
+
+
 
 
         $htmltagparams = @{}
         $tagname = "button"
         if($CustomParameters){
-            
+
             foreach ($entry in $CustomParameters){
 
                 if($entry -eq "content"){
 
-                    
+
                     $htmltagparams.$entry = $PSBoundParameters[$entry]
                 }else{
                     $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
                 }
-                
-    
+
+
             }
 
             if($Attributes){
                 $htmltagparams += $Attributes
             }
 
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid  
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
         }
 
-    
+
 
 }

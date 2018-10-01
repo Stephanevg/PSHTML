@@ -2,7 +2,7 @@ Function Col {
     <#
     .SYNOPSIS
     Generates col HTML tag.
-    
+
     .DESCRIPTION
     The <col> tag specifies column properties for each column within a <colgroup> element.
     The <col> tag is useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.
@@ -13,13 +13,13 @@ Function Col {
 
     .PARAMETER Id
     Allows to specify an id to assign the html element.
-    
+
     .PARAMETER Style
     Allows to specify in line CSS style to assign the html element.
 
 
     .EXAMPLE
-    
+
     col -span 3 -Class "Table1"
 
     Generates the following code
@@ -27,7 +27,7 @@ Function Col {
     <col span="3" Class="Table1"  >
 
     .EXAMPLE
-    
+
     Col is often used in conjunction with 'colgroup'. See below for an example using colgroup and two col
 
     Colgroup {
@@ -71,21 +71,21 @@ Function Col {
     $attr = ""
     $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
     $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-    
+
     if($CustomParameters){
-        
+
         foreach ($entry in $CustomParameters){
 
-            
+
             $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
 
         }
-            
+
     }
 
     if($Attributes){
         foreach($entry in $Attributes.Keys){
-           
+
             $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
         }
     }
@@ -95,7 +95,7 @@ Function Col {
     }else{
         "<col >"
     }
-    
+
 
 
 }

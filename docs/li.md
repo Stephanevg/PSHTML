@@ -54,11 +54,11 @@ $Snoverisms += (Invoke-WebRequest -uri "http://snoverisms.com/page/2/").ParsedHt
 
     ul -id "snoverism-list" -Content {
         Foreach ($snov in $Snoverisms){
-        
+
             li -Class "snoverism" -content {
                 $snov.innerHTML
             }
-        } 
+        }
     }
 
 ## PARAMETERS

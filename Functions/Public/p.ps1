@@ -2,23 +2,23 @@ Function p {
     <#
     .SYNOPSIS
     Create a p tag in an HTML document.
-    
+
     .PARAMETER Class
     Allows to specify one (or more) class(es) to assign the html element.
     More then one class can be assigned by seperating them with a white space.
 
     .PARAMETER Id
     Allows to specify an id to assign the html element.
-    
+
     .PARAMETER Style
     Allows to specify in line CSS style to assign the html element.
 
     .PARAMETER Content
-    Allows to add child element(s) inside the current opening and closing HTML tag(s). 
+    Allows to add child element(s) inside the current opening and closing HTML tag(s).
 
     .EXAMPLE
 
-    p 
+    p
     .EXAMPLE
     p "woop1" -Class "class"
 
@@ -30,7 +30,7 @@ Function p {
 
     .EXAMPLE
     p {
-        $Important = strong{"This is REALLY important"} 
+        $Important = strong{"This is REALLY important"}
         "This is regular test in a paragraph " + $Important
     }
 
@@ -73,21 +73,21 @@ Function p {
         $attr = ""
         $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
+
         if($CustomParameters){
-            
+
             foreach ($entry in $CustomParameters){
 
-                
+
                 $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-    
+
             }
-                
+
         }
 
         if($Attributes){
             foreach($entry in $Attributes.Keys){
-               
+
                 $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
             }
         }
@@ -98,8 +98,8 @@ Function p {
         }else{
             "<p>"
         }
-        
-      
+
+
 
         if($Content){
 

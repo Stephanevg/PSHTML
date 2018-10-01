@@ -2,7 +2,7 @@ Function meta {
     <#
     .SYNOPSIS
     Create a meta title in an HTML document.
-    
+
     .DESCRIPTION
 
     Metadata is data (information) about data.
@@ -16,7 +16,7 @@ Function meta {
     (source --> https://www.w3schools.com/tags/tag_meta.asp)
     .EXAMPLE
 
-    meta 
+    meta
     .EXAMPLE
     meta "woop1" -Class "class"
 
@@ -80,7 +80,7 @@ Function meta {
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Style,
-        
+
         [Hashtable]$Attributes
     )
 
@@ -88,16 +88,16 @@ Function meta {
     #for the meta tag, content is a regular attribute that we can use.
     $CommonParameters = ("Attributes","httpequiv") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
     $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-    
+
     if($CustomParameters){
-        
+
         foreach ($entry in $CustomParameters){
 
-            
+
             $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
 
         }
-            
+
     }
 
     if($httpequiv){
@@ -106,7 +106,7 @@ Function meta {
 
     if($Attributes){
         foreach($entry in $Attributes.Keys){
-           
+
             $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
         }
     }
@@ -116,7 +116,7 @@ Function meta {
     }else{
         "<meta>"
     }
-    
+
 
 
 }

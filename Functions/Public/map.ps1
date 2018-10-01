@@ -2,12 +2,12 @@ Function map {
     <#
     .SYNOPSIS
     Generates map HTML tag.
-    
+
     .DESCRIPTION
     The map must be used in conjunction with area. Pass an 'area' parameter with its arguments in the 'Content' parameter
 
     .EXAMPLE
-    
+
     map -Content {area -href "map.png" -coords "0,0,50,50" -shape circle -target top }
 
     Generates the following code
@@ -15,7 +15,7 @@ Function map {
     <map>
         <area href="map.png" coords="0,0,50,50" shape="circle" target="top" >
     </map>
-    
+
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -73,10 +73,10 @@ Function map {
 
         }
 
-        
+
 
         if($attr){
-            "<map $attr>" 
+            "<map $attr>"
         }else{
             "<map>"
         }
@@ -84,10 +84,10 @@ Function map {
         if($Content){
             $Content.Invoke()
         }
-            
+
 
         '</map>'
     }
-    
-    
+
+
 }

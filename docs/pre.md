@@ -32,7 +32,7 @@ pre
 pre -Content @"
 ```
 
-whatever 
+whatever
     it       is
 
     you ne  ed
@@ -43,7 +43,7 @@ whatever
 pre -class "classy" -style "stylish" -Content @"
 ```
 
-whatever 
+whatever
     it       is
 
     you ne  ed

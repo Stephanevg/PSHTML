@@ -2,14 +2,14 @@ Function script {
     <#
     .SYNOPSIS
     Generates script HTML tag.
-    
+
     .EXAMPLE
     script -type text/javascript -src "myscript.js"
-    
+
     Generates the following code:
 
     <script type="text/javascript" src="myscript.js"></script>
-    
+
     .EXAMPLE
     script -type text/javascript  -content "alert( 'Hello, world!' );"
 
@@ -22,10 +22,10 @@ Function script {
     [CmdletBinding()]
     Param(
 
-        
+
         [Parameter(Position =0)]
         [String]$src,
-        
+
         [Parameter(Mandatory=$false,Position = 1)]
         [ValidateSet("text/javascript")]
         [String]$type,
@@ -84,11 +84,11 @@ Function script {
 
         }
 
-        "<script {0}>{1}</script>"  -f $attr,$content 
-        
+        "<script {0}>{1}</script>"  -f $attr,$content
 
-        
+
+
     }#End process
-    
-    
+
+
 }

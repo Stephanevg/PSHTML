@@ -14,7 +14,7 @@ import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
     Describe "Testing a" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
@@ -23,22 +23,22 @@ Context "Testing PSHTML"{
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
         $string = a {"woop"} -Target $target -href $href -Attributes $CustomAtt -Style $Style -Class $class -id $id
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<a.*>' | should be $true
             $string -match '.*</a>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{
             $string -match "^.*>woop<.*" | should be $true
         }
 
-        
+
         it "Testing common parameters: target"{
             $string -match '^<a.*target="_self".*>' | should be $true
         }
@@ -65,12 +65,12 @@ Context "Testing PSHTML"{
                 $string -match "^<a.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
-    
+
 }
 
 Pop-Location

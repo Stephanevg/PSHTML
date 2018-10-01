@@ -2,16 +2,16 @@ Function fieldset {
     <#
     .SYNOPSIS
     Create a fieldset title in an HTML document.
-    
+
     .EXAMPLE
 
-    fieldset 
+    fieldset
     .EXAMPLE
     fieldset "woop1" -Class "class"
 
     .EXAMPLE
     $css = @"
-        "p {color:green;} 
+        "p {color:green;}
         h1 {color:orange;}"
     "@
     fieldset {$css} -media "print" -type "text/css"
@@ -42,41 +42,41 @@ Function fieldset {
         [String]$Class,
 
         [String]$Id,
-        
+
         [Hashtable]$Attributes
     )
 
-    
+
         $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        
+
+
 
         $htmltagparams = @{}
         $tagname = "fieldset"
         if($CustomParameters){
-            
+
             foreach ($entry in $CustomParameters){
 
                 if($entry -eq "content"){
 
-                    
+
                     $htmltagparams.$entry = $PSBoundParameters[$entry]
                 }else{
                     $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
                 }
-                
-    
+
+
             }
 
             if($Attributes){
                 $htmltagparams += $Attributes
             }
 
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid   
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
         }
 
-    
+
 
 }
 

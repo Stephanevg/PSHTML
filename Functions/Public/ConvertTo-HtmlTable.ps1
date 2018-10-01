@@ -9,7 +9,7 @@ Function ConvertTo-HTMLTable {
 
         .EXAMPLE
         $service = Get-Service -Name Sens,wsearch,wscsvc | select DisplayName,Status,StartType
-        ConvertTo-HTMLtable -Object $service 
+        ConvertTo-HTMLtable -Object $service
 
         .EXAMPLE
 
@@ -31,9 +31,9 @@ Function ConvertTo-HTMLTable {
         $Object
     )
 
-    
+
     Table{
-        
+
         $Properties = $object | get-member | where-Object -FilterScript {$_.MemberType -eq 'property' -or $_.MemberType -eq 'NoteProperty'}
 
         thead {
@@ -41,8 +41,8 @@ Function ConvertTo-HTMLTable {
 
 
                 foreach($prop in $Properties.Name){
-            
-                    td{ 
+
+                    td{
                         $prop
                     }
                 }
@@ -51,14 +51,14 @@ Function ConvertTo-HTMLTable {
         Tbody{
             foreach($item in $object){
                 tr{
-    
-                    
+
+
                     foreach($propertyName in $Properties.Name){
-        
+
                         td {
                             $item.$propertyName
                         }
-                
+
                     }
                 }
             }

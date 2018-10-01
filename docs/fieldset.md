@@ -37,7 +37,7 @@ fieldset "woop1" -Class "class"
 $css = @"
 ```
 
-"p {color:green;} 
+"p {color:green;}
     h1 {color:orange;}"
 "@
 fieldset {$css} -media "print" -type "text/css"

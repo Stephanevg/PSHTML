@@ -2,10 +2,10 @@ Function header {
     <#
     .SYNOPSIS
     Generates a header HTML tag.
-    
+
     .DESCRIPTION
 
-    
+
     The <header> element represents a container for introductory content or a set of navigational links.
 
     A <header> element typically contains:
@@ -23,12 +23,12 @@ Function header {
 
     .PARAMETER Id
     Allows to specify an id to assign the html element.
-    
+
     .PARAMETER Style
     Allows to specify in line CSS style to assign the html element.
 
     .PARAMETER Content
-    Allows to add child element(s) inside the current opening and closing HTML tag(s). 
+    Allows to add child element(s) inside the current opening and closing HTML tag(s).
 
 
     .EXAMPLE
@@ -52,7 +52,7 @@ Function header {
         </p>
     </header>
 
-    
+
     .NOTES
     Current version 1.0
     History:
@@ -79,26 +79,26 @@ Param(
     [String]$Style,
 
     [Parameter(Position = 4)]
-    [Hashtable]$Attributes 
+    [Hashtable]$Attributes
 )
 $attr = ""
     $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
     $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-    
+
     if($CustomParameters){
-        
+
         foreach ($entry in $CustomParameters){
 
-            
+
             $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
 
         }
-            
+
     }
 
     if($Attributes){
         foreach($entry in $Attributes.Keys){
-           
+
             $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
         }
     }
@@ -108,8 +108,8 @@ $attr = ""
     }else{
         "<header>"
     }
-    
-  
+
+
 
     if($Content){
 
@@ -119,7 +119,7 @@ $attr = ""
             $Content
         }
     }
-        
+
 
     '</header>'
 

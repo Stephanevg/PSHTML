@@ -12,7 +12,7 @@ Write-Verbose "Importing module"
 
 import-module .\PSHTML -Force
     Describe "Testing legend - ScriptBlock" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
@@ -20,15 +20,15 @@ import-module .\PSHTML -Force
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
 
         $string = legend {"woop"} -Attributes $CustomAtt -Class $class -id $id
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<legend.*>' | should be $true
             $string -match '.*</legend>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{
@@ -50,10 +50,10 @@ import-module .\PSHTML -Force
                 $string -match "^<legend.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
 
 

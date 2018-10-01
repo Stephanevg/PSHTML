@@ -2,7 +2,7 @@ Function base {
     <#
     .SYNOPSIS
     Create a base title in an HTML document.
-    
+
     .DESCRIPTION
     The <base> tag specifies the base URL/target for all relative URLs in a document.
 
@@ -10,7 +10,7 @@ Function base {
 
     .EXAMPLE
 
-    base 
+    base
     .EXAMPLE
     base "woop1" -Class "class"
 
@@ -38,7 +38,7 @@ Function base {
         [String]$Class,
 
         [String]$Id,
-        
+
         [Hashtable]$Attributes
     )
 
@@ -49,24 +49,24 @@ Function base {
         $htmltagparams = @{}
         $tagname = "base"
         if($CustomParameters){
-            
+
             foreach ($entry in $CustomParameters){
 
                 if($entry -eq "content"){
 
-                    
+
                     $htmltagparams.$entry = $PSBoundParameters[$entry]
                 }else{
                     $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
                 }
-                
-    
+
+
             }
 
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid   
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
         }
 
-    
+
 
 }
 

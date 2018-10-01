@@ -15,15 +15,15 @@ Function Thead {
     )
     Process{
         "<thead>"
-       
+
 
         if($ChildItem){
             $ChildItem.Invoke()
         }
-            
+
 
         '</thead>'
     }
-    
-    
+
+
 }

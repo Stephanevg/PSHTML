@@ -14,28 +14,28 @@ import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
     Describe "Testing aside" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
         $string = aside {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<aside.*>' | should be $true
             $string -match '.*</aside>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{
             $string -match "^.*>woop<.*" | should be $true
         }
-        
+
         it "Testing common parameters: Class"{
             $string -match '^<aside.*class="myclass".*>' | should be $true
         }
@@ -54,12 +54,12 @@ Context "Testing PSHTML"{
                 $string -match "^<aside.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
-    
+
 }
 
 Pop-Location

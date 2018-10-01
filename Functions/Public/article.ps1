@@ -2,23 +2,23 @@ Function article {
     <#
     .SYNOPSIS
     Generates article HTML tag.
-    
+
     .PARAMETER Class
     Allows to specify one (or more) class(es) to assign the html element.
     More then one class can be assigned by seperating them with a white space.
 
     .PARAMETER Id
     Allows to specify an id to assign the html element.
-    
+
     .PARAMETER Style
     Allows to specify in line CSS style to assign the html element.
 
     .PARAMETER Content
-    Allows to add child element(s) inside the current opening and closing HTML tag(s). 
-    
+    Allows to add child element(s) inside the current opening and closing HTML tag(s).
+
 
     .EXAMPLE
-    
+
     article {
         h1 "This is blog post number 1"
         p {
@@ -34,9 +34,9 @@ Function article {
             This is content of blog post 1
         </p>
     </article>
-    
+
     .EXAMPLE
-    
+
     It is also possible to use regular powershell logic inside a scriptblock. The example below, generates a article element
     based on values located in a powershell object. The content is generated dynamically through the usage of a foreach loop.
 
@@ -93,7 +93,7 @@ Function article {
                 </p>
             </article>
         </body>
-        
+
     .NOTES
      Current version 1.0
         History:
@@ -123,28 +123,28 @@ Function article {
         [String]$Style,
 
         [Parameter(Position = 4)]
-        [Hashtable]$Attributes 
+        [Hashtable]$Attributes
     )
     Process{
 
         $attr = ""
         $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
+
         if($CustomParameters){
-            
+
             foreach ($entry in $CustomParameters){
 
-                
+
                 $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-    
+
             }
-                
+
         }
 
         if($Attributes){
             foreach($entry in $Attributes.Keys){
-               
+
                 $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
             }
         }
@@ -154,16 +154,16 @@ Function article {
         }else{
             "<article>"
         }
-        
-      
+
+
 
         if($Content){
             $Content.Invoke()
         }
-            
+
 
         '</article>'
     }
-    
-    
+
+
 }

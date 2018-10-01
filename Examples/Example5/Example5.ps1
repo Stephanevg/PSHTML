@@ -15,7 +15,7 @@ $Snover = Html {
     }
     Body{
         h1 "Tribute to Jeffrey Snover" -Class "Title"
-        
+
         div -Class "Photo" {
 
             img -src "https://pbs.twimg.com/profile_images/618804166631145473/2q6yharL_400x400.jpg" -alt "Jeffrey Snover photo" -height "400" -width "400" -Class "Photo"
@@ -41,10 +41,10 @@ $Snover = Html {
                         $Corrected
                     }
                 }
-                
+
 
             }
-            
+
         }#End Accomplishements
         Div -id "Snoverisms" {
             $SnoverismsSite = "http://snoverisms.com/"
@@ -58,12 +58,12 @@ $Snover = Html {
 
             ul -id "snoverism-list" -Content {
                 Foreach ($snov in $Snoverisms){
-                
+
                     li -Class "snoverism" -content {
                         $snov.innerHTML
                     }
                 }
-                
+
             }#end of ul
         }
     }

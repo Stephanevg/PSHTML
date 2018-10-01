@@ -27,7 +27,7 @@ blockquote [-Content] <String> [[-cite] <String>] [[-Class] <String>] [[-Id] <St
 blockquote -cite "https://www.google.com" -Content @"
 ```
 
-Google is a 
+Google is a
     great website
     to search for information
 "@
@@ -37,7 +37,7 @@ Google is a
 blockquote -cite "https://www.google.com" -class "classy" -style "stylish" -Content @"
 ```
 
-Google is a     
+Google is a
     great website
     to search for information
 "@

@@ -2,13 +2,13 @@ Function strong {
     <#
     .SYNOPSIS
     Generates strong HTML tag.
-    
+
     .Description
     This tag is a "Textual semantic" tag. To use it in a "P" tag, be sure to prefix it with a semicolon (";").
     See example for more details.
 
     .EXAMPLE
-    p{ 
+    p{
         "This is";strong {"cool"}
     }
 
@@ -21,7 +21,7 @@ Function strong {
         </strong>
     </p>
 
-    
+
 
     .Notes
     Author: Stéphane van Gulick
@@ -29,7 +29,7 @@ Function strong {
     History:
         2018.05.23;@Stephanevg; Updated function to use New-HTMLTag
         2018.05.09;@Stephanevg; Creation
-        
+
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -63,17 +63,17 @@ Function strong {
     $htmltagparams = @{}
     $tagname = "strong"
     if($CustomParameters){
-        
+
         foreach ($entry in $CustomParameters){
 
             if($entry -eq "content"){
 
-                
+
                 $htmltagparams.$entry = $PSBoundParameters[$entry]
             }else{
                 $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
             }
-            
+
 
         }
 
@@ -81,10 +81,10 @@ Function strong {
             $htmltagparams += $Attributes
         }
 
-        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid  
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
     }
-    
-     
+
+
 }
 
 

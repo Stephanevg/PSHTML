@@ -2,7 +2,7 @@ Function dl {
     <#
     .SYNOPSIS
     Create a dl tag in an HTML document.
-     
+
     .EXAMPLE
     dl
 
@@ -50,45 +50,45 @@ Function dl {
         $attr = ""
         $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
+
         if($CustomParameters){
-            
+
             foreach ($entry in $CustomParameters){
-    
-                
+
+
                 $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-    
+
             }
-                
+
         }
-    
+
         if($Attributes){
             foreach($entry in $Attributes.Keys){
-               
+
                 $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
             }
         }
-    
+
         if($attr){
             "<dl {0} >"  -f $attr
         }else{
             "<dl>"
         }
-        
-      
-    
+
+
+
         if($Content){
-    
+
             if($Content -is [System.Management.Automation.ScriptBlock]){
                 $Content.Invoke()
             }else{
                 $Content
             }
         }
-            
-    
+
+
         '</dl>'
     }
-    
-    
+
+
 }

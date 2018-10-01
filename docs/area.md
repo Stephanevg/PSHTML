@@ -28,7 +28,7 @@ The are tag must be used in a \<map\> element (Use the 'map' function)
 area -href "link.php" -alt "alternate description" -coords "0,0,10,10"
 ```
 
-Generates the following code: 
+Generates the following code:
 
 \<area href="link.php" alt="alternate description" coords="0,0,10,10" \>
 
@@ -37,7 +37,7 @@ Generates the following code:
 area -href image.png -coords "0,0,20,20" -shape rect
 ```
 
-Generates the following code: 
+Generates the following code:
 
 \<area href="image.png"coords="0,0,20,20"shape="rect" \>
 

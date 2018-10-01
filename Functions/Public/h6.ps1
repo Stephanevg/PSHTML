@@ -2,10 +2,10 @@ Function h6 {
     <#
     .SYNOPSIS
     Create a h6 title in an HTML document.
-    
+
     .EXAMPLE
 
-    h6 
+    h6
     .EXAMPLE
     h6 "woop1" -Class "class"
 
@@ -40,28 +40,28 @@ Function h6 {
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Style,
-        
+
         [Hashtable]$Attributes
     )
 
     $attr = ""
     $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
     $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-    
+
     if($CustomParameters){
-        
+
         foreach ($entry in $CustomParameters){
 
-            
+
             $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
 
         }
-            
+
     }
 
     if($Attributes){
         foreach($entry in $Attributes.Keys){
-           
+
             $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
         }
     }
@@ -71,8 +71,8 @@ Function h6 {
     }else{
         "<h6>"
     }
-    
-  
+
+
     if($Content){
 
         if($Content -is [System.Management.Automation.ScriptBlock]){
@@ -81,7 +81,7 @@ Function h6 {
             $Content
         }
     }
-        
+
 
     '</h6>'
 
