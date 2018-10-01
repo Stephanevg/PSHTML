@@ -1,10 +1,15 @@
 Function area {
     <#
     .SYNOPSIS
-    Generates area HTML tag.
+    Generates <area> HTML tag.
 
     .DESCRIPTION
     The are tag must be used in a <map> element (Use the 'map' function)
+
+    The <area> element is always nested inside a <map> tag.
+
+    More information can be found here --> https://www.w3schools.com/tags/tag_area.asp
+
 
     .PARAMETER Class
     Allows to specify one (or more) class(es) to assign the html element.
@@ -82,44 +87,35 @@ Function area {
     )
     Process{
 
-        $attr = ""
-        $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+
+        $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        $htmltagparams = @{}
+        $tagname = "area"
 
         if($CustomParameters){
 
             foreach ($entry in $CustomParameters){
 
+                if($entry -eq "content"){
 
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+                    
+                    $htmltagparams.$entry = $PSBoundParameters[$entry]
+                }else{
+                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                }
+                
+    
+            }
+
+            if($Attributes){
+                $htmltagparams += $Attributes
 
             }
 
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType void
         }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-            }
-        }
-
-        if($attr){
-            "<area {0} >"  -f $attr
-        }else{
-            "<area>"
-        }
-
-
-
-        if($Content){
-            $Content.Invoke()
-        }
-
-
-        '</area>'
-
-
 
     }#End process
 
