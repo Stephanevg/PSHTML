@@ -30,8 +30,9 @@ Function hr {
 
     .Notes
     Author: Stéphane van Gulick
-    Version: 1.0.0
+    Version: 2.0.0
     History:
+        2018.04.08;bateskevin; Updated to v2.0 
         2018.04.08;Stephanevg; Updated to version 1.0: Updated content block to support string & ScriptBlock
         2018.03.25;@Stephanevg; Added Styles, ID, CLASS attributes functionality
         2018.03.25;@Stephanevg; Creation
@@ -54,33 +55,37 @@ Function hr {
         [Hashtable]$Attributes
     )
 
-    $attr = ""
-    $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+    Process {
 
-    if($CustomParameters){
+        $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        $htmltagparams = @{}
+        $tagname = "hr"
 
-        foreach ($entry in $CustomParameters){
+        if($CustomParameters){
+
+            foreach ($entry in $CustomParameters){
 
 
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+                if($entry -eq "content"){
 
+                    
+                    $htmltagparams.$entry = $PSBoundParameters[$entry]
+                }else{
+                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                }
+                
+    
+            }
+
+            if($Attributes){
+                $htmltagparams += $Attributes
+            }
+
+
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
         }
-
     }
-
-    if($Attributes){
-        foreach($entry in $Attributes.Keys){
-
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-        }
-    }
-
-    if($attr){
-        "<hr {0} >"  -f $attr
-    }else{
-        "<hr>"
-    }
-
 
 }
