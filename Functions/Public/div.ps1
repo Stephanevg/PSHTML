@@ -14,8 +14,9 @@ Function Div {
 
 
         .NOTES
-        Current version 1.0
+        Current version 2.0
         History:
+            2018.04.10;bateskevin; Updated to v2.0
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
         .LINK
@@ -44,45 +45,37 @@ Function Div {
         [Parameter(Position = 4)]
         [Hashtable]$Attributes
     )
-    Process{
+    Process {
 
-
-        $attr = ""
-        $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+        $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        $htmltagparams = @{}
+        $tagname = "div"
 
         if($CustomParameters){
 
             foreach ($entry in $CustomParameters){
 
 
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+                if($entry -eq "content"){
 
+                    
+                    $htmltagparams.$entry = $PSBoundParameters[$entry]
+                }else{
+                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                }
+                
+    
             }
 
-        }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            if($Attributes){
+                $htmltagparams += $Attributes
             }
+
+
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
         }
-
-        if($attr){
-            "<div {0} >"  -f $attr
-        }else{
-            "<div>"
-        }
-
-
-
-        if($Content){
-            $Content.Invoke()
-        }
-
-
-        '</div>'
     }
 
 
