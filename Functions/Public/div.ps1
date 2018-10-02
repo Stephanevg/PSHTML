@@ -16,7 +16,7 @@ Function Div {
         .NOTES
         Current version 2.0
         History:
-            2018.04.10;bateskevin; Updated to v2.0
+            2018.10.02;bateskevin; Updated to v2.0
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
         .LINK
