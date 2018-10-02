@@ -14,7 +14,12 @@ Function ConvertTo-HTMLTable {
         .EXAMPLE
 
         $proc = Get-Process | Select-Object -First 2
-        ConvertTo-HTMLtable -Object $proc
+        ConvertTo-HTMLtable -Object $proc 
+        
+        .EXAMPLE
+
+        $proc = Get-Process | Select-Object -First 2
+        ConvertTo-HTMLtable -Object $proc -properties name,handles
 
         .NOTES
         Current version 0.6
@@ -28,35 +33,42 @@ Function ConvertTo-HTMLTable {
         [Parameter(Mandatory=$true,
                 ValueFromPipeline=$true
         )]
-        $Object
+        $Object,
+        [String[]]$Properties
     )
 
 
-    Table{
+    if($Properties){
+        $HeaderNames = $Properties
+    }else{
+        $props = $Object | Get-Member -MemberType Properties | Select-Object Name
+        $HeaderNames = @()
+        foreach($i in $props){$HeaderNames += $i.name.tostring()}
+    }
 
-        $Properties = $object | get-member | where-Object -FilterScript {$_.MemberType -eq 'property' -or $_.MemberType -eq 'NoteProperty'}
+    Table{
 
         thead {
             tr{
 
 
-                foreach($prop in $Properties.Name){
+                foreach($Name in $HeaderNames){
 
                     td{
-                        $prop
+                        $Name
                     }
                 }
             }
         }
         Tbody{
-            foreach($item in $object){
+            foreach($item in $Headernames){
                 tr{
 
 
-                    foreach($propertyName in $Properties.Name){
+                    foreach($propertyName in $Object.$item){
 
                         td {
-                            $item.$propertyName
+                            $propertyName
                         }
 
                     }
