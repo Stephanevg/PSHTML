@@ -1,13 +1,21 @@
 # PSHTML
-Module to generate HTML markup language within a DSL
+
+Module to generate HTML markup language within a DSL.
 
 # Example
 
-PSHTML allow people to write a HTML document using powershell-like syntax, which makes building a webpage easier, and less cumbersome.
+PSHTML allow people to write a HTML document(s) using powershell-like syntax, which makes building webpages easier, and less cumbersome for 'native' powersheller's.
+
+PSHTMl offers the flexibility of the POwerShell language, and allows to add logic in ```powershell``` directly in the ```HTML``` structure. This open the possibility to add loopings, conditional statements, switchs, functions, classes, calling external modules etc.. all that directly from the same editor.
+
+Also, it benefits from code completition, and syntax highliting from the the default powershell langauge, which will highlight any HTML syntax issue.
+
 
 ## A few Basic examples
 
 ### Basic page
+
+The following quick example displays a simple page, with a few headers, divs, paragraphs, and header elements
 
 ```Powershell
 
@@ -168,154 +176,11 @@ Eventually, the following components will also be added:
  - [ ] Include Sections
  - [ ] Interactive Data
 
+Each function has an additional parameter called: ```Attributes``` of type HashTable.
+It allow to add additional html tags without having to list ALL the existing attributes. It offers flexibility for custom and/or special htmls attributes.
+
+## HTML 5 coverage
+
+I would like to have all HTML 5 tags available in PSHTML ASAP. The list is currently ongoing, and this is work in progress. It can be followed [here](https://github.com/Stephanevg/PSHTML/issues/7)
 
 
-
-## Root
-- [X] ```<html>```
-## MetadaData
-- [X] ```<head>```
-- [X] ```<title>```
-- [X] ```<base>```
-- [X] ```<link>```
-- [X] ```<meta>```
-- [X] ```<style>```
-
-## Scripts
-
-- [X] ```<script>```
-- [X] ```<noscript>```	
-
-## Sections
-- [X] ```<body>```
-- [X] ```<section>```
-- [X] ```<nav>```
-- [X] ```<article>```
-- [X] ```<aside>```
-- [X] ```<h1>```
-- [X] ```<h2>```
-- [X] ```<h3>```
-- [X] ```<h4>```
-- [X] ```<h5>```
-- [X] ```<h6>```
-- [ ] ~~```<hgroup>```~~ 'Functionallity still in beta'
-- [X] ```<header>```
-- [X] ```<footer>```
-- [X] ```<address>```
-
-## blocs
-- [X] ```<div>```
-- [X] ```<p>```
-    - [X] Add support for title attribute
-- [X] ```<hr>```
-- [X] ```<pre>```
-- [X] ```<blockquote>```
-- [X] ```<ol>```
-- [X] ```<ul>```
-- [X] ```<li>```
-- [X] ```<dl>```
-- [X] ```<dt>```
-- [X] ```<dd>```
-- [X] ```<figure>```
-- [X] ```<figcaption>```
-
-
-## Tables
-- [X] ```<table>```
-- [X] ```<tbody>```
-- [X] ```<thead>```
-- [X] ```<tfoot>```
-- [X] ```<tr>```
-- [X] ```<td>```
-- [X] ```<th>```
-- [X] ```<caption>```
-- [X] ```<colgroup>```
-- [X] ```<col>```
-
-## Textual semantic
-- [X] ```<a>```
-- [ ] ```<em>```
-- [X] ```<strong>```
-- [ ] ```<small>```
-- [ ] ```<s>```
-- [ ] ```<cite>```
-- [ ] ```<q>```
-- [ ] ```<dfn>```
-- [ ] ```<abbr>```
-- [ ] ```<data>```
-- [ ] ```<time>```
-- [ ] ```<code>```
-- [ ] ```<var>```
-- [ ] ```<samp>```
-- [ ] ```<kbd>```
-- [ ] ```<sub>```
-- [ ] ```<sup>```
-- [ ] ```<i>```
-- [ ] ```<b>```
-- [ ] ```<u>```
-- [ ] ```<mark>```
-- [ ] ```<ruby>```
-- [ ] ```<rt>```
-- [ ] ```<bdi>```
-- [ ] ```<bdo>```
-- [ ] ```<span>```
-- [ ] ```<br>```
-- [ ] ```<wbr>```
-
-
-## include sections
-- [X] ```<img>```
-- [ ] ~~```<iframe>```~~ 'Not supported in HTML 5'
-- [ ] ```<object>```
-- [ ] ```<param>```
-- [ ] ```<video>```
-- [ ] ```<audio>```
-- [ ] ```<source>```
-- [ ] ```<track>```
-- [ ] ```<canvas>```
-- [X] ```<map>```
-- [X] ```<area>```
-- [ ] ```<svg>```
-- [ ] ```<math>```
-
-## Forms
-- [X] ```<form>```
-- [X] ```<fieldset>``` 2.0
-- [X] ```<legend>```
-- [X] ```<label>```
-- [X] ```<input>```
-    - [ ] Add support for disabled attribut
-- [X] ```<button>```
-- [ ] ```<select>```
-    - [ ] This commands overrides the 'select' alias which normally points to 'select-object'
-- [ ] ```<datalist>```
-- [ ] ```<optgroup>```
-- [ ] ```<option>```
-- [ ] ```<textarea>```
-- [ ] ```<keyben>```
-- [ ] ```<output>```
-- [ ] ```<progress>```
-- [ ] ```<meter>```
-
-## Interactive data
-
-- [ ] ```<detail>```
-- [ ] ```<command>```
-- [ ] ~~```<menu>```~~ --> This feature will not be implemented, since this feature is only avaible in Firefox.
-
-## Function Design:
-
-
-### Passing attributes
-
-- [ ] Every HTML tag (PSHTML Function) should have 'at least' the following attributes available:
-- Class
-- ID
-- Style
-
-these are - in my opinion- the most commonly used attributes in HTML.
-
-### Additional Attributes
-
-- [ ] Each function has an additional parameter called: ```Attributes``` of type HashTable.
-It will allow to add additional html tags without having to list ALL the existing attributes. It offers flexibility for custom and/or special htmls attributes.
