@@ -37,8 +37,8 @@ html {
                 }
             }
         }
-    
-        
+
+
             p {
                 h1 "This is h1"
                 h2 "This is h2"
@@ -49,7 +49,7 @@ html {
                 strong "plop";"Woop"
             }
     }
-    
+
 }
 
 ```
@@ -152,7 +152,7 @@ Which generates the following code:
 ```
 # Todo List
 
-There is a lot to accomplish before making this module available to the public. 
+There is a lot to accomplish before making this module available to the public.
 
 I plan the following most important milestones:
 
@@ -184,3 +184,154 @@ It allow to add additional html tags without having to list ALL the existing att
 I would like to have all HTML 5 tags available in PSHTML ASAP. The list is currently ongoing, and this is work in progress. It can be followed [here](https://github.com/Stephanevg/PSHTML/issues/7)
 
 
+<<<<<<< HEAD
+=======
+## Root
+- [X] ```<html>```
+## MetadaData
+- [X] ```<head>```
+- [X] ```<title>```
+- [X] ```<base>```
+- [X] ```<link>```
+- [X] ```<meta>```
+- [X] ```<style>```
+
+## Scripts
+
+- [X] ```<script>```
+- [X] ```<noscript>```
+
+## Sections
+- [X] ```<body>```
+- [X] ```<section>```
+- [X] ```<nav>```
+- [X] ```<article>```
+- [X] ```<aside>```
+- [X] ```<h1>```
+- [X] ```<h2>```
+- [X] ```<h3>```
+- [X] ```<h4>```
+- [X] ```<h5>```
+- [X] ```<h6>```
+- [ ] ~~```<hgroup>```~~ 'Functionallity still in beta'
+- [X] ```<header>```
+- [X] ```<footer>```
+- [X] ```<address>```
+
+## blocs
+- [X] ```<div>```
+- [X] ```<p>```
+    - [X] Add support for title attribute
+- [X] ```<hr>```
+- [X] ```<pre>```
+- [X] ```<blockquote>```
+- [X] ```<ol>```
+- [X] ```<ul>```
+- [X] ```<li>```
+- [X] ```<dl>```
+- [X] ```<dt>```
+- [X] ```<dd>```
+- [X] ```<figure>```
+- [X] ```<figcaption>```
+
+
+## Tables
+- [X] ```<table>```
+- [X] ```<tbody>```
+- [X] ```<thead>```
+- [X] ```<tfoot>```
+- [X] ```<tr>```
+- [X] ```<td>```
+- [X] ```<th>```
+- [X] ```<caption>```
+- [X] ```<colgroup>```
+- [X] ```<col>```
+
+## Textual semantic
+- [X] ```<a>```
+- [ ] ```<em>```
+- [X] ```<strong>```
+- [ ] ```<small>```
+- [ ] ```<s>```
+- [ ] ```<cite>```
+- [ ] ```<q>```
+- [ ] ```<dfn>```
+- [ ] ```<abbr>```
+- [ ] ```<data>```
+- [ ] ```<time>```
+- [ ] ```<code>```
+- [ ] ```<var>```
+- [ ] ```<samp>```
+- [ ] ```<kbd>```
+- [ ] ```<sub>```
+- [ ] ```<sup>```
+- [ ] ```<i>```
+- [ ] ```<b>```
+- [ ] ```<u>```
+- [ ] ```<mark>```
+- [ ] ```<ruby>```
+- [ ] ```<rt>```
+- [ ] ```<bdi>```
+- [ ] ```<bdo>```
+- [ ] ```<span>```
+- [ ] ```<br>```
+- [ ] ```<wbr>```
+
+
+## include sections
+- [X] ```<img>```
+- [ ] ~~```<iframe>```~~ 'Not supported in HTML 5'
+- [ ] ```<object>```
+- [ ] ```<param>```
+- [ ] ```<video>```
+- [ ] ```<audio>```
+- [ ] ```<source>```
+- [ ] ```<track>```
+- [ ] ```<canvas>```
+- [X] ```<map>```
+- [X] ```<area>```
+- [ ] ```<svg>```
+- [ ] ```<math>```
+
+## Forms
+- [X] ```<form>```
+- [X] ```<fieldset>``` 2.0
+- [X] ```<legend>```
+- [X] ```<label>```
+- [X] ```<input>```
+    - [ ] Add support for disabled attribut
+- [X] ```<button>```
+- [ ] ```<select>```
+    - [ ] This commands overrides the 'select' alias which normally points to 'select-object'
+- [ ] ```<datalist>```
+- [ ] ```<optgroup>```
+- [ ] ```<option>```
+- [ ] ```<textarea>```
+- [ ] ```<keyben>```
+- [ ] ```<output>```
+- [ ] ```<progress>```
+- [ ] ```<meter>```
+
+## Interactive data
+
+- [ ] ```<detail>```
+- [ ] ```<command>```
+- [ ] ~~```<menu>```~~ --> This feature will not be implemented, since this feature is only avaible in Firefox.
+
+## Function Design:
+
+
+### Passing attributes
+
+- [ ] Every HTML tag (PSHTML Function) should have 'at least' the following attributes available:
+- Class
+- ID
+- Style
+
+these are - in my opinion- the most commonly used attributes in HTML.
+
+### Additional Attributes
+
+- [ ] Each function has an additional parameter called: ```Attributes``` of type HashTable.
+It will allow to add additional html tags without having to list ALL the existing attributes. It offers flexibility for custom and/or special htmls attributes.
+>>>>>>> 0329c88a1752d63b1620ace3279f7e70e93547a4

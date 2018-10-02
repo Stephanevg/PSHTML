@@ -14,22 +14,22 @@ import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
     Describe "Testing h1 - ScriptBlock" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
         $string = h1 {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<h1.*>' | should be $true
             $string -match '.*</h1>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{
@@ -54,37 +54,37 @@ Context "Testing PSHTML"{
                 $string -match "^<h1.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
 
     Describe "Testing h1 - String" {
-     
+
         it 'Should not fail when passing String' {
             {h1 "woop"} | should not throw
         }
 
-        
+
 
         $String = h1 "woop"
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<h1.*>' | should be $true
             $string -match '.*</h1>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{
             $string -match "^.*>woop<.*" | should be $true
         }
     }
-    
+
 }
 
 Pop-Location

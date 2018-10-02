@@ -14,28 +14,28 @@ import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
     Describe "Testing col" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
         $string = col -span 4 -Attributes $CustomAtt -Style $Style -Class $class -id $id
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<col.*>' | should be $true
-            
-            
+
+
         }
 
         it "Testing tag parameters: span"{
             $string -match '^<col.*span="4".*>' | should be $true
         }
-        
+
         it "Testing common parameters: Class"{
             $string -match '^<col.*class="myclass".*>' | should be $true
         }
@@ -54,12 +54,12 @@ Context "Testing PSHTML"{
                 $string -match "^<col.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
-    
+
 }
 
 Pop-Location

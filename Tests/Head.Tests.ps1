@@ -14,28 +14,28 @@ import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
     Describe "Testing head" {
-        
+
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
         $string = head {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<head.*>' | should be $true
             $string -match '.*</head>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{
             $string -match "^.*>woop<.*" | should be $true
         }
-        
+
         it "Testing common parameters: Class"{
             $string -match '^<head.*class="myclass".*>' | should be $true
         }
@@ -54,30 +54,30 @@ Context "Testing PSHTML"{
                 $string -match "^<head.*$at=`"$val`".*>" | should be $true
             }
 
-            
+
         }
 
-        
+
     }
-    
+
     Describe "Testing head - String" {
-     
+
         it 'Should not fail when passing String' {
             {h5 "woop"} | should not throw
         }
 
-        
+
 
         $String = head "woop"
-       
+
         if($string -is [array]){
-            $string = $String -join "" 
+            $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
             $string -match '^<head.*>' | should be $true
             $string -match '.*</head>$' | should be $true
-            
+
         }
 
         it "Testing content in child element"{

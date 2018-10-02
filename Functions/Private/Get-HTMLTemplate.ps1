@@ -2,7 +2,7 @@ Function Get-HTMLTemplate{
     <#
         .Example
 
-        
+
 
 html{
     Body{

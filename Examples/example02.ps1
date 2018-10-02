@@ -21,7 +21,7 @@ $Document = html {
         }
 
             p{
-               
+
                 h2 "Example with HTML table"
 
                 table{
@@ -53,7 +53,7 @@ $Document = html {
                 }
             }
         p{
-            
+
             a {
                 "This links point to PowershellDistrict"
             } -href "http://powershellDistrict.com"
@@ -63,7 +63,7 @@ $Document = html {
                 h6 "This is h1 Title in Footer"
         }
     }
-    
+
 }
 
 
