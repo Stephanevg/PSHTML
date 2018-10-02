@@ -20,25 +20,28 @@ Function input {
         [Parameter(Mandatory = $false, Position = 2)]
         [switch]$required,
 
-        [Parameter(Position = 3)]
-        [String]$Class,
+        [Parameter(Mandatory = $false, Position = 3)]
+        [switch]$readonly,
 
         [Parameter(Position = 4)]
-        [String]$Id,
+        [String]$Class,
 
         [Parameter(Position = 5)]
-        [String]$Style,
+        [String]$Id,
 
         [Parameter(Position = 6)]
-        [String]$value,
+        [String]$Style,
 
         [Parameter(Position = 7)]
+        [String]$value,
+
+        [Parameter(Position = 8)]
         [Hashtable]$Attributes,
 
         [Parameter(
             ValueFromPipeline = $true,
             Mandatory = $false,
-            Position = 7
+            Position = 9
         )]
         [scriptblock]
         $Content
