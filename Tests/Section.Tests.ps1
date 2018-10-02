@@ -13,22 +13,22 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
-    Describe "Testing pre" {
+    Describe "Testing Section" {
 
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $string = pre {woop} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $string = Section {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
 
         if($string -is [array]){
             $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
-            $string -match '^<pre.*>' | should be $true
-            $string -match '.*</pre>$' | should be $true
+            $string -match '^<Section.*>' | should be $true
+            $string -match '.*</Section>$' | should be $true
 
         }
 
@@ -37,13 +37,13 @@ Context "Testing PSHTML"{
         }
 
         it "Testing common parameters: Class"{
-            $string -match '^<pre.*class="myclass".*>' | should be $true
+            $string -match '^<Section.*class="myclass".*>' | should be $true
         }
         it "Testing common parameters: ID"{
-            $string -match '^<pre.*id="myid".*>' | should be $true
+            $string -match '^<Section.*id="myid".*>' | should be $true
         }
         it "Testing common parameters: Style"{
-            $string -match '^<pre.*style=".+".*>' | should be $true
+            $string -match '^<Section.*style=".+".*>' | should be $true
         }
 
         it "Testing Attributes parameters"{
@@ -51,7 +51,7 @@ Context "Testing PSHTML"{
             foreach($at in $CustomAtt.Keys){
                 $val = $null
                 $val = $CustomAtt[$at]
-                $string -match "^<pre.*$at=`"$val`".*>" | should be $true
+                $string -match "^<Section.*$at=`"$val`".*>" | should be $true
             }
 
 
