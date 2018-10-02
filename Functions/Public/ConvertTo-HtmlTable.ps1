@@ -14,7 +14,12 @@ Function ConvertTo-HTMLTable {
         .EXAMPLE
 
         $proc = Get-Process | Select-Object -First 2
-        ConvertTo-HTMLtable -Object $proc
+        ConvertTo-HTMLtable -Object $proc 
+        
+        .EXAMPLE
+
+        $proc = Get-Process | Select-Object -First 2
+        ConvertTo-HTMLtable -Object $proc -properties name,handles
 
         .NOTES
         Current version 0.6
