@@ -48,8 +48,6 @@ Function ConvertTo-HTMLTable {
 
     Table{
 
-        $Properties = $object | get-member | where-Object -FilterScript {$_.MemberType -eq 'property' -or $_.MemberType -eq 'NoteProperty'}
-
         thead {
             tr{
 
