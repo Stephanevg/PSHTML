@@ -72,9 +72,13 @@ Describe "Testing ConvertTo-HTMLTable" {
 Describe "Testing ConvertTo-HTMLTable Properties Parameter" {
     $string = Get-Service | Where-Object -FilterScript {$_.Status -eq "running" -and $_.StartType -eq "Automatic"} | Select-Object -Property DisplayName,Status,StartType -first 2 | ConvertTo-HTMLTable -properties name,status
 
+    if($string -is [array]){
+        $string = $String -join ""
+    }
+
     it "The header Names of the Table should be the values passed to the properties parameter" {
-        $string -match ".*<td>Name</td>.*" | should be $true
-        $string -match ".*<td>Status</td>.*" | should be $true
+    
+        $string -match ".*<td>name</td><td>status</td>.*" | should be $true
 
     }
     

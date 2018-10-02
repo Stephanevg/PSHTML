@@ -43,7 +43,7 @@ Function ConvertTo-HTMLTable {
     }else{
         $props = $Object | Get-Member -MemberType Properties | Select-Object Name
         $HeaderNames = @()
-        foreach($i in $props){$HeaderNames += $i.name}
+        foreach($i in $props){$HeaderNames += $i.name.tostring()}
     }
 
     Table{
