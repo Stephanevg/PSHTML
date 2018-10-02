@@ -40,6 +40,14 @@ Function section {
     </section>
     .LINK
         https://github.com/Stephanevg/PSHTML
+
+    .NOTES
+        Current version 2.0
+        History:
+            2018.04.10;bateskevin; Updated to version 2.0
+            2018.04.10;Stephanevg; Added parameters
+            2018.04.01;Stephanevg;Creation.
+
     #>
     [CmdletBinding()]
     Param(
@@ -65,59 +73,37 @@ Function section {
         [scriptblock]
         $Content
     )
-    Process{
+    Process {
 
-        $attr = ""
-        $boundParams = $PSBoundParameters
-        $CommonParameters = @(
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "InsectionationAction",
-            "InsectionationVariable",
-            "OutVariable",
-            "OutBuffer",
-            "PipelineVariable",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable"
-        )
+        $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        $htmltagparams = @{}
+        $tagname = "Section"
 
-        foreach ($cp in $CommonParameters){
+        if($CustomParameters){
 
-            $null = $boundParams.Remove($cp)
-        }
+            foreach ($entry in $CustomParameters){
 
-        foreach ($entry in $boundParams.Keys){
-            if ($entry -eq 'content' -or $entry -eq 'attributes'){
-                continue
+
+                if($entry -eq "content"){
+
+                    
+                    $htmltagparams.$entry = $PSBoundParameters[$entry]
+                }else{
+                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                }
+                
+    
             }
-            $attr += "$($entry)=`"$($boundParams[$entry])`" "
 
-        }
-
-        if ($Attributes){
-            foreach ($entry in $Attributes.Keys){
-
-                $attr += "$($entry)=`"$($Attributes[$entry])`" "
-
+            if($Attributes){
+                $htmltagparams += $Attributes
             }
+
+
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
         }
-
-
-
-        if($attr){
-            "<section $attr>"
-        }else{
-            "<section>"
-        }
-
-        if($Content){
-            $Content.Invoke()
-        }
-
-
-        '</section>'
     }
 
 
