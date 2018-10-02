@@ -16,7 +16,7 @@ Function dd {
     dd "woop3" -Class "class" -Id "something" -Style "color:red;"
 
     .NOTES
-    Current version 1.0
+    Current version 2.0
        History:
            2018.10.02;bateskevin;Updated to v2.
            2018.04.01;bateskevin;Creation.
