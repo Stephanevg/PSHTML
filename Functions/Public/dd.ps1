@@ -16,9 +16,10 @@ Function dd {
     dd "woop3" -Class "class" -Id "something" -Style "color:red;"
 
     .NOTES
-    Current version 1.0
+    Current version 2.0
        History:
-           2018.04.01;bateskevinhanevg;Creation.
+           2018.10.02;bateskevin;Updated to v2.
+           2018.04.01;bateskevin;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -47,45 +48,36 @@ Function dd {
 
     )
 
-    $attr = ""
-    $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+    Process {
 
-    if($CustomParameters){
+        $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        $htmltagparams = @{}
+        $tagname = "dd"
 
-        foreach ($entry in $CustomParameters){
+        if($CustomParameters){
 
-
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-        }
-
-    }
-
-    if($Attributes){
-        foreach($entry in $Attributes.Keys){
-
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-        }
-    }
-
-    if($attr){
-        "<dd {0} >"  -f $attr
-    }else{
-        "<dd>"
-    }
+            foreach ($entry in $CustomParameters){
 
 
+                if($entry -eq "content"){
 
-    if($Content){
+                    
+                    $htmltagparams.$entry = $PSBoundParameters[$entry]
+                }else{
+                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                }
+                
+    
+            }
 
-        if($Content -is [System.Management.Automation.ScriptBlock]){
-            $Content.Invoke()
-        }else{
-            $Content
+            if($Attributes){
+                $htmltagparams += $Attributes
+            }
+
+
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
         }
     }
-
-
-    '</dd>'
 }

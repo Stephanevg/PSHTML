@@ -18,7 +18,8 @@ Function dt {
     .NOTES
     Current version 1.0
        History:
-           2018.04.01;bateskevinhanevg;Creation.
+           2018.10.02;bateskevin;Updated to v2.
+           2018.04.01;bateskevin;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -45,41 +46,36 @@ Function dt {
         [Hashtable]$Attributes
     )
 
-        $attr = ""
-        $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+    Process {
+
+        $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        $htmltagparams = @{}
+        $tagname = "dt"
 
         if($CustomParameters){
 
             foreach ($entry in $CustomParameters){
 
 
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+                if($entry -eq "content"){
 
+                    
+                    $htmltagparams.$entry = $PSBoundParameters[$entry]
+                }else{
+                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                }
+                
+    
             }
 
-        }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            if($Attributes){
+                $htmltagparams += $Attributes
             }
+
+
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
         }
-
-
-if($attr){
-    $return = @"
-    <dt $attr>$Content</dt>
-"@
-
-}else{
-
-    $return =     @"
-    <dt>$Content</dt>
-"@
-}
-
-return $return
-
+    }
 }
