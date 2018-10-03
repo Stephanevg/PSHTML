@@ -38,6 +38,7 @@ Function li {
     .NOTES
     Current version 1.1
        History:
+        2018.10.02;bateskevin;Updated to v2
         2018.04.14;stephanevg;Added Attributes parameter. Upgraded to v1.1.1
         2018.04.14;stephanevg;fix Content bug. Upgraded to v1.1.0
         2018.04.01;bateskevinhanevg;Creation.
@@ -72,48 +73,38 @@ Function li {
         [int]$Value
     )
 
-        $attr = ""
-        $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+    Process {
+
+        $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        $htmltagparams = @{}
+        $tagname = "li"
 
         if($CustomParameters){
 
             foreach ($entry in $CustomParameters){
 
 
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+                if($entry -eq "content"){
 
+                    
+                    $htmltagparams.$entry = $PSBoundParameters[$entry]
+                }else{
+                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                }
+                
+    
             }
 
-        }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            if($Attributes){
+                $htmltagparams += $Attributes
             }
+
+
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
         }
-
-
-        if($attr){
-            "<li {0} >"  -f $attr
-        }else{
-            "<li>"
-        }
-
-
-        if($Content){
-
-            if($Content -is [System.Management.Automation.ScriptBlock]){
-                $Content.Invoke()
-            }else{
-                $Content
-            }
-        }
-
-
-        '</li>'
-
+    }
 
 
 }
