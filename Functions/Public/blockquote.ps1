@@ -18,8 +18,9 @@ Function blockquote {
     "@
 
     .NOTES
-    Current version 1.0
+    Current version 2.0
        History:
+            2018.10.02;bateskevin;updated to version 2.0
             2018.05.07;stephanevg;updated to version 1.0
             2018.04.01;bateskevinhanevg;Creation.
     .LINK
@@ -50,42 +51,36 @@ Function blockquote {
         [Hashtable]$Attributes
     )
 
+    Process {
 
-        $attr = ""
-        $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+        $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        $htmltagparams = @{}
+        $tagname = "blockquote"
 
         if($CustomParameters){
 
             foreach ($entry in $CustomParameters){
 
 
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+                if($entry -eq "content"){
 
+                    
+                    $htmltagparams.$entry = $PSBoundParameters[$entry]
+                }else{
+                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                }
+                
+    
             }
 
-        }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            if($Attributes){
+                $htmltagparams += $Attributes
             }
+
+
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
         }
-
-        if($attr){
-            "<blockquote {0} >"  -f $attr
-        }else{
-            "<blockquote>"
-        }
-
-
-
-        if($Content){
-            $Content.Invoke()
-        }
-
-
-        '</blockquote>'
-
+    }
 }
