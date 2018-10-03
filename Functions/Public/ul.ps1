@@ -15,6 +15,7 @@ Function ul {
     .NOTES
     Current version 1.1
        History:
+           2018.10.02;bateskevin;Updated to v2.
            2018.04.14;stephanevg;fix Content bug. Upgraded to v1.1.
            2018.04.01;bateskevinhanevg;Creation.
     .LINK
@@ -49,55 +50,38 @@ Function ul {
         [string]$start
 
     )
-    Process{
+    Process {
 
-        $Attr = ""
-
-        if($reversed){
-            $Attr += "reversed "
-        }
-
-        $CommonParameters = ("Attributes", "content","reversed") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+        $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        $htmltagparams = @{}
+        $tagname = "ul"
 
         if($CustomParameters){
 
             foreach ($entry in $CustomParameters){
 
 
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+                if($entry -eq "content"){
 
+                    
+                    $htmltagparams.$entry = $PSBoundParameters[$entry]
+                }else{
+                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                }
+                
+    
             }
-        }
 
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            if($Attributes){
+                $htmltagparams += $Attributes
             }
+
+
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
         }
-
-        if($attr){
-            "<ul {0} >"  -f $attr
-        }else{
-            "<ul>"
-        }
-
-
-
-        if($Content){
-
-            if($Content -is [System.Management.Automation.ScriptBlock]){
-                $Content.Invoke()
-            }else{
-                $Content
-            }
-        }
-
-
-        '</ul>'
     }
-
 
 }
 
