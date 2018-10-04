@@ -187,6 +187,6 @@ I would like to have all HTML 5 tags available in PSHTML ASAP. The list is curre
 
 ## Contributing
 
-Read how you can `contribute` to `pshtml`by reading the [contributing](.\contributing.md) document.
+Read how you can `contribute` to `pshtml`by reading the [contributing](/CONTRIBUTING.md) document.
 
 
