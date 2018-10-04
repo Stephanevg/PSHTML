@@ -4,12 +4,13 @@ Module to generate HTML markup language within a DSL.
 
 # Example
 
-PSHTML allow people to write a HTML document(s) using powershell-like syntax, which makes building webpages easier, and less cumbersome for 'native' powersheller's.
+`PSHTML` allow people to write a HTML document(s) using `powershell-like` syntax, which makes building webpages easier, and less cumbersome for 'native' powersheller's.
 
-PSHTMl offers the flexibility of the POwerShell language, and allows to add logic in ```powershell``` directly in the ```HTML``` structure. This open the possibility to add loopings, conditional statements, switchs, functions, classes, calling external modules etc.. all that directly from the same editor.
+`PSHTML` offers the flexibility of the PowerShell language, and allows to add logic in ```powershell``` directly in the ```HTML``` structure. This open the possibility to add loops, conditional statements, switchs, functions, classes, calling external modules etc.. all that directly from the same editor.
+PSHTML comes with a templating functionality which allows one to include parts of webpages that are identical throughout the web page Eg: footer, Header,Menu etc..
 
-Also, it benefits from code completition, and syntax highliting from the the default powershell langauge, which will highlight any HTML syntax issue.
 
+Usinng PSHTML, offers code completition and syntax highliting from the the default powershell langauge. As PSHTML respects the W3C standards, any HTML errors, will be spotted immediatly.
 
 ## A few Basic examples
 
