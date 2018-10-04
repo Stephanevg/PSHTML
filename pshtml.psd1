@@ -12,7 +12,7 @@
 RootModule = 'pshtml.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.5.16'
+ModuleVersion = '0.5.17'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
