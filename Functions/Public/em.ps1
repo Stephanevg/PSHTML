@@ -4,8 +4,7 @@ Function em {
     Generates em HTML tag.
 
     .Description
-    This tag is a "Textual semantic" tag. To use it in a "P" tag, be sure to prefix it with a semicolon (";").
-    See example for more details.
+    This tag is a phrase tag. It renders as emphasized text.
 
     .EXAMPLE
     p{
@@ -21,8 +20,6 @@ Function em {
         </em>
     </p>
 
-
-
     .Notes
     Author: Andrew Wickham
     Version: 2.0.0
@@ -37,7 +34,6 @@ Function em {
 
         [Parameter(
             ValueFromPipeline = $true,
-            Mandatory = $true,
             Position = 0
         )]
         [object]$Content,
