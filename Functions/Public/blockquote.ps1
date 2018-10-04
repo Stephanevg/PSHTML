@@ -28,7 +28,7 @@ Function blockquote {
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$false)]
         [AllowEmptyString()]
         [AllowNull()]
         [String]
