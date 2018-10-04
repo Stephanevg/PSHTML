@@ -21,6 +21,17 @@ Function ConvertTo-HTMLTable {
         $proc = Get-Process | Select-Object -First 2
         ConvertTo-HTMLtable -Object $proc -properties name,handles
 
+        Returns the following HTML code
+
+        <table>
+            <thead>
+                <tr><td>name</td><td>handles</td></tr></thead>
+            <tbody>
+                <tr><td>AccelerometerSt</td><td>AgentService</td></tr>
+                <tr><td>155</td><td>190</td></tr>
+            </tbody>
+        </Table>
+
         .NOTES
         Current version 0.6
         History:
