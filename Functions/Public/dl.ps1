@@ -27,7 +27,6 @@ Function dl {
         [Parameter(Mandatory=$false,position=0)]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]
         $Content,
 
         [Parameter(Position = 1)]
