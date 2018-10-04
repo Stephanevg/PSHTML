@@ -13,7 +13,7 @@ Module to generate HTML markup language within a DSL.
 
 Usinng PSHTML, offers code completition and syntax highliting from the the default powershell langauge. As PSHTML respects the W3C standards, any HTML errors, will be spotted immediatly.
 
-## A few Basic examples
+## A few Basic examples of what PSHTML can achieve
 
 ### Basic page
 
@@ -174,13 +174,19 @@ In parallel to this, I want to add the support for the following attributes (as 
 
 
 Eventually, the following components will also be added:
- - [ ] Scripts
- - [ ] Include Sections
+ - [X] Scripts
+ - [X] Include Sections
  - [ ] Interactive Data
 
 Each function has an additional parameter called: ```Attributes``` of type HashTable.
-It allow to add additional html tags without having to list ALL the existing attributes. It offers flexibility for custom and/or special htmls attributes.
+It allow to add additional html tags without having to list ALL the existing attributes. It offers flexibility for custom and/or special htmls attributes, or the ones that are not immediatly available to you. (Open an issue, if you want to have an additional parameter for a specific html element. Or, you could add it your self, since this is an open sourced project ;) (Read 'contributing' part here under.
 
 ## HTML 5 coverage
 
 I would like to have all HTML 5 tags available in PSHTML ASAP. The list is currently ongoing, and this is work in progress. It can be followed [here](https://github.com/Stephanevg/PSHTML/issues/7)
+
+## Contributing
+
+Read how you can `contribute` to `pshtml`by reading the [contributing](.\contributing.md) document.
+
+
