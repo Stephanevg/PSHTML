@@ -63,10 +63,13 @@ Function base {
 
             }
 
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
+            if($Attributes){
+                $htmltagparams += $Attributes
+            }
+
         }
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
 
 
 
 }
-
