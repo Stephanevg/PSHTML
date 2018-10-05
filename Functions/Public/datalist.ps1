@@ -1,28 +1,37 @@
-Function blockquote {
+Function datalist {
     <#
     .SYNOPSIS
-    Create a blockquote tag in an HTML document.
+    Create a datalist tag in an HTML document.
+
+    .DESCRIPTION
+
+    The <datalist> tag specifies a list of pre-defined options for an <input> element.
+
+    The <datalist> tag is used to provide an "autocomplete" feature on <input> elements. Users will see a drop-down list of pre-defined options as they input data.
+
+    Use the <input> element's list attribute to bind it together with a <datalist> element.
 
     .EXAMPLE
-    blockquote -cite "https://www.google.com" -Content @"
-        Google is a
-        great website
-        to search for information
-    "@
+    
+    datalist {
+        option -value "Volvo" -Content "Volvo" 
+        option -value Saab -Content "saab"
+    }
 
+
+    Generates the following code:
+
+    <datalist>
+        <option value="Volvo"  >volvo</option>
+        <option value="Saab"  >saab</option>
+    </datalist>
     .EXAMPLE
-    blockquote -cite "https://www.google.com" -class "classy" -style "stylish" -Content @"
-        Google is a
-        great website
-        to search for information
-    "@
+    
 
     .NOTES
     Current version 2.0
        History:
-            2018.10.02;bateskevin;updated to version 2.0
-            2018.05.07;stephanevg;updated to version 1.0
-            2018.04.01;bateskevinhanevg;Creation.
+            2018.10.05;@stephanevg;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -31,10 +40,7 @@ Function blockquote {
         [Parameter(Mandatory=$false)]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]
         $Content,
-
-        [string]$cite,
 
         [AllowEmptyString()]
         [AllowNull()]
@@ -57,7 +63,7 @@ Function blockquote {
         $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
         
         $htmltagparams = @{}
-        $tagname = "blockquote"
+        $tagname = "datalist"
 
         if($CustomParameters){
 
@@ -80,7 +86,7 @@ Function blockquote {
             }
 
 
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
         }
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
     }
 }
