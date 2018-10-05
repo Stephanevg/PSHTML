@@ -20,7 +20,7 @@ Context "Testing PSHTML"{
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $string = datalist {woop} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $string = datalist {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
 
         if($string -is [array]){
             $string = $String -join ""
@@ -57,8 +57,19 @@ Context "Testing PSHTML"{
 
         }
 
+        it 'Testing: -Content Parameter should expand child elements' {
+            
+            $string2 = datalist {option -value "Volvo" -Content "Car" }
+            $String2 = $string2 -join ""
+            
+                $string2 -match '^.*>.*<option value="Volvo".*<.*' | should be $true
+            
+        }
+
 
     }
+
+    
 
 }
 
