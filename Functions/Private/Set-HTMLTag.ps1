@@ -69,7 +69,7 @@ Function Set-HtmlTag {
             if($attr){
                 "<{0} {1} {2}>"  -f $tagname,$attr,$Closingtag
             }else{
-                "<{0},{1}>" -f $tagname,$Closingtag
+                "<{0} {1}>" -f $tagname,$Closingtag
             }
         }else{
             #tag is of type "non-void"
