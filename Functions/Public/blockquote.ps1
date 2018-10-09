@@ -29,10 +29,14 @@ Function blockquote {
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$false)]
+
+        [Parameter(
+            ValueFromPipeline = $true,
+            Mandatory = $false,
+            Position = 0
+        )]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]
         $Content,
 
         [string]$cite,
