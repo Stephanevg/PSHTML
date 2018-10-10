@@ -12,34 +12,28 @@ Write-Verbose "Importing module"
 
 import-module .\PSHTML -Force
 
-    Describe "Testing optgroup - ScriptBlock" {
+Context "Testing PSHTML"{
+    Describe "Testing optgroup" {
 
 
         $Class = "MyClass"
         $Id = "MyID"
+        $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-
-        $string = optgroup -label "woop" -Target _top -Attributes $CustomAtt -Class $class -id $id
+        $string = optgroup {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
 
         if($string -is [array]){
             $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
-            $string -match '^<optgroup .*/>$' | should be $true
+            $string -match '^<optgroup.*>' | should be $true
+            $string -match '.*</optgroup>$' | should be $true
 
         }
 
-        it "Testing common parameters: href"{
-            $string -match '^<optgroup.*href="www\.powershelldistrict\.com".*/>' | should be $true
-        }
-
-        it "Testing common parameters: Attributes should not be present"{
-            $string -match '^<optgroup.*attributes=.*>' | should be $false
-        }
-
-        it "Testing common parameters: Target"{
-            $string -match '^<optgroup.*target="_top".*>' | should be $true
+        it "Testing content in child element"{
+            $string -match "^.*>woop<.*" | should be $true
         }
 
         it "Testing common parameters: Class"{
@@ -47,6 +41,9 @@ import-module .\PSHTML -Force
         }
         it "Testing common parameters: ID"{
             $string -match '^<optgroup.*id="myid".*>' | should be $true
+        }
+        it "Testing common parameters: Style"{
+            $string -match '^<optgroup.*style=".+".*>' | should be $true
         }
 
         it "Testing Attributes parameters"{
@@ -62,5 +59,7 @@ import-module .\PSHTML -Force
 
 
     }
+
+}
 
 Pop-Location
