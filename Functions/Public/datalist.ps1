@@ -13,6 +13,18 @@ Function datalist {
 
     .EXAMPLE
     
+    datalist {
+        option -value "Volvo" -Content "Volvo" 
+        option -value Saab -Content "saab"
+    }
+
+
+    Generates the following code:
+
+    <datalist>
+        <option value="Volvo"  >volvo</option>
+        <option value="Saab"  >saab</option>
+    </datalist>
     .EXAMPLE
     
 
@@ -28,10 +40,7 @@ Function datalist {
         [Parameter(Mandatory=$false)]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]
         $Content,
-
-        [string]$cite,
 
         [AllowEmptyString()]
         [AllowNull()]
@@ -77,7 +86,7 @@ Function datalist {
             }
 
 
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
         }
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
     }
 }
