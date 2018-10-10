@@ -19,7 +19,7 @@ import-module .\PSHTML -Force
         $Id = "MyID"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
 
-        $string = optgroup -href "www.powershelldistrict.com" -Target _top -Attributes $CustomAtt -Class $class -id $id
+        $string = optgroup -label "woop" -Target _top -Attributes $CustomAtt -Class $class -id $id
 
         if($string -is [array]){
             $string = $String -join ""
