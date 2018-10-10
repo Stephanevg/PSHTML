@@ -40,7 +40,7 @@ Function area {
     <area href="image.png"coords="0,0,20,20"shape="rect" >
 
     .NOTES
-     Current version 1.0
+     Current version 2.0
         History:
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
@@ -114,8 +114,8 @@ Function area {
 
             }
 
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType void
         }
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType void
 
     }#End process
 

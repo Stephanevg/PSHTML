@@ -35,8 +35,9 @@ Function img {
 
 
         .NOTES
-        Current version 1.0
+        Current version 2.0
         History:
+            2018.10.10;Stephanevg; Updated code to version 2.0
             2018.05.07;Stephanevg; Updated code to version 1.0
             2018.04.01;Stephanevg;Creation.
         .LINK
@@ -45,11 +46,11 @@ Function img {
 
     Param(
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$false)]
         [String]
         $src="",
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$false)]
         [string]
         $alt = "",
 
@@ -72,31 +73,32 @@ Function img {
 
 
     $attr = ""
-    $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+    $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
     $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
 
+    $htmltagparams = @{}
+    $tagname = "img"
     if($CustomParameters){
 
         foreach ($entry in $CustomParameters){
 
+            if($entry -eq "content"){
 
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+
+                $htmltagparams.$entry = $PSBoundParameters[$entry]
+            }else{
+                $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+            }
+
 
         }
 
-    }
-
-    if($Attributes){
-        foreach($entry in $Attributes.Keys){
-
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+        if($Attributes){
+            $htmltagparams += $Attributes
         }
-    }
 
-    if($attr){
-        "<img {0} />"  -f $attr
-    }else{
-        "<img />"
     }
+    Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType Void
+
 
 }

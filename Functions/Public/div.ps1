@@ -74,8 +74,8 @@ Function Div {
             }
 
 
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
         }
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
     }
 
 

@@ -27,6 +27,15 @@ Function optgroup {
     [Cmdletbinding()]
     Param(
 
+        [Parameter(
+            ValueFromPipeline = $true,
+            Mandatory = $false,
+            Position = 0
+        )]
+        [AllowEmptyString()]
+        [AllowNull()]
+        $Content,
+
         [Parameter(Mandatory = $false)]
         [String]$Label,
 
@@ -37,17 +46,24 @@ Function optgroup {
         [AllowNull()]
         [String]$Class,
 
+        [AllowEmptyString()]
+        [AllowNull()]
         [String]$Id,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Style,
 
         [Hashtable]$Attributes
     )
 
-        $attr = ""
+        #$attr = ""
         $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
 
         $htmltagparams = @{}
         $tagname = "optgroup"
+
         if($CustomParameters){
 
             foreach ($entry in $CustomParameters){
@@ -63,10 +79,15 @@ Function optgroup {
 
             }
 
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
-        }
+            if($Attributes){
+                $htmltagparams += $Attributes
+            }
 
+        }
+        
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
 
 
 }
 
+optgroup
