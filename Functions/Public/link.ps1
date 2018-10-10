@@ -47,7 +47,7 @@ Function Link {
         [AllowNull()]
         $type,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$False)]
         [Validateset("alternate","author","dns-prefetch","help","icon","license","next","pingback","preconnect","prefetch","preload","prerender","prev","search","stylesheet")]
         [string]
         $rel,
