@@ -20,7 +20,7 @@ Context "Testing PSHTML"{
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $string = meter {woop} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $string = meter {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
 
         if($string -is [array]){
             $string = $String -join ""
