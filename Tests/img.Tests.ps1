@@ -27,8 +27,8 @@ Context "Testing PSHTML"{
         }
 
         it "Should contain opening and closing tags" {
-            $string -match '^<img.*>' | should be $true
-            $string -match '.*</img>$' | should be $true
+            $string -match '^<img.*/>' | should be $true
+            $string -match '.*/>$' | should be $true
 
         }
 
