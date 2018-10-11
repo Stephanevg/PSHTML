@@ -43,7 +43,7 @@ Function blockquote {
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class="",
+        [String]$Class = "",
 
         [String]$Id,
 
@@ -56,36 +56,34 @@ Function blockquote {
         [Hashtable]$Attributes
     )
 
-    Process {
-
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+    Begin {
         
         $htmltagparams = @{}
         $tagname = "blockquote"
+    }
+    Process {       
+        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+        
+        if ($CustomParameters) {
 
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-
-                if($entry -eq "content"){
-
-                    
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }else{
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+            Switch ($CustomParameters) {
+                {($_ -eq 'content') -and ($null -eq $htmltagparams.$_)} {
+                    $htmltagparams.$_ = @($PSBoundParameters[$_])
+                    continue
                 }
-                
-    
+                {$_ -eq 'content'} {
+                    $htmltagparams.$_ += $PSBoundParameters[$_]
+                    continue
+                }
+                default {$htmltagparams.$_ = "{0}" -f $PSBoundParameters[$_]}
             }
-
-            if($Attributes){
-                $htmltagparams += $Attributes
-            }
-
-
         }
-         Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
+    }
+    End {
+        if ($Attributes) {
+            $htmltagparams += $Attributes
+        }
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
     }
 }
