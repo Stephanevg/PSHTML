@@ -61,7 +61,7 @@ html{
         write-verbose "Template file found at $($Template.FullName)"
     }
 
-    $Rawcontent = Get-Content $Template.FullName
+    $Rawcontent = Get-Content $Template.FullName -Raw
     $Content = [scriptBlock]::Create($Rawcontent).Invoke()
     return $content
 
