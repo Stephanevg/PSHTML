@@ -12,4 +12,4 @@ install:
 build: off
 test_script:
 - ps: >- 
-    .\CI\build.ps1
+    .\CI\Build.ps1
