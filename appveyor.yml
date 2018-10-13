@@ -4,7 +4,8 @@ image:
 
 install:
 - ps: >-
-    Install-PackageProvider -Name NuGet -Force
+  # Is this needed?
+  #  Install-PackageProvider -Name NuGet -Force
     
     Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
     
