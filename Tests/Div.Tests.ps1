@@ -32,7 +32,7 @@ Context "Testing PSHTML"{
 
         }
 
-        it "Testing content in child element" -Skip {
+        it "Testing content in child element" {
             $string -match "^.*>woop<.*" | should be $true
         }
 
