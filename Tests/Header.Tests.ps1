@@ -10,7 +10,7 @@ set-location -Path $RootFolder.FullName
 
 Write-Verbose "Importing module"
 
-import-module .\PSHTML -Force
+import-module .\PSHtml -Force
 
 Context "Testing PSHTML"{
     Describe "Testing header" {

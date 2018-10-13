@@ -8,7 +8,7 @@ set-location -Path $RootFolder.FullName
 
 Write-Verbose "Importing module"
 
-import-module .\PSHTML -Force
+import-module .\PSHtml -Force
 
 
 Describe "Testing ConvertTo-HTMLTable" {
