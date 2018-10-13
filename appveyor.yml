@@ -1,3 +1,7 @@
+image:
+- Visual Studio 2017
+- Ubuntu
+
 install:
 - ps: >-
     Install-PackageProvider -Name NuGet -Force
