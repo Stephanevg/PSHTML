@@ -9,10 +9,10 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-RootModule = 'pshtml.psm1'
+RootModule = 'PSHtml.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.5.19'
+ModuleVersion = '0.5.20'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()

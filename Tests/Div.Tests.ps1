@@ -10,7 +10,7 @@ set-location -Path $RootFolder.FullName
 
 Write-Verbose "Importing module"
 
-import-module .\PSHTML -Force
+import-module .\pshtml.psd1 -Force
 
 Context "Testing PSHTML"{
     Describe "Testing Div" {
@@ -32,7 +32,7 @@ Context "Testing PSHTML"{
 
         }
 
-        it "Testing content in child element"{
+        it "Testing content in child element" {
             $string -match "^.*>woop<.*" | should be $true
         }
 

@@ -76,4 +76,4 @@ $Document = html {
 }
 
 
-$Document > .\PSHTML_Example.html
+$Document > .\PSHtml_Example.html

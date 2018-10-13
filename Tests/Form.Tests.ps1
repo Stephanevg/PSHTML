@@ -10,7 +10,7 @@ set-location -Path $RootFolder.FullName
 
 Write-Verbose "Importing module"
 
-import-module .\PSHTML -Force
+import-module .\pshtml.psd1 -Force
 
 Context "Testing PSHTML"{
     Describe "Testing Form" {
@@ -34,7 +34,7 @@ Context "Testing PSHTML"{
 
         }
 
-        it "Testing primary parameters: Action"{
+        it "Testing primary parameters: Action" {
             $string -match '^<form.*action="action_Page\.php".*>'| should be $true
         }
 
