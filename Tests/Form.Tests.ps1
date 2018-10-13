@@ -34,7 +34,7 @@ Context "Testing PSHTML"{
 
         }
 
-        it "Testing primary parameters: Action" -Skip {
+        it "Testing primary parameters: Action" {
             $string -match '^<form.*action="action_Page\.php".*>'| should be $true
         }
 
