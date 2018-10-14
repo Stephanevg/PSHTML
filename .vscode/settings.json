@@ -2,5 +2,10 @@
     "editor.renderWhitespace": "all",
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
-    "editor.detectIndentation": false
+    "editor.detectIndentation": false,
+    "powershell.codeFormatting.ignoreOneLineBlock": false,
+    "powershell.codeFormatting.newLineAfterCloseBrace": true,
+    "powershell.codeFormatting.newLineAfterOpenBrace": true,
+    "powershell.codeFormatting.openBraceOnSameLine": true,
+    "powershell.codeFormatting.whitespaceAfterSeparator": true
 }
