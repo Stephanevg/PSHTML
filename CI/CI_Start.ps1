@@ -38,7 +38,5 @@ if ($res.FailedCount -gt 0) { throw "$($res.FailedCount) tests failed."};
             }
         }
     }else{
-        write-host "[$($env:APPVEYOR_REPO_BRANCH)] Build finished." -foregroundcolor Yellow;
-    }Else{
-        write-host "[$($env:APPVEYOR_REPO_BRANCH)] Build tasks finished" -foregroundcolor red;
-    }
+        write-host "[$($env:APPVEYOR_REPO_BRANCH)] Build tasks finished." -foregroundcolor Yellow;
+}
