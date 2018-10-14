@@ -21,6 +21,9 @@ Usinng PSHTML, offers code completition and syntax highliting from the the defau
 |master |[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/master) |
 |dev |[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/dev)|
 
+A change log is available [here](Change_Log.md)
+Known issues are tracked [here](Known_Issues.md)
+
 ## A few Basic examples of what PSHTML can achieve
 
 ### Basic page
