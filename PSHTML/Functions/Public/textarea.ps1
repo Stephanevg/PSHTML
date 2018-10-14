@@ -34,27 +34,27 @@ Function textarea {
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         $Content,
         
         [AllowEmptyString()]
         [AllowNull()]
-        [int]$Name="",
+        [int]$Name = "",
 
         [AllowEmptyString()]
         [AllowNull()]
-        [int]$Rows="",
+        [int]$Rows = "",
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Cols="",
+        [String]$Cols = "",
 
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class="",
+        [String]$Class = "",
 
         [String]$Id,
 
@@ -75,28 +75,29 @@ Function textarea {
         $htmltagparams = @{}
         $tagname = "textarea"
 
-        if($CustomParameters){
+        if ($CustomParameters) {
 
-            foreach ($entry in $CustomParameters){
+            foreach ($entry in $CustomParameters) {
 
 
-                if($entry -eq "content"){
+                if ($entry -eq "content") {
 
                     
                     $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }else{
+                }
+                else {
                     $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
                 }
                 
     
             }
 
-            if($Attributes){
+            if ($Attributes) {
                 $htmltagparams += $Attributes
             }
 
 
         }
-         Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid
     }
 }
