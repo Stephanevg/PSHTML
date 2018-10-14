@@ -1,29 +1,36 @@
-Function blockquote {
+Function canvas {
     <#
     .SYNOPSIS
-    Create a blockquote tag in an HTML document.
+    Create a canvas tag in an HTML document.
+
+    .DESCRIPTION
+
+    Will create a canvas. Perfect to draw beautfill art.
+
+    Note: Any text inside the <canvas> element will be displayed in browsers that does not support <canvas>.
 
     .EXAMPLE
-    blockquote -cite "https://www.google.com" -Content @"
-        Google is a
-        great website
-        to search for information
-    "@
+    
+     canvas -Height 300 -Width 400
+
+     generates
+
+    <canvas Height="300" Width="400"  >
+    </canvas>
 
     .EXAMPLE
-    blockquote -cite "https://www.google.com" -class "classy" -style "stylish" -Content @"
-        Google is a
-        great website
-        to search for information
-    "@
+    
+    #text will be displayed, only if the canvas cannot be displayed in the browser.
+    canvas -Height 300 -Width 400 -Content "Not supported in your browser"
+
+    <canvas Width="400" Height="300"  >
+        Not supported in your browser
+    </canvas>
 
     .NOTES
     Current version 2.0
        History:
-            2018.10.02;@stephanevg;Fixed error when no content passed. to version 2.0
-            2018.10.02;bateskevin;updated to version 2.0
-            2018.05.07;stephanevg;updated to version 1.0
-            2018.04.01;bateskevinhanevg;Creation.
+            2018.04.01;stephanevg;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -39,7 +46,13 @@ Function blockquote {
         [AllowNull()]
         $Content,
 
-        [string]$cite,
+        [AllowEmptyString()]
+        [AllowNull()]
+        $Height,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        $Width,
 
         [AllowEmptyString()]
         [AllowNull()]
@@ -59,7 +72,7 @@ Function blockquote {
     Begin {
         
         $htmltagparams = @{}
-        $tagname = "blockquote"
+        $tagname = "canvas"
     }
     Process {       
         $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
@@ -87,3 +100,4 @@ Function blockquote {
         Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
     }
 }
+

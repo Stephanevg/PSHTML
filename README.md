@@ -2,7 +2,7 @@
 
 Module to generate HTML markup language within a DSL.
 
-# Example
+# Summary
 
 `PSHTML` allow people to write a HTML document(s) using `powershell-like` syntax, which makes building webpages easier, and less cumbersome for 'native' powersheller's.
 
@@ -12,6 +12,17 @@ Module to generate HTML markup language within a DSL.
 
 
 Usinng PSHTML, offers code completition and syntax highliting from the the default powershell langauge. As PSHTML respects the W3C standards, any HTML errors, will be spotted immediatly.
+
+-----
+
+## Build Status
+|Branch|Status|
+|---|---|
+|master |[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/master) |
+|dev |[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/dev)|
+
+A change log is available [here](Change_Log.md)
+Known issues are tracked [here](Known_Issues.md)
 
 ## A few Basic examples of what PSHTML can achieve
 
