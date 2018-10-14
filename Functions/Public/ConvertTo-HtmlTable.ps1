@@ -1,5 +1,5 @@
 Function ConvertTo-HTMLTable {
-    <#
+<#
 .SYNOPSIS
     Converts a powershell object to a HTML table.
 
@@ -12,9 +12,6 @@ Function ConvertTo-HTMLTable {
 .PARAMETER Properties
     Properties you want as table headernames
 
-.PARAMETER Inline
-    Force the ouput to be inline. By default output is by column
-
 .EXAMPLE
     $service = Get-Service -Name Sens,wsearch,wscsvc | Select-Object -Property DisplayName,Status,StartType
     ConvertTo-HTMLtable -Object $service
@@ -26,21 +23,6 @@ Function ConvertTo-HTMLTable {
 .EXAMPLE
     $proc = Get-Process | Select-Object -First 2
     ConvertTo-HTMLtable -Object $proc -properties name,handles
-
-    Returns the following HTML code
-
-    <table>
-        <thead>
-            <tr><td>name</td><td>handles</td></tr></thead>
-        <tbody>
-            <tr><td>AccelerometerSt</td><td>AgentService</td></tr>
-            <tr><td>155</td><td>190</td></tr>
-        </tbody>
-    </Table>
-
-.EXAMPLE
-    $proc = Get-Process | Select-Object -First 2
-    ConvertTo-HTMLtable -Object $proc -properties name,handles -Inline
 
     Returns the following HTML code
 
@@ -76,8 +58,7 @@ Function ConvertTo-HTMLTable {
     Param(
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
         $Object,
-        [String[]]$Properties,
-        [Switch]$Inline
+        [String[]]$Properties
     )
 
 
@@ -112,36 +93,18 @@ Function ConvertTo-HTMLTable {
 
         tbody {
 
-            if ($PSBoundParameters['Inline']) {
-                foreach ($item in $Object) {
+            foreach ($item in $Object) {
 
-                    tr {
+                tr {
 
-                        foreach ($propertyName in $HeaderNames) {
+                    foreach ($propertyName in $HeaderNames) {
 
-                            td {
-                                $item.$propertyName
-                            }
-
+                        td {
+                            $item.$propertyName
                         }
 
                     }
-                }
-            }
-            else {
-                foreach ($item in $Headernames) {
 
-                    tr {
-
-                        foreach ($propertyName in $Object.$item) {
-
-                            td {
-                                $propertyName
-                            }
-
-                        }
-
-                    }
                 }
             }
 
