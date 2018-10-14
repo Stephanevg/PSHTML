@@ -1,29 +1,30 @@
-Function blockquote {
+Function math {
     <#
     .SYNOPSIS
-    Create a blockquote tag in an HTML document.
+    Create a math tag in an HTML document.
 
     .EXAMPLE
-    blockquote -cite "https://www.google.com" -Content @"
-        Google is a
-        great website
-        to search for information
-    "@
+    
+    math -dir ltr -MathbackGround "#234"
+
+    #Generates the following
+
+    <math dir="ltr" MathbackGround="#234"  >
+    </math>
 
     .EXAMPLE
-    blockquote -cite "https://www.google.com" -class "classy" -style "stylish" -Content @"
-        Google is a
-        great website
-        to search for information
-    "@
+    
+     math -dir ltr -MathbackGround "#234" -Display Inline -Overflow linebreak
+    
+     #Generates the following
+
+     <math Overflow="linebreak" dir="ltr" Display="Inline" MathbackGround="#234"  >
+    </math>
 
     .NOTES
     Current version 2.0
        History:
-            2018.10.02;@stephanevg;Fixed error when no content passed. to version 2.0
-            2018.10.02;bateskevin;updated to version 2.0
-            2018.05.07;stephanevg;updated to version 1.0
-            2018.04.01;bateskevinhanevg;Creation.
+            2018.04.01;stephanevg;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -39,7 +40,33 @@ Function blockquote {
         [AllowNull()]
         $Content,
 
-        [string]$cite,
+        [ValidateSet("ltr","rtl")]
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$dir = "",
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$href = "",
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$MathbackGround = "",
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$MathColor = "",
+
+        [ValidateSet("Block","Inline")]
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Display = "",
+
+
+        [ValidateSet("linebreak","scrolle","elide","truncate","scale")]
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Overflow,
 
         [AllowEmptyString()]
         [AllowNull()]
@@ -59,7 +86,7 @@ Function blockquote {
     Begin {
         
         $htmltagparams = @{}
-        $tagname = "blockquote"
+        $tagname = "math"
     }
     Process {       
         $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
@@ -87,3 +114,4 @@ Function blockquote {
         Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
     }
 }
+
