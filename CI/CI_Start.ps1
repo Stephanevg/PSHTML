@@ -30,8 +30,8 @@ if ($res.FailedCount -eq 0 -and $res.successcount -ne 0) {
         Write-host "[$($env:APPVEYOR_REPO_BRANCH)] All tested Passed, and on Branch 'master'"
         import-module "$($env:APPVEYOR_BUILD_FOLDER)\$($ModuleName)\$($ModuleName).psd1" -Force -Verbose
         try{
-
-            $GalleryVersion = (Find-Module $ModuleName).version -ErrorAction stop
+            $GalleryModule = Find-Module $ModuleName -ErrorAction stop
+            $GalleryVersion = $GalleryModule.version 
         }catch{
             Write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)] Module not found on the gallery (First deployment?)"
         }
