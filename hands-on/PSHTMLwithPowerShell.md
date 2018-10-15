@@ -46,7 +46,7 @@ foreach($route in (Get-ChildItem -Path .\routes)) {
 Start-Polaris -Port 8080
 ```
 
-> helloworld.ps1 - snippet
+> helloworld.ps1 - snippet (Routes are case sensitive)
 
 ```PowerShell
 New-PolarisGetRoute -path '/helloworld' -ScriptBlock {
