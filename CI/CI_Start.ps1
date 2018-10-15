@@ -33,7 +33,7 @@ if ($res.FailedCount -eq 0 -and $res.successcount -ne 0) {
 
             $GalleryVersion = (Find-Module $ModuleName).version -ErrorAction stop
         }catch{
-            Write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)] "Module not found on the gallery (First deployment?)"
+            Write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)] Module not found on the gallery (First deployment?)"
         }
         $LocalVersion = (get-module $ModuleName).version.ToString()
 
