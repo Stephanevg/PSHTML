@@ -184,6 +184,12 @@ Which generate the following HTML page :
 
 ![screen shot of PSHTML ConvertTo-HTMLtable results](/Examples/Example-ConvertTo-HTMLtable.png)
 
+# Dynamic pages:
+
+It is possible to couple PSHTML with other cool technologies such as nodejs or Polaris.
+
+Read the [following example](/hands-on/PSHTMLwithPowerShell.md) on how to do this (Thanks to [chen](https://github.com/ChendrayanV)!!)
+
 # Todo List
 
 There is a lot to accomplish before making this module available to the public.

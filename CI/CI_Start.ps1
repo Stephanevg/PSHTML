@@ -4,6 +4,8 @@ start-sleep -seconds 2
 write-output "BUILD_FOLDER: $($env:APPVEYOR_BUILD_FOLDER)"
 write-output "PROJECT_NAME: $($env:APPVEYOR_PROJECT_NAME)"
 write-output "BRANCH: $($env:APPVEYOR_REPO_BRANCH)"
+$ModuleClonePath = Join-Path -Path $env:APPVEYOR_BUILD_FOLDER -ChildPath $env:APPVEYOR_PROJECT_NAME
+Write-Output "MODULE CLONE PATH: $($ModuleClonePath)"
 
 $ModuleClonePath = Join-Path -Path $env:APPVEYOR_BUILD_FOLDER -ChildPath $env:APPVEYOR_PROJECT_NAME
 
@@ -34,8 +36,8 @@ if ($res.FailedCount -eq 0 -and $res.successcount -ne 0) {
 
         Copy-Item -Path $ModuleClonePath -Destination $OfficialModulePath -Recurse -Force
 
-        Write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)] Import module from: $($ModuleClonePath)\$($ModuleName)\$($ModuleName).psd1" -ForegroundColor DarkGreen
-        import-module "$($ModuleClonePath)\$($ModuleName)\$($ModuleName).psd1" -Force
+        Write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)] Import module from: $($ModuleClonePath)\$($ModuleName).psd1" -ForegroundColor DarkGreen
+        import-module "$($ModuleClonePath)\$($ModuleName).psd1" -Force
         try{
             $GalleryModule = Find-Module $ModuleName -ErrorAction stop
             $GalleryVersion = $GalleryModule.version 

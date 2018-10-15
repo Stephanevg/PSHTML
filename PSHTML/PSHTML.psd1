@@ -30,10 +30,10 @@ CompanyName = 'District'
 Copyright = '(c) 2018 Stéphane van Gulick. All rights reserved.'
 
 # Description of the functionality provided by this module
-# Description = ''
+Description = 'Module to generate HTML markup language and create awesome web pages!'
 
 # Minimum version of the Windows PowerShell engine required by this module
-# PowerShellVersion = ''
+PowerShellVersion = '3.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -95,19 +95,19 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+        Tags = @('pshtml','html','web')
 
         # A URL to the license for this module.
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/Stephanevg/PSHTML'
 
         # A URL to an icon representing this module.
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        ReleaseNotes = 'https://github.com/Stephanevg/PSHTML/blob/master/Change_Log.md'
 
     } # End of PSData hashtable
 
