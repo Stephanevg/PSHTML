@@ -28,7 +28,7 @@ if ($res.FailedCount -gt 0 -or $res.PassedCount -eq 0) {
 if ($res.FailedCount -eq 0 -and $res.successcount -ne 0) {
     If ($env:APPVEYOR_REPO_BRANCH -eq "master") {
         Write-host "[$($env:APPVEYOR_REPO_BRANCH)] All tested Passed, and on Branch 'master'"
-        import-module "$($env:APPVEYOR_BUILD_FOLDER)\$($ModuleName)\$($ModuleName).psd1" -Force -Verbose
+        import-module "$($env:APPVEYOR_BUILD_FOLDER)\$($ModuleName)\$($ModuleName).psd1" -Force
         try{
             $GalleryModule = Find-Module $ModuleName -ErrorAction stop
             $GalleryVersion = $GalleryModule.version 
@@ -51,7 +51,7 @@ if ($res.FailedCount -eq 0 -and $res.successcount -ne 0) {
 
                 try{
     
-                    publish-module -Name $($env:APPVEYOR_BUILD_FOLDER)\$ModuleName -NuGetApiKey $Env:PSgalleryKey; -ErrorAction stop;
+                    publish-module -Name $ModuleName -NuGetApiKey $Env:PSgalleryKey; -ErrorAction stop;
                     write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)][$($LocalVersion)] Module successfully deployed to the psgallery" -foregroundcolor green;
                 }Catch{
                     write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)][$($LocalVersion)] An error occured while publishing the module to the gallery" -foregroundcolor red;
