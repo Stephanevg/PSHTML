@@ -1,90 +1,119 @@
 Function ConvertTo-HTMLTable {
     <#
-
-        .SYNOPSIS
+    .SYNOPSIS
         Converts a powershell object to a HTML table.
-
-        .DESCRIPTION
+    
+    .DESCRIPTION
         This cmdlet is intended to be used when powershell objects should be rendered in an HTML table format.
-
-        .EXAMPLE
+    
+    .PARAMETER Object
+        Specifies the object to use
+    
+    .PARAMETER Properties
+        Properties you want as table headernames
+    
+    .EXAMPLE
         $service = Get-Service -Name Sens,wsearch,wscsvc | Select-Object -Property DisplayName,Status,StartType
         ConvertTo-HTMLtable -Object $service
-
-        .EXAMPLE
-
+    
+    .EXAMPLE
         $proc = Get-Process | Select-Object -First 2
         ConvertTo-HTMLtable -Object $proc 
-        
-        .EXAMPLE
-
+    
+    .EXAMPLE
         $proc = Get-Process | Select-Object -First 2
         ConvertTo-HTMLtable -Object $proc -properties name,handles
-
+    
         Returns the following HTML code
-
+    
         <table>
             <thead>
-                <tr><td>name</td><td>handles</td></tr></thead>
+                <tr>
+                    <td>name</td>
+                    <td>handles</td>
+                </tr>
+            </thead>
             <tbody>
-                <tr><td>AccelerometerSt</td><td>AgentService</td></tr>
-                <tr><td>155</td><td>190</td></tr>
+                <tr>
+                    <td>AccelerometerSt</td>
+                    <td>155</td>
+                </tr>
+                <tr>
+                    <td>AgentService</td>
+                    <td>190</td>
+                </tr>
             </tbody>
-        </Table>
-
-        .NOTES
-        Current version 0.6
-        History:
-           2018.05.09;stephanevg;Creation.
-        .LINK
-            https://github.com/Stephanevg/PSHTML
+        </table>
+    
+    .NOTES
+            Current version 0.7.1
+            History:
+            2018.05.09;stephanevg;Made Linux compatible (changed Get-Serv).
+            2018.10.14;Christophe Kumor;Update.
+            2018.05.09;stephanevg;Creation.
+            
+    
+    .LINK
+        https://github.com/Stephanevg/PSHTML
     #>
-    [CmdletBinding()]
-    Param(
-        [Parameter(Mandatory=$true,
-                ValueFromPipeline=$true
-        )]
-        $Object,
-        [String[]]$Properties
-    )
-
-
-    if($Properties){
-        $HeaderNames = $Properties
-    }else{
-        $props = $Object | Get-Member -MemberType Properties | Select-Object Name
-        $HeaderNames = @()
-        foreach($i in $props){$HeaderNames += $i.name.tostring()}
-    }
-
-    Table{
-
-        thead {
-            tr{
-
-
-                foreach($Name in $HeaderNames){
-
-                    td{
-                        $Name
-                    }
-                }
+        [CmdletBinding()]
+        Param(
+            [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+            $Object,
+            [String[]]$Properties
+        )
+    
+    
+        if ($Properties) {
+            $HeaderNames = $Properties
+        }
+        else {
+            $props = $Object | Get-Member -MemberType Properties | Select-Object Name
+            $HeaderNames = @()
+            foreach ($i in $props) {
+                $HeaderNames += $i.name.tostring()
             }
         }
-        Tbody{
-            foreach($item in $Headernames){
-                tr{
-
-
-                    foreach($propertyName in $Object.$item){
-
+    
+        table {
+    
+            thead {
+    
+                tr {
+    
+                    foreach ($Name in $HeaderNames) {
+    
                         td {
-                            $propertyName
+                            $Name
                         }
-
+    
+                    }
+    
+                }
+    
+            }
+    
+            tbody {
+    
+                foreach ($item in $Object) {
+    
+                    tr {
+    
+                        foreach ($propertyName in $HeaderNames) {
+    
+                            td {
+                                $item.$propertyName
+                            }
+    
+                        }
+    
                     }
                 }
+    
             }
         }
     }
-}
+    
+    
+    
+    
