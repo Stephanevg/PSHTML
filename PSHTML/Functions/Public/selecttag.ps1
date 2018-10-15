@@ -76,8 +76,9 @@ Function selecttag {
                 $htmltagparams += $Attributes
             }
 
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
         }
+    Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
+
 
 
 

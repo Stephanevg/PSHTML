@@ -53,29 +53,31 @@ Function dl {
         $htmltagparams = @{}
         $tagname = "dl"
 
-        if($CustomParameters){
+        if ($CustomParameters) {
 
-            foreach ($entry in $CustomParameters){
+            foreach ($entry in $CustomParameters) {
 
 
-                if($entry -eq "content"){
+                if ($entry -eq "content") {
 
                     
                     $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }else{
+                }
+                else {
                     $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
                 }
                 
     
             }
 
-            if($Attributes){
+            if ($Attributes) {
                 $htmltagparams += $Attributes
             }
 
 
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
         }
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
+        
     }
 
 }

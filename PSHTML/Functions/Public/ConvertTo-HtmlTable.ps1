@@ -1,4 +1,5 @@
 Function ConvertTo-HTMLTable {
+
     <#
     .SYNOPSIS
         Converts a powershell object to a HTML table.
@@ -56,64 +57,64 @@ Function ConvertTo-HTMLTable {
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
-        [CmdletBinding()]
-        Param(
-            [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
-            $Object,
-            [String[]]$Properties
-        )
+    [CmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+        $Object,
+        [String[]]$Properties
+    )
     
     
-        if ($Properties) {
-            $HeaderNames = $Properties
+    if ($Properties) {
+        $HeaderNames = $Properties
+    }
+    else {
+        $props = $Object | Get-Member -MemberType Properties | Select-Object Name
+        $HeaderNames = @()
+        foreach ($i in $props) {
+            $HeaderNames += $i.name.tostring()
+
         }
-        else {
-            $props = $Object | Get-Member -MemberType Properties | Select-Object Name
-            $HeaderNames = @()
-            foreach ($i in $props) {
-                $HeaderNames += $i.name.tostring()
+
+    }
+    table {
+    
+        thead {
+    
+            tr {
+    
+                foreach ($Name in $HeaderNames) {
+    
+                    td {
+                        $Name
+                    }
+    
+                }
+    
             }
+    
         }
     
-        table {
+        tbody {
     
-            thead {
+            foreach ($item in $Object) {
     
                 tr {
     
-                    foreach ($Name in $HeaderNames) {
+                    foreach ($propertyName in $HeaderNames) {
     
                         td {
-                            $Name
+                            $item.$propertyName
                         }
     
                     }
     
                 }
-    
+
             }
     
-            tbody {
-    
-                foreach ($item in $Object) {
-    
-                    tr {
-    
-                        foreach ($propertyName in $HeaderNames) {
-    
-                            td {
-                                $item.$propertyName
-                            }
-    
-                        }
-    
-                    }
-                }
-    
-            }
         }
+
     }
-    
-    
-    
-    
+}
+
