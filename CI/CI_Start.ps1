@@ -32,7 +32,7 @@ if ($res.FailedCount -eq 0 -and $res.successcount -ne 0) {
         $GalleryVersion = (Find-Module $ModuleName).version
         $LocalVersion = (get-module $ModuleName).version.ToString()
 
-        if($GalleryVersion -eq "" -or $LocalVersion -eq ""){
+        if($LocalVersion -eq ""){
             throw "Could not get version numbers"
         }
 
@@ -46,7 +46,7 @@ if ($res.FailedCount -eq 0 -and $res.successcount -ne 0) {
 
                 try{
     
-                    publish-module -Name $ModuleName -NuGetApiKey $Env:PSgalleryKey -ErrorAction stop;
+                    publish-module -Name $($env:APPVEYOR_BUILD_FOLDER)\$ModuleName -NuGetApiKey $Env:PSgalleryKey; -ErrorAction stop;
                     write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)][$($LocalVersion)] Module successfully deployed to the psgallery" -foregroundcolor green;
                 }Catch{
                     write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)][$($LocalVersion)] An error occured while publishing the module to the gallery" -foregroundcolor red;
@@ -56,8 +56,6 @@ if ($res.FailedCount -eq 0 -and $res.successcount -ne 0) {
                 write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($LocalVersion)] All checks passed, but module not deployed to the gallery. " -foregroundcolor green;
             }
 
-            publish-module -Name $ModuleName -NuGetApiKey $Env:PSgalleryKey;
-            write-host "[$($env:APPVEYOR_REPO_BRANCH)] Module deployed to the psgallery" -foregroundcolor green;
         }
     }Else{
         Write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)] Awesome, nothing to do more. If you want to upload to the gallery, please merge from dev into master: use 'push gallery' in commit message to master to publish the module."
