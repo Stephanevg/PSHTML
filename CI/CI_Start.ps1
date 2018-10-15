@@ -5,6 +5,8 @@ write-output "BUILD_FOLDER: $($env:APPVEYOR_BUILD_FOLDER)"
 write-output "PROJECT_NAME: $($env:APPVEYOR_PROJECT_NAME)"
 write-output "BRANCH: $($env:APPVEYOR_REPO_BRANCH)"
 
+$ModuleClonePath = Join-Path -Path $env:APPVEYOR_BUILD_FOLDER -ChildPath $env:APPVEYOR_PROJECT_NAME
+
 $moduleName = "$($env:APPVEYOR_PROJECT_NAME)"
 Get-Module $moduleName
 
@@ -28,12 +30,17 @@ if ($res.FailedCount -gt 0 -or $res.PassedCount -eq 0) {
 if ($res.FailedCount -eq 0 -and $res.successcount -ne 0) {
     If ($env:APPVEYOR_REPO_BRANCH -eq "master") {
         Write-host "[$($env:APPVEYOR_REPO_BRANCH)] All tested Passed, and on Branch 'master'"
-        import-module "$($env:APPVEYOR_BUILD_FOLDER)\$($ModuleName)\$($ModuleName).psd1" -Force
+        $OfficialModulePath = $env:PSModulePath.SPlit(";")[0]
+
+        Copy-Item -Path $ModuleClonePath -Destination $OfficialModulePath -Recurse -Force
+
+        Write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)] Import module from: $($ModuleClonePath)\$($ModuleName)\$($ModuleName).psd1" -ForegroundColor DarkGreen
+        import-module "$($ModuleClonePath)\$($ModuleName)\$($ModuleName).psd1" -Force
         try{
             $GalleryModule = Find-Module $ModuleName -ErrorAction stop
             $GalleryVersion = $GalleryModule.version 
         }catch{
-            Write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)] Module not found on the gallery (First deployment?)"
+            Write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)] Module not found on the gallery (is this the First deployment perhaps?)"
         }
         $LocalVersion = (get-module $ModuleName).version.ToString()
 
