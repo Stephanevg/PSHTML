@@ -1,6 +1,6 @@
 # PSHTML 💗  Polaris
 
-With the help of PSHTML and Polaris we can build good HTML based web applications. There are plenty of use cases coming up. As a first step here is the get started example.
+With the help of PSHTML and [Polaris](https://github.com/PowerShell/Polaris) we can build good HTML based web applications. This document will be updated in regular schedule to share real world examples using PSHTML with Polaris. As a first step here is the get started examples.
 
 > The below example shows inlined example. 
 
