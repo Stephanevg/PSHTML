@@ -7,6 +7,8 @@ write-output "BRANCH: $($env:APPVEYOR_REPO_BRANCH)"
 $ModuleClonePath = Join-Path -Path $env:APPVEYOR_BUILD_FOLDER -ChildPath $env:APPVEYOR_PROJECT_NAME
 Write-Output "MODULE CLONE PATH: $($ModuleClonePath)"
 
+$ModuleClonePath = Join-Path -Path $env:APPVEYOR_BUILD_FOLDER -ChildPath $env:APPVEYOR_PROJECT_NAME
+
 $moduleName = "$($env:APPVEYOR_PROJECT_NAME)"
 Get-Module $moduleName
 
