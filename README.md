@@ -72,7 +72,7 @@ html {
 The following example is a tribute to PowerShell GodFather 'Jeffrey Snover' where we generated a BIO of the ShellFather gathering data from Wikipedia and other sources, all that using Powershell.
 
 
-![screen shot of PSHTML results](PSHTML/examples/Example6/tribute_snover.png)
+![screen shot of PSHTML results](PSHTML/Examples/Example6/tribute_snover.png)
 
 The example ```PSHTML / Powershell``` code is available [here](PSHTML/examples/Example6/Example6.ps1)
 
