@@ -24,6 +24,18 @@ Usinng PSHTML, offers code completition and syntax highliting from the the defau
 A change log is available [here](Change_Log.md)
 Known issues are tracked [here](Known_Issues.md)
 
+# How to install PSHTML
+
+PSHTML is available on the powershell gallery. You can install it using the following one liner from a powershell console
+
+
+```Powershell
+Find-Module PSHTML | Install-Module
+```
+# What is PSHTML?
+
+The best way to understand what PSHTML can do, is to skim through some examples.
+
 ## A few Basic examples of what PSHTML can achieve
 
 ### Basic page
@@ -67,7 +79,7 @@ html {
 
 ```
 
-## A more advanced example:
+### A more advanced example:
 
 The following example is a tribute to PowerShell GodFather 'Jeffrey Snover' where we generated a BIO of the ShellFather gathering data from Wikipedia and other sources, all that using Powershell.
 
@@ -77,9 +89,13 @@ The following example is a tribute to PowerShell GodFather 'Jeffrey Snover' wher
 The example ```PSHTML / Powershell``` code is available [here](PSHTML/examples/Example6/Example6.ps1)
 
 The generated ```HTML``` code is available [here](PSHTML/examples/Example6/Example6.html)
-## Templates
 
-Since version 0.4 it is possible to build websites using templates. The following example showcase how this works:
+
+# Templating
+
+Since version 0.4 it is possible to build websites using templates. this is done by using the keyword `include` and specifiying the name of your template.
+
+The following example showcase how this works:
 
 ```Example04/Example04.ps1``` contains the following sample code:
 
