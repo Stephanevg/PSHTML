@@ -1,5 +1,5 @@
 ---
-external help file: pshtml-help.xml
+external help file: PSHTML-help.xml
 Module Name: PSHTML
 online version:
 schema: 2.0.0
@@ -13,7 +13,7 @@ Converts a powershell object to a HTML table.
 ## SYNTAX
 
 ```
-ConvertTo-HTMLTable [-Object] <Object> [<CommonParameters>]
+ConvertTo-HTMLTable [-Object] <Object> [[-Properties] <String[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -52,9 +52,23 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -Properties
+Properties you want as table headernames
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
