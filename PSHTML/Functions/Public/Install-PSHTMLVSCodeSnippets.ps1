@@ -19,21 +19,21 @@ function Install-PSHTMLVSCodeSnippets {
     #>
     [CmdletBinding()]
     Param(
+        [String]$DestinationPath = "$($env:APPDATA)\Code\User\snippets",
         [Switch]$Force
     )
     
 
     $callstack = Get-PSCallStack | Select-Object -ExpandProperty scriptname
     
-    $path = Split-path -path (Split-path -Path (Split-Path -path $callstack -Parent) -Parent) -Parent
+    $Rootpath = Split-path -path (Split-path -Path (Split-Path -path $callstack -Parent) -Parent) -Parent
 
-    $snippetsfolder = join-path $path -ChildPath "Snippets"
+    $snippetsfolder = join-path $Rootpath -ChildPath "Snippets"
 
     $AllSnipets = Get-childItem -path $snippetsfolder
 
     $Paras = @{}
-    
-    $Paras.Destination = "$($env:APPDATA)\Code\User\snippets"
+    $Paras.Destination = $DestinationPath
     $Paras.errorAction =  "Stop"
 
     if($Force){
