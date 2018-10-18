@@ -3,7 +3,9 @@ Function SUP {
     .SYNOPSIS
         Create a SUP tag in an HTML document.
     .DESCRIPTION
-        Create a SUP tag in an HTML document. 
+        The <sup> tag defines superscript text. 
+        Superscript text appears half a character above the normal line, and is sometimes rendered in a smaller font. 
+        Superscript text can be used for footnotes, like WWW[1].
     .EXAMPLE
         $Power = 3
         p -content {
@@ -11,6 +13,14 @@ Function SUP {
             SUP $Power
             "is {0}" -f ([Math]::Pow(2,$Power))
         } 
+        The above example renderes the HTML code as illustrated below
+        <p>
+        The Value of 2
+        <SUP>
+            3
+        </SUP>
+        is 8
+        </p>
     .NOTES
         Current version 2.0
         History:
