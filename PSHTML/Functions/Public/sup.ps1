@@ -62,6 +62,7 @@ Function SUP {
             $htmltagparams = @{}
             $tagname = "SUP"
         }
+        
         Process {       
             $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
             $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
@@ -81,10 +82,12 @@ Function SUP {
                 }
             }
         }
+        
         End {
             if ($Attributes) {
                 $htmltagparams += $Attributes
             }
             Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
         }
+        
     }
