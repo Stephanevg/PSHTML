@@ -3,7 +3,9 @@ Function SUB {
     .SYNOPSIS
         Create a SUB tag in an HTML document.
     .DESCRIPTION
-        Create a SUB tag in an HTML document. 
+        The <sub> tag defines subscript text. 
+        Subscript text appears half a character below the normal line, and is sometimes rendered in a smaller font. 
+        Subscript text can be used for chemical formulas, like H2O. 
     .EXAMPLE
         p -content {
             "The Chemical Formula for water is H"
@@ -12,6 +14,14 @@ Function SUB {
             }
             "O"
         } 
+        The above example renders the html as illustrated below
+        <p>
+        The Chemical Formula for water is H
+        <SUB>
+            2
+        </SUB>
+        O
+        </p>
     .NOTES
         Current version 2.0
         History:
