@@ -18,8 +18,9 @@ Function blockquote {
     "@
 
     .NOTES
-    Current version 2.0
+    Current version 2.1
        History:
+            2018.10.02;@NicolasBaudin;Fixed pipeline support bug. to version 2.1
             2018.10.02;@stephanevg;Fixed error when no content passed. to version 2.0
             2018.10.02;bateskevin;updated to version 2.0
             2018.05.07;stephanevg;updated to version 1.0
