@@ -37,6 +37,7 @@ function Install-PSHTMLVSCodeSnippets {
     $Paras = @{}
     $Paras.Destination = $Path
     $Paras.errorAction =  "Stop"
+    $Para.Force = $true
 
     if($Force){
         $Paras.Force = $true
