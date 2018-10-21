@@ -1,3 +1,7 @@
+image:
+- Visual Studio 2015
+- Ubuntu
+
 environment:
   PSgalleryKey:
     secure: wl8DNkBd6QUSBAEWxCNTTW+cVn32ub6kWSqZxAUrpx4/QPnWYGiLWEj+ZaFp5cuA
