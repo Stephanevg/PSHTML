@@ -10,9 +10,9 @@ install:
 - ps: >-
     Install-PackageProvider -Name NuGet -Force
     
-    Install-Module -Name PSScriptAnalyzer -Force
+    Install-Module -Name PSScriptAnalyzer -Force  -Scope CurrentUser
     
-    Install-Module -Name Pester -Force
+    Install-Module -Name Pester -Force  -Scope CurrentUser
 build: off
 test_script:
 - ps: >- 
