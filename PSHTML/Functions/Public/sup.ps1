@@ -1,87 +1,93 @@
 Function SUP {
     <#
     .SYNOPSIS
-    Create a SUP title in an HTML document.
-
+        Create a SUP tag in an HTML document.
+    .DESCRIPTION
+        The <sup> tag defines superscript text. 
+        Superscript text appears half a character above the normal line, and is sometimes rendered in a smaller font. 
+        Superscript text can be used for footnotes, like WWW[1].
     .EXAMPLE
-
-    SUP
-    .EXAMPLE
-    SUP "woop1" -Class "class"
-
-    .EXAMPLE
-    SUP "woop2" -Class "class" -Id "MainTitle"
-
-    .EXAMPLE
-    SUP {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
-
-    .Notes
-    Author: Chendrayan Venkatesan (Chen V)
-    Version: 1.0.0
-    History:
-        2018.10.17;@ChendrayanV; New Version 1.0.0
+        $Power = 3
+        p -content {
+            "The Value of 2"
+            SUP $Power
+            "is {0}" -f ([Math]::Pow(2,$Power))
+        } 
+        The above example renderes the HTML code as illustrated below
+        <p>
+        The Value of 2
+        <SUP>
+            3
+        </SUP>
+        is 8
+        </p>
+    .NOTES
+        Current version 2.0
+        History:
+                2018.10.18;@ChendrayanV;Updated to version 2.0
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
-    [Cmdletbinding()]
-    Param(
-        [Parameter(Mandatory=$false)]
-        [AllowEmptyString()]
-        [AllowNull()]
-        $Content,
-
-        [AllowEmptyString()]
-        [AllowNull()]
-        [String]$Class,
-
-        [String]$Id,
-
-        [AllowEmptyString()]
-        [AllowNull()]
-        [String]$Style,
-
-        [Hashtable]$Attributes
-    )
-
-    $attr = ""
-    $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-
-    if($CustomParameters){
-
-        foreach ($entry in $CustomParameters){
-
-
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
+        [Cmdletbinding()]
+        Param(
+    
+            [Parameter(
+                ValueFromPipeline = $true,
+                Mandatory = $false,
+                Position = 0
+            )]
+            [AllowEmptyString()]
+            [AllowNull()]
+            $Content,
+    
+            [string]$cite,
+    
+            [AllowEmptyString()]
+            [AllowNull()]
+            [String]$Class = "",
+    
+            [String]$Id,
+    
+            [AllowEmptyString()]
+            [AllowNull()]
+            [String]$Style,
+    
+            [String]$title,
+    
+            [Hashtable]$Attributes
+        )
+    
+        Begin {
+            
+            $htmltagparams = @{}
+            $tagname = "SUP"
         }
-
-    }
-
-    if($Attributes){
-        foreach($entry in $Attributes.Keys){
-
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+        
+        Process {       
+            $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+            $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+            
+            if ($CustomParameters) {
+    
+                Switch ($CustomParameters) {
+                    {($_ -eq 'content') -and ($null -eq $htmltagparams.$_)} {
+                        $htmltagparams.$_ = @($PSBoundParameters[$_])
+                        continue
+                    }
+                    {$_ -eq 'content'} {
+                        $htmltagparams.$_ += $PSBoundParameters[$_]
+                        continue
+                    }
+                    default {$htmltagparams.$_ = "{0}" -f $PSBoundParameters[$_]}
+                }
+            }
         }
-    }
-
-    if($attr){
-        "<SUP {0} >"  -f $attr
-    }else{
-        "<SUP>"
-    }
-
-
-    if($Content){
-
-        if($Content -is [System.Management.Automation.ScriptBlock]){
-            $Content.Invoke()
-        }else{
-            $Content
+        
+        End {
+            if ($Attributes) {
+                $htmltagparams += $Attributes
+            }
+            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
         }
+        
     }
-
-
-    '</SUP>'
-
-}
