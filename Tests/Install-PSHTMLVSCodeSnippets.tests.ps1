@@ -10,6 +10,9 @@ Write-Verbose "Importing module"
 
 import-module .\PSHTML -Force
 
+$ModuleRoot = Get-ModuleRoot
+
+Write-host "Module Root is: $($ModuleRoot)"
 
 Describe "Testing Install-VSCodeSnippets" {
 
