@@ -9,8 +9,8 @@ environment:
 install:
 - ps: >-
     .\CI\02_Install.ps1
-
 build_script:
+- ps: >-
     .\CI\03_Build.ps1
 test_script:
 - ps: >-
