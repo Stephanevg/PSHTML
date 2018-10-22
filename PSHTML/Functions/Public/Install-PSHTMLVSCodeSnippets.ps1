@@ -25,19 +25,16 @@ function Install-PSHTMLVSCodeSnippets {
     )
     
 
-    $callstack = Get-PSCallStack | Select-Object -ExpandProperty scriptname
-    
-    $Rootpath = Split-path -path (Split-Path -path $callstack -Parent)-Parent
-
-    $Rootpath = split-Path -Path $PSScriptRoot -Parent
-    $snippetsfolder = join-path $Rootpath -ChildPath "Snippets"
+    $ModuleRoot = Get-ModuleRoot
+   
+    $snippetsfolder = join-path $ModuleRoot -ChildPath "Snippets"
 
     $AllSnipets = Get-childItem -path $snippetsfolder
 
     $Paras = @{}
     $Paras.Destination = $Path
     $Paras.errorAction =  "Stop"
-    $Para.Force = $true
+    $Paras.Force = $true
 
     if($Force){
         $Paras.Force = $true
