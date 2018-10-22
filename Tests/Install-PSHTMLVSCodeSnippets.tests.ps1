@@ -10,9 +10,7 @@ Write-Verbose "Importing module"
 
 import-module .\PSHTML -Force
 
-$ModuleRoot = Get-ModuleRoot
 
-Write-host "Module Root is: $($ModuleRoot)"
 
 Describe "Testing Install-VSCodeSnippets" {
 
@@ -22,8 +20,9 @@ Describe "Testing Install-VSCodeSnippets" {
         {install-PSHTMLVsCodeSnippets} | should not throw
     }
 
-    $Items = gci "$($env:APPDATA)\Code\User\snippets\"
-    it "Should create the snippets at correct path: $($env:APPDATA)\Code\User\snippets\"{
+    $SnippetsPath = "$($env:APPDATA)\Code\User\Snippets\"
+    $Items = gci $SnippetsPath
+    it "Should create the snippets at correct path: $($SnippetsPath)"{
         $ITems | should not benullOrEmpty
         
     }

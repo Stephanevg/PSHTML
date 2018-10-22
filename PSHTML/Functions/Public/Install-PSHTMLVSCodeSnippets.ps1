@@ -20,12 +20,15 @@ function Install-PSHTMLVSCodeSnippets {
     #>
     [CmdletBinding()]
     Param(
-        [String]$Path = "$($env:APPDATA)\Code\User\snippets",
+        [String]$Path = "$($env:APPDATA)\Code\User\Snippets",
         [Switch]$Force
     )
     
 
     $ModuleRoot = Get-ModuleRoot
+
+    Write-host "Module Root is: $($ModuleRoot)"
+
    
     $snippetsfolder = join-path $ModuleRoot -ChildPath "Snippets"
 
