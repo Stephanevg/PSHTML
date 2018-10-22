@@ -10,9 +10,10 @@ install:
 - ps: >-
     .\CI\02_Install.ps1
 
+build: off
+
 build_script:
     .\CI\03_Build.ps1
-
 test_script:
 - ps: >-
     .\CI\04_Tests.ps1
