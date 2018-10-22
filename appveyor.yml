@@ -11,5 +11,5 @@ install:
     .\CI\02_Install.ps1
 build: off
 test_script:
-- ps: >- 
+- ps: >-
     .\CI\03_Tests.ps1
