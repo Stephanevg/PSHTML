@@ -70,7 +70,7 @@ Param(
         foreach ($entry in $CustomParameters){
 
 
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+            $attr += '{0}="{1}"' -f $entry,$PSBoundParameters[$entry]
 
         }
 
@@ -79,12 +79,12 @@ Param(
     if($Attributes){
         foreach($entry in $Attributes.Keys){
 
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            $attr += ' {0}="{1}"' -f $entry,$Attributes[$Entry]
         }
     }
 
     if($attr){
-        "<html {0} >"  -f $attr
+        "<html {0}>"  -f $attr
     }else{
         "<html>"
     }

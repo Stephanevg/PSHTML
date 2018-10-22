@@ -54,7 +54,7 @@ Function meta {
         [AllowNull()]
         [string]$charset,
 
-        [ValidateSet("content-type","default-style","refresh")]
+        [ValidateSet("content-type","default-style","refresh","X-UA-Compatible")]
         [Parameter(Mandatory=$false)]
         [AllowEmptyString()]
         [AllowNull()]
@@ -89,30 +89,30 @@ Function meta {
     $CommonParameters = ("Attributes","httpequiv") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
     $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
 
+    if($httpequiv){
+        $Attr += 'http-equiv="{0}"' -f $PSBoundParameters['httpequiv']
+    }
+
     if($CustomParameters){
 
         foreach ($entry in $CustomParameters){
 
 
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
+            $Attr += ' {0}="{1}"' -f $entry,$PSBoundParameters[$entry]
 
         }
 
-    }
-
-    if($httpequiv){
-        $Attr += "http-equiv=`"{0}`" " -f $PSBoundParameters['httpequiv']
     }
 
     if($Attributes){
         foreach($entry in $Attributes.Keys){
 
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+            $attr += ' {0}="{1}"' -f $entry,$Attributes[$Entry]
         }
     }
 
     if($attr){
-        "<meta {0} >"  -f $attr
+        "<meta {0}>"  -f $attr
     }else{
         "<meta>"
     }
