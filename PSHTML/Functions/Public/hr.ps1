@@ -30,8 +30,9 @@ Function hr {
 
     .Notes
     Author: Stéphane van Gulick
-    Version: 2.0.0
+    Version: 2.1
     History:
+        2018.10.24;@ChristopheKumor;Modified $htmltagparams filling to version 2.1
         2018.04.08;bateskevin; Updated to v2.0 
         2018.04.08;Stephanevg; Updated to version 1.0: Updated content block to support string & ScriptBlock
         2018.03.25;@Stephanevg; Added Styles, ID, CLASS attributes functionality
@@ -54,38 +55,54 @@ Function hr {
 
         [Hashtable]$Attributes
     )
-
+    Begin {
+        $htmltagparams = @{}
+        $tagname = "hr"    
+    }
     Process {
 
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+
+
+        foreach ($paramkey in $MyInvocation.MyCommand.Parameters.Keys) {
+            $paramvalue = Get-Variable $paramkey -ValueOnly -EA SilentlyContinue
+            if ($paramvalue -and !$PSBoundParameters.ContainsKey($paramkey)) {
+                $htmltagparams.$paramkey = $paramvalue
+            }
+        }
         
-        $htmltagparams = @{}
-        $tagname = "hr"
-
-        if ($CustomParameters) {
-
-            foreach ($entry in $CustomParameters) {
-
-
-                if ($entry -eq "content") {
-
-                    
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
+        switch ($PSBoundParameters.Keys) {
+            'content' { 
+                if ($PSBoundParameters['content'] -is [System.Management.Automation.ScriptBlock]) {
+                    $htmltagparams.$_ = $PSBoundParameters[$_]
+                    continue
+                }
+                elseif ($null -eq $htmltagparams.$_) {
+                    $htmltagparams.$_ = @($PSBoundParameters[$_])
+                    continue   
                 }
                 else {
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                    $htmltagparams.$_ += $PSBoundParameters[$_] 
+                    continue
                 }
-                
-    
             }
-
-            if ($Attributes) {
-                $htmltagparams += $Attributes
+            'Attributes' { 
+                if ($null -eq $htmltagparams.$_) {
+                    $htmltagparams.$_ += $PSBoundParameters[$_]
+                }
+                continue
             }
-
-
+            default { 
+                if ($PSBoundParameters[$_].IsPresent) { 
+                    $htmltagparams.$_ = $null
+                }
+                else {
+                    $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
+                }
+            }
         }
+    }
+    End {
+
         Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
         
     }

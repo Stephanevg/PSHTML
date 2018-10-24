@@ -40,8 +40,9 @@ Function area {
     <area href="image.png"coords="0,0,20,20"shape="rect" >
 
     .NOTES
-     Current version 2.0
+     Current version 2.1
         History:
+            2018.10.24;@ChristopheKumor;Modified $htmltagparams filling to version 2.1
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
     .LINK
@@ -51,33 +52,33 @@ Function area {
     Param(
 
 
-        [Parameter(Position =0)]
+        [Parameter(Position = 0)]
         [String]$href,
 
-        [Parameter(Position =1)]
+        [Parameter(Position = 1)]
         [String]$alt,
 
-        [Parameter(Position =2)]
+        [Parameter(Position = 2)]
         [String]$coords,
 
-        [Parameter(Position =3)]
-        [validateset("default","rect","circle","poly")]
+        [Parameter(Position = 3)]
+        [validateset("default", "rect", "circle", "poly")]
         [String]$shape,
 
-        [Parameter(Mandatory=$false,Position = 4)]
-        [ValidateSet("_blank","_self","_parent","top")]
+        [Parameter(Mandatory = $false, Position = 4)]
+        [ValidateSet("_blank", "_self", "_parent", "top")]
         [String]$target = "_Blank",
 
-        [Parameter(Position =5)]
+        [Parameter(Position = 5)]
         [String]$type,
 
-        [Parameter(Position =6)]
+        [Parameter(Position = 6)]
         [String]$Class,
 
         [Parameter(Position = 7)]
         [String]$Id,
 
-        [Parameter(Position =8)]
+        [Parameter(Position = 8)]
         [String]$Style,
 
         [Parameter(Position = 9)]
@@ -85,36 +86,55 @@ Function area {
 
 
     )
-    Process{
-
-
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
+    Begin {
         $htmltagparams = @{}
         $tagname = "area"
+    }
+    Process {
 
-        if($CustomParameters){
 
-            foreach ($entry in $CustomParameters){
 
-                if($entry -eq "content"){
 
-                    
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }else{
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-                }
-                
-    
+        foreach ($paramkey in $MyInvocation.MyCommand.Parameters.Keys) {
+            $paramvalue = Get-Variable $paramkey -ValueOnly -EA SilentlyContinue
+            if ($paramvalue -and !$PSBoundParameters.ContainsKey($paramkey)) {
+                $htmltagparams.$paramkey = $paramvalue
             }
-
-            if($Attributes){
-                $htmltagparams += $Attributes
-
-            }
-
         }
+        
+        switch ($PSBoundParameters.Keys) {
+            'content' { 
+                if ($PSBoundParameters['content'] -is [System.Management.Automation.ScriptBlock]) {
+                    $htmltagparams.$_ = $PSBoundParameters[$_]
+                    continue
+                }
+                elseif ($null -eq $htmltagparams.$_) {
+                    $htmltagparams.$_ = @($PSBoundParameters[$_])
+                    continue   
+                }
+                else {
+                    $htmltagparams.$_ += $PSBoundParameters[$_] 
+                    continue
+                }
+            }
+            'Attributes' { 
+                if ($null -eq $htmltagparams.$_) {
+                    $htmltagparams.$_ += $PSBoundParameters[$_]
+                }
+                continue
+            }
+            default { 
+                if ($PSBoundParameters[$_].IsPresent) { 
+                    $htmltagparams.$_ = $null
+                }
+                else {
+                    $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
+                }
+            }
+        }
+    }
+    End {
+
         Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType void
 
     }#End process

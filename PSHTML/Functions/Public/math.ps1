@@ -22,8 +22,9 @@ Function math {
     </math>
 
     .NOTES
-    Current version 2.0
+    Current version 2.1
        History:
+            2018.10.24;@ChristopheKumor;Modified $htmltagparams filling to version 2.1
             2018.04.01;stephanevg;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
@@ -40,7 +41,7 @@ Function math {
         [AllowNull()]
         $Content,
 
-        [ValidateSet("ltr","rtl")]
+        [ValidateSet("ltr", "rtl")]
         [AllowEmptyString()]
         [AllowNull()]
         [String]$dir = "",
@@ -57,13 +58,13 @@ Function math {
         [AllowNull()]
         [String]$MathColor = "",
 
-        [ValidateSet("Block","Inline")]
+        [ValidateSet("Block", "Inline")]
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Display = "",
 
 
-        [ValidateSet("linebreak","scrolle","elide","truncate","scale")]
+        [ValidateSet("linebreak", "scrolle", "elide", "truncate", "scale")]
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Overflow,
@@ -89,28 +90,46 @@ Function math {
         $tagname = "math"
     }
     Process {       
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        if ($CustomParameters) {
 
-            Switch ($CustomParameters) {
-                {($_ -eq 'content') -and ($null -eq $htmltagparams.$_)} {
+        foreach ($paramkey in $MyInvocation.MyCommand.Parameters.Keys) {
+            $paramvalue = Get-Variable $paramkey -ValueOnly -EA SilentlyContinue
+            if ($paramvalue -and !$PSBoundParameters.ContainsKey($paramkey)) {
+                $htmltagparams.$paramkey = $paramvalue
+            }
+        }
+        
+        switch ($PSBoundParameters.Keys) {
+            'content' { 
+                if ($PSBoundParameters['content'] -is [System.Management.Automation.ScriptBlock]) {
+                    $htmltagparams.$_ = $PSBoundParameters[$_]
+                    continue
+                }
+                elseif ($null -eq $htmltagparams.$_) {
                     $htmltagparams.$_ = @($PSBoundParameters[$_])
+                    continue   
+                }
+                else {
+                    $htmltagparams.$_ += $PSBoundParameters[$_] 
                     continue
                 }
-                {$_ -eq 'content'} {
+            }
+            'Attributes' { 
+                if ($null -eq $htmltagparams.$_) {
                     $htmltagparams.$_ += $PSBoundParameters[$_]
-                    continue
                 }
-                default {$htmltagparams.$_ = "{0}" -f $PSBoundParameters[$_]}
+                continue
+            }
+            default { 
+                if ($PSBoundParameters[$_].IsPresent) { 
+                    $htmltagparams.$_ = $null
+                }
+                else {
+                    $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
+                }
             }
         }
     }
     End {
-        if ($Attributes) {
-            $htmltagparams += $Attributes
-        }
         Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
     }
 }

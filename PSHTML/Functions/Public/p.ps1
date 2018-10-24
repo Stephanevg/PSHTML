@@ -41,16 +41,17 @@ Function p {
     </p>
 
     .NOTES
-    Current version 1.1.0
+    Current version 2.1
        History:
-           2018.04.10;Stephanevg;Updated content (removed string, added if for selection between scriptblock and string).
-           2018.04.01;bateskevinhanevg;Creation.
+        2018.10.24;@ChristopheKumor;Modified $htmltagparams filling to version 2.1
+        2018.04.10;Stephanevg;Updated content (removed string, added if for selection between scriptblock and string).
+        2018.04.01;bateskevinhanevg;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false, Position = 0)]
         [AllowEmptyString()]
         [AllowNull()]
         $Content,
@@ -70,46 +71,50 @@ Function p {
         [Hashtable]$Attributes
     )
 
-        $attr = ""
-        $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-            }
-
-        }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+    Begin {
+        $htmltagparams = @{}
+        $tagname = "p"
+    }
+    Process {
+        foreach ($paramkey in $MyInvocation.MyCommand.Parameters.Keys) {
+            $paramvalue = Get-Variable $paramkey -ValueOnly -EA SilentlyContinue
+            if ($paramvalue -and !$PSBoundParameters.ContainsKey($paramkey)) {
+                $htmltagparams.$paramkey = $paramvalue
             }
         }
-
-
-        if($attr){
-            "<p {0} >"  -f $attr
-        }else{
-            "<p>"
-        }
-
-
-
-        if($Content){
-
-            if($Content -is [System.Management.Automation.ScriptBlock]){
-                $Content.Invoke()
-            }else{
-                $Content
+    
+        switch ($PSBoundParameters.Keys) {
+            'content' { 
+                if ($PSBoundParameters['content'] -is [System.Management.Automation.ScriptBlock]) {
+                    $htmltagparams.$_ = $PSBoundParameters[$_]
+                    continue
+                }
+                elseif ($null -eq $htmltagparams.$_) {
+                    $htmltagparams.$_ = @($PSBoundParameters[$_])
+                    continue   
+                }
+                else {
+                    $htmltagparams.$_ += $PSBoundParameters[$_] 
+                    continue
+                }
+            }
+            'Attributes' { 
+                if ($null -eq $htmltagparams.$_) {
+                    $htmltagparams.$_ += $PSBoundParameters[$_]
+                }
+                continue
+            }
+            default { 
+                if ($PSBoundParameters[$_].IsPresent) { 
+                    $htmltagparams.$_ = $null
+                }
+                else {
+                    $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
+                }
             }
         }
-
-    "</p>"
-
+    }
+    End {
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
+    }
 }

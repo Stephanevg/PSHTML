@@ -22,72 +22,91 @@ Function SUP {
         is 8
         </p>
     .NOTES
-        Current version 2.0
+        Current version 2.1
         History:
+                2018.10.24;@ChristopheKumor;Modified $htmltagparams filling to version 2.1
                 2018.10.18;@ChendrayanV;Updated to version 2.0
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
-        [Cmdletbinding()]
-        Param(
+    [Cmdletbinding()]
+    Param(
     
-            [Parameter(
-                ValueFromPipeline = $true,
-                Mandatory = $false,
-                Position = 0
-            )]
-            [AllowEmptyString()]
-            [AllowNull()]
-            $Content,
+        [Parameter(
+            ValueFromPipeline = $true,
+            Mandatory = $false,
+            Position = 0
+        )]
+        [AllowEmptyString()]
+        [AllowNull()]
+        $Content,
     
-            [string]$cite,
+        [string]$cite,
     
-            [AllowEmptyString()]
-            [AllowNull()]
-            [String]$Class = "",
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class = "",
     
-            [String]$Id,
+        [String]$Id,
     
-            [AllowEmptyString()]
-            [AllowNull()]
-            [String]$Style,
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Style,
     
-            [String]$title,
+        [String]$title,
     
-            [Hashtable]$Attributes
-        )
+        [Hashtable]$Attributes
+    )
     
-        Begin {
+    Begin {
             
-            $htmltagparams = @{}
-            $tagname = "SUP"
-        }
+        $htmltagparams = @{}
+        $tagname = "SUP"
+    }
         
-        Process {       
-            $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-            $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
+    Process {       
             
-            if ($CustomParameters) {
-    
-                Switch ($CustomParameters) {
-                    {($_ -eq 'content') -and ($null -eq $htmltagparams.$_)} {
-                        $htmltagparams.$_ = @($PSBoundParameters[$_])
-                        continue
-                    }
-                    {$_ -eq 'content'} {
-                        $htmltagparams.$_ += $PSBoundParameters[$_]
-                        continue
-                    }
-                    default {$htmltagparams.$_ = "{0}" -f $PSBoundParameters[$_]}
+        foreach ($paramkey in $MyInvocation.MyCommand.Parameters.Keys) {
+            $paramvalue = Get-Variable $paramkey -ValueOnly -EA SilentlyContinue
+            if ($paramvalue -and !$PSBoundParameters.ContainsKey($paramkey)) {
+                $htmltagparams.$paramkey = $paramvalue
+            }
+        }
+            
+        switch ($PSBoundParameters.Keys) {
+            'content' { 
+                if ($PSBoundParameters['content'] -is [System.Management.Automation.ScriptBlock]) {
+                    $htmltagparams.$_ = $PSBoundParameters[$_]
+                    continue
+                }
+                elseif ($null -eq $htmltagparams.$_) {
+                    $htmltagparams.$_ = @($PSBoundParameters[$_])
+                    continue   
+                }
+                else {
+                    $htmltagparams.$_ += $PSBoundParameters[$_] 
+                    continue
+                }
+            }
+            'Attributes' { 
+                if ($null -eq $htmltagparams.$_) {
+                    $htmltagparams.$_ += $PSBoundParameters[$_]
+                }
+                continue
+            }
+            default { 
+                if ($PSBoundParameters[$_].IsPresent) { 
+                    $htmltagparams.$_ = $null
+                }
+                else {
+                    $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
                 }
             }
         }
-        
-        End {
-            if ($Attributes) {
-                $htmltagparams += $Attributes
-            }
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
-        }
-        
     }
+    End {
+
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
+    }
+        
+}

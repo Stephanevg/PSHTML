@@ -22,8 +22,9 @@ Function em {
 
     .Notes
     Author: Andrew Wickham
-    Version: 2.0.0
+    Version: 2.1
     History:
+        2018.10.24;@ChristopheKumor;Modified $htmltagparams filling to version 2.1
         2018.10.04;@awickham10; Creation
 
     .LINK
@@ -51,36 +52,51 @@ Function em {
         [Hashtable]$Attributes
 
     )
-    $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-
-
-    $htmltagparams = @{}
-    $tagname = "em"
-    if ($CustomParameters) {
-
-        foreach ($entry in $CustomParameters) {
-
-            if ($entry -eq "content") {
-
-
-                $htmltagparams.$entry = $PSBoundParameters[$entry]
-            }
-            else {
-                $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-            }
-
-
-        }
-
-        if ($Attributes) {
-            $htmltagparams += $Attributes
-        }
-
+    Begin {
+        $htmltagparams = @{}
+        $tagname = "em"
     }
+    Process { 
+
+        foreach ($paramkey in $MyInvocation.MyCommand.Parameters.Keys) {
+            $paramvalue = Get-Variable $paramkey -ValueOnly -EA SilentlyContinue
+            if ($paramvalue -and !$PSBoundParameters.ContainsKey($paramkey)) {
+                $htmltagparams.$paramkey = $paramvalue
+            }
+        }
     
-    Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
-
-
-
+        switch ($PSBoundParameters.Keys) {
+            'content' { 
+                if ($PSBoundParameters['content'] -is [System.Management.Automation.ScriptBlock]) {
+                    $htmltagparams.$_ = $PSBoundParameters[$_]
+                    continue
+                }
+                elseif ($null -eq $htmltagparams.$_) {
+                    $htmltagparams.$_ = @($PSBoundParameters[$_])
+                    continue   
+                }
+                else {
+                    $htmltagparams.$_ += $PSBoundParameters[$_] 
+                    continue
+                }
+            }
+            'Attributes' { 
+                if ($null -eq $htmltagparams.$_) {
+                    $htmltagparams.$_ += $PSBoundParameters[$_]
+                }
+                continue
+            }
+            default { 
+                if ($PSBoundParameters[$_].IsPresent) { 
+                    $htmltagparams.$_ = $null
+                }
+                else {
+                    $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
+                }
+            }
+        }
+    }
+    End {
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
+    }
 }
