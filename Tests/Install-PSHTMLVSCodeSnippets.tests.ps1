@@ -22,6 +22,10 @@ Describe "Testing Install-VSCodeSnippets" {
 
     $SnippetsPath = join-Path -Path $Env:AppData -ChildPath "/Code/User/Snippets/"
     
+    if(!(Test-Path $SnippetsPath)){
+        $null = mkdir $SnippetsPath
+    }
+
     $Items = gci $SnippetsPath
     it "Should create the snippets at correct path: $($SnippetsPath)"{
         $ITems | should not benullOrEmpty
