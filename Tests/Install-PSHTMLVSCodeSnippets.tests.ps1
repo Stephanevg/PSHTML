@@ -17,19 +17,20 @@ Describe "Testing Install-VSCodeSnippets" {
     $SnippetTypes = @("small","medium","full")
 
     it "The cmdlet should not throw"{
-        {install-PSHTMLVsCodeSnippets} | should not throw
+        {install-PSHTMLVsCodeSnippets -force} | should not throw
     }
 
-    $SnippetsPath = "$($env:APPDATA)\Code\User\Snippets\"
+    $SnippetsPath = join-Path -Path $Env:AppData -ChildPath "/Code/User/Snippets/"
+    
     $Items = gci $SnippetsPath
     it "Should create the snippets at correct path: $($SnippetsPath)"{
         $ITems | should not benullOrEmpty
         
     }
 
-    It "Should contain 3 snippets"{
+    It "Should contain at least 3 snippets"{
 
-        ($Items | measure).Count | should be 3
+        ($Items | measure).Count | should BeGreaterOrEqual 3
     }
 
     foreach($SnippetType in $SnippetTypes){
