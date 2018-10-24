@@ -27,18 +27,23 @@ function Install-PSHTMLVSCodeSnippets {
 
     $ModuleRoot = Get-ModuleRoot
 
-    Write-host "Module Root is: $($ModuleRoot)"
+    Write-verbose "Module Root is: $($ModuleRoot)"
 
    
     $snippetsfolder = join-path $ModuleRoot -ChildPath "Snippets"
 
     $AllSnipets = Get-childItem -path $snippetsfolder
 
+    if(!(Test-Path)){
+        $Null = New-Item -Path $Path -ItemType Directory -Force
+    }
+
     $Paras = @{}
     $Paras.Destination = $Path
     $Paras.errorAction =  "Stop"
-    $Paras.Force = $true
-
+    #$Paras.Force = $true
+    $Paras.Recurse = $true
+    
     if($Force){
         $Paras.Force = $true
     }
