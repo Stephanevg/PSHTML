@@ -47,13 +47,13 @@ Function img {
 
     Param(
 
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $true)]
         [String]
-        $src = "",
+        $src,
 
-        [Parameter(Mandatory = $false)]
+        [Parameter(Mandatory = $true)]
         [string]
-        $alt = "",
+        $alt,
 
         [Parameter(Mandatory = $false)]
         [string]
@@ -74,6 +74,7 @@ Function img {
 
 
     Begin {
+        $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $htmltagparams = @{}
         $tagname = "img"
     }
@@ -107,12 +108,16 @@ Function img {
                 continue
             }
             default { 
-                if ($PSBoundParameters[$_].IsPresent) { 
+                if ($_ -notin $CommonParameters) {
+            
+                    if ($PSBoundParameters[$_].IsPresent) { 
                     $htmltagparams.$_ = $null
                 }
                 else {
                     $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
                 }
+
+            }
             }
         }
     }

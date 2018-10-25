@@ -57,7 +57,7 @@ Function canvas {
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class = "",
+        [String]$Class,
 
         [String]$Id,
 
@@ -71,7 +71,7 @@ Function canvas {
     )
 
     Begin {
-        
+        $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $htmltagparams = @{}
         $tagname = "canvas"
     }
@@ -106,12 +106,16 @@ Function canvas {
                 continue
             }
             default { 
-                if ($PSBoundParameters[$_].IsPresent) { 
+                if ($_ -notin $CommonParameters) {
+            
+                    if ($PSBoundParameters[$_].IsPresent) { 
                     $htmltagparams.$_ = $null
                 }
                 else {
                     $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
                 }
+
+            }
             }
         }
     }

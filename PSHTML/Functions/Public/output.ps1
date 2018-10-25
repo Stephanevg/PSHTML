@@ -54,7 +54,7 @@ Function output {
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class = "",
+        [String]$Class,
 
         [String]$Id,
 
@@ -68,6 +68,7 @@ Function output {
     )
 
     Begin {
+        $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $htmltagparams = @{}
         $tagname = "output"        
     }
@@ -104,12 +105,16 @@ Function output {
                 continue
             }
             default { 
-                if ($PSBoundParameters[$_].IsPresent) { 
+                if ($_ -notin $CommonParameters) {
+            
+                    if ($PSBoundParameters[$_].IsPresent) { 
                     $htmltagparams.$_ = $null
                 }
                 else {
                     $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
                 }
+
+            }
             }
         }
     }

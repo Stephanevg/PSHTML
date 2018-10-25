@@ -47,6 +47,7 @@ Function dl {
 
     )
     Begin {
+        $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $htmltagparams = @{}
         $tagname = "dl"
     }
@@ -83,12 +84,16 @@ Function dl {
                 continue
             }
             default { 
-                if ($PSBoundParameters[$_].IsPresent) { 
+                if ($_ -notin $CommonParameters) {
+            
+                    if ($PSBoundParameters[$_].IsPresent) { 
                     $htmltagparams.$_ = $null
                 }
                 else {
                     $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
                 }
+
+            }
             }
         }
     }

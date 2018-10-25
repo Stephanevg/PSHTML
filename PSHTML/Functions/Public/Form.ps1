@@ -46,11 +46,11 @@ Function Form {
 
         [Parameter(Mandatory=$true,Position = 1)]
         [ValidateSet("get","post")]
-        [String]$method = "get",
+        [String]$method,
 
         [Parameter(Mandatory=$true,Position = 2)]
         [ValidateSet("_blank","_self","_parent","top")]
-        [String]$target = "_self",
+        [String]$target,
 
         [Parameter(Position = 3)]
         [String]$Class,

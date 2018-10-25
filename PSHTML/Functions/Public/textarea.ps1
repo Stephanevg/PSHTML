@@ -41,20 +41,20 @@ Function textarea {
         
         [AllowEmptyString()]
         [AllowNull()]
-        [int]$Name = "",
+        [int]$Name,
 
         [AllowEmptyString()]
         [AllowNull()]
-        [int]$Rows = "",
+        [int]$Rows,
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Cols = "",
+        [String]$Cols,
 
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class = "",
+        [String]$Class,
 
         [String]$Id,
 
@@ -68,6 +68,7 @@ Function textarea {
     )
 
     Begin {
+        $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $htmltagparams = @{}
         $tagname = "textarea"
     }
@@ -104,12 +105,16 @@ Function textarea {
                 continue
             }
             default { 
-                if ($PSBoundParameters[$_].IsPresent) { 
+                if ($_ -notin $CommonParameters) {
+            
+                    if ($PSBoundParameters[$_].IsPresent) { 
                     $htmltagparams.$_ = $null
                 }
                 else {
                     $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
                 }
+
+            }
             }
         }
     }

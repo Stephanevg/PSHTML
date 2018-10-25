@@ -67,7 +67,7 @@ Function meter {
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class = "",
+        [String]$Class,
 
         [String]$Id,
 
@@ -81,6 +81,7 @@ Function meter {
     )
 
     Begin {
+        $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $htmltagparams = @{}
         $tagname = "meter"        
     }
@@ -117,12 +118,16 @@ Function meter {
                 continue
             }
             default { 
-                if ($PSBoundParameters[$_].IsPresent) { 
+                if ($_ -notin $CommonParameters) {
+            
+                    if ($PSBoundParameters[$_].IsPresent) { 
                     $htmltagparams.$_ = $null
                 }
                 else {
                     $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
                 }
+
+            }
             }
         }
     }

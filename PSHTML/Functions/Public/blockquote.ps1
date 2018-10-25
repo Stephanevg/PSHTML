@@ -46,7 +46,7 @@ Function blockquote {
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class = "",
+        [String]$Class,
 
         [String]$Id,
 
@@ -61,12 +61,17 @@ Function blockquote {
 
 
     Begin {
-        
+        $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $htmltagparams = @{}
         $tagname = "blockquote"
     }
     Process {  
-        foreach ($paramkey in $MyInvocation.MyCommand.Parameters.Keys) {
+
+        $callstack = $PSScriptRoot
+        $Rootpath = '{0}\Private\Params.ps1' -f (Split-Path -path $callstack -Parent)
+        . $Rootpath
+       # $htmltagparams += Set-HTMLParams -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys
+      <#   foreach ($paramkey in $MyInvocation.MyCommand.Parameters.Keys) {
             $paramvalue = Get-Variable $paramkey -ValueOnly -EA SilentlyContinue
             if ($paramvalue -and !$PSBoundParameters.ContainsKey($paramkey)) {
                 $htmltagparams.$paramkey = $paramvalue
@@ -95,14 +100,20 @@ Function blockquote {
                 continue
             }
             default { 
-                if ($PSBoundParameters[$_].IsPresent) { 
+                
+                if ($_ -notin $CommonParameters) {
+            
+                    if ($PSBoundParameters[$_].IsPresent) { 
                     $htmltagparams.$_ = $null
                 }
                 else {
                     $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
                 }
+                
             }
-        }
+
+            }
+        } #>
     }
     End {
         Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 

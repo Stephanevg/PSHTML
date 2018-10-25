@@ -44,24 +44,24 @@ Function math {
         [ValidateSet("ltr", "rtl")]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$dir = "",
+        [String]$dir,
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$href = "",
+        [String]$href,
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$MathbackGround = "",
+        [String]$MathbackGround,
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$MathColor = "",
+        [String]$MathColor,
 
         [ValidateSet("Block", "Inline")]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Display = "",
+        [String]$Display,
 
 
         [ValidateSet("linebreak", "scrolle", "elide", "truncate", "scale")]
@@ -71,7 +71,7 @@ Function math {
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class = "",
+        [String]$Class,
 
         [String]$Id,
 
@@ -85,7 +85,7 @@ Function math {
     )
 
     Begin {
-        
+        $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
         $htmltagparams = @{}
         $tagname = "math"
     }
@@ -120,12 +120,16 @@ Function math {
                 continue
             }
             default { 
-                if ($PSBoundParameters[$_].IsPresent) { 
+                if ($_ -notin $CommonParameters) {
+            
+                    if ($PSBoundParameters[$_].IsPresent) { 
                     $htmltagparams.$_ = $null
                 }
                 else {
                     $htmltagparams.$_ = '{0}' -f $PSBoundParameters[$_]
                 }
+
+            }
             }
         }
     }

@@ -20,24 +20,32 @@ function Install-PSHTMLVSCodeSnippets {
     #>
     [CmdletBinding()]
     Param(
-        [String]$Path = "$($env:APPDATA)\Code\User\snippets",
+        [String]$Path,
         [Switch]$Force
     )
     
+    if(!($Path)){
 
-    $callstack = Get-PSCallStack | Select-Object -ExpandProperty scriptname
-    
-    $Rootpath = Split-path -path (Split-Path -path $callstack -Parent)-Parent
+        if($IsLinux){
+            $Path = "$($home)/vscode/Snippets/"
+        }else{
+            $Path = "$($env:APPDATA)\Code\User\Snippets"
+        }
+    }
 
-    $Rootpath = split-Path -Path $PSScriptRoot -Parent
-    $snippetsfolder = join-path $Rootpath -ChildPath "Snippets"
+
+    $PSHTMLpath = Split-path -path (Split-Path -path $PSScriptRoot -Parent)-Parent
+
+    #$Rootpath = split-Path -Path $PSScriptRoot -Parent
+    $snippetsfolder = join-path $PSHTMLpath -ChildPath "Snippets"
 
     $AllSnipets = Get-childItem -path $snippetsfolder
 
     $Paras = @{}
     $Paras.Destination = $Path
     $Paras.errorAction =  "Stop"
-    $Para.Force = $true
+    #$Paras.Force = $true
+    $Paras.Recurse = $true
 
     if($Force){
         $Paras.Force = $true
