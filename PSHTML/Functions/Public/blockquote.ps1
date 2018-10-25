@@ -67,11 +67,8 @@ Function blockquote {
     }
     Process {  
 
-        $callstack = $PSScriptRoot
-        $Rootpath = '{0}\Private\Params.ps1' -f (Split-Path -path $callstack -Parent)
-        . $Rootpath
-       # $htmltagparams += Set-HTMLParams -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys
-      <#   foreach ($paramkey in $MyInvocation.MyCommand.Parameters.Keys) {
+
+    foreach ($paramkey in $MyInvocation.MyCommand.Parameters.Keys) {
             $paramvalue = Get-Variable $paramkey -ValueOnly -EA SilentlyContinue
             if ($paramvalue -and !$PSBoundParameters.ContainsKey($paramkey)) {
                 $htmltagparams.$paramkey = $paramvalue
@@ -113,7 +110,7 @@ Function blockquote {
             }
 
             }
-        } #>
+        } 
     }
     End {
         Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
