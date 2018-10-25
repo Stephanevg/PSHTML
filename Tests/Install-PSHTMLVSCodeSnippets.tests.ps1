@@ -20,7 +20,13 @@ Describe "Testing Install-VSCodeSnippets" {
         {install-PSHTMLVsCodeSnippets -force} | should not throw
     }
 
-    $SnippetsPath = join-Path -Path $Env:AppData -ChildPath "/Code/User/Snippets/"
+    if($IsLinux){
+        $SnippetsPath = "$home/.vscode/User/Snippets"
+    }else{
+        
+        $SnippetsPath = join-Path -Path $Env:AppData -ChildPath "/Code/User/Snippets/"
+    }
+
     
     if(!(Test-Path $SnippetsPath)){
         $null = mkdir $SnippetsPath
