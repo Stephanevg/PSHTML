@@ -34,7 +34,7 @@ function Install-PSHTMLVSCodeSnippets {
 
     $AllSnipets = Get-childItem -path $snippetsfolder
 
-    if(!(Test-Path)){
+    if(!(Test-Path $Path)){
         $Null = New-Item -Path $Path -ItemType Directory -Force
     }
 
