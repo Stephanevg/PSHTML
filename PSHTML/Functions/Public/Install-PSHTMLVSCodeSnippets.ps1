@@ -28,7 +28,7 @@ function Install-PSHTMLVSCodeSnippets {
     if(!($Path)){
 
         if($IsLinux){
-            $Path = "$home/.vscode/Snippets"
+            $Path = "$($home)/vscode/Snippets/"
         }else{
             $Path = "$($env:APPDATA)\Code\User\Snippets"
         }

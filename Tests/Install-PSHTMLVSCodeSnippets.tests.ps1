@@ -21,7 +21,7 @@ Describe "Testing Install-VSCodeSnippets" {
     }
 
     if($IsLinux){
-        $SnippetsPath = "$home/.vscode/User/Snippets"
+        $SnippetsPath = "$home/vscode/User/Snippets/"
     }else{
         
         $SnippetsPath = join-Path -Path $Env:AppData -ChildPath "/Code/User/Snippets/"
