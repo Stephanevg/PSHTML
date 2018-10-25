@@ -20,10 +20,19 @@ function Install-PSHTMLVSCodeSnippets {
     #>
     [CmdletBinding()]
     Param(
-        [String]$Path = "$($env:APPDATA)\Code\User\Snippets",
+        [String]$Path ,
         [Switch]$Force
     )
-    
+
+
+    if(!($Path)){
+
+        if($IsLinux){
+            $Path = "$home/.vscode/Snippets"
+        }else{
+            $Path = "$($env:APPDATA)\Code\User\Snippets"
+        }
+    }
 
     $ModuleRoot = Get-ModuleRoot
 
