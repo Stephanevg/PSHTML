@@ -188,3 +188,5 @@ Upgraded to v1.1.
     2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the ol HTML tag can be found here --> https://www.w3schools.com/tags/tag_ol.asp](https://www.w3schools.com/tags/tag_ol.asp)

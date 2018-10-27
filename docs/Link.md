@@ -205,3 +205,5 @@ History:
     2018.03.25;@Stephanevg; Creation
 
 ## RELATED LINKS
+
+[Information on the link HTML tag can be found here --> https://www.w3schools.com/tags/tag_link.asp](https://www.w3schools.com/tags/tag_link.asp)

@@ -171,3 +171,5 @@ Upgraded to v1.1.0
     2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the li HTML tag can be found here --> https://www.w3schools.com/tags/tag_li.asp](https://www.w3schools.com/tags/tag_li.asp)

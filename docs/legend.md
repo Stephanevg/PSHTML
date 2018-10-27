@@ -122,3 +122,5 @@ History:
     2018.05.09;@Stephanevg; Creation
 
 ## RELATED LINKS
+
+[Information on the legend HTML tag can be found here --> https://www.w3schools.com/tags/tag_legend.asp](https://www.w3schools.com/tags/tag_legend.asp)
