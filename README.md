@@ -1,4 +1,3 @@
-![PSHTML_LOGO](PSHTML_2020.png)
 
 PSHTML is a cross platform Powershell module to generate HTML markup language within a DSL.
 
