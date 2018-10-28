@@ -55,3 +55,5 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
+
+[Information on the title HTML tag can be found here --> https://www.w3schools.com/tags/tag_title.asp](https://www.w3schools.com/tags/tag_title.asp)

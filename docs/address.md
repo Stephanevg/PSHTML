@@ -135,3 +135,5 @@ Current version 1.0
        2018.04.01;Stephanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the address HTML tag can be found here --> https://www.w3schools.com/tags/tag_address.asp](https://www.w3schools.com/tags/tag_address.asp)

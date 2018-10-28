@@ -162,3 +162,5 @@ History:
     2018.05.21;@Stephanevg; Updated function to use New-HTMLTag
 
 ## RELATED LINKS
+
+[Information on the nav HTML tag can be found here --> https://www.w3schools.com/tags/tag_nav.asp](https://www.w3schools.com/tags/tag_nav.asp)

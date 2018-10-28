@@ -213,3 +213,5 @@ History:
     2018.04.14;@Stephanevg; Creation
 
 ## RELATED LINKS
+
+[Information on the meta HTML tag can be found here --> https://www.w3schools.com/tags/tag_meta.asp](https://www.w3schools.com/tags/tag_meta.asp)

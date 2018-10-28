@@ -178,3 +178,5 @@ Updated help
     2018.04.01;Stephanevg;Fix disyplay bug.
 
 ## RELATED LINKS
+
+[Information on the form HTML tag can be found here --> https://www.w3schools.com/tags/tag_form.asp](https://www.w3schools.com/tags/tag_form.asp)

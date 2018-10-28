@@ -59,3 +59,5 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 
 ## RELATED LINKS
+
+[Information on the thead HTML tag can be found here --> https://www.w3schools.com/tags/tag_thead.asp](https://www.w3schools.com/tags/tag_thead.asp)
