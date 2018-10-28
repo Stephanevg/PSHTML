@@ -23,22 +23,26 @@ figcaption [-Content] <String> [[-Class] <String>] [[-Id] <String>] [[-Style] <S
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 figcaption
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 figcaption "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 figcaption "woop2" -Class "class" -Id "Something"
 ```
 
 ### EXAMPLE 4
-```
+
+``` powershell
 figcaption "woop3" -Class "class" -Id "something" -Style "color:red;"
 ```
 

@@ -23,35 +23,39 @@ p [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 p
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 p "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 p "woop2" -Class "class" -Id "Something"
 ```
 
 ### EXAMPLE 4
-```
+
+``` powershell
 p "woop3" -Class "class" -Id "something" -Style "color:red;"
 ```
 
 ### EXAMPLE 5
-```
-p {
-```
 
-$Important = strong{"This is REALLY important"}
+``` powershell
+p {
+    $Important = strong{"This is REALLY important"}
     "This is regular test in a paragraph " + $Important
 }
+```
 
-Generates the following code
+Generates the following code:
 
 \<p\>
 This is regular test in a paragraph \<strong\>"This is REALLY important"\</strong\>

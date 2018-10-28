@@ -23,17 +23,20 @@ fieldset [[-Content] <Object>] [-disabled] [[-form] <String>] [[-name] <String>]
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 fieldset
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 fieldset "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 $css = @"
 ```
 

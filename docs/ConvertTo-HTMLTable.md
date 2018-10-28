@@ -22,16 +22,22 @@ This cmdlet is intended to be used when powershell objects should be rendered in
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 $service = Get-Service -Name Sens,wsearch,wscsvc | Select-Object -Property DisplayName,Status,StartType
 ```
+
+Generates the following code:
 
 ConvertTo-HTMLtable -Object $service
 
 ### EXAMPLE 2
-```
+
+``` powershell
 $proc = Get-Process | Select-Object -First 2
 ```
+
+Generates the following code:
 
 ConvertTo-HTMLtable -Object $proc
 

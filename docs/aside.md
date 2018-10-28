@@ -23,15 +23,15 @@ aside [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-aside {
-```
 
-h4 "This is an aside"
+``` powershell
+aside {
+    h4 "This is an aside"
     p{
         "This is a paragraph inside the aside block"
     }
 }
+```
 
 Generates the following code:
 

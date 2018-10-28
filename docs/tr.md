@@ -23,9 +23,6 @@ tr [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <St
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-
-```
 
 ## PARAMETERS
 

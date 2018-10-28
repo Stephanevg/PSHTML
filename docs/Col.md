@@ -24,7 +24,8 @@ The \<col\> tag is useful for applying styles to entire columns, instead of repe
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 col -span 3 -Class "Table1"
 ```
 
@@ -33,10 +34,10 @@ Generates the following code
 \<col span="3" Class="Table1"  \>
 
 ### EXAMPLE 2
-```
-Col is often used in conjunction with 'colgroup'. See below for an example using colgroup and two col
-```
 
+Col is often used in conjunction with 'colgroup'. See below for an example using colgroup and two col
+
+``` powershell
 Colgroup {
     col -span 3 -Style "Background-color:red"
     col -Style "Backgroung-color:yellow"
@@ -47,6 +48,7 @@ Generates the following code
     \<col span="3" Style="Background-color:red"  \>
     \<col Style="Backgroung-color:yellow"  \>
 \</colgroup\>
+```
 
 ## PARAMETERS
 

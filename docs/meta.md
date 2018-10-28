@@ -33,27 +33,32 @@ The metadata can be used by browsers (how to display content or reload page), se
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 meta
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 meta "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 meta "woop2" -Class "class" -Id "MainTitle"
 ```
 
 ### EXAMPLE 4
-```
+
+``` powershell
 meta {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 ```
 
 ### EXAMPLE 5
-```
+
+``` powershell
 meta -name author -content "Stephane van Gulick"
 ```
 

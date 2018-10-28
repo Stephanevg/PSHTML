@@ -23,17 +23,20 @@ ul [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 ul
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 ul -Content {li -Content "asdf"}
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 ul -Class "class" -Id "something" -Style "color:red;"
 ```
 

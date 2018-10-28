@@ -23,12 +23,14 @@ Should be used in conjunction with a form attribute.
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 button
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 button "woop1" -Class "class"
 ```
 

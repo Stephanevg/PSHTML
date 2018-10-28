@@ -23,16 +23,16 @@ address [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-address {
-```
 
-$twitterLink = a -href "http://twitter/stephanevg" -Target _blank -ChildItem {"@stephanevg"}
+``` powershell
+address {
+    $twitterLink = a -href "http://twitter/stephanevg" -Target _blank -ChildItem {"@stephanevg"}
     $bloglink = a -href "http://www.powershelldistrict.com" -Target _blank -ChildItem {"www.powershelldistrict.com"}
     "written by: Stephane van Gulick"
     "blog: $($bloglink)";
     "twitter: $($twitterLink)"
 }
+```
 
 Generates the following code:
 

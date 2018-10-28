@@ -23,14 +23,8 @@ input [-type] <String> [-name] <String> [-required] [[-Class] <String>] [[-Id] <
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-
-```
 
 ### EXAMPLE 2
-```
-
-```
 
 ## PARAMETERS
 

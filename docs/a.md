@@ -23,11 +23,12 @@ a [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <Str
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-The following exapmles show cases how to create an empty a, with a class, an ID, and, custom attributes.
-```
 
+The following example showcases how to create an empty a, with a class, an ID, and, custom attributes.
+
+``` powershell
 a -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}
+```
 
 Generates the following code:
 

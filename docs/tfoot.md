@@ -23,9 +23,6 @@ tfoot [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-
-```
 
 ## PARAMETERS
 

@@ -23,26 +23,30 @@ ol [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 ol
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 ol -Content {li -Content "asdf"}
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 ol -Class "class" -Id "something" -Style "color:red;"
 ```
 
 ### EXAMPLE 4
-```
+
+``` powershell
 ol {li -Content "asdf"} -reversed -type a
 ```
 
-#Generates the following content
+Generates the following content
 
 \<ol type="a" reversed \>
     \<li\>

@@ -23,19 +23,18 @@ label [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Attributes] 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 label
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 label "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
-
-```
 
 \<fieldset\>
     \<label\>Personalia:\</label\>

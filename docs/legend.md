@@ -23,19 +23,18 @@ legend [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Attributes]
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 legend
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 legend "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
-
-```
 
 \<fieldset\>
     \<legend\>Personalia:\</legend\>

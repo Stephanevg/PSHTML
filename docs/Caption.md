@@ -23,11 +23,12 @@ Caption [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <St
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-The following exapmles show cases how to create an empty caption, with a class, an ID, and, custom attributes.
-```
 
+The following examples show cases how to create an empty caption, with a class, an ID, and, custom attributes.
+
+``` powershell
 caption -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}
+```
 
 Generates the following code:
 
@@ -35,10 +36,10 @@ Generates the following code:
 \</caption\>
 
 ### EXAMPLE 2
-```
-The caption is used in the construction of the HTML table. The following example illustrates how the caption could be used.
-```
 
+The caption is used in the construction of the HTML table. The following example illustrates how the caption could be used.
+
+``` powershell
 table{
             caption "This is a table generated with PSHTML"
             thead {
@@ -67,6 +68,7 @@ table{
             }
         }
     }
+```
 
 ## PARAMETERS
 

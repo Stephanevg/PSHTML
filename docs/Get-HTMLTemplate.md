@@ -21,11 +21,10 @@ Get-HTMLTemplate [[-Name] <Object>] [<CommonParameters>]
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-html{
-```
 
-Body{
+``` powershell
+html{
+    Body{
 
         include -name body
 
@@ -34,8 +33,9 @@ Body{
         Include -Name Footer
     }
 }
+```
 
-#Generates the following HTML code
+Generates the following HTML code:
 
         \<html\>
             \<body\>

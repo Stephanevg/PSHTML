@@ -23,31 +23,33 @@ Link [-href] <String> [[-type] <Object>] [-rel] <String> [[-Integrity] <String>]
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 link
 ```
 
-#Generates the following code:
+Generates the following code:
 
 \<link\>
 
 ### EXAMPLE 2
-```
+
+``` powershell
 link -Attributes @{"Attribute1"="val1";"Attribute2"="val2"}
 ```
 
-Generates the following code
+Generates the following code:
 
 \<link Attribute1="val1" Attribute2="val2"  \>
 
 ### EXAMPLE 3
-```
+
+``` powershell
 $Style = "font-family: arial; text-align: center;"
+link -Style $style
 ```
 
-link -Style $style
-
-Generates the following code
+Generates the following code:
 
 \<link Style="font-family: arial; text-align: center;"  \>
 

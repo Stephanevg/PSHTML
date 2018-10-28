@@ -22,8 +22,9 @@ Tbody [[-ChildItem] <ScriptBlock>] [<CommonParameters>]
 ## EXAMPLES
 
 ### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+
+``` powershell
+{{ Add example code here }}
 ```
 
 {{ Add example description here }}
