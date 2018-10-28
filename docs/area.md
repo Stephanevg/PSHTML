@@ -12,7 +12,7 @@ Generates area HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 area [[-href] <String>] [[-alt] <String>] [[-coords] <String>] [[-shape] <String>] [[-target] <String>]
  [[-type] <String>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]

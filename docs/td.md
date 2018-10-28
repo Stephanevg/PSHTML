@@ -12,7 +12,7 @@ Generates td HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 td [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

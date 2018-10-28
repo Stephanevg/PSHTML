@@ -12,7 +12,7 @@ Converts a powershell object to a HTML table.
 
 ## SYNTAX
 
-```
+``` powershell
 ConvertTo-HTMLTable [-Object] <Object> [<CommonParameters>]
 ```
 

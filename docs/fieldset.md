@@ -12,7 +12,7 @@ Create a fieldset title in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 fieldset [[-Content] <Object>] [-disabled] [[-form] <String>] [[-name] <String>] [[-Class] <String>]
  [[-Id] <String>] [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

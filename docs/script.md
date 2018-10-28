@@ -12,7 +12,7 @@ Generates script HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 script [[-src] <String>] [[-type] <String>] [[-integrity] <String>] [[-crossorigin] <String>]
  [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>] [[-content] <String>]
  [<CommonParameters>]

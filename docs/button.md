@@ -12,7 +12,7 @@ Creates a \<button\> html tag.
 
 ## SYNTAX
 
-```
+``` powershell
 button [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```

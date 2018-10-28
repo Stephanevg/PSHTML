@@ -12,7 +12,7 @@ Generates colgroup HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Colgroup [[-Content] <ScriptBlock>] [[-span] <Int32>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

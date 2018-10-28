@@ -12,7 +12,7 @@ Create a dt tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 dt [-Content] <String> [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-value] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

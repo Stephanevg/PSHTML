@@ -12,7 +12,7 @@ Create a ol tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 ol [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [-reversed] [[-start] <Int32>] [[-type] <String>] [<CommonParameters>]
 ```

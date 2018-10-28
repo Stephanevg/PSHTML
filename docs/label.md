@@ -12,7 +12,7 @@ Creates a \<label\> HTML element tag
 
 ## SYNTAX
 
-```
+``` powershell
 label [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```

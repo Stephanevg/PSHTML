@@ -12,7 +12,7 @@ Generates tr HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 tr [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

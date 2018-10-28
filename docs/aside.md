@@ -12,7 +12,7 @@ Generates aside HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 aside [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

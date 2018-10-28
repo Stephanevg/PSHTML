@@ -12,7 +12,7 @@ Create a meta title in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 meta [[-content] <String>] [[-charset] <String>] [[-httpequiv] <String>] [[-name] <String>]
  [[-scheme] <String>] [[-class] <String>] [[-id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]

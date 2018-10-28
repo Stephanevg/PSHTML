@@ -12,7 +12,7 @@ Generates a header HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 header [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

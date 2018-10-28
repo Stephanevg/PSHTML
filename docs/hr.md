@@ -12,7 +12,7 @@ Create a hr title in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 hr [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
 

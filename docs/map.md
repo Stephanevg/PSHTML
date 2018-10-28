@@ -12,7 +12,7 @@ Generates map HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 map [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [[-Content] <ScriptBlock>] [<CommonParameters>]
 ```

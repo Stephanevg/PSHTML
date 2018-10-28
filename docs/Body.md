@@ -12,7 +12,7 @@ Generates a Body HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Body [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

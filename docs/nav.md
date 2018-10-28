@@ -12,7 +12,7 @@ Generates nav HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 nav [-Content] <ScriptBlock> [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

@@ -12,7 +12,7 @@ Generates Noscript HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Noscript [[-content] <String>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
