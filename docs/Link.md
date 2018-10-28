@@ -12,7 +12,7 @@ Create a link title in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 Link [-href] <String> [[-type] <Object>] [-rel] <String> [[-Integrity] <String>] [[-CrossOrigin] <String>]
  [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

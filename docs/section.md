@@ -12,7 +12,7 @@ Generates section HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 section [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [[-Content] <ScriptBlock>] [<CommonParameters>]
 ```

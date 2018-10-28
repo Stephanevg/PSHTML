@@ -12,7 +12,7 @@ Create a p tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 p [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-title] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

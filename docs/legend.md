@@ -12,7 +12,7 @@ The \<legend\> tag defines a caption for the \<fieldset\> element.
 
 ## SYNTAX
 
-```
+``` powershell
 legend [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```

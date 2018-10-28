@@ -12,7 +12,7 @@ Generates Form HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Form [-action] <String> [-method] <String> [-target] <String> [[-Class] <String>] [[-Id] <String>]
  [[-Style] <String>] [[-Attributes] <Hashtable>] [[-Content] <ScriptBlock>] [<CommonParameters>]
 ```

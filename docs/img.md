@@ -12,7 +12,7 @@ Generates a html img tag.
 
 ## SYNTAX
 
-```
+``` powershell
 img [-src] <String> [-alt] <String> [[-height] <String>] [[-width] <String>] [[-Class] <String>]
  [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

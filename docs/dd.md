@@ -12,7 +12,7 @@ Create a dd tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 dd [-Content] <String> [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-value] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

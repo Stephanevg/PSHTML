@@ -12,7 +12,7 @@ Create a pre tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 pre [-Content] <String> [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-title] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

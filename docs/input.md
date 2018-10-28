@@ -12,7 +12,7 @@ Generates input HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 input [-type] <String> [-name] <String> [-required] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-value] <String>] [[-Attributes] <Hashtable>] [[-Content] <ScriptBlock>] [<CommonParameters>]
 ```

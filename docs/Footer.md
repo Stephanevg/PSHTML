@@ -12,7 +12,7 @@ Generates a Footer HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Footer [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

@@ -12,7 +12,7 @@ Create a base title in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 base [-href] <String> [[-Target] <String>] [[-Class] <String>] [[-Id] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```

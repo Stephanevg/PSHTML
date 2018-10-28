@@ -12,7 +12,7 @@ Create a style title in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 style [[-Content] <Object>] [[-media] <String>] [[-Type] <String>] [[-Class] <String>] [[-Id] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

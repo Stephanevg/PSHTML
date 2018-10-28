@@ -12,7 +12,7 @@ Create a li tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 li [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [[-Value] <Int32>] [<CommonParameters>]
 ```

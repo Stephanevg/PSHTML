@@ -12,7 +12,7 @@ Generates a a HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 a [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] -href <String> [-Target <String>] [<CommonParameters>]
 ```

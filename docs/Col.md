@@ -12,7 +12,7 @@ Generates col HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Col [[-span] <Int32>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```

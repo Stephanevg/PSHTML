@@ -12,7 +12,7 @@ Generates article HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 article [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

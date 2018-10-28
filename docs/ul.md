@@ -12,7 +12,7 @@ Create a ul tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 ul [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [-reversed] [[-start] <String>] [<CommonParameters>]
 ```

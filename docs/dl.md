@@ -12,7 +12,7 @@ Create a dl tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 dl [[-Content] <String>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [[-start] <String>] [<CommonParameters>]
 ```

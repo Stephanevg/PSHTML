@@ -12,7 +12,7 @@ Generates a caption HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Caption [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

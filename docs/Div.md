@@ -12,7 +12,7 @@ Generates a DIV HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Div [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

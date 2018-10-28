@@ -12,7 +12,7 @@ Generates tfoot HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 tfoot [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```

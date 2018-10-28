@@ -12,7 +12,7 @@ Generates a head HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 head [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```
