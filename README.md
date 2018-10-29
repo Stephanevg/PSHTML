@@ -79,7 +79,7 @@ The generated ```HTML``` code is available [here](PSHTML/examples/Example6/Examp
 
 ## Documenation
 
-Check out the [Documentation](Docs/HowToUsePSHTML.md) on how to use PSHTML.
+Check out the [Documentation](docs/_HowToUsePSHTML.md) on how to use PSHTML.
 
 
 ## Wanna Contribute?
