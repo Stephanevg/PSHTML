@@ -12,7 +12,7 @@ schema: 2.0.0
 
 ## SYNTAX
 
-```
+``` powershell
 Th [[-Content] <String>]
 ```
 
@@ -56,3 +56,5 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
+
+[Information on the th HTML tag can be found here --> https://www.w3schools.com/tags/tag_th.asp](https://www.w3schools.com/tags/tag_th.asp)

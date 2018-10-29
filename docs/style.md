@@ -12,7 +12,7 @@ Create a style title in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 style [[-Content] <Object>] [[-media] <String>] [[-Type] <String>] [[-Class] <String>] [[-Id] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -151,3 +151,5 @@ History:
     2018.05.09;@Stephanevg; Creation
 
 ## RELATED LINKS
+
+[Information on the style HTML tag can be found here --> https://www.w3schools.com/tags/tag_style.asp](https://www.w3schools.com/tags/tag_style.asp)

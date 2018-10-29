@@ -12,7 +12,7 @@ This function is the base function for all the html elements in pshtml.
 
 ## SYNTAX
 
-```
+``` powershell
 Set-HtmlTag [[-TagName] <Object>] [[-Attributes] <Hashtable>] [[-TagType] <Object>] [[-Content] <Object>]
  [<CommonParameters>]
 ```

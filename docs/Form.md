@@ -12,7 +12,7 @@ Generates Form HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Form [-action] <String> [-method] <String> [-target] <String> [[-Class] <String>] [[-Id] <String>]
  [[-Style] <String>] [[-Attributes] <Hashtable>] [[-Content] <ScriptBlock>] [<CommonParameters>]
 ```
@@ -180,3 +180,5 @@ Updated help
     2018.04.01;Stephanevg;Fix disyplay bug.
 
 ## RELATED LINKS
+
+[Information on the form HTML tag can be found here --> https://www.w3schools.com/tags/tag_form.asp](https://www.w3schools.com/tags/tag_form.asp)

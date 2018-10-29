@@ -12,7 +12,7 @@ Generates a a HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 a [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] -href <String> [-Target <String>] [<CommonParameters>]
 ```
@@ -158,3 +158,5 @@ History:
     2018.04.01;Stephanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the a HTML tag can be found here --> https://www.w3schools.com/tags/tag_a.asp](https://www.w3schools.com/tags/tag_a.asp)

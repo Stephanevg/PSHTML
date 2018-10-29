@@ -12,7 +12,7 @@ Create a blockquote tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 blockquote [-Content] <String> [[-cite] <String>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-title] <String>] [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -164,3 +164,5 @@ Current version 1.0
         2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the blockquote HTML tag can be found here --> https://www.w3schools.com/tags/tag_blockquote.asp](https://www.w3schools.com/tags/tag_blockquote.asp)

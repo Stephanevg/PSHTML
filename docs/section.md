@@ -12,7 +12,7 @@ Generates section HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 section [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [[-Content] <ScriptBlock>] [<CommonParameters>]
 ```
@@ -150,3 +150,5 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 
 ## RELATED LINKS
+
+[Information on the section HTML tag can be found here --> https://www.w3schools.com/tags/tag_section.asp](https://www.w3schools.com/tags/tag_section.asp)

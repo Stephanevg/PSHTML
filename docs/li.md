@@ -12,7 +12,7 @@ Create a li tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 li [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [[-Value] <Int32>] [<CommonParameters>]
 ```
@@ -176,3 +176,5 @@ Upgraded to v1.1.0
     2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the li HTML tag can be found here --> https://www.w3schools.com/tags/tag_li.asp](https://www.w3schools.com/tags/tag_li.asp)

@@ -12,7 +12,7 @@ Generates input HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 input [-type] <String> [-name] <String> [-required] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-value] <String>] [[-Attributes] <Hashtable>] [[-Content] <ScriptBlock>] [<CommonParameters>]
 ```
@@ -174,3 +174,5 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 
 ## RELATED LINKS
+
+[Information on the input HTML tag can be found here --> https://www.w3schools.com/tags/tag_input.asp](https://www.w3schools.com/tags/tag_input.asp)

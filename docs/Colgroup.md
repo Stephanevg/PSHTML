@@ -12,7 +12,7 @@ Generates colgroup HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Colgroup [[-Content] <ScriptBlock>] [[-span] <Int32>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -159,3 +159,5 @@ History:
     2018.04.01;Stephanevg;Fix disyplay bug.
 
 ## RELATED LINKS
+
+[Information on the colgroup HTML tag can be found here --> https://www.w3schools.com/tags/tag_colgroup.asp](https://www.w3schools.com/tags/tag_colgroup.asp)

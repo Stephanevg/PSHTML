@@ -12,7 +12,7 @@ creates a "select" html tag.
 
 ## SYNTAX
 
-```
+``` powershell
 selecttag [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```

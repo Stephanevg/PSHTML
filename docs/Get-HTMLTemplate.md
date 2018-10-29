@@ -11,7 +11,7 @@ schema: 2.0.0
 
 ## SYNTAX
 
-```
+``` powershell
 Get-HTMLTemplate [[-Name] <Object>] [<CommonParameters>]
 ```
 

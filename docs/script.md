@@ -12,7 +12,7 @@ Generates script HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 script [[-src] <String>] [[-type] <String>] [[-integrity] <String>] [[-crossorigin] <String>]
  [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>] [[-content] <String>]
  [<CommonParameters>]
@@ -191,3 +191,5 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 
 ## RELATED LINKS
+
+[Information on the script HTML tag can be found here --> https://www.w3schools.com/tags/tag_script.asp](https://www.w3schools.com/tags/tag_script.asp)

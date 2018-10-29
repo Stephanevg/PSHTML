@@ -12,7 +12,7 @@ Generates a figure HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 figure [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -126,3 +126,5 @@ History:
    2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the figure HTML tag can be found here --> https://www.w3schools.com/tags/tag_figure.asp](https://www.w3schools.com/tags/tag_figure.asp)

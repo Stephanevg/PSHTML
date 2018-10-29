@@ -12,7 +12,7 @@ Create a ol tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 ol [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [-reversed] [[-start] <Int32>] [[-type] <String>] [<CommonParameters>]
 ```
@@ -192,3 +192,5 @@ Upgraded to v1.1.
     2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the ol HTML tag can be found here --> https://www.w3schools.com/tags/tag_ol.asp](https://www.w3schools.com/tags/tag_ol.asp)

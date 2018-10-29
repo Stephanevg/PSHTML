@@ -12,7 +12,7 @@ Generates strong HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 strong [-Content] <Object> [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```
@@ -134,3 +134,5 @@ History:
     2018.05.09;@Stephanevg; Creation
 
 ## RELATED LINKS
+
+[Information on the strong HTML tag can be found here --> https://www.w3schools.com/tags/tag_strong.asp](https://www.w3schools.com/tags/tag_strong.asp)

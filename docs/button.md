@@ -12,7 +12,7 @@ Creates a \<button\> html tag.
 
 ## SYNTAX
 
-```
+``` powershell
 button [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```
@@ -124,3 +124,5 @@ History:
     2018.05.09;@Stephanevg; Creation
 
 ## RELATED LINKS
+
+[Information on the button HTML tag can be found here --> https://www.w3schools.com/tags/tag_button.asp](https://www.w3schools.com/tags/tag_button.asp)

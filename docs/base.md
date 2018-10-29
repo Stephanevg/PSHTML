@@ -12,7 +12,7 @@ Create a base title in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 base [-href] <String> [[-Target] <String>] [[-Class] <String>] [[-Id] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```
@@ -131,3 +131,5 @@ History:
     2018.05.09;@Stephanevg; Creation
 
 ## RELATED LINKS
+
+[Information on the base HTML tag can be found here --> https://www.w3schools.com/tags/tag_base.asp](https://www.w3schools.com/tags/tag_base.asp)

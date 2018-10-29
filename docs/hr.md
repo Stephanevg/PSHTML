@@ -12,7 +12,7 @@ Create a hr title in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 hr [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
 
@@ -131,3 +131,5 @@ History:
     2018.03.25;@Stephanevg; Creation
 
 ## RELATED LINKS
+
+[Information on the hr HTML tag can be found here --> https://www.w3schools.com/tags/tag_hr.asp](https://www.w3schools.com/tags/tag_hr.asp)

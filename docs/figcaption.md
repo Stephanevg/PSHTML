@@ -12,7 +12,7 @@ Create a figcaption tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 figcaption [-Content] <String> [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-title] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -152,3 +152,5 @@ Current version 1.0
        2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the figcaption HTML tag can be found here --> https://www.w3schools.com/tags/tag_figcaption.asp](https://www.w3schools.com/tags/tag_figcaption.asp)

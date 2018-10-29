@@ -12,7 +12,7 @@ Generates a head HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 head [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```
@@ -131,3 +131,5 @@ History:
     2018.04.01;Stephanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the head HTML tag can be found here --> https://www.w3schools.com/tags/tag_head.asp](https://www.w3schools.com/tags/tag_head.asp)

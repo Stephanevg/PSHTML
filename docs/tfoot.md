@@ -12,7 +12,7 @@ Generates tfoot HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 tfoot [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -118,3 +118,5 @@ Updated help
     2018.04.01;Stephanevg;
 
 ## RELATED LINKS
+
+[Information on the tfoot HTML tag can be found here --> https://www.w3schools.com/tags/tag_tfoot.asp](https://www.w3schools.com/tags/tag_tfoot.asp)

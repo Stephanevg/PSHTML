@@ -12,7 +12,7 @@ Create a meta title in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 meta [[-content] <String>] [[-charset] <String>] [[-httpequiv] <String>] [[-name] <String>]
  [[-scheme] <String>] [[-class] <String>] [[-id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
@@ -218,3 +218,5 @@ History:
     2018.04.14;@Stephanevg; Creation
 
 ## RELATED LINKS
+
+[Information on the meta HTML tag can be found here --> https://www.w3schools.com/tags/tag_meta.asp](https://www.w3schools.com/tags/tag_meta.asp)
