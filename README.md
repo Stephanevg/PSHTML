@@ -94,8 +94,6 @@ Find here a few examples where people already used PSHTML in an awesome way.
 - Blog post from [@ChendrayanV](https://twitter.com/ChendrayanV) [Autorefresh pages with Polaris and PSHTML](https://chen.about-powershell.com/2018/10/auto-refresh-polaris-page-to-retrieve-status-using-pshtml/)
 - [Docker Image](https://hub.docker.com/r/stijnc/pshtml/tags/) with Polaris and PSHTML created by [@StijnCa](https://twitter.com/StijnCa).
 - [Build your own API](https://livestream.com/accounts/26955461/PSConfAsia/videos/182130806) Presentation by [@ravikanth](https://twitter.com/ravikanth) at PSConfAsia. The PSHTML part starts at 31 minutes, however it is worth it to watch the whole session.
-- 
-
 
 ## Want to Contribute?
 
