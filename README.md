@@ -10,7 +10,7 @@ PSHTML is a cross platform Powershell module to generate HTML markup language wi
 `PSHTML` comes with a templating functionality which allows one to `include` parts of webpages that are identical throughout the web page Eg: footer, Header,Menu etc..
 
 
-Usinng PSHTML, offers code completition and syntax highliting from the the default powershell langauge. As PSHTML respects the W3C standards, any HTML errors, will be spotted immediatly.
+Using PSHTML, offers code completition and syntax highliting from the the default powershell langauge. As PSHTML respects the W3C standards, any HTML errors, will be spotted immediatly.
 
 -----
 
@@ -81,7 +81,22 @@ The generated ```HTML``` code is available [here](PSHTML/examples/Example6/Examp
 
 Check out the [Documentation](docs/_HowToUsePSHTML.md) on how to use PSHTML.
 
+## Check out refferences/blog posts
 
-## Wanna Contribute?
+- Introducing PSHTML on [PowershellDistrict](http://powershelldistrict.com/introducing-pshtml/).
+- [Multiple Blog posts](https://chen.about-powershell.com/) from [@ChendrayanV](https://twitter.com/ChendrayanV).
+- Presentation at [Glasgow Super Meetup](https://youtu.be/QS_gppC5UWQ?t=6246). 
+
+## See how community members use PSHTML
+
+Find here a few examples where people already used PSHTML in an awesome way.
+
+- Blog post from [@ChendrayanV](https://twitter.com/ChendrayanV) [Autorefresh pages with Polaris and PSHTML](https://chen.about-powershell.com/2018/10/auto-refresh-polaris-page-to-retrieve-status-using-pshtml/)
+- [Docker Image](https://hub.docker.com/r/stijnc/pshtml/tags/) with Polaris and PSHTML created by [@StijnCa](https://twitter.com/StijnCa).
+- [Build your own API](https://livestream.com/accounts/26955461/PSConfAsia/videos/182130806) Presentation by [@ravikanth](https://twitter.com/ravikanth) at PSConfAsia. The PSHTML part starts at 31 minutes, however it is worth it to watch the whole session.
+- 
+
+
+## Want to Contribute?
 
 If you're interessted in contributing to PSHTML please be sure to check out the [Contribution Guide](CONTRIBUTING.md).
