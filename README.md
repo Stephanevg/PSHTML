@@ -85,7 +85,7 @@ Check out the [Documentation](docs/_HowToUsePSHTML.md) on how to use PSHTML.
 
 - Introducing PSHTML on [PowershellDistrict](http://powershelldistrict.com/introducing-pshtml/).
 - [Multiple Blog posts](https://chen.about-powershell.com/) from [@ChendrayanV](https://twitter.com/ChendrayanV).
-- Presentation at [Glasgow Super Meetup](https://youtu.be/QS_gppC5UWQ?t=6246). 
+- Presentation at [Glasgow Super Meetup](https://youtu.be/QS_gppC5UWQ?t=6246) by [@anthonyroud](https://twitter.com/anthonyroud). 
 
 ## See how community members use PSHTML
 
