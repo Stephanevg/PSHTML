@@ -12,7 +12,7 @@ Create a pre tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 pre [-Content] <String> [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-title] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -23,31 +23,32 @@ pre [-Content] <String> [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 pre
 ```
 
 ### EXAMPLE 2
-```
-pre -Content @"
-```
 
+``` powershell
+pre -Content @"
 whatever
     it       is
 
     you ne  ed
 "@
+```
 
 ### EXAMPLE 3
-```
-pre -class "classy" -style "stylish" -Content @"
-```
 
+``` powershell
+pre -class "classy" -style "stylish" -Content @"
 whatever
     it       is
 
     you ne  ed
 "@
+```
 
 ## PARAMETERS
 
@@ -155,3 +156,5 @@ Current version 1.0
        2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the pre HTML tag can be found here --> https://www.w3schools.com/tags/tag_pre.asp](https://www.w3schools.com/tags/tag_pre.asp)

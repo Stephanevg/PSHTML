@@ -12,7 +12,7 @@ Generates a figure HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 figure [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -23,11 +23,12 @@ figure [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style]
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-The following exapmles show cases how to create an empty figure, with a class, an ID, and, custom attributes.
-```
 
+The following examples show cases how to create an empty figure, with a class, an ID, and, custom attributes.
+
+``` powershell
 figure -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}
+```
 
 Generates the following code:
 
@@ -125,3 +126,5 @@ History:
    2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the figure HTML tag can be found here --> https://www.w3schools.com/tags/tag_figure.asp](https://www.w3schools.com/tags/tag_figure.asp)

@@ -12,7 +12,7 @@ Create a dl tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 dl [[-Content] <String>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [[-start] <String>] [<CommonParameters>]
 ```
@@ -23,17 +23,20 @@ dl [[-Content] <String>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 dl
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 dl -Content {dt -Content "Coffe";dl -Content "Black hot drink"}
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 dl -Class "class" -Id "something" -Style "color:red;"
 ```
 
@@ -144,3 +147,5 @@ Current version 1.0
         2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the dl HTML tag can be found here --> https://www.w3schools.com/tags/tag_dl.asp](https://www.w3schools.com/tags/tag_dl.asp)

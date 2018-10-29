@@ -12,7 +12,7 @@ The \<legend\> tag defines a caption for the \<fieldset\> element.
 
 ## SYNTAX
 
-```
+``` powershell
 legend [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```
@@ -23,19 +23,18 @@ legend [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Attributes]
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 legend
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 legend "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
-
-```
 
 \<fieldset\>
     \<legend\>Personalia:\</legend\>
@@ -122,3 +121,5 @@ History:
     2018.05.09;@Stephanevg; Creation
 
 ## RELATED LINKS
+
+[Information on the legend HTML tag can be found here --> https://www.w3schools.com/tags/tag_legend.asp](https://www.w3schools.com/tags/tag_legend.asp)

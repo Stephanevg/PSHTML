@@ -12,7 +12,7 @@ Create a dd tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 dd [-Content] <String> [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-value] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -23,22 +23,26 @@ dd [-Content] <String> [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 dd
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 dd "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 dd "woop2" -Class "class" -Id "Something"
 ```
 
 ### EXAMPLE 4
-```
+
+``` powershell
 dd "woop3" -Class "class" -Id "something" -Style "color:red;"
 ```
 
@@ -148,3 +152,5 @@ Current version 1.0
        2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the dd HTML tag can be found here --> https://www.w3schools.com/tags/tag_dd.asp](https://www.w3schools.com/tags/tag_dd.asp)

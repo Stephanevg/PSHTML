@@ -12,7 +12,7 @@ Generates td HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 td [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -23,9 +23,6 @@ td [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <St
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-
-```
 
 ## PARAMETERS
 
@@ -121,3 +118,5 @@ Updated help
     2018.04.01;Stephanevg;
 
 ## RELATED LINKS
+
+[Information on the td HTML tag can be found here --> https://www.w3schools.com/tags/tag_td.asp](https://www.w3schools.com/tags/tag_td.asp)

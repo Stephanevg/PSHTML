@@ -5,42 +5,54 @@ online version:
 schema: 2.0.0
 ---
 
-# Table
+# ConvertTo-HTMLTable
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+Converts a powershell object to a HTML table.
 
 ## SYNTAX
 
 ``` powershell
-Table [[-ChildItem] <ScriptBlock>] [<CommonParameters>]
+ConvertTo-HTMLTable [-Object] <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+This cmdlet is intended to be used when powershell objects should be rendered in an HTML table format.
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 
 ``` powershell
-{{ Add example code here }}
+$service = Get-Service -Name Sens,wsearch,wscsvc | Select-Object -Property DisplayName,Status,StartType
 ```
 
-{{ Add example description here }}
+Generates the following code:
+
+ConvertTo-HTMLtable -Object $service
+
+### EXAMPLE 2
+
+``` powershell
+$proc = Get-Process | Select-Object -First 2
+```
+
+Generates the following code:
+
+ConvertTo-HTMLtable -Object $proc
 
 ## PARAMETERS
 
-### -ChildItem
-{{Fill ChildItem Description}}
+### -Object
+{{Fill Object Description}}
 
 ```yaml
-Type: ScriptBlock
+Type: Object
 Parameter Sets: (All)
 Aliases:
 
-Required: False
-Position: 0
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
@@ -52,13 +64,11 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 
 ## INPUTS
 
-### System.Management.Automation.ScriptBlock
-
 ## OUTPUTS
 
-### System.Object
 ## NOTES
+Current version 0.6
+History:
+   2018.05.09;stephanevg;Creation.
 
 ## RELATED LINKS
-
-[Information on the table HTML tag can be found here --> https://www.w3schools.com/tags/tag_table.asp](https://www.w3schools.com/tags/tag_table.asp)
