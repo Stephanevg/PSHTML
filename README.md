@@ -1,121 +1,117 @@
 
-PSHTML is a cross platform Powershell module to generate HTML markup language within a DSL.
+## Learning by doing
 
-# Summary
+The easiest way to get a grasp of how to use PSHTML is to check out the [Examples](../PSHTML/Examples). Find below a few examples to play with.
 
-`PSHTML` allow people to write a HTML document(s) using `powershell-like` syntax, which makes building webpages easier, and less cumbersome for 'native' powersheller's.
+## Templates
 
-`PSHTML` offers the flexibility of the PowerShell language, and allows to add logic in ```powershell``` directly in the ```HTML``` structure. This open the possibility to add loops, conditional statements, switchs, functions, classes, calling external modules etc.. all that directly from the same editor.
+Since version 0.4 it is possible to build websites using templates. The following example showcase how this works:
 
-`PSHTML` comes with a templating functionality which allows one to `include` parts of webpages that are identical throughout the web page Eg: footer, Header,Menu etc..
+```Example04/Example04.ps1``` contains the following sample code:
 
+### Example04/Example04.ps1
 
-Using PSHTML, offers code completition and syntax highliting from the the default powershell langauge. As PSHTML respects the W3C standards, any HTML errors, will be spotted immediatly.
-
------
-
-## Build Status
-|Branch|Status|
-|---|---|
-|master |[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/master) |
-|dev |[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/dev)|
-
-A change log is available [here](Change_Log.md)
-Known issues are tracked [here](Known_Issues.md)
-
-# How to install PSHTML
-
-PSHTML is available on the powershell gallery. You can install it using the following one liner from a powershell console
+```powershell
 
 
-```Powershell
-Find-Module PSHTML | Install-Module
-```
-# What is PSHTML?
-
-The best way to understand what PSHTML can do, is to skim through some examples.
-
-## A few Basic examples of what PSHTML can achieve
-
-### Basic page
-
-The following quick example displays a simple page, with a few headers, divs, paragraphs, and header elements
-
-```Powershell
-
-html {
-
-    head{
-
-        title "woop title"
-        link "css/normalize.css" "stylesheet"
+html{
+    Header{
+        h1 "This is an example generated using PSHTML Templates"
     }
+    Body{
 
-    body{
+        include -name Body
 
-        Header {
-            h1 "This is h1 Title in header"
-            div {
-                p {
-                    "This is simply a paragraph in a div."
-                }
-            }
-        }
-
-
-            p {
-                h1 "This is h1"
-                h2 "This is h2"
-                h3 "This is h3"
-                h4 "This is h4"
-                h5 "This is h5"
-                h6 "This is h6"
-                strong "plop";"Woop"
-            }
     }
-
+    Footer{
+        Include -Name Footer
+    }
 }
 
 ```
 
-### A more advanced example:
+Assuming that ```Example4/body.ps1``` and ```Example/Footer.ps1``` contains the following ```pshtml```code:
 
-The following example is a tribute to PowerShell GodFather 'Jeffrey Snover' where we generated a BIO of the ShellFather gathering data from Wikipedia and other sources, all that using Powershell.
+### body.ps1
 
+```powershell
 
-![screen shot of PSHTML results](PSHTML/Examples/Example6/tribute_snover.png)
+    h2 "This comes from a template file"
 
-The example ```PSHTML / Powershell``` code is available [here](PSHTML/examples/Example6/Example6.ps1)
+```
 
-The generated ```HTML``` code is available [here](PSHTML/examples/Example6/Example6.html)
+### footer.ps1
 
-<<<<<<< HEAD
-## Documenation
-=======
+```powershell
+div {
+    h4 "This is the footer from a template"
+    p{
+        "Copyright from template"
+    }
+}
+```
 
-# Templating
+Would generate the following code:
 
-Since version 0.4 it is possible to build websites using templates. this is done by using the keyword `include` and specifiying the name of your template.
+```html
 
-The following example showcase how this works:
->>>>>>> 5ee9effd41baa4bc1fbe7047c0d0576370e32fd2
+    <header>
+        <h1>This is an example generated using PSHTML Templates</h1>
+    </header>
+    <body>
+        <h2>This comes from a template file</h2>
+    </body>
+    <footer>
+        <div>
+            <h4>This is the footer from a template</h4>
+        </div>
+    </footer>
+</html>
 
-Check out the [Documentation](docs/_HowToUsePSHTML.md) on how to use PSHTML.
+```
+## Generating a (very) basic form
 
-## Check out refferences/blog posts
+```PowerShell
+form "MyPage.php" post _self -Content {
 
-- Introducing PSHTML on [PowershellDistrict](http://powershelldistrict.com/introducing-pshtml/).
-- [Multiple Blog posts](https://chen.about-powershell.com/) from [@ChendrayanV](https://twitter.com/ChendrayanV).
-- Presentation at [Glasgow Super Meetup](https://youtu.be/QS_gppC5UWQ?t=6246) by [@anthonyroud](https://twitter.com/anthonyroud). 
+    input "text" "FirstName"
+    input "text" "LastName"
+    input submit "MySubmit"
+}
+```
 
-## See how community members use PSHTML
+Which generates the following code:
 
-Find here a few examples where people already used PSHTML in an awesome way.
+```html
+<form action="MyPage.php" method="post" target="_self" >
+    <input type="text" name="FirstName" >
+    <input type="text" name="LastName" >
+    <input type="submit" name="MySubmit" >
+</form>
+```
+## Generating a HTML Table
 
-- Blog post from [@ChendrayanV](https://twitter.com/ChendrayanV) [Autorefresh pages with Polaris and PSHTML](https://chen.about-powershell.com/2018/10/auto-refresh-polaris-page-to-retrieve-status-using-pshtml/)
-- [Docker Image](https://hub.docker.com/r/stijnc/pshtml/tags/) with Polaris and PSHTML created by [@StijnCa](https://twitter.com/StijnCa).
-- [Build your own API](https://livestream.com/accounts/26955461/PSConfAsia/videos/182130806) Presentation by [@ravikanth](https://twitter.com/ravikanth) at PSConfAsia. The PSHTML part starts at 31 minutes, however it is worth it to watch the whole session.
+```PowerShell
+$proc = Get-Process | Select-Object -Skip 8 -First 10
+$css = 'body{background:#252525;font:87.5%/1.5em Lato,sans-serif;padding:20px}table{border-spacing:1px;border-collapse:collapse;background:#F7F6F6;border-radius:6px;overflow:hidden;max-width:800px;width:100%;margin:0 auto;position:relative}td,th{padding-left:8px}thead tr{height:60px;background:#367AB1;color:#F5F6FA;font-size:1.2em;font-weight:700;text-transform:uppercase}tbody tr{height:48px;border-bottom:1px solid #367AB1;text-transform:capitalize;font-size:1em;&:last-child {;border:0}tr:nth-child(even){background-color:#E8E9E8}'
 
-## Want to Contribute?
+html {
+    head { 
+        style {
+            $css
+        }
+    }
+    body {
+        ConvertTo-HTMLtable -Object $proc -Inline -properties Id, Name, Handles, StartTime, WorkingSet
+    }
+}  | Out-File 'C:\temp\Example-ConvertTo-HTMLtable.html'
+```
+Which generate the following HTML page :
 
-If you're interessted in contributing to PSHTML please be sure to check out the [Contribution Guide](CONTRIBUTING.md).
+![screen shot of PSHTML ConvertTo-HTMLtable results](/Examples/Example-ConvertTo-HTMLtable.png)
+
+# Dynamic pages:
+
+It is possible to couple PSHTML with other cool technologies such as nodejs or Polaris.
+
+Read the [following example](/hands-on/PSHTMLwithPowerShell.md) on how to do this (Thanks to [chen](https://github.com/ChendrayanV)!!)
