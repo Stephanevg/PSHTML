@@ -27,9 +27,6 @@ The \<html\> tag is the container for all other HTML elements (except for the \<
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-
-```
 
 ## PARAMETERS
 

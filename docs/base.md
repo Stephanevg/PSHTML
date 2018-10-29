@@ -25,19 +25,18 @@ There can be at maximum one \<base\> element in a document, and it must be insid
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 base
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 base "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
-
-```
 
 ## PARAMETERS
 

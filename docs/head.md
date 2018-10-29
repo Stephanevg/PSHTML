@@ -37,9 +37,6 @@ The following elements can go inside the \<head\> element:
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-
-```
 
 ## PARAMETERS
 

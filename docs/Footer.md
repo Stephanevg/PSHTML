@@ -23,12 +23,12 @@ Footer [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <Str
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-Footer {
-```
 
+``` powershell
+Footer {
 h6 "This is h6 Title in Footer"
 }
+```
 
 Generates the following code
 

@@ -25,30 +25,34 @@ The \<li\> tag is used in ordered lists(\<ol\>), unordered lists (\<ul\>), and i
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 li
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 li "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 li "woop2" -Class "class" -Id "Something"
 ```
 
 ### EXAMPLE 4
-```
+
+``` powershell
 li "woop3" -Class "class" -Id "something" -Style "color:red;"
 ```
 
 ### EXAMPLE 5
-```
-The following code snippet will get all the 'snoverism' from www.snoverisms.com and put them in an UL.
-```
 
+The following code snippet will get all the 'snoverism' from www.snoverisms.com and put them in an UL.
+
+``` powershell
 $Snoverisms += (Invoke-WebRequest -uri "http://snoverisms.com/page/2/").ParsedHtml.getElementsByTagName("p") | ?
 {$_.ClassName -ne "site-description"} | Select-Object -Property innerhtml
 
@@ -60,6 +64,7 @@ $Snoverisms += (Invoke-WebRequest -uri "http://snoverisms.com/page/2/").ParsedHt
             }
         }
     }
+```
 
 ## PARAMETERS
 

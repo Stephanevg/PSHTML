@@ -25,14 +25,14 @@ See example for more details.
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 p{
+    "This is";strong {"cool"}
+}
 ```
 
-"This is";strong {"cool"}
-}
-
-Will generate the following code
+Will generate the following code:
 
 \<p\>
     This is

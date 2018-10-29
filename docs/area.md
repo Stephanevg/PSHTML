@@ -24,7 +24,8 @@ The are tag must be used in a \<map\> element (Use the 'map' function)
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 area -href "link.php" -alt "alternate description" -coords "0,0,10,10"
 ```
 

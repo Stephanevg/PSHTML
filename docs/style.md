@@ -23,24 +23,26 @@ style [[-Content] <Object>] [[-media] <String>] [[-Type] <String>] [[-Class] <St
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 style
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 style "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
-$css = @"
-```
 
+``` powershell
+$css = @"
 "p {color:green;}
     h1 {color:orange;}"
 "@
 style {$css} -media "print" -type "text/css"
+```
 
 ## PARAMETERS
 

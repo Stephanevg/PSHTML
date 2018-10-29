@@ -32,16 +32,16 @@ You can have several \<header\> elements in one document.
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-header {
-```
 
+``` powershell
+header {
 h1 "This is h1 Title in header"
         h2 "This is h2 Title in header"
         p "Some text in paragraph"
 }
+```
 
-Generates the following code
+Generates the following code:
 
 \<header\>
     \<h1\>

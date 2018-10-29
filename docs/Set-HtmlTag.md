@@ -23,12 +23,14 @@ although it can be this function is not intended to be used directly.
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 Set-HtmlTag -TagName div -Attributes @{"Class"="myClass123"}
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 Set-HtmlTag -TagName style -Attributes @{"Class"="myClass123"}
 ```
 

@@ -23,15 +23,15 @@ article [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-article {
-```
 
-h1 "This is blog post number 1"
+``` powershell
+article {
+    h1 "This is blog post number 1"
     p {
         "This is content of blog post 1"
     }
 }
+```
 
 Generates the following code:
 

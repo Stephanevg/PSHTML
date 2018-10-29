@@ -25,9 +25,6 @@ The \<img\> tag has two required attributes: src and alt.
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-
-```
 
 ## PARAMETERS
 

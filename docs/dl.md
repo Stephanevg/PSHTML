@@ -23,17 +23,20 @@ dl [[-Content] <String>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 dl
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 dl -Content {dt -Content "Coffe";dl -Content "Black hot drink"}
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 dl -Class "class" -Id "something" -Style "color:red;"
 ```
 

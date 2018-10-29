@@ -23,15 +23,15 @@ nav [-Content] <ScriptBlock> [[-Class] <String>] [[-Id] <String>] [[-Style] <Str
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-nav -Content {
-```
 
+``` powershell
+nav -Content {
 a -href "\home.html" -Target _blank
     a -href "\about.html" -Target _blank
     a -href "\blog.html" -Target _blank
     a -href "\contact.html" -Target _blank
 }
+```
 
 Generates the following code:
 
@@ -43,13 +43,10 @@ Generates the following code:
 \</nav\>
 
 ### EXAMPLE 2
-```
-It is also possible to use regular powershell logic inside a scriptblock. The example below, generates a nav element
-```
 
-based on values located in a array.
-The various links are build using a foreach loop.
+It is also possible to use regular powershell logic inside a scriptblock. The example below, generates a nav element based on values located in a array. The various links are build using a foreach loop.
 
+``` powershell
 $Pages = "home.html","login.html","about.html"
 nav -Content {
     foreach($page in $pages){
@@ -57,6 +54,7 @@ nav -Content {
     }
 
 } -Class "mainnavigation" -Style "border 1px"
+```
 
 Generates the following code:
 

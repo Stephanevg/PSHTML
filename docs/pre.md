@@ -23,31 +23,32 @@ pre [-Content] <String> [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 pre
 ```
 
 ### EXAMPLE 2
-```
-pre -Content @"
-```
 
+``` powershell
+pre -Content @"
 whatever
     it       is
 
     you ne  ed
 "@
+```
 
 ### EXAMPLE 3
-```
-pre -class "classy" -style "stylish" -Content @"
-```
 
+``` powershell
+pre -class "classy" -style "stylish" -Content @"
 whatever
     it       is
 
     you ne  ed
 "@
+```
 
 ## PARAMETERS
 

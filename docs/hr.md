@@ -22,29 +22,31 @@ hr [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hash
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 hr
 ```
 
-#Generates the following code:
+Generates the following code:
 
 \<hr\>
 
 ### EXAMPLE 2
-```
+
+``` powershell
 hr -Attributes @{"Attribute1"="val1";"Attribute2"="val2"}
 ```
 
-Generates the following code
+Generates the following code:
 
 \<hr Attribute1="val1" Attribute2="val2"  \>
 
 ### EXAMPLE 3
-```
-$Style = "font-family: arial; text-align: center;"
-```
 
+``` powershell
+$Style = "font-family: arial; text-align: center;"
 hr -Style $style
+```
 
 Generates the following code
 

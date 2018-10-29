@@ -24,7 +24,8 @@ script [[-src] <String>] [[-type] <String>] [[-integrity] <String>] [[-crossorig
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 script -type text/javascript -src "myscript.js"
 ```
 
@@ -33,7 +34,8 @@ Generates the following code:
 \<script type="text/javascript" src="myscript.js"\>\</script\>
 
 ### EXAMPLE 2
-```
+
+``` powershell
 script -type text/javascript  -content "alert( 'Hello, world!' );"
 ```
 

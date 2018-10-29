@@ -24,7 +24,8 @@ Pass an 'area' parameter with its arguments in the 'Content' parameter
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 map -Content {area -href "map.png" -coords "0,0,50,50" -shape circle -target top }
 ```
 
@@ -35,9 +36,6 @@ Generates the following code
 \</map\>
 
 ### EXAMPLE 2
-```
-
-```
 
 ## PARAMETERS
 

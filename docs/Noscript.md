@@ -23,7 +23,8 @@ Noscript [[-content] <String>] [[-Class] <String>] [[-Id] <String>] [[-Style] <S
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 Noscript "Your browser doesn`'t support javascript"
 ```
 

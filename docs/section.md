@@ -23,15 +23,15 @@ section [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-section -Attributes @{"class"="MyClass";"id"="myid"} -Content {
-```
 
-h1 "This is a h1"
+``` powershell
+section -Attributes @{"class"="MyClass";"id"="myid"} -Content {
+    h1 "This is a h1"
     P{
         "This paragraph is part of a section with id 'myid'"
     }
 }
+```
 
 Generates the following code:
 
@@ -43,15 +43,15 @@ Generates the following code:
 \</section\>
 
 ### EXAMPLE 2
-```
-section -Class "myclass" -Style "section {border:1px dotted black;}" -Content {
-```
 
+``` powershell
+section -Class "myclass" -Style "section {border:1px dotted black;}" -Content {
 h1 "This is a h1"
     P{
         "This paragraph is part of section with id 'myid'"
     }
 }
+```
 
 Generates the following code:
 

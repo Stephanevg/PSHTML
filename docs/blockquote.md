@@ -23,24 +23,24 @@ blockquote [-Content] <String> [[-cite] <String>] [[-Class] <String>] [[-Id] <St
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-blockquote -cite "https://www.google.com" -Content @"
-```
 
+``` powershekk
+blockquote -cite "https://www.google.com" -Content @"
 Google is a
     great website
     to search for information
 "@
+```
 
 ### EXAMPLE 2
-```
-blockquote -cite "https://www.google.com" -class "classy" -style "stylish" -Content @"
-```
 
+``` powershell
+blockquote -cite "https://www.google.com" -class "classy" -style "stylish" -Content @"
 Google is a
     great website
     to search for information
 "@
+```
 
 ## PARAMETERS
 

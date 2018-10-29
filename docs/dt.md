@@ -23,22 +23,26 @@ dt [-Content] <String> [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 dt
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 dt "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 dt "woop2" -Class "class" -Id "Something"
 ```
 
 ### EXAMPLE 4
-```
+
+``` powershell
 dt "woop3" -Class "class" -Id "something" -Style "color:red;"
 ```
 

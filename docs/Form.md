@@ -23,7 +23,8 @@ Form [-action] <String> [-method] <String> [-target] <String> [[-Class] <String>
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 form "/action_Page.php" post _self
 ```
 
@@ -33,11 +34,12 @@ Generates the following html element: (Not very usefull, we both agree on that)
 \</form\>
 
 ### EXAMPLE 2
-```
-The following Example show how to pass custom HTML tag and their values
-```
 
+The following Example show how to pass custom HTML tag and their values
+
+``` powershell
 form "/action_Page.php" post _self -attributes @{"Woop"="Wap";"sap"="sop"}
+```
 
 ## PARAMETERS
 
