@@ -29,7 +29,7 @@ Function Set-HtmlTag {
 
         $MyCParametersKeys,
 
-        [ValidateSet("void","NonVoid")]
+        [ValidateSet('void','NonVoid')]
         $TagType,
 
         $Content
@@ -45,7 +45,7 @@ Function Set-HtmlTag {
         foreach ($paramkey in $MyCParametersKeys) {
             $paramvalue = Get-Variable $paramkey -ValueOnly -EA SilentlyContinue
             if ($paramvalue -and !$PSBParameters.ContainsKey($paramkey)) {
-                $htmltagparams.$paramkey = $paramvalue
+                $attr += '{0}="{1}" ' -f $paramkey, $paramvalue
             }
         }
         
@@ -63,16 +63,16 @@ Function Set-HtmlTag {
         'Attributes' { 
 
             foreach($entry in $PSBParameters['Attributes'].Keys){
-                if($entry -eq "content" -or $entry -eq "Attributes"){
+                if($entry -eq 'content' -or $entry -eq 'Attributes'){
                     continue
                 }
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+                $attr += '{0}="{1}" ' -f $entry,$Attributes[$Entry]
     }
 
             if($Attributes.Attributes){
                 foreach($at in $Attributes.Attributes.keys){
 
-            $attr += "{0}=`"{1}`" " -f $at,$Attributes.Attributes[$at]
+            $attr += '{0}="{1}" ' -f $at,$Attributes.Attributes[$at]
         }
     }
 
@@ -96,20 +96,20 @@ Function Set-HtmlTag {
 
 
 
-        if($TagType -eq "void"){
-            $Closingtag = "/"
+        if($TagType -eq 'void'){
+            $Closingtag = '/'
             if($attr){
-            $output += "<{0} {1} {2}>"  -f $tagname,$attr,$Closingtag
+            $output += '<{0} {1} {2}>'  -f $tagname,$attr,$Closingtag
             }else{
-            $output += "<{0} {1}>" -f $tagname,$Closingtag
+            $output += '<{0} {1}>' -f $tagname,$Closingtag
             }
             $output
         }else{
             #tag is of type "non-void"
             if($attr){
-                $output += "<{0} {1} >"  -f $tagname,$attr
+                $output += '<{0} {1} >'  -f $tagname,$attr
             }else{
-                $output += "<{0}>" -f $tagname
+                $output += '<{0}>' -f $tagname
             }
 
 
@@ -118,7 +118,7 @@ Function Set-HtmlTag {
             $output += $outcontent
             }
 
-            $output += "</{0}>" -f $tagname
+            $output += '</{0}>' -f $tagname
             $output
         }
     }
