@@ -1,7 +1,7 @@
 
 ## Learning by doing
 
-The easiest way to get a grasp of how to use PSHTML is to check out the [Examples](PSHTML/PSHTML/examples). Find below a few examples to play with.
+The easiest way to get a grasp of how to use PSHTML is to check out the [Examples](../PSHTML/Examples). Find below a few examples to play with.
 
 ## Templates
 
