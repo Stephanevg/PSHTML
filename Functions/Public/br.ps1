@@ -12,7 +12,7 @@ Function br
     Author: Ravikanth Chaganti
     Version: 1.0.0.0
     History:
-        2018.10.27;rchaganti; Adding br element
+        2018.10.29;rchaganti; Adding br element
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
