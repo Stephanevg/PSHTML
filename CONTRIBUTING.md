@@ -6,7 +6,7 @@ To determine what you could help you can:
 
 - Open an issue if you have an idea for improvement.
 - Check in the Issues if something needs to be fixed.
-- Check out [Todo List](Docs/ToDo.md).
+- Check out [Todo List](docs/ToDo.md).
 
 ## Name your branch
 
