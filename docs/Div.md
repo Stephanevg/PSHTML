@@ -12,7 +12,7 @@ Generates a DIV HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Div [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -23,11 +23,12 @@ Div [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <S
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-The following exapmles show cases how to create an empty div, with a class, an ID, and, custom attributes.
-```
 
+The following examples show cases how to create an empty div, with a class, an ID, and, custom attributes.
+
+``` powershell
 div -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}
+```
 
 Generates the following code:
 
@@ -126,3 +127,5 @@ History:
     2018.04.01;Stephanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the div HTML tag can be found here --> https://www.w3schools.com/tags/tag_div.asp](https://www.w3schools.com/tags/tag_div.asp)

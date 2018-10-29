@@ -12,7 +12,7 @@ Generates section HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 section [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [[-Content] <ScriptBlock>] [<CommonParameters>]
 ```
@@ -23,15 +23,15 @@ section [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-section -Attributes @{"class"="MyClass";"id"="myid"} -Content {
-```
 
-h1 "This is a h1"
+``` powershell
+section -Attributes @{"class"="MyClass";"id"="myid"} -Content {
+    h1 "This is a h1"
     P{
         "This paragraph is part of a section with id 'myid'"
     }
 }
+```
 
 Generates the following code:
 
@@ -43,15 +43,15 @@ Generates the following code:
 \</section\>
 
 ### EXAMPLE 2
-```
-section -Class "myclass" -Style "section {border:1px dotted black;}" -Content {
-```
 
+``` powershell
+section -Class "myclass" -Style "section {border:1px dotted black;}" -Content {
 h1 "This is a h1"
     P{
         "This paragraph is part of section with id 'myid'"
     }
 }
+```
 
 Generates the following code:
 
@@ -150,3 +150,5 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 
 ## RELATED LINKS
+
+[Information on the section HTML tag can be found here --> https://www.w3schools.com/tags/tag_section.asp](https://www.w3schools.com/tags/tag_section.asp)

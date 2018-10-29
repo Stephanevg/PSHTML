@@ -12,7 +12,7 @@ Create a p tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 p [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-title] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -23,35 +23,39 @@ p [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 p
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 p "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 p "woop2" -Class "class" -Id "Something"
 ```
 
 ### EXAMPLE 4
-```
+
+``` powershell
 p "woop3" -Class "class" -Id "something" -Style "color:red;"
 ```
 
 ### EXAMPLE 5
-```
-p {
-```
 
-$Important = strong{"This is REALLY important"}
+``` powershell
+p {
+    $Important = strong{"This is REALLY important"}
     "This is regular test in a paragraph " + $Important
 }
+```
 
-Generates the following code
+Generates the following code:
 
 \<p\>
 This is regular test in a paragraph \<strong\>"This is REALLY important"\</strong\>
@@ -165,3 +169,5 @@ Current version 1.1.0
        2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the p HTML tag can be found here --> https://www.w3schools.com/tags/tag_p.asp](https://www.w3schools.com/tags/tag_p.asp)

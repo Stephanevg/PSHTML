@@ -12,7 +12,7 @@ schema: 2.0.0
 
 ## SYNTAX
 
-```
+``` powershell
 Title [[-Content] <String>]
 ```
 
@@ -22,8 +22,9 @@ Title [[-Content] <String>]
 ## EXAMPLES
 
 ### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+
+``` powershell
+{{ Add example code here }}
 ```
 
 {{ Add example description here }}
@@ -55,3 +56,5 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
+
+[Information on the title HTML tag can be found here --> https://www.w3schools.com/tags/tag_title.asp](https://www.w3schools.com/tags/tag_title.asp)

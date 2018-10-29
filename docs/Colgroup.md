@@ -12,7 +12,7 @@ Generates colgroup HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Colgroup [[-Content] <ScriptBlock>] [[-span] <Int32>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -23,27 +23,29 @@ The \<colgroup\> tag is useful for applying styles to entire columns, instead of
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-Colgroup {
-```
 
-col -span 2
+``` powershell
+Colgroup {
+    col -span 2
 }
+```
+Generates the following code
 
 \<colgroup\>
     \<col span="2"  \>
 \</colgroup\>
 
 ### EXAMPLE 2
-```
-Colgroup {
-```
 
-col -span 3 -Style "Background-color:red"
+``` powershell
+Colgroup {
+    col -span 3 -Style "Background-color:red"
     col -Style "Backgroung-color:yellow"
 }
+```
 
 Generates the following code
+
 \<colgroup\>
     \<col span="3" Style="Background-color:red"  \>
     \<col Style="Backgroung-color:yellow"  \>
@@ -157,3 +159,5 @@ History:
     2018.04.01;Stephanevg;Fix disyplay bug.
 
 ## RELATED LINKS
+
+[Information on the colgroup HTML tag can be found here --> https://www.w3schools.com/tags/tag_colgroup.asp](https://www.w3schools.com/tags/tag_colgroup.asp)

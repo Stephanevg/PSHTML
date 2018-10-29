@@ -12,7 +12,7 @@ Generates script HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 script [[-src] <String>] [[-type] <String>] [[-integrity] <String>] [[-crossorigin] <String>]
  [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>] [[-content] <String>]
  [<CommonParameters>]
@@ -24,7 +24,8 @@ script [[-src] <String>] [[-type] <String>] [[-integrity] <String>] [[-crossorig
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 script -type text/javascript -src "myscript.js"
 ```
 
@@ -33,7 +34,8 @@ Generates the following code:
 \<script type="text/javascript" src="myscript.js"\>\</script\>
 
 ### EXAMPLE 2
-```
+
+``` powershell
 script -type text/javascript  -content "alert( 'Hello, world!' );"
 ```
 
@@ -189,3 +191,5 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 
 ## RELATED LINKS
+
+[Information on the script HTML tag can be found here --> https://www.w3schools.com/tags/tag_script.asp](https://www.w3schools.com/tags/tag_script.asp)

@@ -5,15 +5,14 @@ online version:
 schema: 2.0.0
 ---
 
-# Table
+# Get-HTMLTemplate
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
 
 ## SYNTAX
 
 ``` powershell
-Table [[-ChildItem] <ScriptBlock>] [<CommonParameters>]
+Get-HTMLTemplate [[-Name] <Object>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -21,28 +20,52 @@ Table [[-ChildItem] <ScriptBlock>] [<CommonParameters>]
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 
 ``` powershell
-{{ Add example code here }}
+html{
+    Body{
+
+        include -name body
+
+    }
+    Footer{
+        Include -Name Footer
+    }
+}
 ```
 
-{{ Add example description here }}
+Generates the following HTML code:
+
+        \<html\>
+            \<body\>
+
+            h2 "This comes a template file"
+            \</body\>
+            \<footer\>
+            div {
+                h4 "This is the footer from a template"
+                p{
+                    CopyRight from template
+                }
+            }
+            \</footer\>
+        \</html\>
 
 ## PARAMETERS
 
-### -ChildItem
-{{Fill ChildItem Description}}
+### -Name
+{{Fill Name Description}}
 
 ```yaml
-Type: ScriptBlock
+Type: Object
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 0
+Position: 1
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
@@ -52,13 +75,8 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 
 ## INPUTS
 
-### System.Management.Automation.ScriptBlock
-
 ## OUTPUTS
 
-### System.Object
 ## NOTES
 
 ## RELATED LINKS
-
-[Information on the table HTML tag can be found here --> https://www.w3schools.com/tags/tag_table.asp](https://www.w3schools.com/tags/tag_table.asp)

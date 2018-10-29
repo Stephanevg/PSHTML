@@ -12,7 +12,7 @@ Generates a html HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 html [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [-xmlns <String>] [<CommonParameters>]
 ```
@@ -27,9 +27,6 @@ The \<html\> tag is the container for all other HTML elements (except for the \<
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-
-```
 
 ## PARAMETERS
 
@@ -139,3 +136,5 @@ History:
     2018.04.01;Stephanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the html HTML tag can be found here --> https://www.w3schools.com/tags/tag_html.asp](https://www.w3schools.com/tags/tag_html.asp)

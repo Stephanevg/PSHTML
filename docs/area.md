@@ -12,7 +12,7 @@ Generates area HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 area [[-href] <String>] [[-alt] <String>] [[-coords] <String>] [[-shape] <String>] [[-target] <String>]
  [[-type] <String>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
@@ -24,7 +24,8 @@ The are tag must be used in a \<map\> element (Use the 'map' function)
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 area -href "link.php" -alt "alternate description" -coords "0,0,10,10"
 ```
 
@@ -209,3 +210,5 @@ Current version 1.0
        2018.04.01;Stephanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the area HTML tag can be found here --> https://www.w3schools.com/tags/tag_area.asp](https://www.w3schools.com/tags/tag_area.asp)
