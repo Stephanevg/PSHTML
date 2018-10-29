@@ -1,5 +1,15 @@
 # To contribute, please follow these rules
 
+## What can I do?
+
+To determine what you could help you can:
+
+- Open an issue if you have an idea for improvement.
+- Check in the Issues if something needs to be fixed.
+- Check out [Todo List](Docs/ToDo.md).
+
+## Name your branch
+
 According to the type of submission you are planning to make, create a branch called:
 
 - Feature: "Feature_<Description>"
@@ -19,3 +29,4 @@ According to the type of submission you are planning to make, create a branch ca
 2. Commit only feature additions (Use commit --amend to add bug fixes to previous commits)
 3. Do a pull request, and don't be offended if it is refused. It doesn't mean that your code sucks, it simply means that it doesn't fit 100% our standards
 4. Once validated, please comment this issue with your PR number -> <https://github.com/Stephanevg/PSHTML/issues/7> and which element you have just done
+
