@@ -6,14 +6,16 @@ Function Set-HtmlTag {
     .Description
         although it can be this function is not intended to be used directly.
     .EXAMPLE
-    Set-HtmlTag -TagName div -Attributes @{"Class"="myClass123"}
+    Set-HtmlTag -TagName div -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys
 
     .EXAMPLE
-    Set-HtmlTag -TagName style -Attributes @{"Class"="myClass123"}
+    Set-HtmlTag -TagName style -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys
 
     .NOTES
-    Current version 0.7
-       History:
+    Current version 0.8
+        History:
+            2018.10.24;@ChristopheKumor;include tag parameters to version 0.8
+            2018.05.07;stephanevg;
             2018.05.07;stephanevg;Creation
     #>
     [Cmdletbinding()]
@@ -23,78 +25,101 @@ Function Set-HtmlTag {
         #[system.web.ui.HtmlTextWriterTag]
         $TagName,
 
-        [HashTable]
-        $Attributes,
+        $PSBParameters,
+
+        $MyCParametersKeys,
 
         [ValidateSet("void","NonVoid")]
         $TagType,
 
-
         $Content
     )
 
-        $attr = ""
-        $CommonParameters = ("Attributes", "Content","tagname","tagtype") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-        $par = $PSBoundParameters
-        if($CustomParameters){
+    Begin {
+        $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+    }
+    Process {
+        $attr = $output = ''
+        $outcontent = $false
 
-            foreach ($entry in $CustomParameters){
-
-
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
+        foreach ($paramkey in $MyCParametersKeys) {
+            $paramvalue = Get-Variable $paramkey -ValueOnly -EA SilentlyContinue
+            if ($paramvalue -and !$PSBParameters.ContainsKey($paramkey)) {
+                $htmltagparams.$paramkey = $paramvalue
             }
-
         }
+        
+    switch ($PSBParameters.Keys) {
+        'Content' { 
+            if ($PSBParameters[$_] -is [System.Management.Automation.ScriptBlock]) {
+                $outcontent = $PSBParameters[$_].Invoke()
+                continue
+            }
+            else {
+                $outcontent = $PSBParameters[$_]
+                continue
+            }
+        }
+        'Attributes' { 
 
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
+            foreach($entry in $PSBParameters['Attributes'].Keys){
                 if($entry -eq "content" -or $entry -eq "Attributes"){
                     continue
                 }
                 $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
+    }
+
+            if($Attributes.Attributes){
+                foreach($at in $Attributes.Attributes.keys){
+
+            $attr += "{0}=`"{1}`" " -f $at,$Attributes.Attributes[$at]
+        }
+    }
+
+            continue
+        }
+        default { 
+            
+            if ($_ -notin $CommonParameters) {
+        
+                if ($PSBParameters[$_].IsPresent) { 
+                $Attr += '{0}'  -f $_
             }
+            else {
+                $Attr += '{0}="{1}" ' -f $_ ,$PSBParameters[$_]
+            }
+
         }
 
-        if($Attributes.Attributes){
-            foreach($at in $Attributes.Attributes.keys){
-
-                $attr += "{0}=`"{1}`" " -f $at,$Attributes.Attributes[$at]
-            }
         }
+    }
+
+
 
         if($TagType -eq "void"){
             $Closingtag = "/"
             if($attr){
-                "<{0} {1} {2}>"  -f $tagname,$attr,$Closingtag
+            $output += "<{0} {1} {2}>"  -f $tagname,$attr,$Closingtag
             }else{
-                "<{0} {1}>" -f $tagname,$Closingtag
+            $output += "<{0} {1}>" -f $tagname,$Closingtag
             }
+            $output
         }else{
             #tag is of type "non-void"
-
             if($attr){
-                "<{0} {1} >"  -f $tagname,$attr
+                $output += "<{0} {1} >"  -f $tagname,$attr
             }else{
-                "<{0}>" -f $tagname
-            }
-
-            if($Attributes.Keys -contains "content"){
-
-                if($Attributes['content'] -is [System.Management.Automation.ScriptBlock]){
-                    $Attributes['content'].Invoke()
-                }else{
-                    $Attributes['content']
-                }
+                $output += "<{0}>" -f $tagname
             }
 
 
-            "</{0}>" -f $tagname
+
+            if ($outcontent) {
+            $output += $outcontent
+            }
+
+            $output += "</{0}>" -f $tagname
+            $output
         }
-
-
-
-
-
+    }
 }
