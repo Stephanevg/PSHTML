@@ -27,6 +27,7 @@ Function strong {
     Author: Stéphane van Gulick
     Version: 2.0.0
     History:
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.05.23;@Stephanevg; Updated function to use New-HTMLTag
         2018.05.09;@Stephanevg; Creation
 
@@ -56,34 +57,9 @@ Function strong {
         [Hashtable]$Attributes
 
     )
-    $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-
-
-    $htmltagparams = @{}
     $tagname = "strong"
-    if($CustomParameters){
 
-        foreach ($entry in $CustomParameters){
-
-            if($entry -eq "content"){
-
-
-                $htmltagparams.$entry = $PSBoundParameters[$entry]
-            }else{
-                $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-            }
-
-
-        }
-
-        if($Attributes){
-            $htmltagparams += $Attributes
-        }
-
-    }
-    Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
-
+    Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
 
 }
 

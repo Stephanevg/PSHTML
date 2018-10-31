@@ -28,13 +28,14 @@ Function button {
     Author: Stéphane van Gulick
     Version: 1.0.0
     History:
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.05.09;@Stephanevg; Creation
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         $Content,
@@ -49,35 +50,10 @@ Function button {
     )
 
 
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+    $tagname = "button"
 
+    Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
 
-
-
-        $htmltagparams = @{}
-        $tagname = "button"
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-                if($entry -eq "content"){
-
-
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }else{
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-                }
-
-
-            }
-
-            if($Attributes){
-                $htmltagparams += $Attributes
-            }
-
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
-        }
 
 
 

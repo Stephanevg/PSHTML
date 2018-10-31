@@ -38,35 +38,36 @@ Function meta {
     Author: Stéphane van Gulick
     Version: 1.0.0
     History:
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.14;@Stephanevg; Creation
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
-        [string]$content,
+        [string]$content_tag,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         [string]$charset,
 
-        [ValidateSet("content-type","default-style","refresh")]
-        [Parameter(Mandatory=$false)]
+        [ValidateSet("content-type", "default-style", "refresh")]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         [string]$httpequiv,
 
-        [ValidateSet("application-name","author","description","generator","keywords","viewport")]
-        [Parameter(Mandatory=$false)]
+        [ValidateSet("application-name", "author", "description", "generator", "keywords", "viewport")]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         [string]$name,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         [string]$scheme,
@@ -84,39 +85,8 @@ Function meta {
         [Hashtable]$Attributes
     )
 
-    $attr = ""
-    #for the meta tag, content is a regular attribute that we can use.
-    $CommonParameters = ("Attributes","httpequiv") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-
-    if($CustomParameters){
-
-        foreach ($entry in $CustomParameters){
-
-
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-        }
-
+    Process {
+        $tagname = "meta"
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType Void
     }
-
-    if($httpequiv){
-        $Attr += "http-equiv=`"{0}`" " -f $PSBoundParameters['httpequiv']
-    }
-
-    if($Attributes){
-        foreach($entry in $Attributes.Keys){
-
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-        }
-    }
-
-    if($attr){
-        "<meta {0} >"  -f $attr
-    }else{
-        "<meta>"
-    }
-
-
-
 }

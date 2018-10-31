@@ -20,13 +20,13 @@ Function Noscript {
         [Parameter(Position = 1)]
         [string]$content,
 
-        [Parameter(Position =2)]
+        [Parameter(Position = 2)]
         [String]$Class,
 
         [Parameter(Position = 3)]
         [String]$Id,
 
-        [Parameter(Position =4)]
+        [Parameter(Position = 4)]
         [String]$Style,
 
         [Parameter(Position = 5)]
@@ -34,43 +34,12 @@ Function Noscript {
 
 
     )
-    Process{
 
-        $attr = ""
-        $boundParams = $PSBoundParameters
-        $CommonParameters = @(
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "InformationAction",
-            "InformationVariable",
-            "OutVariable",
-            "OutBuffer",
-            "PipelineVariable",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable"
-        )
+    Process {
 
-        foreach ($cp in $CommonParameters){
+        $tagname = "noscript"
 
-            $null = $boundParams.Remove($cp)
-        }
-
-        foreach ($entry in $boundParams.Keys){
-            if($entry -eq "content"){
-                continue
-            }
-            #$attr += "$($entry)=`"$($boundParams[$entry])`" "
-            $attr += "{0}=`"{1}`" " -f $entry,$boundParams[$entry]
-
-        }
-
-        "<noscript {0}>{1}</noscript>"  -f $attr,$content
-
-
-
-    }#End process
-
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+    }
 
 }

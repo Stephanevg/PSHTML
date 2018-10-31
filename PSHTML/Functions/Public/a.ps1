@@ -48,6 +48,7 @@ Function a {
         .NOTES
         Current version 2.0
         History:
+            2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.09.30;Stephanevg;Updated to version 2.0
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
@@ -57,7 +58,7 @@ Function a {
 
     Param(
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         $Content,
@@ -65,7 +66,7 @@ Function a {
         [Parameter(Mandatory = $true)]
         [String]$href,
 
-        [ValidateSet("_self","_blank","_parent","_top")]
+        [ValidateSet("_self", "_blank", "_parent", "_top")]
         [String]$Target = "_self",
 
         [AllowEmptyString()]
@@ -79,36 +80,8 @@ Function a {
         [Hashtable]$Attributes
 
     )
-    Process{
+    $tagname = "a"
 
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        $htmltagparams = @{}
-        $tagname = "a"
+    Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType NonVoid
 
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-
-                if($entry -eq "content"){
-
-                    
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }else{
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-                }
-                
-    
-            }
-
-            if($Attributes){
-                $htmltagparams += $Attributes
-            }
-        }
-
-        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
-
-    }
 }

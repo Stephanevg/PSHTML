@@ -37,6 +37,7 @@ Function img {
         .NOTES
         Current version 2.0
         History:
+        2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.10.10;Stephanevg; Updated code to version 2.0
             2018.05.07;Stephanevg; Updated code to version 1.0
             2018.04.01;Stephanevg;Creation.
@@ -46,19 +47,19 @@ Function img {
 
     Param(
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [String]
-        $src="",
+        $src = "",
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [string]
         $alt = "",
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [string]
         $height,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [string]
         $width,
 
@@ -72,33 +73,8 @@ Function img {
     )
 
 
-    $attr = ""
-    $CommonParameters = "tagname" + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-
-    $htmltagparams = @{}
     $tagname = "img"
-    if($CustomParameters){
 
-        foreach ($entry in $CustomParameters){
-
-            if($entry -eq "content"){
-
-
-                $htmltagparams.$entry = $PSBoundParameters[$entry]
-            }else{
-                $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-            }
-
-
-        }
-
-        if($Attributes){
-            $htmltagparams += $Attributes
-        }
-
-    }
-    Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType Void
-
+    Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType 'void'
 
 }

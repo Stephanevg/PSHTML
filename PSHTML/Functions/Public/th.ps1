@@ -1,5 +1,5 @@
 Function Th {
-<#
+    <#
     .LINK
     https://github.com/Stephanevg/PSHTML
 #>
@@ -8,9 +8,11 @@ Function Th {
         $Content
     )
 
-    @"
-    <th>$Content</th>
-"@
+    Process {
 
+        $tagname = "th"
+
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+    }
 
 }
