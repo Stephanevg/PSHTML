@@ -12,7 +12,7 @@ Generates map HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 map [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [[-Content] <ScriptBlock>] [<CommonParameters>]
 ```
@@ -24,7 +24,8 @@ Pass an 'area' parameter with its arguments in the 'Content' parameter
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 map -Content {area -href "map.png" -coords "0,0,50,50" -shape circle -target top }
 ```
 
@@ -35,9 +36,6 @@ Generates the following code
 \</map\>
 
 ### EXAMPLE 2
-```
-
-```
 
 ## PARAMETERS
 
@@ -127,3 +125,5 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 
 ## RELATED LINKS
+
+[Information on the map HTML tag can be found here --> https://www.w3schools.com/tags/tag_map.asp](https://www.w3schools.com/tags/tag_map.asp)

@@ -12,7 +12,7 @@ Generates a header HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 header [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -32,16 +32,16 @@ You can have several \<header\> elements in one document.
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-header {
-```
 
+``` powershell
+header {
 h1 "This is h1 Title in header"
         h2 "This is h2 Title in header"
         p "Some text in paragraph"
 }
+```
 
-Generates the following code
+Generates the following code:
 
 \<header\>
     \<h1\>
@@ -148,3 +148,5 @@ History:
     2018.04.01;Stephanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the header HTML tag can be found here --> https://www.w3schools.com/tags/tag_header.asp](https://www.w3schools.com/tags/tag_header.asp)

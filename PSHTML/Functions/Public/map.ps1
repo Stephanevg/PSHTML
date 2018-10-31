@@ -42,52 +42,9 @@ Function map {
         [scriptblock]
         $Content
     )
-    Process{
 
-        $attr = ""
-        $boundParams = $PSBoundParameters
-        $CommonParameters = @(
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "InmapationAction",
-            "InmapationVariable",
-            "OutVariable",
-            "OutBuffer",
-            "PipelineVariable",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable"
-        )
-
-        foreach ($cp in $CommonParameters){
-
-            $null = $boundParams.Remove($cp)
-        }
-
-        foreach ($entry in $boundParams.Keys){
-            if ($entry -eq 'content'){
-                continue
-            }
-            $attr += "$($entry)=`"$($boundParams[$entry])`" "
-
-        }
-
-
-
-        if($attr){
-            "<map $attr>"
-        }else{
-            "<map>"
-        }
-
-        if($Content){
-            $Content.Invoke()
-        }
-
-
-        '</map>'
+    Process {
+        $tagname = "map"
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
     }
-
-
 }

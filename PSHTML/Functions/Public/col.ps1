@@ -44,6 +44,7 @@ Function Col {
     .NOTES
     Current version 1.0
     History:
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.08;Stephanvg; Updated to version 1.0
         2018.04.01;Stephanevg;Fix disyplay bug.
     .LINK
@@ -68,34 +69,9 @@ Function Col {
 
     )
 
-    $attr = ""
-    $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-
-    if($CustomParameters){
-
-        foreach ($entry in $CustomParameters){
-
-
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-        }
-
+    Process {
+        $tagname = "col"
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType Void
     }
-
-    if($Attributes){
-        foreach($entry in $Attributes.Keys){
-
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-        }
-    }
-
-    if($attr){
-        "<col {0} >"  -f $attr
-    }else{
-        "<col >"
-    }
-
-
 
 }

@@ -27,6 +27,7 @@ Function ol {
     .NOTES
     Current version 1.1
        History:
+       2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.10.02;bateskevin;Updated to v2.
         2018.04.14;stephanevg;fix Content bug, Added parameter 'type'. Upgraded to v1.1.
         2018.04.01;bateskevin;Creation.
@@ -61,7 +62,7 @@ Function ol {
         [Parameter(Position = 6)]
         [int]$start,
 
-        [ValidateSet("1","A","a","I","i")]
+        [ValidateSet("1", "A", "a", "I", "i")]
         [Parameter(Position = 7)]
         [String]$type
 
@@ -69,37 +70,9 @@ Function ol {
     )
     Process {
 
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        $htmltagparams = @{}
         $tagname = "ol"
 
-        if ($CustomParameters) {
-
-            foreach ($entry in $CustomParameters) {
-
-
-                if ($entry -eq "content") {
-
-                    
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }
-                else {
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-                }
-                
-    
-            }
-
-            if ($Attributes) {
-                $htmltagparams += $Attributes
-            }
-
-
-        }
-        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
-        
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
     }
 
 }

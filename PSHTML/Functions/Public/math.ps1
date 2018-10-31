@@ -24,6 +24,7 @@ Function math {
     .NOTES
     Current version 2.0
        History:
+       2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.04.01;stephanevg;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
@@ -40,7 +41,7 @@ Function math {
         [AllowNull()]
         $Content,
 
-        [ValidateSet("ltr","rtl")]
+        [ValidateSet("ltr", "rtl")]
         [AllowEmptyString()]
         [AllowNull()]
         [String]$dir = "",
@@ -57,13 +58,13 @@ Function math {
         [AllowNull()]
         [String]$MathColor = "",
 
-        [ValidateSet("Block","Inline")]
+        [ValidateSet("Block", "Inline")]
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Display = "",
 
 
-        [ValidateSet("linebreak","scrolle","elide","truncate","scale")]
+        [ValidateSet("linebreak", "scrolle", "elide", "truncate", "scale")]
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Overflow,
@@ -84,34 +85,12 @@ Function math {
     )
 
     Begin {
-        
-        $htmltagparams = @{}
+
         $tagname = "math"
     }
     Process {       
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        if ($CustomParameters) {
 
-            Switch ($CustomParameters) {
-                {($_ -eq 'content') -and ($null -eq $htmltagparams.$_)} {
-                    $htmltagparams.$_ = @($PSBoundParameters[$_])
-                    continue
-                }
-                {$_ -eq 'content'} {
-                    $htmltagparams.$_ += $PSBoundParameters[$_]
-                    continue
-                }
-                default {$htmltagparams.$_ = "{0}" -f $PSBoundParameters[$_]}
-            }
-        }
-    }
-    End {
-        if ($Attributes) {
-            $htmltagparams += $Attributes
-        }
-        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
     }
 }
 

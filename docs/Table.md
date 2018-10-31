@@ -12,7 +12,7 @@ schema: 2.0.0
 
 ## SYNTAX
 
-```
+``` powershell
 Table [[-ChildItem] <ScriptBlock>] [<CommonParameters>]
 ```
 
@@ -22,8 +22,9 @@ Table [[-ChildItem] <ScriptBlock>] [<CommonParameters>]
 ## EXAMPLES
 
 ### Example 1
-```powershell
-PS C:\> {{ Add example code here }}
+
+``` powershell
+{{ Add example code here }}
 ```
 
 {{ Add example description here }}
@@ -59,3 +60,5 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 
 ## RELATED LINKS
+
+[Information on the table HTML tag can be found here --> https://www.w3schools.com/tags/tag_table.asp](https://www.w3schools.com/tags/tag_table.asp)

@@ -19,6 +19,7 @@ Function H1 {
     Author: Stéphane van Gulick
     Version: 1.0.0
     History:
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.08;Stephanevg; Updated to version 1.0: Updated content block to support string & ScriptBlock
         2018.04.08;Stephanevg; Fixed custom Attributes display bug. Updated help
         2018.03.25;@Stephanevg; Added Styles, ID, CLASS attributes functionality
@@ -28,7 +29,7 @@ Function H1 {
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         $Content,
@@ -46,45 +47,8 @@ Function H1 {
         [Hashtable]$Attributes
     )
 
-    $attr = ""
-    $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-
-    if($CustomParameters){
-
-        foreach ($entry in $CustomParameters){
-
-
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-        }
-
+    Process {
+        $tagname = "h1"
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
     }
-
-    if($Attributes){
-        foreach($entry in $Attributes.Keys){
-
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-        }
-    }
-
-    if($attr){
-        "<h1 {0} >"  -f $attr
-    }else{
-        "<h1>"
-    }
-
-
-    if($Content){
-
-        if($Content -is [System.Management.Automation.ScriptBlock]){
-            $Content.Invoke()
-        }else{
-            $Content
-        }
-    }
-
-
-    '</h1>'
-
 }

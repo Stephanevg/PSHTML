@@ -12,7 +12,7 @@ Create a li tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 li [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [[-Value] <Int32>] [<CommonParameters>]
 ```
@@ -25,30 +25,34 @@ The \<li\> tag is used in ordered lists(\<ol\>), unordered lists (\<ul\>), and i
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 li
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 li "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 li "woop2" -Class "class" -Id "Something"
 ```
 
 ### EXAMPLE 4
-```
+
+``` powershell
 li "woop3" -Class "class" -Id "something" -Style "color:red;"
 ```
 
 ### EXAMPLE 5
-```
-The following code snippet will get all the 'snoverism' from www.snoverisms.com and put them in an UL.
-```
 
+The following code snippet will get all the 'snoverism' from www.snoverisms.com and put them in an UL.
+
+``` powershell
 $Snoverisms += (Invoke-WebRequest -uri "http://snoverisms.com/page/2/").ParsedHtml.getElementsByTagName("p") | ?
 {$_.ClassName -ne "site-description"} | Select-Object -Property innerhtml
 
@@ -60,6 +64,7 @@ $Snoverisms += (Invoke-WebRequest -uri "http://snoverisms.com/page/2/").ParsedHt
             }
         }
     }
+```
 
 ## PARAMETERS
 
@@ -171,3 +176,5 @@ Upgraded to v1.1.0
     2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the li HTML tag can be found here --> https://www.w3schools.com/tags/tag_li.asp](https://www.w3schools.com/tags/tag_li.asp)

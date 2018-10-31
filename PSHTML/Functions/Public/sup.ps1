@@ -24,70 +24,49 @@ Function SUP {
     .NOTES
         Current version 2.0
         History:
+        2018.10.30;@ChristopheKumor;Updated to version 3.0
                 2018.10.18;@ChendrayanV;Updated to version 2.0
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
-        [Cmdletbinding()]
-        Param(
+    [Cmdletbinding()]
+    Param(
     
-            [Parameter(
-                ValueFromPipeline = $true,
-                Mandatory = $false,
-                Position = 0
-            )]
-            [AllowEmptyString()]
-            [AllowNull()]
-            $Content,
+        [Parameter(
+            ValueFromPipeline = $true,
+            Mandatory = $false,
+            Position = 0
+        )]
+        [AllowEmptyString()]
+        [AllowNull()]
+        $Content,
     
-            [string]$cite,
+        [string]$cite,
     
-            [AllowEmptyString()]
-            [AllowNull()]
-            [String]$Class = "",
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class = "",
     
-            [String]$Id,
+        [String]$Id,
     
-            [AllowEmptyString()]
-            [AllowNull()]
-            [String]$Style,
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Style,
     
-            [String]$title,
+        [String]$title,
     
-            [Hashtable]$Attributes
-        )
+        [Hashtable]$Attributes
+    )
     
-        Begin {
+    Begin {
             
-            $htmltagparams = @{}
-            $tagname = "SUP"
-        }
-        
-        Process {       
-            $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-            $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-            
-            if ($CustomParameters) {
-    
-                Switch ($CustomParameters) {
-                    {($_ -eq 'content') -and ($null -eq $htmltagparams.$_)} {
-                        $htmltagparams.$_ = @($PSBoundParameters[$_])
-                        continue
-                    }
-                    {$_ -eq 'content'} {
-                        $htmltagparams.$_ += $PSBoundParameters[$_]
-                        continue
-                    }
-                    default {$htmltagparams.$_ = "{0}" -f $PSBoundParameters[$_]}
-                }
-            }
-        }
-        
-        End {
-            if ($Attributes) {
-                $htmltagparams += $Attributes
-            }
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
-        }
-        
+        $tagname = "SUP"
     }
+        
+    Process {       
+
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+            
+    }
+        
+}

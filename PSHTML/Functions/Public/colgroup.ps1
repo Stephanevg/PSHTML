@@ -45,6 +45,7 @@ Function Colgroup {
     .NOTES
     Current version 1.0
     History:
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.08;Stephanevg; Updated to version 1.0
         2018.04.01;Stephanevg;Fix disyplay bug.
     .LINK
@@ -78,44 +79,10 @@ Function Colgroup {
 
 
     )
-    Process{
-        $attr = ""
-        $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-            }
-
-        }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-            }
-        }
-
-        if($attr){
-            "<colgroup {0} >"  -f $attr
-        }else{
-            "<colgroup>"
-        }
-
-
-
-        if($Content){
-            $Content.Invoke()
-        }
-
-
-        '</colgroup>'
+  
+    Process {
+        $tagname = "colgroup"
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
     }
-
 
 }

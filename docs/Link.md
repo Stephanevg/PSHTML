@@ -12,7 +12,7 @@ Create a link title in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 Link [-href] <String> [[-type] <Object>] [-rel] <String> [[-Integrity] <String>] [[-CrossOrigin] <String>]
  [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -23,31 +23,33 @@ Link [-href] <String> [[-type] <Object>] [-rel] <String> [[-Integrity] <String>]
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 link
 ```
 
-#Generates the following code:
+Generates the following code:
 
 \<link\>
 
 ### EXAMPLE 2
-```
+
+``` powershell
 link -Attributes @{"Attribute1"="val1";"Attribute2"="val2"}
 ```
 
-Generates the following code
+Generates the following code:
 
 \<link Attribute1="val1" Attribute2="val2"  \>
 
 ### EXAMPLE 3
-```
+
+``` powershell
 $Style = "font-family: arial; text-align: center;"
+link -Style $style
 ```
 
-link -Style $style
-
-Generates the following code
+Generates the following code:
 
 \<link Style="font-family: arial; text-align: center;"  \>
 
@@ -205,3 +207,5 @@ History:
     2018.03.25;@Stephanevg; Creation
 
 ## RELATED LINKS
+
+[Information on the link HTML tag can be found here --> https://www.w3schools.com/tags/tag_link.asp](https://www.w3schools.com/tags/tag_link.asp)

@@ -12,7 +12,7 @@ Generates Form HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Form [-action] <String> [-method] <String> [-target] <String> [[-Class] <String>] [[-Id] <String>]
  [[-Style] <String>] [[-Attributes] <Hashtable>] [[-Content] <ScriptBlock>] [<CommonParameters>]
 ```
@@ -23,7 +23,8 @@ Form [-action] <String> [-method] <String> [-target] <String> [[-Class] <String>
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 form "/action_Page.php" post _self
 ```
 
@@ -33,11 +34,12 @@ Generates the following html element: (Not very usefull, we both agree on that)
 \</form\>
 
 ### EXAMPLE 2
-```
-The following Example show how to pass custom HTML tag and their values
-```
 
+The following Example show how to pass custom HTML tag and their values
+
+``` powershell
 form "/action_Page.php" post _self -attributes @{"Woop"="Wap";"sap"="sop"}
+```
 
 ## PARAMETERS
 
@@ -178,3 +180,5 @@ Updated help
     2018.04.01;Stephanevg;Fix disyplay bug.
 
 ## RELATED LINKS
+
+[Information on the form HTML tag can be found here --> https://www.w3schools.com/tags/tag_form.asp](https://www.w3schools.com/tags/tag_form.asp)

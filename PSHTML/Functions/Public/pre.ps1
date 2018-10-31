@@ -27,6 +27,7 @@ Function pre {
     .NOTES
     Current version 1.0
        History:
+       2018.10.30;@ChristopheKumor;Updated to version 3.0
        2018.10.02:bateskevin; Updated to v2 
        2018.04.01;bateskevin;Creation.
     .LINK
@@ -34,7 +35,7 @@ Function pre {
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [AllowEmptyString()]
         [AllowNull()]
         [String]
@@ -42,7 +43,7 @@ Function pre {
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class="",
+        [String]$Class = "",
 
         [String]$Id,
 
@@ -56,37 +57,9 @@ Function pre {
     )
 
     Process {
-
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        $htmltagparams = @{}
         $tagname = "pre"
 
-        if ($CustomParameters) {
-
-            foreach ($entry in $CustomParameters) {
-
-
-                if ($entry -eq "content") {
-
-                    
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }
-                else {
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-                }
-                
-    
-            }
-
-            if ($Attributes) {
-                $htmltagparams += $Attributes
-            }
-
-
-        }
-        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
         
     }
 }

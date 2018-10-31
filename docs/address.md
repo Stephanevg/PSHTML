@@ -12,7 +12,7 @@ Generates address HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 address [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -23,16 +23,17 @@ address [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-address {
-```
 
-$twitterLink = a -href "http://twitter/stephanevg" -Target _blank -ChildItem {"@stephanevg"}
+
+``` powershell
+address {
+    $twitterLink = a -href "http://twitter/stephanevg" -Target _blank -ChildItem {"@stephanevg"}
     $bloglink = a -href "http://www.powershelldistrict.com" -Target _blank -ChildItem {"www.powershelldistrict.com"}
     "written by: Stephane van Gulick"
     "blog: $($bloglink)";
     "twitter: $($twitterLink)"
 }
+```
 
 Generates the following code:
 
@@ -135,3 +136,5 @@ Current version 1.0
        2018.04.01;Stephanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the address HTML tag can be found here --> https://www.w3schools.com/tags/tag_address.asp](https://www.w3schools.com/tags/tag_address.asp)

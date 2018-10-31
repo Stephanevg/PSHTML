@@ -18,6 +18,7 @@ Function base {
     Author: Stéphane van Gulick
     Version: 1.0.1
     History:
+        2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.05.11;@Stephanevg; fixed minor bugs
         2018.05.09;@Stephanevg; Creation
 
@@ -30,7 +31,7 @@ Function base {
         [Parameter(Mandatory = $true)]
         [String]$href,
 
-        [ValidateSet("_self","_blank","_parent","_top")]
+        [ValidateSet("_self", "_blank", "_parent", "_top")]
         [String]$Target = "_self",
 
         [AllowEmptyString()]
@@ -42,34 +43,9 @@ Function base {
         [Hashtable]$Attributes
     )
 
-        $attr = ""
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+    $tagname = "base"
 
-        $htmltagparams = @{}
-        $tagname = "base"
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-                if($entry -eq "content"){
-
-
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }else{
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-                }
-
-
-            }
-
-            if($Attributes){
-                $htmltagparams += $Attributes
-            }
-
-        }
-        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType Void
-
+    Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType void
 
 
 }

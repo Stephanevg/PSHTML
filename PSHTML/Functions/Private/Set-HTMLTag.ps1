@@ -19,7 +19,7 @@ Function Set-HtmlTag {
             2018.05.07;stephanevg;Creation
     #>
     [Cmdletbinding()]
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSProvideCommentHelp", "", Justification="Manipulation of text")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSProvideCommentHelp", "", Justification = "Manipulation of text")]
     Param(
 
         #[system.web.ui.HtmlTextWriterTag]
@@ -29,7 +29,7 @@ Function Set-HtmlTag {
 
         $MyCParametersKeys,
 
-        [ValidateSet('void','NonVoid')]
+        [ValidateSet('void', 'NonVoid')]
         $TagType,
 
         $Content
@@ -49,77 +49,85 @@ Function Set-HtmlTag {
             }
         }
         
-    switch ($PSBParameters.Keys) {
-        'Content' { 
-            if ($PSBParameters[$_] -is [System.Management.Automation.ScriptBlock]) {
-                $outcontent = $PSBParameters[$_].Invoke()
-                continue
-            }
-            else {
-                $outcontent = $PSBParameters[$_]
-                continue
-            }
-        }
-        'Attributes' { 
-
-            foreach($entry in $PSBParameters['Attributes'].Keys){
-                if($entry -eq 'content' -or $entry -eq 'Attributes'){
+        switch ($PSBParameters.Keys) {
+            'Content' { 
+                if ($PSBParameters[$_] -is [System.Management.Automation.ScriptBlock]) {
+                    $outcontent = $PSBParameters[$_].Invoke()
                     continue
                 }
-                $attr += '{0}="{1}" ' -f $entry,$Attributes[$Entry]
-    }
+                else {
+                    $outcontent = $PSBParameters[$_]
+                    continue
+                }
+            }
+            'Attributes' { 
 
-            if($Attributes.Attributes){
-                foreach($at in $Attributes.Attributes.keys){
+                foreach ($entry in $PSBParameters['Attributes'].Keys) {
+                    if ($entry -eq 'content' -or $entry -eq 'Attributes') {
+                        continue
+                    }
+                    $attr += '{0}="{1}" ' -f $entry, $Attributes[$Entry]
+                }
 
-            $attr += '{0}="{1}" ' -f $at,$Attributes.Attributes[$at]
-        }
-    }
+                if ($Attributes.Attributes) {
+                    foreach ($at in $Attributes.Attributes.keys) {
 
-            continue
-        }
-        default { 
+                        $attr += '{0}="{1}" ' -f $at, $Attributes.Attributes[$at]
+                    }
+                }
+
+                continue
+            }
+            'httpequiv' {
+                $attr += 'http-equiv="{0}" ' -f $PSBParameters[$_]
+                continue
+            }
+            'content_tag' {
+                $attr += 'content="{0}" ' -f $PSBParameters[$_]
+                continue
+            }
+            default { 
             
-            if ($_ -notin $CommonParameters) {
+                if ($_ -notin $CommonParameters) {
         
-                if ($PSBParameters[$_].IsPresent) { 
-                $Attr += '{0}'  -f $_
+                    if ($PSBParameters[$_].IsPresent) { 
+                        $attr += '{0}' -f $_
+                    }
+                    else {
+                        $attr += '{0}="{1}" ' -f $_ , $PSBParameters[$_]
+                    }
+
+                }
+
+            }
+        }
+
+
+
+        if ($TagType -eq 'void') {
+            $Closingtag = '/'
+            if ($attr) {
+                $output += '<{0} {1} {2}>' -f $tagname, $attr, $Closingtag
             }
             else {
-                $Attr += '{0}="{1}" ' -f $_ ,$PSBParameters[$_]
+                $output += '<{0} {1}>' -f $tagname, $Closingtag
             }
-
         }
-
-        }
-    }
-
-
-
-        if($TagType -eq 'void'){
-            $Closingtag = '/'
-            if($attr){
-            $output += '<{0} {1} {2}>'  -f $tagname,$attr,$Closingtag
-            }else{
-            $output += '<{0} {1}>' -f $tagname,$Closingtag
-            }
-            $output
-        }else{
+        else {
             #tag is of type "non-void"
-            if($attr){
-                $output += '<{0} {1} >'  -f $tagname,$attr
-            }else{
+            if ($attr) {
+                $output += '<{0} {1} >' -f $tagname, $attr
+            }
+            else {
                 $output += '<{0}>' -f $tagname
             }
 
-
-
             if ($outcontent) {
-            $output += $outcontent
+                $output += -join $outcontent 
             }
 
             $output += '</{0}>' -f $tagname
-            $output
         }
+        $output
     }
 }

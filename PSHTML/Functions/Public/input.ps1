@@ -36,56 +36,12 @@ Function input {
         [String]$value,
 
         [Parameter(Position = 8)]
-        [Hashtable]$Attributes,
-
-        [Parameter(
-            ValueFromPipeline = $true,
-            Mandatory = $false,
-            Position = 9
-        )]
-        [scriptblock]
-        $Content
+        [Hashtable]$Attributes
     )
+
     Process {
-
-        $attr = ""
-        $boundParams = $PSBoundParameters
-        $CommonParameters = @(
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "InformationAction",
-            "InformationVariable",
-            "OutVariable",
-            "OutBuffer",
-            "PipelineVariable",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable"
-        )
-
-        foreach ($cp in $CommonParameters) {
-
-            $null = $boundParams.Remove($cp)
-        }
-
-        foreach ($entry in $boundParams.Keys) {
-
-            $attr += "$($entry)=`"$($boundParams[$entry])`" "
-
-        }
-
-
-
-        if ($attr) {
-            "<input $attr>"
-        }
-        else {
-            throw "No attributes were defined for <input> element"
-        }
-
-
-    }#End process
-
+        $tagname = "input"
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType Void
+    }
 
 }

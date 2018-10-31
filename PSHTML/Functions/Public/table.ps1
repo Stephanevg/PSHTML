@@ -1,5 +1,5 @@
 Function Table {
-<#
+    <#
     .LINK
     https://github.com/Stephanevg/PSHTML
 #>
@@ -11,19 +11,16 @@ Function Table {
             Position = 0
         )]
         [scriptblock]
-        $ChildItem
+        $Content
     )
-    Process{
-        "<table>"
 
+    Process {
 
-        if($ChildItem){
-            $ChildItem.Invoke()
-        }
+        $tagname = "Table"
 
-
-        '</Table>'
+        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
     }
-
-
 }
+
+
+
