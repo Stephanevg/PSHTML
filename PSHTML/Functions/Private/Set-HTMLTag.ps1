@@ -1,4 +1,3 @@
-#!/usr/bin/env powershell
 Function Set-HtmlTag {
     <#
     .Synopsis
@@ -44,7 +43,7 @@ Function Set-HtmlTag {
         $outcontent = $false
 
         foreach ($paramkey in $MyInvocationParametersKeys) {
-            $paramvalue = Get-Variable $paramkey -ValueOnly -EA SilentlyContinue
+            $paramvalue = Get-Variable -Name $paramkey -ValueOnly -ErrorAction SilentlyContinue
             if ($paramvalue -and !$Parameters.ContainsKey($paramkey)) {
                 $attr += '{0}="{1}" ' -f $paramkey, $paramvalue
             }
@@ -65,16 +64,16 @@ Function Set-HtmlTag {
 
                 foreach ($entry in $Parameters['Attributes'].Keys) {
                     if ($entry -eq 'content' -or $entry -eq 'Attributes') {
-                        write-verbose ('[Set-HTMLTAG] attribute {0} is a reserved value, and should not be passed in the Attributes HashTable' -f ($entry))
+                        write-verbose -Message ('[Set-HTMLTAG] attribute {0} is a reserved value, and should not be passed in the Attributes HashTable' -f ($entry))
                         continue
                     }
-                    $attr += '{0}="{1}" ' -f $entry, $_[$Entry]
+                    $attr += '{0}="{1}" ' -f $entry, $Attributes[$Entry]
                 }
 
-                if ($_.Attributes) {
-                    foreach ($at in $_.Attributes.keys) {
+                if ($Attributes.Attributes) {
+                    foreach ($at in $Attributes.Attributes.keys) {
 
-                        $attr += '{0}="{1}" ' -f $at, $_.Attributes[$at]
+                        $attr += '{0}="{1}" ' -f $at, $Attributes.Attributes[$at]
                     }
                 }
 
