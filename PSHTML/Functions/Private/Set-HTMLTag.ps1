@@ -1,3 +1,4 @@
+#!/usr/bin/env powershell
 Function Set-HtmlTag {
     <#
     .Synopsis
@@ -6,10 +7,10 @@ Function Set-HtmlTag {
     .Description
         although it can be this function is not intended to be used directly.
     .EXAMPLE
-    Set-HtmlTag -TagName div -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys
+    Set-HtmlTag -TagName div -PSBParameters $PSBoundParameters -MyInvocationParametersKeys $MyInvocation.MyCommand.Parameters.Keys
 
     .EXAMPLE
-    Set-HtmlTag -TagName style -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys
+    Set-HtmlTag -TagName style -PSBParameters $PSBoundParameters -MyInvocationParametersKeys $MyInvocation.MyCommand.Parameters.Keys
 
     .NOTES
     Current version 0.8
@@ -19,15 +20,15 @@ Function Set-HtmlTag {
             2018.05.07;stephanevg;Creation
     #>
     [Cmdletbinding()]
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSProvideCommentHelp", "", Justification = "Manipulation of text")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSProvideCommentHelp', '', Justification = 'Manipulation of text')]
     Param(
 
         #[system.web.ui.HtmlTextWriterTag]
         $TagName,
 
-        $PSBParameters,
+        $Parameters,
 
-        $MyCParametersKeys,
+        $MyInvocationParametersKeys,
 
         [ValidateSet('void', 'NonVoid')]
         $TagType,
@@ -39,62 +40,63 @@ Function Set-HtmlTag {
         $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
     }
     Process {
-        $attr = $output = ''
+        $attr = ''
         $outcontent = $false
 
-        foreach ($paramkey in $MyCParametersKeys) {
+        foreach ($paramkey in $MyInvocationParametersKeys) {
             $paramvalue = Get-Variable $paramkey -ValueOnly -EA SilentlyContinue
-            if ($paramvalue -and !$PSBParameters.ContainsKey($paramkey)) {
+            if ($paramvalue -and !$Parameters.ContainsKey($paramkey)) {
                 $attr += '{0}="{1}" ' -f $paramkey, $paramvalue
             }
         }
         
-        switch ($PSBParameters.Keys) {
+        switch ($Parameters.Keys) {
             'Content' { 
-                if ($PSBParameters[$_] -is [System.Management.Automation.ScriptBlock]) {
-                    $outcontent = $PSBParameters[$_].Invoke()
+                if ($Parameters[$_] -is [System.Management.Automation.ScriptBlock]) {
+                    $outcontent = $Parameters[$_].Invoke()
                     continue
                 }
                 else {
-                    $outcontent = $PSBParameters[$_]
+                    $outcontent = $Parameters[$_]
                     continue
                 }
             }
             'Attributes' { 
 
-                foreach ($entry in $PSBParameters['Attributes'].Keys) {
+                foreach ($entry in $Parameters['Attributes'].Keys) {
                     if ($entry -eq 'content' -or $entry -eq 'Attributes') {
+                        write-verbose ('[Set-HTMLTAG] attribute {0} is a reserved value, and should not be passed in the Attributes HashTable' -f ($entry))
                         continue
                     }
-                    $attr += '{0}="{1}" ' -f $entry, $Attributes[$Entry]
+                    $attr += '{0}="{1}" ' -f $entry, $_[$Entry]
                 }
 
-                if ($Attributes.Attributes) {
-                    foreach ($at in $Attributes.Attributes.keys) {
+                if ($_.Attributes) {
+                    foreach ($at in $_.Attributes.keys) {
 
-                        $attr += '{0}="{1}" ' -f $at, $Attributes.Attributes[$at]
+                        $attr += '{0}="{1}" ' -f $at, $_.Attributes[$at]
                     }
                 }
 
                 continue
             }
             'httpequiv' {
-                $attr += 'http-equiv="{0}" ' -f $PSBParameters[$_]
+                $attr += 'http-equiv="{0}" ' -f $Parameters[$_]
                 continue
             }
             'content_tag' {
-                $attr += 'content="{0}" ' -f $PSBParameters[$_]
+                $attr += 'content="{0}" ' -f $Parameters[$_]
                 continue
             }
             default { 
             
                 if ($_ -notin $CommonParameters) {
         
-                    if ($PSBParameters[$_].IsPresent) { 
+                    if ($Parameters[$_].IsPresent) { 
                         $attr += '{0}' -f $_
                     }
                     else {
-                        $attr += '{0}="{1}" ' -f $_ , $PSBParameters[$_]
+                        $attr += '{0}="{1}" ' -f $_ , $Parameters[$_]
                     }
 
                 }
@@ -103,31 +105,41 @@ Function Set-HtmlTag {
         }
 
 
+        #Generating OutPut string
+        #$TagBegin - TagAttributes - <TagContent> - TagEnd
+        
 
-        if ($TagType -eq 'void') {
-            $Closingtag = '/'
-            if ($attr) {
-                $output += '<{0} {1} {2}>' -f $tagname, $attr, $Closingtag
-            }
-            else {
-                $output += '<{0} {1}>' -f $tagname, $Closingtag
-            }
+        $TagBegin = '<{0}' -f $TagName
+
+    
+        if ($tagType -eq 'nonvoid') {
+            $ClosingFirstTag = '>'
+            $TagEnd = '</{0}>' -f $tagname
         }
         else {
-            #tag is of type "non-void"
-            if ($attr) {
-                $output += '<{0} {1} >' -f $tagname, $attr
-            }
-            else {
-                $output += '<{0}>' -f $tagname
-            }
-
-            if ($outcontent) {
-                $output += -join $outcontent 
-            }
-
-            $output += '</{0}>' -f $tagname
+            $ClosingFirstTag = '/>'
+            $TagEnd = ''
         }
-        $output
+        
+        
+        if ($attr) {
+
+            $TagAttributes = ' {0}{1}' -f $attr.trim(), $ClosingFirstTag
+        }
+        else {
+            $TagAttributes = '{0}' -f $ClosingFirstTag
+        }
+
+
+    
+        if ($outcontent) {
+
+            $TagContent = (-join $outcontent ).trim()
+        }
+
+        $Data = $TagBegin + $TagAttributes + $TagContent + $TagEnd
+
+
+        return $Data
     }
 }
