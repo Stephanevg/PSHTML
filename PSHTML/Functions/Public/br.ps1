@@ -19,12 +19,6 @@ Function br
     [Cmdletbinding()]
     param
     (
-        [Parameter(
-            ValueFromPipeline = $true,
-            Mandatory = $false,
-            Position = 0
-        )]
-        $Content,
 
         [Parameter(Position = 1)]
         [String]$Class,
