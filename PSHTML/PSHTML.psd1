@@ -12,7 +12,7 @@
 RootModule = 'PSHTML.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.6.0'
+ModuleVersion = '0.6.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -30,7 +30,7 @@ CompanyName = 'District'
 Copyright = '(c) 2018 Stéphane van Gulick. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'Module to generate HTML markup language and create awesome web pages!'
+Description = 'Cross platform PowerShell module to generate HTML markup language and create awesome web pages!'
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '3.0'

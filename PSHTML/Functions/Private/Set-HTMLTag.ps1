@@ -22,19 +22,40 @@ Function Set-HtmlTag {
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSProvideCommentHelp", "", Justification = "Manipulation of text")]
     Param(
 
-        #[system.web.ui.HtmlTextWriterTag]
+        [Parameter(Mandatory=$True)]
         $TagName,
 
+        [Parameter(Mandatory=$True)]
         $Parameters,
 
         [Parameter(Mandatory=$true)]
         [ValidateSet('void', 'NonVoid')]
         $TagType,
 
+        [Parameter(Mandatory=$False)]
         $Content
     )
 
     Begin {
+
+        Function GetCustomParameters {
+            [CmdletBinding()]
+            Param(
+                [HashTable]$Parameters
+            )
+    
+            $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+            $CleanedHash = @{}
+            foreach($key in $Parameters.Keys){
+                if(!($key -in $CommonParameters)){
+                    $CleanedHash.$Key = $Parameters[$key]
+                }
+            }
+            if(!($CleanedHash)){
+                write-verbose "[GetCustomParameters] No custom parameters passed."
+            }
+            Return $cleanedHash
+    }
         $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
     }
     Process {
@@ -43,24 +64,6 @@ Function Set-HtmlTag {
 
         $AttributesToSkip = "Content","Attributes","httpequiv","content_tag"
 
-    Function GetCustomParameters {
-        [CmdletBinding()]
-        Param(
-            [HashTable]$Parameters
-        )
-
-        $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CleanedHash = @{}
-        foreach($key in $Parameters.Keys){
-            if(!($key -in $CommonParameters)){
-                $CleanedHash.$Key = $Parameters[$key]
-            }
-        }
-        if(!($CleanedHash)){
-            write-verbose "[GetCustomParameters] No custom parameters passed."
-        }
-        Return $cleanedHash
-    }
 
         $Attributes = GetCustomParameters -parameters $Parameters
 
@@ -143,7 +146,8 @@ Function Set-HtmlTag {
             $TagAttributes = ' {0}' -f  $ClosingFirstTag
         }
 
-
+        #Fix to avoid a additional space before the content
+        $TagAttributes = $TagAttributes.TrimEnd(" ")
     
         if($outcontent){
 
