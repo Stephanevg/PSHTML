@@ -95,7 +95,7 @@ Function article {
         </body>
 
     .NOTES
-     Current version 1.1
+     Current version 3.1
         History:
             2018.11.1; Stephanevg;Updated to version 3.1
             2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -131,7 +131,7 @@ Function article {
 
         $tagname = "article"
 
-        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType NonVoid
+        Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
     }
 
 
