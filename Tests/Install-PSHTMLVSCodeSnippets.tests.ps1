@@ -14,26 +14,31 @@ import-module .\PSHTML -Force
 Describe "Testing Install-VSCodeSnippets" {
 
     $SnippetTypes = @("small","medium","full")
+    $TestSnippetsPath = Join-Path -Path $TestDrive -ChildPath "Snippets"
 
-    it "The cmdlet should not throw"{
-        {install-PSHTMLVsCodeSnippets} | should not throw
+    if(!(Test-Path $TestSnippetsPath)){
+        $null = mkdir $TestSnippetsPath
     }
 
-    if($IsLinux){
+    it "The cmdlet should not throw"{
+        {install-PSHTMLVsCodeSnippets -Path $TestSnippetsPath} | should not throw
+    }
+
+    <# if($IsLinux){
         $Path = Join-Path -Path $env:HOME -ChildPath ".config/Code/User/snippets/"
     }else{
         $Path = "$($env:APPDATA)\Code\User\snippets"
-    }
+    } #>
     
-    $Items = gci $Path
-    it "Should create the snippets at correct path: $($Path)"{
+    $Items = gci $TestSnippetsPath
+    it "Should create the snippets at correct path: $($TestSnippetsPath)"{
         $Items | should not benullOrEmpty
         
     }
 
-    It "Should contain 5 snippets"{
+    It "Should contain at least 3 snippets"{
 
-        ($Items | measure).Count | should be 5
+        ($Items | measure).Count | Should -BeGreaterOrEqual 3
     }
 
     foreach($SnippetType in $SnippetTypes){
