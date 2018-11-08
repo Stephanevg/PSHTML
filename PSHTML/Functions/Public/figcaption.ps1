@@ -16,7 +16,7 @@ Function figcaption {
     figcaption "woop3" -Class "class" -Id "something" -Style "color:red;"
 
     .NOTES
-    Current version 2.0
+    Current version 3.1.0
        History:
        2018.10.30;@ChristopheKumor;Updated to version 3.0
            2018.10.02;bateskevin;Updated to v2.
@@ -29,7 +29,6 @@ Function figcaption {
         [Parameter(Mandatory = $true)]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]
         $Content,
 
         [AllowEmptyString()]
@@ -51,7 +50,7 @@ Function figcaption {
 
         $tagname = "figcaption"
 
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
         
     }
 }
