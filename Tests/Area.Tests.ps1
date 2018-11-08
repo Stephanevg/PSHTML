@@ -88,11 +88,11 @@ Context "Testing PSHTML"{
             
 
         }
-
+<# 
         it "Testing default parameters: target"{
             $string -match '^<area.*target="_Blank".*>' | should be $true
         }
-
+ #>
     }
 }
 
