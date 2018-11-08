@@ -85,7 +85,7 @@ Function a {
 
     if(!($Target)){
           
-        $PSBoundParameters.Target = "_href"
+        $PSBoundParameters.Target = "_self"
     }
 
     Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
