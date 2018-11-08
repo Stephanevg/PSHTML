@@ -45,8 +45,8 @@ Describe "Testing ConvertTo-HTMLTable" {
     }
 
 
-    it "Header should match DisplayName,StartType,Status"{
-        $string -match ".*<td>Handles</td><td>ProcessName</td>.*" | should be $true
+    it "Header should match Handles and ProcessName"{
+        $string -match ".*<td.*>Handles</td><td.*>ProcessName</td>.*" | should be $true
     }
 
     it "Should contain opening and closing <td> tags" {
@@ -69,7 +69,7 @@ Describe "Testing ConvertTo-HTMLTable Properties Parameter" {
 
     it "The header Names of the Table should be the values passed to the properties parameter" {
     
-        $string -match ".*<td>Handles</td><td>ProcessName</td>.*" | should be $true
+        $string -match ".*<td.*>Handles</td><td.*>ProcessName</td>.*" | should be $true
 
     }
     

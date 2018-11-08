@@ -74,7 +74,7 @@ Context "Testing PSHTML" {
         }
 
         it "Testing content p{} in child element" {
-            $string -match "^.*<p></p>.*" | should be $true
+            $string -match "^.*<p.*></p>.*" | should be $true
         }
 
         it "Testing common parameters: Class" {
