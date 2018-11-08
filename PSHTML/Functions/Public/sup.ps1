@@ -56,38 +56,36 @@ Function SUP {
     
             [Hashtable]$Attributes
         )
+        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
     
-        Begin {
-            
-            $htmltagparams = @{}
-            $tagname = "SUP"
-        }
-        
-        Process {       
-            $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-            $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-            
-            if ($CustomParameters) {
     
-                Switch ($CustomParameters) {
-                    {($_ -eq 'content') -and ($null -eq $htmltagparams.$_)} {
-                        $htmltagparams.$_ = @($PSBoundParameters[$_])
-                        continue
-                    }
-                    {$_ -eq 'content'} {
-                        $htmltagparams.$_ += $PSBoundParameters[$_]
-                        continue
-                    }
-                    default {$htmltagparams.$_ = "{0}" -f $PSBoundParameters[$_]}
+        $htmltagparams = @{}
+        $tagname = "sup"
+        if ($CustomParameters) {
+    
+            foreach ($entry in $CustomParameters) {
+    
+                if ($entry -eq "content") {
+    
+    
+                    $htmltagparams.$entry = $PSBoundParameters[$entry]
                 }
+                else {
+                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
+                }
+    
+    
             }
-        }
-        
-        End {
+    
             if ($Attributes) {
                 $htmltagparams += $Attributes
             }
-            Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid 
+    
         }
+        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
+        
+    
+    
         
     }
