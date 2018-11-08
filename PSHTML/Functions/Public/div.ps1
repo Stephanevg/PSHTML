@@ -31,7 +31,6 @@ Function Div {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
         $Content,
 
         [Parameter(Position = 1)]
@@ -50,7 +49,7 @@ Function Div {
 
         $tagname = "div"
 
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 
 
