@@ -12,7 +12,7 @@ Create a ol tag in an HTML document.
 
 ## SYNTAX
 
-```
+``` powershell
 ol [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>] [[-Attributes] <Hashtable>]
  [-reversed] [[-start] <Int32>] [[-type] <String>] [<CommonParameters>]
 ```
@@ -23,26 +23,30 @@ ol [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 ol
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 ol -Content {li -Content "asdf"}
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 ol -Class "class" -Id "something" -Style "color:red;"
 ```
 
 ### EXAMPLE 4
-```
+
+``` powershell
 ol {li -Content "asdf"} -reversed -type a
 ```
 
-#Generates the following content
+Generates the following content
 
 \<ol type="a" reversed \>
     \<li\>
@@ -188,3 +192,5 @@ Upgraded to v1.1.
     2018.04.01;bateskevinhanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the ol HTML tag can be found here --> https://www.w3schools.com/tags/tag_ol.asp](https://www.w3schools.com/tags/tag_ol.asp)

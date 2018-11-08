@@ -12,7 +12,7 @@ Generates a Body HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Body [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -23,11 +23,12 @@ Body [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-The following exapmles show cases how to create an empty Body, with a class, an ID, and, custom attributes.
-```
 
+The following exapmles show cases how to create an empty Body, with a class, an ID, and, custom attributes.
+
+``` powershell
 Body -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}
+```
 
 Generates the following code:
 
@@ -127,3 +128,5 @@ History:
     2018.04.01;Stephanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the body HTML tag can be found here --> https://www.w3schools.com/tags/tag_body.asp](https://www.w3schools.com/tags/tag_body.asp)

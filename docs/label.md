@@ -12,7 +12,7 @@ Creates a \<label\> HTML element tag
 
 ## SYNTAX
 
-```
+``` powershell
 label [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```
@@ -23,19 +23,18 @@ label [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Attributes] 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 label
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 label "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
-
-```
 
 \<fieldset\>
     \<label\>Personalia:\</label\>
@@ -122,3 +121,5 @@ History:
     2018.05.09;@Stephanevg; Creation
 
 ## RELATED LINKS
+
+[Information on the label HTML tag can be found here --> https://www.w3schools.com/tags/tag_label.asp](https://www.w3schools.com/tags/tag_label.asp)

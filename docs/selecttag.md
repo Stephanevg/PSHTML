@@ -12,7 +12,7 @@ creates a "select" html tag.
 
 ## SYNTAX
 
-```
+``` powershell
 selecttag [[-Content] <Object>] [[-Class] <String>] [[-Id] <String>] [[-Attributes] <Hashtable>]
  [<CommonParameters>]
 ```
@@ -24,17 +24,20 @@ with the built-in powershell alias "select" (which points to Select-object)
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 selecttag
 ```
 
 ### EXAMPLE 2
-```
+
+``` powershell
 selecttag "woop1" -Class "class"
 ```
 
 ### EXAMPLE 3
-```
+
+``` powershell
 
 ```
 

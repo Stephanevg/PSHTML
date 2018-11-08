@@ -12,7 +12,7 @@ Generates Noscript HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 Noscript [[-content] <String>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -23,7 +23,8 @@ Noscript [[-content] <String>] [[-Class] <String>] [[-Id] <String>] [[-Style] <S
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+``` powershell
 Noscript "Your browser doesn`'t support javascript"
 ```
 
@@ -119,3 +120,5 @@ For more information, see about_CommonParameters (http://go.microsoft.com/fwlink
 ## NOTES
 
 ## RELATED LINKS
+
+[Information on the noscript HTML tag can be found here --> https://www.w3schools.com/tags/tag_noscript.asp](https://www.w3schools.com/tags/tag_noscript.asp)

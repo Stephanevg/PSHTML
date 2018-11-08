@@ -12,7 +12,7 @@ Generates article HTML tag.
 
 ## SYNTAX
 
-```
+``` powershell
 article [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style] <String>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
@@ -23,15 +23,15 @@ article [[-Content] <ScriptBlock>] [[-Class] <String>] [[-Id] <String>] [[-Style
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
-article {
-```
 
-h1 "This is blog post number 1"
+``` powershell
+article {
+    h1 "This is blog post number 1"
     p {
         "This is content of blog post 1"
     }
 }
+```
 
 Generates the following code:
 
@@ -197,3 +197,5 @@ Current version 1.0
        2018.04.01;Stephanevg;Creation.
 
 ## RELATED LINKS
+
+[Information on the article HTML tag can be found here --> https://www.w3schools.com/tags/tag_article.asp](https://www.w3schools.com/tags/tag_article.asp)
