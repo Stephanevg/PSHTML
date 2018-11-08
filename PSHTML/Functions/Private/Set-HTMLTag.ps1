@@ -132,7 +132,7 @@ Function Set-HtmlTag {
 
     
         if($tagType -eq 'nonvoid'){
-            $ClosingFirstTag = "/>"
+            $ClosingFirstTag = ">"
             $TagEnd = '</{0}>' -f $tagname
         }else{
             $ClosingFirstTag = "/>"
