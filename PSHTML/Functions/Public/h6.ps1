@@ -17,7 +17,7 @@ Function h6 {
 
     .Notes
     Author: Stéphane van Gulick
-    Version: 1.0.0
+    Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.08;Stephanevg; Updated to version 1.0: Updated content block to support string & ScriptBlock
@@ -47,6 +47,6 @@ Function h6 {
 
     Process {
         $tagname = "h6"
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 }
