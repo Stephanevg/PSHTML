@@ -34,4 +34,4 @@ foreach ($public in $PublicFunctions){
     }
 }
 
-New-Alias -Name Include -Value 'Get-HTMLTemplate' -Description "Include parts of PSHTML documents using Templates"
+New-Alias -Name Include -Value 'Get-HTMLTemplate' -Description "Include parts of PSHTML documents using Templates" -Force
