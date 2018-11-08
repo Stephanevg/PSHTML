@@ -22,7 +22,7 @@ Function em {
 
     .Notes
     Author: Andrew Wickham
-    Version: 2.0.0
+    Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.10.04;@awickham10; Creation
@@ -37,7 +37,7 @@ Function em {
             ValueFromPipeline = $true,
             Position = 0
         )]
-        [object]$Content,
+        $Content,
 
         [Parameter(Position = 1)]
         [String]$Class,
@@ -55,7 +55,7 @@ Function em {
 
     $tagname = "em"
 
-    Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType NonVoid
+    Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType NonVoid
 
 
 
