@@ -33,7 +33,8 @@ Context "Testing PSHTML" {
         }
 
         it "Testing content in child element" {
-            $string -match "^.*>woop<.*" | should be $true
+            $s = $string -join ""
+            $s -match "^.*>woop<.*" | should be $true
         }
 
         it "Testing common parameters: Class" {
