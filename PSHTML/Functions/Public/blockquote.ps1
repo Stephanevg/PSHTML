@@ -18,8 +18,9 @@ Function blockquote {
     "@
 
     .NOTES
-    Current version 2.2
+    Current version 3.1
        History:
+            2018.11.1; Stephanevg;Updated to version 3.1
             2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.10.29;@ChristopheKumor;New Set-HtmlTag function to version 2.2
             2018.10.02;@NicolasBaudin;Fixed pipeline support bug. to version 2.1
@@ -46,7 +47,7 @@ Function blockquote {
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class = "",
+        [String]$Class,
 
         [String]$Id,
 
@@ -60,7 +61,7 @@ Function blockquote {
     )
 
     $tagname = "blockquote"
-    Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType NonVoid    
+    Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid    
 
 
 }
