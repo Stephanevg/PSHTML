@@ -46,8 +46,9 @@ Function a {
 
 
         .NOTES
-        Current version 2.0
+        Current version 3.1
         History:
+            2018.10.30;@Stephanevg;Updated to version 3.1
             2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.09.30;Stephanevg;Updated to version 2.0
             2018.04.10;Stephanevg; Added parameters
@@ -67,7 +68,7 @@ Function a {
         [String]$href,
 
         [ValidateSet("_self", "_blank", "_parent", "_top")]
-        [String]$Target = "_self",
+        [String]$Target,
 
         [AllowEmptyString()]
         [AllowNull()]
@@ -82,6 +83,13 @@ Function a {
     )
     $tagname = "a"
 
-    Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType NonVoid
+    if(!($Target)){
+          
+        $PSBoundParameters.Target = "_href"
+    }
+
+    Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
+    
+    
 
 }
