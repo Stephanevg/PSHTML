@@ -28,8 +28,9 @@ Function Body {
 
 
         .NOTES
-        Current version 2.0
+        Current version 3.1
         History:
+            2018.11.1; Stephanevg;Updated to version 3.1
             2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.04.10;bateskevin; Updated to version 2.0
             2018.04.10;Stephanevg; Added parameters
@@ -45,7 +46,6 @@ Function Body {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
         $Content,
 
         [Parameter(Position = 1)]
@@ -63,7 +63,7 @@ Function Body {
     Process {
         $tagname = "Body"
 
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType NonVoid
+        Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
     }
 
 
