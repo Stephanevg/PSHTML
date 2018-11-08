@@ -135,7 +135,7 @@ Function Set-HtmlTag {
             $ClosingFirstTag = "/>"
             $TagEnd = '</{0}>' -f $tagname
         }else{
-            $ClosingFirstTag = ">"
+            $ClosingFirstTag = "/>"
         }
         
         
