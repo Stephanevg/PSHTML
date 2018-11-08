@@ -57,6 +57,6 @@ Function script {
 
         $tagname = "script"
 
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 }

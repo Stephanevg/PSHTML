@@ -41,7 +41,7 @@ Function p {
     </p>
 
     .NOTES
-    Current version 1.2.0
+    Current version 3.1.0
        History:
             2018.11.1; Stephanevg;Updated to version 3.1
             2018.10.30;@ChristopheKumor;Updated to version 3.0

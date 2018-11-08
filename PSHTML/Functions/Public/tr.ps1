@@ -17,7 +17,7 @@ Function tr {
     Allows to add child element(s) inside the current opening and closing HTML tag(s).
 
     .NOTES
-    Current version 0.8
+    Current version 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.08;Stephanevg; Fixed custom Attributes display bug. Updated help
@@ -33,7 +33,6 @@ Function tr {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
         $Content,
 
         [Parameter(Position = 1)]
@@ -54,7 +53,7 @@ Function tr {
 
         $tagname = "tr"
     
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 }
 

@@ -49,7 +49,7 @@ Function label {
 
     $tagname = "label"
 
-    Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+    Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
 
 
 
