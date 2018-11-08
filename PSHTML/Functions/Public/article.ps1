@@ -112,7 +112,6 @@ Function article {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
         $Content,
 
         [Parameter(Position = 1)]
