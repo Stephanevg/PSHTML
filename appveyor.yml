@@ -1,15 +1,17 @@
+image:
+- Visual Studio 2015
+- Ubuntu
+
 environment:
   PSgalleryKey:
     secure: wl8DNkBd6QUSBAEWxCNTTW+cVn32ub6kWSqZxAUrpx4/QPnWYGiLWEj+ZaFp5cuA
 
 install:
 - ps: >-
-    Install-PackageProvider -Name NuGet -Force
-    
-    Install-Module -Name PSScriptAnalyzer -Force
-    
-    Install-Module -Name Pester -Force
-build: off
+    .\CI\02_Install.ps1
+build_script:
+- ps: >-
+    .\CI\03_Build.ps1
 test_script:
-- ps: >- 
-    .\CI\CI_Start.ps1
+- ps: >-
+    .\CI\04_Tests.ps1

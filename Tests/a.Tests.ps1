@@ -71,6 +71,38 @@ Context "Testing PSHTML"{
 
     }
 
-}
+    Describe "Testing a without optional explicit Param" {
+
+        $href = "www.powershelldistrict.com"
+        $string = a {"woop"} -href $href
+
+        if($string -is [array]){
+            $string = $String -join ""
+        }
+
+        it "Should contain opening and closing tags" {
+            $string -match '^<a.*>' | should be $true
+            $string -match '.*</a>$' | should be $true
+
+        }
+
+        it "Testing content in child element"{
+            $string -match "^.*>woop<.*" | should be $true
+        }
+
+
+        #This feature will be implemented in next version.
+        <# it "Testing default parameters: target"{
+            $string -match '^<a.*target="_self".*>' | should be $true
+        } #>
+
+        it "Testing common parameters: href"{
+            $string -match '^<a.*href="www\.powershelldistrict\.com".*>' | should be $true
+        }
+
+        }
+
+
+    }
 
 Pop-Location

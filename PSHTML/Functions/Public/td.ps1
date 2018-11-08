@@ -32,7 +32,8 @@ Function td {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
+        [AllowEmptyString()]
+        [AllowNull()]
         $Content,
 
         [Parameter(Position = 1)]
@@ -81,8 +82,11 @@ Function td {
 
 
 
-        if($Content){
+        if($Content -is [System.Management.Automation.ScriptBlock]){
             $Content.Invoke()
+        } else {
+
+            $Content
         }
 
 

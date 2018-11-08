@@ -7,6 +7,8 @@ write-output "BRANCH: $($env:APPVEYOR_REPO_BRANCH)"
 $ModuleClonePath = Join-Path -Path $env:APPVEYOR_BUILD_FOLDER -ChildPath $env:APPVEYOR_PROJECT_NAME
 Write-Output "MODULE CLONE PATH: $($ModuleClonePath)"
 
+$ModuleClonePath = Join-Path -Path $env:APPVEYOR_BUILD_FOLDER -ChildPath $env:APPVEYOR_PROJECT_NAME
+
 $moduleName = "$($env:APPVEYOR_PROJECT_NAME)"
 Get-Module $moduleName
 
@@ -53,8 +55,12 @@ if ($res.FailedCount -eq 0 -and $res.successcount -ne 0) {
             write-host "[$($env:APPVEYOR_REPO_BRANCH)][$($ModuleName)] Module not deployed to the psgallery" -foregroundcolor Yellow;
         }
         Else {
+            $envIsLinux = $false
+            if($IsLinux){
 
-            If($env:APPVEYOR_REPO_COMMIT_MESSAGE -match '^push psgallery.*$'){
+                $envIsLinux = $true
+            }
+            If($env:APPVEYOR_REPO_COMMIT_MESSAGE -match '^push psgallery.*$' -and $envIsLinux){
 
                 try{
     

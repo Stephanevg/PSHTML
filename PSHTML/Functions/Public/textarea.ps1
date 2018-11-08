@@ -41,7 +41,7 @@ Function textarea {
         
         [AllowEmptyString()]
         [AllowNull()]
-        [int]$Name = "",
+        [String]$Name = "",
 
         [AllowEmptyString()]
         [AllowNull()]

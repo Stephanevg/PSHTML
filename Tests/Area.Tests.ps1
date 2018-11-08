@@ -74,7 +74,26 @@ Context "Testing PSHTML"{
 
 
     }
+    Describe "Testing area without optional explicit Param" {
 
+        $String = area 
+        if($string -is [array]){
+            $string = $String -join ""
+        }
+
+        it "Should contain opening (and voided closing) tag" {
+            $string -match '^<area.*>' | should be $true
+
+            $string -match '.*<.*/>$' | should be $true
+            
+
+        }
+<# 
+        it "Testing default parameters: target"{
+            $string -match '^<area.*target="_Blank".*>' | should be $true
+        }
+ #>
+    }
 }
 
 Pop-Location

@@ -23,7 +23,7 @@ foreach ($Private in $PrivateFunctions){
 }
 
 write-verbose -Message "Loading Private Functions"
-$PublicFunctions = Get-ChildItem -Path "$ScriptPath\Functions\public" -Filter *.ps1 | Select-Object -ExpandProperty FullName
+$PublicFunctions = Get-ChildItem -Path "$ScriptPath\Functions\Public" -Filter *.ps1 | Select-Object -ExpandProperty FullName
 
 foreach ($public in $PublicFunctions){
     write-verbose "importing function $($function)"
