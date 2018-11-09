@@ -48,17 +48,17 @@ $HTMLPage = html {
     }
     body {
         
-         canvas -Height 400 -Width 400 -Id $GraphID {
+         canvas -Height 500px -Width 500px -Id $GraphID {
 
          }
+         script -src "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" -type "text/javascript"
          script -content {
              $Script
          }
-         script -src "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js" -type "text/javascript"
-         script -src "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js" -type "text/javascript"
+         
     }
 }
 
 
-
-$HTMLPage > C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\Assets\Charts\Graph.html
+$OutPath = "C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\Assets\Charts\Graph.html"
+$HTMLPage | out-file -FilePath $OutPath -Encoding utf8
