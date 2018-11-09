@@ -1,16 +1,19 @@
 Function Title {
-<#
+    <#
     .LINK
     https://github.com/Stephanevg/PSHTML
+    .NOTES
+    Version 3.1.0
 #>
     Param(
-        [String]
         $Content
     )
 
-    @"
-    <title>$Content</title>
-"@
+    Process {
 
+        $tagname = "title"
+    
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
+    }
 
 }

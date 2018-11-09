@@ -16,8 +16,9 @@ Function dt {
     dt "woop3" -Class "class" -Id "something" -Style "color:red;"
 
     .NOTES
-    Current version 1.0
+    Current version 3.1
        History:
+       2018.10.30;@ChristopheKumor;Updated to version 3.0
            2018.10.02;bateskevin;Updated to v2.
            2018.04.01;bateskevin;Creation.
     .LINK
@@ -25,15 +26,14 @@ Function dt {
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]
         $Content,
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class="",
+        [String]$Class = "",
 
         [String]$Id,
 
@@ -47,37 +47,11 @@ Function dt {
     )
 
     Process {
-
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        $htmltagparams = @{}
         $tagname = "dt"
 
-        if ($CustomParameters) {
 
-            foreach ($entry in $CustomParameters) {
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
 
-
-                if ($entry -eq "content") {
-
-                    
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }
-                else {
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-                }
-                
-    
-            }
-
-            if ($Attributes) {
-                $htmltagparams += $Attributes
-            }
-
-
-        }
-        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
         
     }
 }

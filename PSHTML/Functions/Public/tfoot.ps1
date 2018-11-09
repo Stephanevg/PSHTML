@@ -17,8 +17,9 @@ Function tfoot {
     Allows to add child element(s) inside the current opening and closing HTML tag(s).
 
     .NOTES
-    Current version 0.8
+    Current version 3.1.0
     History:
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.08;Stephanevg; Fixed custom Attributes display bug. Updated help
         2018.04.01;Stephanevg;
     .LINK
@@ -32,7 +33,6 @@ Function tfoot {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
         $Content,
 
         [Parameter(Position = 1)]
@@ -49,46 +49,12 @@ Function tfoot {
 
 
     )
-    Process{
+ 
+    Process {
 
-        $attr = ""
-        $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+        $tagname = "tfoot"
 
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-            }
-
-        }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-            }
-        }
-
-        if($attr){
-            "<tfoot {0} >"  -f $attr
-        }else{
-            "<tfoot>"
-        }
-
-
-
-        if($Content){
-            $Content.Invoke()
-        }
-
-
-        '</tfoot>'
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
-
-
 }
 

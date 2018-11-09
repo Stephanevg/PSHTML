@@ -28,8 +28,10 @@ Function Body {
 
 
         .NOTES
-        Current version 2.0
+        Current version 3.1
         History:
+            2018.11.1; Stephanevg;Updated to version 3.1
+            2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.04.10;bateskevin; Updated to version 2.0
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
@@ -44,7 +46,6 @@ Function Body {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
         $Content,
 
         [Parameter(Position = 1)]
@@ -60,36 +61,9 @@ Function Body {
         [Hashtable]$Attributes
     )
     Process {
-
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        $htmltagparams = @{}
         $tagname = "Body"
 
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-
-                if($entry -eq "content"){
-
-                    
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }else{
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-                }
-                
-    
-            }
-
-            if($Attributes){
-                $htmltagparams += $Attributes
-            }
-
-
-        }
-        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid   
+        Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
     }
 
 

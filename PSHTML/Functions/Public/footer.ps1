@@ -1,5 +1,5 @@
 Function Footer {
-        <#
+    <#
         .SYNOPSIS
         Generates a Footer HTML tag.
 
@@ -35,8 +35,9 @@ Function Footer {
 
 
         .NOTES
-        Current version 1.0
+        Current version 3.1
         History:
+        2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
         .LINK
@@ -62,47 +63,10 @@ Function Footer {
         [Parameter(Position = 4)]
         [Hashtable]$Attributes
     )
-    $attr = ""
-        $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
 
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-            }
-
-        }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-            }
-        }
-
-        if($attr){
-            "<footer {0} >"  -f $attr
-        }else{
-            "<footer>"
-        }
-
-
-
-        if($Content){
-
-            if($Content -is [System.Management.Automation.ScriptBlock]){
-                $Content.Invoke()
-            }else{
-                $Content
-            }
-        }
-
-
-        '</footer>'
-
+    Process {
+        $tagname = "footer"
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
+    }
 
 }

@@ -41,16 +41,18 @@ Function p {
     </p>
 
     .NOTES
-    Current version 1.1.0
+    Current version 3.1.0
        History:
-           2018.04.10;Stephanevg;Updated content (removed string, added if for selection between scriptblock and string).
-           2018.04.01;bateskevinhanevg;Creation.
+            2018.11.1; Stephanevg;Updated to version 3.1
+            2018.10.30;@ChristopheKumor;Updated to version 3.0
+            2018.04.10;Stephanevg;Updated content (removed string, added if for selection between scriptblock and string).
+            2018.04.01;bateskevinhanevg;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         $Content,
@@ -69,47 +71,9 @@ Function p {
 
         [Hashtable]$Attributes
     )
-
-        $attr = ""
-        $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-            }
-
-        }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-            }
-        }
-
-
-        if($attr){
-            "<p {0} >"  -f $attr
-        }else{
-            "<p>"
-        }
-
-
-
-        if($Content){
-
-            if($Content -is [System.Management.Automation.ScriptBlock]){
-                $Content.Invoke()
-            }else{
-                $Content
-            }
-        }
-
-    "</p>"
+    
+    $tagname = "p"
+ 
+    Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType NonVoid
 
 }

@@ -95,8 +95,10 @@ Function article {
         </body>
 
     .NOTES
-     Current version 1.0
+     Current version 3.1
         History:
+            2018.11.1; Stephanevg;Updated to version 3.1
+            2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
     .LINK
@@ -110,7 +112,6 @@ Function article {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
         $Content,
 
         [Parameter(Position = 1)]
@@ -125,45 +126,13 @@ Function article {
         [Parameter(Position = 4)]
         [Hashtable]$Attributes
     )
-    Process{
+    Process {
 
-        $attr = ""
-        $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+        $tagname = "article"
 
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-            }
-
-        }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-            }
-        }
-
-        if($attr){
-            "<article {0} >"  -f $attr
-        }else{
-            "<article>"
-        }
-
-
-
-        if($Content){
-            $Content.Invoke()
-        }
-
-
-        '</article>'
+        Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
     }
 
 
 }
+

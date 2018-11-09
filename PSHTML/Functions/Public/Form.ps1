@@ -31,8 +31,9 @@ Function Form {
     form "/action_Page.php" post _self -attributes @{"Woop"="Wap";"sap"="sop"}
 
     .NOTES
-    Current version 0.8
+    Current version 3.1
     History:
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.08;Stephanevg; Fixed custom Attributes display bug. Updated help
         2018.04.01;Stephanevg;Fix disyplay bug.
     .LINK
@@ -41,16 +42,16 @@ Function Form {
     [CmdletBinding()]
     Param(
 
-        [Parameter(Mandatory=$true,Position = 0)]
+        [Parameter(Mandatory = $true, Position = 0)]
         [String]$action,
 
-        [Parameter(Mandatory=$true,Position = 1)]
-        [ValidateSet("get","post")]
+        [Parameter(Mandatory = $true, Position = 1)]
+        [ValidateSet("get", "post")]
         [String]$method = "get",
 
-        [Parameter(Mandatory=$true,Position = 2)]
-        [ValidateSet("_blank","_self","_parent","top")]
-        [String]$target = "_self",
+        [Parameter(Mandatory = $true, Position = 2)]
+        [ValidateSet("_blank", "_self", "_parent", "top")]
+        [String]$target,
 
         [Parameter(Position = 3)]
         [String]$Class,
@@ -69,49 +70,17 @@ Function Form {
             Mandatory = $false,
             Position = 7
         )]
-        [scriptblock]
         $Content
     )
-    Process{
 
-        $attr = ""
-        $CommonParameters = ("Attributes", "content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+    Process {
+        $tagname = "form"
 
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-
-                $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-            }
-
+        if(!($Target)){
+          
+            $PSBoundParameters.Target = "_self"
         }
-
-        if($Attributes){
-            foreach($entry in $Attributes.Keys){
-
-                $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-            }
-        }
-
-        if($attr){
-            "<form {0} >"  -f $attr
-        }else{
-            "<form>"
-        }
-
-
-
-        if($Content){
-            $Content.Invoke()
-        }
-
-
-        '</form>'
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
-
-
 }
 

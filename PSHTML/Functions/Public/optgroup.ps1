@@ -16,8 +16,9 @@ Function optgroup {
 
     .Notes
     Author: Stéphane van Gulick
-    Version: 2.0.0
+    Version: 3.1.0
     History:
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.05.11;@Stephanevg; fixed minor bugs
         2018.05.09;@Stephanevg; Creation
 
@@ -57,37 +58,9 @@ Function optgroup {
         [Hashtable]$Attributes
     )
 
-        $attr = ""
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+    $tagname = "optgroup"
 
-        $htmltagparams = @{}
-        $tagname = "optgroup"
-
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-                if($entry -eq "content"){
-
-
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }else{
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-                }
-
-
-            }
-
-            if($Attributes){
-                $htmltagparams += $Attributes
-            }
-
-        }
-        
-        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
+    Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
 
 
 }
-
-optgroup

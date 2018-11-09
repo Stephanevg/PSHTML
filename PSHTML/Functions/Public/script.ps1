@@ -23,26 +23,26 @@ Function script {
     Param(
 
 
-        [Parameter(Position =0)]
+        [Parameter(Position = 0)]
         [String]$src,
 
-        [Parameter(Mandatory=$false,Position = 1)]
+        [Parameter(Mandatory = $false, Position = 1)]
         [ValidateSet("text/javascript")]
         [String]$type,
 
-        [Parameter(Position =2)]
+        [Parameter(Position = 2)]
         [String]$integrity,
 
-        [Parameter(Position =3)]
+        [Parameter(Position = 3)]
         [String]$crossorigin,
 
-        [Parameter(Position =4)]
+        [Parameter(Position = 4)]
         [String]$Class,
 
         [Parameter(Position = 5)]
         [String]$Id,
 
-        [Parameter(Position =6)]
+        [Parameter(Position = 6)]
         [String]$Style,
 
         [Parameter(Position = 7)]
@@ -52,43 +52,11 @@ Function script {
         [string]$content
 
     )
-    Process{
+ 
+    Process {
 
-        $attr = ""
-        $boundParams = $PSBoundParameters
-        $CommonParameters = @(
-            "Debug",
-            "ErrorAction",
-            "ErrorVariable",
-            "InformationAction",
-            "InformationVariable",
-            "OutVariable",
-            "OutBuffer",
-            "PipelineVariable",
-            "Verbose",
-            "WarningAction",
-            "WarningVariable"
-        )
+        $tagname = "script"
 
-        foreach ($cp in $CommonParameters){
-
-            $null = $boundParams.Remove($cp)
-        }
-
-        foreach ($entry in $boundParams.Keys){
-            if($entry -eq "content"){
-                continue
-            }
-            #$attr += "$($entry)=`"$($boundParams[$entry])`" "
-            $attr += "{0}=`"{1}`" " -f $entry,$boundParams[$entry]
-
-        }
-
-        "<script {0}>{1}</script>"  -f $attr,$content
-
-
-
-    }#End process
-
-
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
+    }
 }

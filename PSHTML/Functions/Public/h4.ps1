@@ -17,8 +17,9 @@ Function h4 {
 
     .Notes
     Author: Stéphane van Gulick
-    Version: 1.0.0
+    Version: 3.1.0
     History:
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.08;Stephanevg; Updated to version 1.0: Updated content block to support string & ScriptBlock
         2018.03.25;@Stephanevg; Creation
     .LINK
@@ -26,7 +27,7 @@ Function h4 {
     #>
     [Cmdletbinding()]
     Param(
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         $Content,
@@ -44,45 +45,8 @@ Function h4 {
         [Hashtable]$Attributes
     )
 
-    $attr = ""
-    $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-
-    if($CustomParameters){
-
-        foreach ($entry in $CustomParameters){
-
-
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-        }
-
+    Process {
+        $tagname = "h4"
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
-
-    if($Attributes){
-        foreach($entry in $Attributes.Keys){
-
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-        }
-    }
-
-    if($attr){
-        "<h4 {0} >"  -f $attr
-    }else{
-        "<h4>"
-    }
-
-
-    if($Content){
-
-        if($Content -is [System.Management.Automation.ScriptBlock]){
-            $Content.Invoke()
-        }else{
-            $Content
-        }
-    }
-
-
-    '</h4>'
-
 }

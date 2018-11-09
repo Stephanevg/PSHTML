@@ -26,9 +26,9 @@ Function meter {
     </meter>
 
     .NOTES
-    Current version 2.0
+    Current version 3.1.0
        History:
-
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.10.10;stephanevg;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
@@ -45,19 +45,19 @@ Function meter {
         [AllowNull()]
         $Content,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         [String]
         $Value,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         [String]
         $Min,
 
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
         [String]
@@ -67,7 +67,7 @@ Function meter {
 
         [AllowEmptyString()]
         [AllowNull()]
-        [String]$Class="",
+        [String]$Class = "",
 
         [String]$Id,
 
@@ -82,34 +82,8 @@ Function meter {
 
     Process {
 
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        $htmltagparams = @{}
         $tagname = "meter"
 
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-
-                if($entry -eq "content"){
-
-                    
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }else{
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-                }
-                
-    
-            }
-
-            if($Attributes){
-                $htmltagparams += $Attributes
-            }
-
-
-        }
-    Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType NonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 }

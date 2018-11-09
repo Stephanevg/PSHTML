@@ -1,7 +1,9 @@
 Function Tbody {
-<#
+    <#
 .LINK
     https://github.com/Stephanevg/PSHTML
+    .NOTES
+    Version 3.1.0
 #>
     Param(
 
@@ -10,20 +12,14 @@ Function Tbody {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
-        $ChildItem
+        
+        $Content
     )
-    Process{
-        "<tbody>"
 
+    Process {
 
-        if($ChildItem){
-            $ChildItem.Invoke()
-        }
+        $tagname = "tbody"
 
-
-        '</tbody>'
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
-
-
 }

@@ -32,8 +32,8 @@ Function address {
     .EXAMPLE
 
     address {
-        $twitterLink = a -href "http://twitter/stephanevg" -Target _blank -ChildItem {"@stephanevg"}
-        $bloglink = a -href "http://www.powershelldistrict.com" -Target _blank -ChildItem {"www.powershelldistrict.com"}
+        $twitterLink = a -href "http://twitter/stephanevg" -Target _blank -Content {"@stephanevg"}
+        $bloglink = a -href "http://www.powershelldistrict.com" -Target _blank -Content {"www.powershelldistrict.com"}
         "written by: Stephane van Gulick"
         "blog: $($bloglink)";
         "twitter: $($twitterLink)"
@@ -48,8 +48,10 @@ Function address {
     </address>
 
     .NOTES
-     Current version 2.0
+     Current version 3.1
         History:
+            2018.11.08;Stephanevg; Updated to version 3.1
+            2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.09.30;Stephanevg; Updated to version 2.0
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
@@ -64,7 +66,6 @@ Function address {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
         $Content,
 
         [Parameter(Position = 1)]
@@ -79,38 +80,11 @@ Function address {
         [Parameter(Position = 4)]
         [Hashtable]$Attributes
     )
-    Process{
+    Process {
 
-
-        $CommonParameters = @('tagname') + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-        $CustomParameters = $PSBoundParameters.Keys | ? { $_ -notin $CommonParameters }
-        
-        $htmltagparams = @{}
         $tagname = "address"
 
-        if($CustomParameters){
-
-            foreach ($entry in $CustomParameters){
-
-                if($entry -eq "content"){
-
-                    
-                    $htmltagparams.$entry = $PSBoundParameters[$entry]
-                }else{
-                    $htmltagparams.$entry = "{0}" -f $PSBoundParameters[$entry]
-                }
-                
-    
-            }
-
-            if($Attributes){
-                $htmltagparams += $Attributes
-
-            }
-
-        }
-        Set-HtmlTag -TagName $tagname -Attributes $htmltagparams -TagType nonVoid
-
+        Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
 
     }
 
