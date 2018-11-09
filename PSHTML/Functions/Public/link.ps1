@@ -1,5 +1,5 @@
 Function Link {
-        <#
+    <#
     .SYNOPSIS
     Create a link title in an HTML document.
 
@@ -30,8 +30,9 @@ Function Link {
 
     .Notes
     Author: Stéphane van Gulick
-    Version: 1.0.0
+    Version: 3.1.0
     History:
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.08;Stephanevg; Updated to version 1.0: Updated content block to support string & ScriptBlock
         2018.03.25;@Stephanevg; Added Styles, ID, CLASS attributes functionality
         2018.03.25;@Stephanevg; Creation
@@ -39,7 +40,7 @@ Function Link {
         https://github.com/Stephanevg/PSHTML
     #>
     Param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
         [String]
         $href,
 
@@ -47,8 +48,8 @@ Function Link {
         [AllowNull()]
         $type,
 
-        [Parameter(Mandatory=$False)]
-        [Validateset("alternate","author","dns-prefetch","help","icon","license","next","pingback","preconnect","prefetch","preload","prerender","prev","search","stylesheet")]
+        [Parameter(Mandatory = $False)]
+        [Validateset("alternate", "author", "dns-prefetch", "help", "icon", "license", "next", "pingback", "preconnect", "prefetch", "preload", "prerender", "prev", "search", "stylesheet")]
         [string]
         $rel,
 
@@ -74,35 +75,10 @@ Function Link {
     )
 
 
-    $attr = ""
-    $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
-
-    if($CustomParameters){
-
-        foreach ($entry in $CustomParameters){
-
-
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-        }
-
+    Process {
+        $tagname = "link"
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType Void
     }
-
-    if($Attributes){
-        foreach($entry in $Attributes.Keys){
-
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-        }
-    }
-
-    if($attr){
-        "<link {0} >"  -f $attr
-    }else{
-        "<link>"
-    }
-
-
 
 }
 

@@ -54,74 +54,37 @@ Function header {
 
 
     .NOTES
-    Current version 1.0
+    Current version 3.1.0
     History:
+    2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.10;Stephanevg; Added parameters
         2018.04.01;Stephanevg;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
 #>
-Param(
-    [Parameter(
-        ValueFromPipeline = $true,
-        Mandatory = $false,
-        Position = 0
-    )]
-    $Content,
+    Param(
+        [Parameter(
+            ValueFromPipeline = $true,
+            Mandatory = $false,
+            Position = 0
+        )]
+        $Content,
 
-    [Parameter(Position = 1)]
-    [String]$Class,
+        [Parameter(Position = 1)]
+        [String]$Class,
 
-    [Parameter(Position = 2)]
-    [String]$Id,
+        [Parameter(Position = 2)]
+        [String]$Id,
 
-    [Parameter(Position = 3)]
-    [String]$Style,
+        [Parameter(Position = 3)]
+        [String]$Style,
 
-    [Parameter(Position = 4)]
-    [Hashtable]$Attributes
-)
-$attr = ""
-    $CommonParameters = ("Attributes", "Content") + [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-    $CustomParameters = $PSBoundParameters.Keys | Where-Object -FilterScript { $_ -notin $CommonParameters }
+        [Parameter(Position = 4)]
+        [Hashtable]$Attributes
+    )
 
-    if($CustomParameters){
-
-        foreach ($entry in $CustomParameters){
-
-
-            $Attr += "{0}=`"{1}`" " -f $entry,$PSBoundParameters[$entry]
-
-        }
-
+    Process {
+        $tagname = "header"
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
-
-    if($Attributes){
-        foreach($entry in $Attributes.Keys){
-
-            $attr += "{0}=`"{1}`" " -f $entry,$Attributes[$Entry]
-        }
-    }
-
-    if($attr){
-        "<header {0} >"  -f $attr
-    }else{
-        "<header>"
-    }
-
-
-
-    if($Content){
-
-        if($Content -is [System.Management.Automation.ScriptBlock]){
-            $Content.Invoke()
-        }else{
-            $Content
-        }
-    }
-
-
-    '</header>'
-
-
 }
