@@ -1,4 +1,5 @@
 
+
 Enum ChartType {
     bar
     line
@@ -24,21 +25,21 @@ Class ChartOption {
 }
 
 Class ChartDataSets {
-    [System.Collections.ArrayList] $Data = @()
-    [String]$Label
+    [System.Collections.ArrayList] $data = @()
+    [String]$label
     [String] $xAxisID
     [String] $yAxisID
-    [String[]]  $BackgroundColor = @()
-    [String[]]  $Bordercolor = @()
-    [int]    $BorderWidth
-    [String] $BorderSkipped
-    [Color]  $HoverBackGroundColor
+    [System.Collections.ArrayList]  $backgroundColor = @()
+    [System.Collections.ArrayList]  $borderColor = @()
+    [int]    $borderWidth
+    [String] $borderSkipped
+    [Color]  $hoverBackgroundColor
     [Color]  $hoverBorderColor
     [int]    $hoverBorderWidth
 }
 Class ChartData {
-    [System.Collections.ArrayList] $Labels = @()
-    [ChartDataSets] $DataSets = [ChartDataSets]::New()
+    [System.Collections.ArrayList] $labels = @()
+    [ChartDataSets[]] $datasets = [ChartDataSets]::New()
 }
 
 Class BarData : ChartData {
@@ -46,19 +47,33 @@ Class BarData : ChartData {
     
 }
 
-Class BarOptions : ChartOption {
-    [int]$BarPercentage = 0.9
-    [Int]$CategoryPercentage = 0.8
-    [String]$BarThickness
-    [Int]$MaxBarThickness
-    [Bool] $OffSetGridLines = $true
+Class scales {
+    [System.Collections.ArrayList]$yAxes = @()
+    [System.Collections.ArrayList]$xAxes = @()
+
+    scales(){
+
+        $this.yAxes.Add(@{"ticks"=@{"beginAtZero"=$true}})
+    }
 }
 
+Class BarOptions : ChartOption {
+    [int]$barPercentage = 0.9
+    [Int]$categoryPercentage = 0.8
+    [bool]$responsive = $false
+    [String]$barThickness
+    [Int]$maxBarThickness
+    [Bool] $offsetGridLines = $true
+    [scales]$scales = [scales]::New()
+}
+
+
+
 Class BaseChart {
-    [ChartType]$Type
-    [ChartData]$Data
-    [ChartOption]$Options
-    Hidden [String]$Definition
+    [ChartType]$type
+    [ChartData]$data
+    [ChartOption]$options
+    Hidden [String]$definition
 
     BaseChart(){
         $Currenttype = $this.GetType()
@@ -112,9 +127,9 @@ var myChart = new Chart(ctx,
                 #Scales
                     #yAxes []
                         #Ticks
-                            #BeginAtZero [bool]
+                            #beginAtZero [bool]
                             
-        $Body = $this | select @{N='Type';E={$_.Type.ToString()}},Data,Options  | convertto-Json -Depth 4
+        $Body = $this | select @{N='type';E={$_.type.ToString()}},Data,Options  | convertto-Json -Depth 6
         Return $Body
     }
 
@@ -132,7 +147,7 @@ var myChart = new Chart(ctx,
 
 Class BarChart : BaseChart{
 
-    [ChartType] $Type = [ChartType]::bar
+    [ChartType] $type = [ChartType]::bar
     
     BarChart(){
         #$Type = [ChartType]::bar
@@ -140,8 +155,8 @@ Class BarChart : BaseChart{
     }
 
     BarChart([ChartData]$Data,[ChartOption]$Options){
-        $this.Data = $Data
-        $This.Options = $Options
+        $this.data = $Data
+        $This.options = $Options
     }
 
 }
@@ -157,7 +172,7 @@ Class PieData : ChartData {
 
 Class PieChart : BaseChart{
 
-    $Type = [ChartType]::Pie
+    $type = [ChartType]::Pie
 
     PieChart([ChartData]$Data,[ChartOption]$Options){
         $this.Data = $Data
@@ -189,33 +204,41 @@ $Baroptions = [BarOptions]::New()
 $BarData = [BarData]::New()
 
 $BarChart = [BarChart]::New($BarData,$Baroptions)
-$BarChart.Data.DataSets.Data.add(1)
-$BarChart.Data.DataSets.Data.add(32)
-$BarChart.Data.datasets.Data.add(24)
-$BarChart.Data.DataSets.Label = "Salutions, this is my graph!"
+$BarChart.Data.DataSets[0].Data.add(4)
+$BarChart.Data.DataSets[0].Data.add(23)
+$BarChart.Data.DataSets[0].Data.add(32)
+$BarChart.Data.datasets[0].Data.add(24)
+$BarChart.Data.datasets[0].Data.add(78)
+$BarChart.Data.DataSets[0].Label = "Salutaions, this is my graph!"
 
-$BarChart.Data.DataSets.BackgroundColor += [Color]::Orange
-$BarChart.Data.DataSets.BackgroundColor += [Color]::Green
-$BarChart.Data.DataSets.BackgroundColor += [Color]::blue
+$BarChart.Data.DataSets[0].BackgroundColor.Add([Color]::Orange)
+$BarChart.Data.DataSets[0].BackgroundColor.Add([Color]::Red)
+$BarChart.Data.DataSets[0].BackgroundColor.Add([Color]::Green)
+$BarChart.Data.DataSets[0].BackgroundColor.Add([Color]::Yellow)
+$BarChart.Data.DataSets[0].BackgroundColor.Add([Color]::blue)
 
-$BarChart.Data.DataSets.Bordercolor += [Color]::blue
-$BarChart.Data.DataSets.Bordercolor += [Color]::Yellow
-$BarChart.Data.DataSets.Bordercolor += [Color]::Red
-$BarChart.Data.DataSets.BorderWidth = 1
+$BarChart.Data.DataSets[0].Bordercolor.Add([Color]::blue)
+$BarChart.Data.DataSets[0].Bordercolor.Add([Color]::Yellow)
+$BarChart.Data.DataSets[0].Bordercolor.Add([Color]::Red)
+$BarChart.Data.DataSets[0].Bordercolor.Add([Color]::blue)
+$BarChart.Data.DataSets[0].Bordercolor.Add([Color]::Yellow)
+$BarChart.Data.DataSets[0].BorderWidth = 1
 
 $BarChart.Data.Labels.Add("Label1")
 $BarChart.Data.Labels.Add("Label2")
 $BarChart.Data.Labels.Add("Label3")
+$BarChart.Data.Labels.Add("Label4")
+$BarChart.Data.Labels.Add("Label5")
 
 $CanvasID = "CanvasPlop"
-$HTMLPage = html {
+$HTMLPage = html { 
     head {
         title 'Chart JS Demonstration'
         
     }
     body {
         
-         canvas -Height 500px -Width 500px -Id $CanvasID {
+         canvas -Height 400px -Width 400px -Id $CanvasID {
 
          }
          script -src "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" -type "text/javascript"
