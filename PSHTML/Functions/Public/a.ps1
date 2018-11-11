@@ -82,6 +82,7 @@ Function a {
     )
     $tagname = "a"
 
-    Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType NonVoid
 
+    #Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -MyInvocationParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType NonVoid
+    Set-HtmlTag -TagName $tagname -TagType NonVoid -Cmdlet $PSCmdlet
 }

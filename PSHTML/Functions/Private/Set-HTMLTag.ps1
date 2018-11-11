@@ -6,15 +6,16 @@ Function Set-HtmlTag {
     .Description
         although it can be this function is not intended to be used directly.
     .EXAMPLE
-    Set-HtmlTag -TagName div -PSBParameters $PSBoundParameters -MyInvocationParametersKeys $MyInvocation.MyCommand.Parameters.Keys
+    Set-HtmlTag -TagName div -TagType NonVoid -Cmdlet $PSCmdlet
 
     .EXAMPLE
-    Set-HtmlTag -TagName style -PSBParameters $PSBoundParameters -MyInvocationParametersKeys $MyInvocation.MyCommand.Parameters.Keys
+    Set-HtmlTag -TagName style TagType NonVoid -Cmdlet $PSCmdlet
 
     .NOTES
-    Current version 0.8
+    Current version 3.2
         History:
-            2018.10.24;@ChristopheKumor;include tag parameters to version 0.8
+            2018.11.11;@ChristopheKumor;use $PSCmdlet to version 3.2
+            2018.10.24;@ChristopheKumor;include tag parameters to version 3.0
             2018.05.07;stephanevg;
             2018.05.07;stephanevg;Creation
     #>
@@ -23,12 +24,13 @@ Function Set-HtmlTag {
     Param(
 
         #[system.web.ui.HtmlTextWriterTag]
-        $TagName,
+        [Parameter(Mandatory = $true)]
+        [String]$TagName,
 
-        $Parameters,
-
-        $MyInvocationParametersKeys,
-
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.PSCmdlet]$Cmdlet,
+        
+        [Parameter(Mandatory = $true)]
         [ValidateSet('void', 'NonVoid')]
         $TagType,
 
@@ -37,15 +39,26 @@ Function Set-HtmlTag {
 
     Begin {
         $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+
+        $Parameters = $Cmdlet.MyInvocation.BoundParameters
+        $InvocationParametersKeys = $Cmdlet.MyInvocation.MyCommand.Parameters.Keys
+
     }
     Process {
         $attr = ''
         $outcontent = $false
 
-        foreach ($paramkey in $MyInvocationParametersKeys) {
-            $paramvalue = Get-Variable -Name $paramkey -ValueOnly -ErrorAction SilentlyContinue
-            if ($paramvalue -and !$Parameters.ContainsKey($paramkey)) {
-                $attr += '{0}="{1}" ' -f $paramkey, $paramvalue
+        foreach ($paramkey in $InvocationParametersKeys) {
+            if (!$Parameters.ContainsKey($paramkey) -and !$CommonParameters.Contains($paramkey)) {
+                write-verbose -Message ('[Set-HTMLTAG] Key {0} : searching for a default value' -f $paramkey)
+                $paramvalue = $PSCmdlet.SessionState.PSVariable.Get($paramkey).Value
+                if ($paramvalue) {
+                    write-verbose -Message ('[Set-HTMLTAG] Key {0} : default value is {1}' -f $paramkey, $paramvalue)
+                    $attr += '{0}="{1}" ' -f $paramkey, $paramvalue
+                }
+                else {
+                    write-verbose -Message ('[Set-HTMLTAG] Key {0} : no default value' -f $paramkey)
+                }
             }
         }
         
@@ -61,7 +74,6 @@ Function Set-HtmlTag {
                 }
             }
             'Attributes' { 
-
                 foreach ($entry in $Parameters['Attributes'].Keys) {
                     if ($entry -eq 'content' -or $entry -eq 'Attributes') {
                         write-verbose -Message ('[Set-HTMLTAG] attribute {0} is a reserved value, and should not be passed in the Attributes HashTable' -f ($entry))
@@ -69,14 +81,13 @@ Function Set-HtmlTag {
                     }
                     $attr += '{0}="{1}" ' -f $entry, $Attributes[$Entry]
                 }
-
-                if ($Attributes.Attributes) {
+                #! Come from old Set-HTMLTag version, keep it ?
+<#                 if ($Attributes.Attributes) {
                     foreach ($at in $Attributes.Attributes.keys) {
 
                         $attr += '{0}="{1}" ' -f $at, $Attributes.Attributes[$at]
                     }
-                }
-
+                } #>
                 continue
             }
             'httpequiv' {
@@ -106,11 +117,8 @@ Function Set-HtmlTag {
 
         #Generating OutPut string
         #$TagBegin - TagAttributes - <TagContent> - TagEnd
-        
-
         $TagBegin = '<{0}' -f $TagName
 
-    
         if ($tagType -eq 'nonvoid') {
             $ClosingFirstTag = '>'
             $TagEnd = '</{0}>' -f $tagname
@@ -119,8 +127,7 @@ Function Set-HtmlTag {
             $ClosingFirstTag = '/>'
             $TagEnd = ''
         }
-        
-        
+
         if ($attr) {
 
             $TagAttributes = ' {0}{1}' -f $attr.trim(), $ClosingFirstTag
@@ -129,15 +136,12 @@ Function Set-HtmlTag {
             $TagAttributes = '{0}' -f $ClosingFirstTag
         }
 
-
-    
         if ($outcontent) {
 
             $TagContent = (-join $outcontent ).trim()
         }
 
         $Data = $TagBegin + $TagAttributes + $TagContent + $TagEnd
-
 
         return $Data
     }
