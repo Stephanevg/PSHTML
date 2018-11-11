@@ -36,9 +36,10 @@ Function head {
     Allows to add child element(s) inside the current opening and closing HTML tag(s).
 
     .NOTES
-    Current version 3.1
-    History:
-    2018.10.30;@ChristopheKumor;Updated to version 3.0
+    Current version 3.2
+    History: 
+        2018.11.11;@ChristopheKumor;Updated to version 3.2
+        2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.10;Stephanevg; Added parameters
         2018.04.01;Stephanevg;Creation.
     .LINK
@@ -67,7 +68,7 @@ Function head {
 
     Process {
         $tagname = "head"
-        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -TagType NonVoid -Cmdlet $PSCmdlet
     }
 
 }

@@ -46,8 +46,9 @@ Function a {
 
 
         .NOTES
-        Current version 3.1
-        History:
+        Current version 3.2
+        History: 
+            2018.11.11;@ChristopheKumor;Updated to version 3.2
             2018.10.30;@Stephanevg;Updated to version 3.1
             2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.09.30;Stephanevg;Updated to version 2.0
@@ -83,7 +84,5 @@ Function a {
     )
     $tagname = "a"
 
-
-    #Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -MyInvocationParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType NonVoid
     Set-HtmlTag -TagName $tagname -TagType NonVoid -Cmdlet $PSCmdlet
 }

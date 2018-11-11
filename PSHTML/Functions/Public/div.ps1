@@ -14,9 +14,10 @@ Function Div {
 
 
         .NOTES
-        Current version 2.0
-        History:
-        2018.10.30;@ChristopheKumor;Updated to version 3.0
+        Current version 3.2
+        History: 
+            2018.11.11;@ChristopheKumor;Updated to version 3.2
+            2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.10.02;bateskevin; Updated to v2.0
             2018.04.10;Stephanevg; Added parameters
             2018.04.01;Stephanevg;Creation.
@@ -49,7 +50,7 @@ Function Div {
 
         $tagname = "div"
 
-        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -TagType nonVoid -Cmdlet $PSCmdlet
     }
 
 

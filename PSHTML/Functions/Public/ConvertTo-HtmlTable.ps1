@@ -47,8 +47,9 @@ Function ConvertTo-HTMLTable {
         </table>
     
     .NOTES
-            Current version 0.7.1
-            History:
+            Current version 3.2
+            History: 
+                2018.11.11;@ChristopheKumor;Updated to version 3.2
             2018.05.09;stephanevg;Made Linux compatible (changed Get-Serv).
             2018.10.14;Christophe Kumor;Update.
             2018.05.09;stephanevg;Creation.

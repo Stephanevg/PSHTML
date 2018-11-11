@@ -30,9 +30,10 @@ Function hr {
 
     .Notes
     Author: Stéphane van Gulick
-    Version: 2.0.0
-    History:
-    2018.10.30;@ChristopheKumor;Updated to version 3.0
+    Current version 3.2
+    History: 
+        2018.11.11;@ChristopheKumor;Updated to version 3.2
+        2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.08;bateskevin; Updated to v2.0 
         2018.04.08;Stephanevg; Updated to version 1.0: Updated content block to support string & ScriptBlock
         2018.03.25;@Stephanevg; Added Styles, ID, CLASS attributes functionality
@@ -59,7 +60,7 @@ Function hr {
     Process {
         $tagname = "hr"
 
-        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType void
+        Set-HtmlTag -TagName $tagname -TagType void -Cmdlet $PSCmdlet
         
     }
 

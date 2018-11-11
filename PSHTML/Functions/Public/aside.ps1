@@ -39,8 +39,9 @@ Function aside {
         https://github.com/Stephanevg/PSHTML
     
     .NOTES
-        Current version 3.1
-        History:
+        Current version 3.2
+        History: 
+            2018.11.11;@ChristopheKumor;Updated to version 3.2
             2018.11.1; Stephanevg;Updated to version 3.1
     #>
     [CmdletBinding()]
@@ -69,7 +70,7 @@ Function aside {
 
         $tagname = "aside"
 
-        Set-htmltag -TagName $tagName -Parameters $PSBoundParameters  -TagType NonVoid
+        Set-htmltag -TagName $tagName -TagType NonVoid -Cmdlet $PSCmdlet
     }
 
 

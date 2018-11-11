@@ -16,11 +16,12 @@ Function dd {
     dd "woop3" -Class "class" -Id "something" -Style "color:red;"
 
     .NOTES
-    Current version 3.1
-       History:
-       2018.10.30;@ChristopheKumor;Updated to version 3.0
-           2018.10.02;bateskevin;Updated to v2.
-           2018.04.01;bateskevin;Creation.
+    Current version 3.2
+        History: 
+            2018.11.11;@ChristopheKumor;Updated to version 3.2
+            2018.10.30;@ChristopheKumor;Updated to version 3.0
+            2018.10.02;bateskevin;Updated to v2.
+            2018.04.01;bateskevin;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -53,7 +54,7 @@ Function dd {
 
         $tagname = "dd"
 
-        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -TagType NonVoid -Cmdlet $PSCmdlet
         
     }
 }

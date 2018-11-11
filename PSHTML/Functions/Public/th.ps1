@@ -3,7 +3,9 @@ Function Th {
     .LINK
     https://github.com/Stephanevg/PSHTML
     .NOTES
-        Version 3.1.0
+    Current version 3.2
+        History:
+            2018.11.11;@ChristopheKumor;Updated to version 3.2
 #>
     Param(
         $Content
@@ -13,7 +15,7 @@ Function Th {
 
         $tagname = "th"
 
-        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -TagType NonVoid -Cmdlet $PSCmdlet
     }
 
 }
