@@ -68,7 +68,7 @@ Function a {
         [String]$href,
 
         [ValidateSet("_self", "_blank", "_parent", "_top")]
-        [String]$Target,
+        [String]$Target = "_self",
 
         [AllowEmptyString()]
         [AllowNull()]
