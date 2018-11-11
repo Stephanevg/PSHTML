@@ -13,38 +13,47 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
 Context "Testing PSHTML" {
-    Describe "Testing SUB" {
+    Describe "Testing Canvas" {
 
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1" = 'MyValue1'; "MyAttribute2" = "MyValue2"}
-        $string = SUB {'woop'} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $Height = 55
+        $Width = 66
+        $string = Canvas {'woop'} -Attributes $CustomAtt -Style $Style -Class $class -id $id -Height $Height -Width $Width
 
         if ($string -is [array]) {
             $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
-            $string -match '^<SUB.*>' | should be $true
-            $string -match '.*</SUB>$' | should be $true
+            $string -match '^<Canvas.*>' | should be $true
+            $string -match '.*</Canvas>$' | should be $true
 
         }
 
         it "Testing content in child element" {
-            $s = $string -join ""
-            $s -match "^.*>.*woop.*<.*" | should be $true
+            $string -match "^.*>woop<.*" | should be $true
         }
 
         it "Testing common parameters: Class" {
-            $string -match '^<SUB.*class="myclass".*>' | should be $true
+            $string -match '^<Canvas.*class="myclass".*>' | should be $true
         }
         it "Testing common parameters: ID" {
-            $string -match '^<SUB.*id="myid".*>' | should be $true
+            $string -match '^<Canvas.*id="myid".*>' | should be $true
         }
         it "Testing common parameters: Style" {
-            $string -match '^<SUB.*style=".+".*>' | should be $true
+            $string -match '^<Canvas.*style=".+".*>' | should be $true
+        }
+
+        it "Testing common parameters: Height" {
+            $string -match '^<Canvas.*height="55".*>' | should be $true
+        }
+
+        it "Testing common parameters: width" {
+            $string -match '^<Canvas.*width="66".*>' | should be $true
         }
 
         it "Testing Attributes parameters" {
@@ -52,24 +61,31 @@ Context "Testing PSHTML" {
             foreach ($at in $CustomAtt.Keys) {
                 $val = $null
                 $val = $CustomAtt[$at]
-                $string -match "^<SUB.*$at=`"$val`".*>" | should be $true
+                $string -match "^<Canvas.*$at=`"$val`".*>" | should be $true
             }
 
 
         }
+
+
     }
-    Describe "Testing SUB with Pipeline" {
+
+    Describe "Testing Canvas with Pipeline" {
+
+
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1" = 'MyValue1'; "MyAttribute2" = "MyValue2"}
-        $string = p {} | SUB -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $string = p {} | Canvas -Attributes $CustomAtt -Style $Style -Class $class -id $id
+
         if ($string -is [array]) {
             $string = $String -join ""
         }
+
         it "Should contain opening and closing tags" {
-            $string -match '^<SUB.*>' | should be $true
-            $string -match '.*</SUB>$' | should be $true
+            $string -match '^<Canvas.*>' | should be $true
+            $string -match '.*</Canvas>$' | should be $true
 
         }
 
@@ -78,13 +94,13 @@ Context "Testing PSHTML" {
         }
 
         it "Testing common parameters: Class" {
-            $string -match '^<SUB.*class="myclass".*>' | should be $true
+            $string -match '^<Canvas.*class="myclass".*>' | should be $true
         }
         it "Testing common parameters: ID" {
-            $string -match '^<SUB.*id="myid".*>' | should be $true
+            $string -match '^<Canvas.*id="myid".*>' | should be $true
         }
         it "Testing common parameters: Style" {
-            $string -match '^<SUB.*style=".+".*>' | should be $true
+            $string -match '^<Canvas.*style=".+".*>' | should be $true
         }
 
         it "Testing Attributes parameters" {
@@ -92,9 +108,13 @@ Context "Testing PSHTML" {
             foreach ($at in $CustomAtt.Keys) {
                 $val = $null
                 $val = $CustomAtt[$at]
-                $string -match "^<SUB.*$at=`"$val`".*>" | should be $true
+                $string -match "^<Canvas.*$at=`"$val`".*>" | should be $true
             }
+
+
         }
+
+
     }
 }
 

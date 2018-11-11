@@ -14,26 +14,37 @@ import-module .\PSHTML -Force
 Describe "Testing Install-VSCodeSnippets" {
 
     $SnippetTypes = @("small","medium","full")
+    $TestSnippetsPath = Join-Path -Path $TestDrive -ChildPath "Snippets"
 
-    it "The cmdlet should not throw"{
-        {install-PSHTMLVsCodeSnippets} | should not throw
+    if(!(Test-Path $TestSnippetsPath)){
+        $null = mkdir $TestSnippetsPath
     }
 
-    $Items = gci "$($env:APPDATA)\Code\User\snippets\"
-    it "Should create the snippets at correct path: $($env:APPDATA)\Code\User\snippets\"{
-        $ITems | should not benullOrEmpty
+    it "The cmdlet should not throw"{
+        {install-PSHTMLVsCodeSnippets -Path $TestSnippetsPath} | should not throw
+    }
+
+    <# if($IsLinux){
+        $Path = Join-Path -Path $env:HOME -ChildPath ".config/Code/User/snippets/"
+    }else{
+        $Path = "$($env:APPDATA)\Code\User\snippets"
+    } #>
+    
+    $Items = gci $TestSnippetsPath
+    it "Should create the snippets at correct path: $($TestSnippetsPath)"{
+        $Items | should not benullOrEmpty
         
     }
 
-    It "Should contain 3 snippets"{
+    It "Should contain at least 3 snippets"{
 
-        ($Items | measure).Count | should be 3
+        ($Items | measure).Count | Should -BeGreaterOrEqual 3
     }
 
     foreach($SnippetType in $SnippetTypes){
 
         It "Should contain snippet -> $($SnippetType)" {
-            $items | ? {$_.Name -like "*$SnippetType*"} | should not benullOrEmpty
+            $Items | ? {$_.Name -like "*$SnippetType*"} | should not benullOrEmpty
         }
     }
 }

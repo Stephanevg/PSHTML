@@ -37,6 +37,11 @@ Function aside {
 
     .LINK
         https://github.com/Stephanevg/PSHTML
+    
+    .NOTES
+        Current version 3.1
+        History:
+            2018.11.1; Stephanevg;Updated to version 3.1
     #>
     [CmdletBinding()]
     Param(
@@ -46,7 +51,6 @@ Function aside {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
         $Content,
 
         [Parameter(Position = 1)]
@@ -65,7 +69,7 @@ Function aside {
 
         $tagname = "aside"
 
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType NonVoid
+        Set-htmltag -TagName $tagName -Parameters $PSBoundParameters  -TagType NonVoid
     }
 
 

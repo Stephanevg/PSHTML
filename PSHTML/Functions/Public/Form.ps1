@@ -31,7 +31,7 @@ Function Form {
     form "/action_Page.php" post _self -attributes @{"Woop"="Wap";"sap"="sop"}
 
     .NOTES
-    Current version 0.8
+    Current version 3.1
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.08;Stephanevg; Fixed custom Attributes display bug. Updated help
@@ -51,7 +51,7 @@ Function Form {
 
         [Parameter(Mandatory = $true, Position = 2)]
         [ValidateSet("_blank", "_self", "_parent", "top")]
-        [String]$target = "_self",
+        [String]$target,
 
         [Parameter(Position = 3)]
         [String]$Class,
@@ -70,13 +70,17 @@ Function Form {
             Mandatory = $false,
             Position = 7
         )]
-        [scriptblock]
         $Content
     )
 
     Process {
         $tagname = "form"
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+
+        if(!($Target)){
+          
+            $PSBoundParameters.Target = "_self"
+        }
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 }
 

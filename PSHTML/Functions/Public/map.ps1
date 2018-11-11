@@ -16,6 +16,9 @@ Function map {
         <area href="map.png" coords="0,0,50,50" shape="circle" target="top" >
     </map>
 
+    .NOTES
+        Version: 3.1.0
+
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -45,6 +48,6 @@ Function map {
 
     Process {
         $tagname = "map"
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 }

@@ -82,10 +82,11 @@ Context "Testing PSHTML"{
             $string -match '^<base.*href="www\.powershelldistrict\.com".*/>' | should be $true
         }
 
-        it "Testing default parameters: Target"{
+        <#
+         it "Testing default parameters: Target"{
             $string -match '^<base.*target="_self".*>' | should be $true
         }
-
+ #>
         }
     }
 Pop-Location

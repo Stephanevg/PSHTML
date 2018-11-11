@@ -43,7 +43,7 @@ Function Colgroup {
     </colgroup>
 
     .NOTES
-    Current version 1.0
+    Current version 3.1
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.04.08;Stephanevg; Updated to version 1.0
@@ -58,7 +58,6 @@ Function Colgroup {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
         $Content,
 
         [Parameter(Position = 1)]
@@ -82,7 +81,7 @@ Function Colgroup {
   
     Process {
         $tagname = "colgroup"
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 
 }

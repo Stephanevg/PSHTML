@@ -25,7 +25,7 @@ Function ol {
     </ol>
 
     .NOTES
-    Current version 1.1
+    Current version 3.1.0
        History:
        2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.10.02;bateskevin;Updated to v2.
@@ -72,7 +72,7 @@ Function ol {
 
         $tagname = "ol"
 
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 
 }

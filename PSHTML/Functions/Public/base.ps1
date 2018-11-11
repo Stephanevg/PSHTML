@@ -16,8 +16,9 @@ Function base {
 
     .Notes
     Author: Stéphane van Gulick
-    Version: 1.0.1
+    Current Version: 3.1
     History:
+        2018.11.1; Stephanevg;Updated to version 3.1
         2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.05.11;@Stephanevg; fixed minor bugs
         2018.05.09;@Stephanevg; Creation
@@ -32,7 +33,7 @@ Function base {
         [String]$href,
 
         [ValidateSet("_self", "_blank", "_parent", "_top")]
-        [String]$Target = "_self",
+        [String]$Target,
 
         [AllowEmptyString()]
         [AllowNull()]
@@ -45,7 +46,12 @@ Function base {
 
     $tagname = "base"
 
-    Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType void
+    if(!($Target)){
+          
+        $PSBoundParameters.Target = "_self"
+    }
+
+    Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType void
 
 
 }

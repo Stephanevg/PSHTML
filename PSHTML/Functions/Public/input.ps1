@@ -1,8 +1,20 @@
 Function input {
+    
     <#
     .SYNOPSIS
     Generates input HTML tag.
+    .DESCRIPTION
+    The <input> tag specifies an input field where the user can enter data.
 
+    <input> elements are used within a <form> element to declare input controls that allow users to input data.
+
+    An input field can vary in many ways, depending on the type attribute.
+
+    Note: The <input> element is empty, it contains attributes only.
+
+    Tip: Use the <label> element to define labels for <input> elements.
+
+    More info: https://www.w3schools.com/tags/tag_input.asp
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -41,7 +53,7 @@ Function input {
 
     Process {
         $tagname = "input"
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType Void
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType Void
     }
 
 }

@@ -29,7 +29,7 @@ Function datalist {
     
 
     .NOTES
-    Current version 2.0
+    Current version 3.1
        History:
        2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.10.05;@stephanevg;Creation.
@@ -62,6 +62,6 @@ Function datalist {
 
         $tagname = "datalist"
 
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 }

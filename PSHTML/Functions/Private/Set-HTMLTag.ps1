@@ -82,7 +82,7 @@ Function Set-HtmlTag {
                     $attr += '{0}="{1}" ' -f $entry, $Attributes[$Entry]
                 }
                 #! Come from old Set-HTMLTag version, keep it ?
-<#                 if ($Attributes.Attributes) {
+                <#                 if ($Attributes.Attributes) {
                     foreach ($at in $Attributes.Attributes.keys) {
 
                         $attr += '{0}="{1}" ' -f $at, $Attributes.Attributes[$at]

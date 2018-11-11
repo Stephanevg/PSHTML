@@ -10,6 +10,9 @@ Function Noscript {
 
     <noscript >Your browser doesn't support javascript</noscript>
 
+    .NOTES
+        version: 3.1.0
+
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -18,7 +21,7 @@ Function Noscript {
 
 
         [Parameter(Position = 1)]
-        [string]$content,
+        $content,
 
         [Parameter(Position = 2)]
         [String]$Class,
@@ -39,7 +42,7 @@ Function Noscript {
 
         $tagname = "noscript"
 
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 
 }

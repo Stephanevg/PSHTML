@@ -2,9 +2,10 @@ Function Th {
     <#
     .LINK
     https://github.com/Stephanevg/PSHTML
+    .NOTES
+        Version 3.1.0
 #>
     Param(
-        [String]
         $Content
     )
 
@@ -12,7 +13,7 @@ Function Th {
 
         $tagname = "th"
 
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 
 }

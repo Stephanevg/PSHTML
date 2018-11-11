@@ -59,7 +59,7 @@ Function hr {
     Process {
         $tagname = "hr"
 
-        Set-HtmlTag -TagName $tagname -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType void
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType void
         
     }
 
