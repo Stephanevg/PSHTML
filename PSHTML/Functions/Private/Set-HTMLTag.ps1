@@ -6,158 +6,143 @@ Function Set-HtmlTag {
     .Description
         although it can be this function is not intended to be used directly.
     .EXAMPLE
-    Set-HtmlTag -TagName div -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys
+    Set-HtmlTag -TagName div -TagType NonVoid -Cmdlet $PSCmdlet
 
     .EXAMPLE
-    Set-HtmlTag -TagName style -PSBParameters $PSBoundParameters -MyCParametersKeys $MyInvocation.MyCommand.Parameters.Keys
+    Set-HtmlTag -TagName style TagType NonVoid -Cmdlet $PSCmdlet
 
     .NOTES
-    Current version 3.1
+    Current version 3.2
         History:
+            2018.11.11;@ChristopheKumor;use $PSCmdlet to version 3.2
             2018.10.24;@ChristopheKumor;include tag parameters to version 3.0
             2018.05.07;stephanevg;
             2018.05.07;stephanevg;Creation
     #>
     [Cmdletbinding()]
-    [Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSProvideCommentHelp", "", Justification = "Manipulation of text")]
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSProvideCommentHelp', '', Justification = 'Manipulation of text')]
     Param(
 
-        [Parameter(Mandatory=$True)]
-        $TagName,
+        #[system.web.ui.HtmlTextWriterTag]
+        [Parameter(Mandatory = $true)]
+        [String]$TagName,
 
-        [Parameter(Mandatory=$True)]
-        $Parameters,
-
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.PSCmdlet]$Cmdlet,
+        
+        [Parameter(Mandatory = $true)]
         [ValidateSet('void', 'NonVoid')]
         $TagType,
 
-        [Parameter(Mandatory=$False)]
         $Content
     )
 
     Begin {
-
-        Function GetCustomParameters {
-            [CmdletBinding()]
-            Param(
-                [HashTable]$Parameters
-            )
-    
-            $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
-            $CleanedHash = @{}
-            foreach($key in $Parameters.Keys){
-                if(!($key -in $CommonParameters)){
-                    $CleanedHash.$Key = $Parameters[$key]
-                }
-            }
-            if(!($CleanedHash)){
-                write-verbose "[GetCustomParameters] No custom parameters passed."
-            }
-            Return $cleanedHash
-    }
         $CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters + [System.Management.Automation.PSCmdlet]::OptionalCommonParameters
+
+        $Parameters = $Cmdlet.MyInvocation.BoundParameters
+        $InvocationParametersKeys = $Cmdlet.MyInvocation.MyCommand.Parameters.Keys
+
     }
     Process {
-        $attr = $output = ''
+        $attr = ''
         $outcontent = $false
 
-        $AttributesToSkip = "Content","Attributes","httpequiv","content_tag"
-
-
-        $Attributes = GetCustomParameters -parameters $Parameters
-
-
-        $KeysToPostProcess = @()
-        foreach ($key in $Attributes.Keys) {
-            if($key -notin $AttributesToSkip){
-
-                $attr += '{0}="{1}" ' -f $key, $Attributes[$key]
-            }else{
-                $KeysToPostProcess += $Key 
+        foreach ($paramkey in $InvocationParametersKeys) {
+            if (!$Parameters.ContainsKey($paramkey) -and !$CommonParameters.Contains($paramkey)) {
+                write-verbose -Message ('[Set-HTMLTAG] Key {0} : searching for a default value' -f $paramkey)
+                $paramvalue = $PSCmdlet.SessionState.PSVariable.Get($paramkey).Value
+                if ($paramvalue) {
+                    write-verbose -Message ('[Set-HTMLTAG] Key {0} : default value is {1}' -f $paramkey, $paramvalue)
+                    $attr += '{0}="{1}" ' -f $paramkey, $paramvalue
+                }
+                else {
+                    write-verbose -Message ('[Set-HTMLTAG] Key {0} : no default value' -f $paramkey)
+                }
             }
         }
-
         
+        switch ($Parameters.Keys) {
+            'Content' { 
+                if ($Parameters[$_] -is [System.Management.Automation.ScriptBlock]) {
+                    $outcontent = $Parameters[$_].Invoke()
+                    continue
+                }
+                else {
+                    $outcontent = $Parameters[$_]
+                    continue
+                }
+            }
+            'Attributes' { 
+                foreach ($entry in $Parameters['Attributes'].Keys) {
+                    if ($entry -eq 'content' -or $entry -eq 'Attributes') {
+                        write-verbose -Message ('[Set-HTMLTAG] attribute {0} is a reserved value, and should not be passed in the Attributes HashTable' -f ($entry))
+                        continue
+                    }
+                    $attr += '{0}="{1}" ' -f $entry, $Attributes[$Entry]
+                }
+                #! Come from old Set-HTMLTag version, keep it ?
+                <#                 if ($Attributes.Attributes) {
+                    foreach ($at in $Attributes.Attributes.keys) {
 
-        foreach($PostKey in $KeysToPostProcess){
-
-            switch ($PostKey) {
-                'Content' { 
-                    if ($Parameters[$($PostKey)] -is [System.Management.Automation.ScriptBlock]) {
-                        $outcontent = $Parameters[$($PostKey)].Invoke()
-                        break
+                        $attr += '{0}="{1}" ' -f $at, $Attributes.Attributes[$at]
+                    }
+                } #>
+                continue
+            }
+            'httpequiv' {
+                $attr += 'http-equiv="{0}" ' -f $Parameters[$_]
+                continue
+            }
+            'content_tag' {
+                $attr += 'content="{0}" ' -f $Parameters[$_]
+                continue
+            }
+            default { 
+            
+                if ($_ -notin $CommonParameters) {
+        
+                    if ($Parameters[$_].IsPresent) { 
+                        $attr += '{0}' -f $_
                     }
                     else {
-                        $outcontent = $Parameters[$($PostKey)]
-                        break
-                    }
-                }
-                'Attributes' { 
-    
-                    foreach ($entry in $Parameters['Attributes'].Keys) {
-                        if ($entry -eq 'content' -or $entry -eq 'Attributes') {
-                            write-verbose "[Set-HTMLTAG] attribute $($entry) is a reserved value, and should not be passed in the Attributes HashTable"
-                            continue
-                        }
-                        $attr += '{0}="{1}" ' -f $entry, $Parameters['Attributes'].$entry
+                        $attr += '{0}="{1}" ' -f $_ , $Parameters[$_]
                     }
 
-                    continue
                 }
-                'httpequiv' {
-                    $attr += 'http-equiv="{0}" ' -f $Parameters[$PostKey]
-                    continue
-                }
-                'content_tag' {
-                    $attr += 'content="{0}" ' -f $Parameters[$PostKey]
-                    continue
-                }
-                default { 
-                
-                    write-verbose "[SET-HTMLTAG] Not found"
-    
-                }
+
             }
         }
 
 
-
-
-    #Generating OutPut string
+        #Generating OutPut string
         #$TagBegin - TagAttributes - <TagContent> - TagEnd
-        
-
         $TagBegin = '<{0}' -f $TagName
 
-    
-        if($tagType -eq 'nonvoid'){
-            $ClosingFirstTag = ">"
+        if ($tagType -eq 'nonvoid') {
+            $ClosingFirstTag = '>'
             $TagEnd = '</{0}>' -f $tagname
-        }else{
-            $ClosingFirstTag = "/>"
         }
-        
-        
-        if($attr){
-
-            $TagAttributes = ' {0} {1} ' -f  $attr,$ClosingFirstTag
-        }else{
-            $TagAttributes = ' {0}' -f  $ClosingFirstTag
+        else {
+            $ClosingFirstTag = '/>'
+            $TagEnd = ''
         }
 
-        #Fix to avoid a additional space before the content
-        $TagAttributes = $TagAttributes.TrimEnd(" ")
-    
-        if($outcontent){
+        if ($attr) {
 
-            $TagContent = -join $outcontent 
+            $TagAttributes = ' {0}{1}' -f $attr.trim(), $ClosingFirstTag
+        }
+        else {
+            $TagAttributes = '{0}' -f $ClosingFirstTag
+        }
+
+        if ($outcontent) {
+
+            $TagContent = (-join $outcontent ).trim()
         }
 
         $Data = $TagBegin + $TagAttributes + $TagContent + $TagEnd
 
-
         return $Data
-
     }
 }

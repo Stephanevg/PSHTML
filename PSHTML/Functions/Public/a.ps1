@@ -68,7 +68,7 @@ Function a {
         [String]$href,
 
         [ValidateSet("_self", "_blank", "_parent", "_top")]
-        [String]$Target,
+        [String]$Target = "_self",
 
         [AllowEmptyString()]
         [AllowNull()]
@@ -83,13 +83,7 @@ Function a {
     )
     $tagname = "a"
 
-    if(!($Target)){
-          
-        $PSBoundParameters.Target = "_self"
-    }
 
-    Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
-    
-    
-
+    #Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -MyInvocationParametersKeys $MyInvocation.MyCommand.Parameters.Keys -TagType NonVoid
+    Set-HtmlTag -TagName $tagname -TagType NonVoid -Cmdlet $PSCmdlet
 }
