@@ -12,8 +12,9 @@ function Install-PSHTMLVSCodeSnippets {
 
 
     .NOTES
-            Current version 1.0
-            History:
+            Current version 3.2
+            History: 
+                2018.11.11;@ChristopheKumor;Updated to version 3.2
             2018.10.21;Stephanevg;Fix wrong path due to module restrucutre.
             2018.10.17;stephanev;updated to v 1.0 - added error handling, and -force parameter
             2018.10.16;FishFenly;Creation.

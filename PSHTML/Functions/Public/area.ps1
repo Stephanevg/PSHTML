@@ -40,8 +40,9 @@ Function area {
     <area href="image.png"coords="0,0,20,20"shape="rect" >
 
     .NOTES
-     Current version 3.1
-        History:
+     Current version 3.2
+        History: 
+            2018.11.11;@ChristopheKumor;Updated to version 3.2
             2018.11.08;Stephanevg; Updated to version 3.1
             2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.04.10;Stephanevg; Added parameters
@@ -68,7 +69,7 @@ Function area {
 
         [Parameter(Mandatory = $false, Position = 4)]
         [ValidateSet("_blank", "_self", "_parent", "top")]
-        [String]$target,
+        [String]$target = "_Blank",
 
         [Parameter(Position = 5)]
         [String]$type,
@@ -91,13 +92,7 @@ Function area {
 
         $tagname = "area"
 
-        if(!($Target)){
-          
-            $PSBoundParameters.Target = "_Blank"
-        }
-
-        Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType void
+        Set-HtmlTag -TagName $tagname -TagType void -Cmdlet $PSCmdlet
     }#End process
-
 
 }

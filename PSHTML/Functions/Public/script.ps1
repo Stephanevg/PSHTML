@@ -16,6 +16,12 @@ Function script {
     Generates the following code:
 
     <script type="text/javascript">alert( 'Hello, world!' );</script>
+
+    .NOTES
+    Current version 3.2
+        History: 
+            2018.11.11;@ChristopheKumor;Updated to version 3.2
+
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -57,6 +63,6 @@ Function script {
 
         $tagname = "script"
 
-        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -TagType NonVoid -Cmdlet $PSCmdlet
     }
 }

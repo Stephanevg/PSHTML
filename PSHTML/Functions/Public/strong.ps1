@@ -25,9 +25,10 @@ Function strong {
 
     .Notes
     Author: Stéphane van Gulick
-    Version: 3.1.0
-    History:
-    2018.10.30;@ChristopheKumor;Updated to version 3.0
+    Current version 3.2
+    History: 
+        2018.11.11;@ChristopheKumor;Updated to version 3.2
+        2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.05.23;@Stephanevg; Updated function to use New-HTMLTag
         2018.05.09;@Stephanevg; Creation
 
@@ -59,7 +60,7 @@ Function strong {
     )
     $tagname = "strong"
 
-    Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
+    Set-HtmlTag -TagName $tagname -TagType NonVoid -Cmdlet $PSCmdlet
 
 }
 

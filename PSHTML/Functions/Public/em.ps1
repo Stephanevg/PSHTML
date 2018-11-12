@@ -22,9 +22,10 @@ Function em {
 
     .Notes
     Author: Andrew Wickham
-    Version: 3.1.0
-    History:
-    2018.10.30;@ChristopheKumor;Updated to version 3.0
+    Current version 3.2
+    History: 
+        2018.11.11;@ChristopheKumor;Updated to version 3.2
+        2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.10.04;@awickham10; Creation
 
     .LINK
@@ -55,7 +56,7 @@ Function em {
 
     $tagname = "em"
 
-    Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType NonVoid
+    Set-HtmlTag -TagName $tagname -TagType NonVoid -Cmdlet $PSCmdlet
 
 
 

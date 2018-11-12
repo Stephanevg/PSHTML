@@ -28,8 +28,9 @@ Function Body {
 
 
         .NOTES
-        Current version 3.1
-        History:
+        Current version 3.2
+        History: 
+            2018.11.11;@ChristopheKumor;Updated to version 3.2
             2018.11.1; Stephanevg;Updated to version 3.1
             2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.04.10;bateskevin; Updated to version 2.0
@@ -63,7 +64,7 @@ Function Body {
     Process {
         $tagname = "Body"
 
-        Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
+        Set-HtmlTag -TagName $tagname -TagType NonVoid -Cmdlet $PSCmdlet
     }
 
 

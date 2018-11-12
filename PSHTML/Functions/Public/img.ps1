@@ -35,9 +35,10 @@ Function img {
 
 
         .NOTES
-        Current version 3.1
-        History:
-        2018.10.30;@ChristopheKumor;Updated to version 3.0
+        Current version 3.2
+        History: 
+            2018.11.11;@ChristopheKumor;Updated to version 3.2
+            2018.10.30;@ChristopheKumor;Updated to version 3.0
             2018.10.10;Stephanevg; Updated code to version 2.0
             2018.05.07;Stephanevg; Updated code to version 1.0
             2018.04.01;Stephanevg;Creation.
@@ -75,6 +76,6 @@ Function img {
 
     $tagname = "img"
 
-    Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType 'void'
+    Set-HtmlTag -TagName $tagname -TagType 'void' -Cmdlet $PSCmdlet
 
 }

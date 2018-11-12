@@ -36,13 +36,14 @@ Function li {
 
 
     .NOTES
-    Current version 3.1.0
-       History:
-       2018.10.30;@ChristopheKumor;Updated to version 3.0
-        2018.10.02;bateskevin;Updated to v2
-        2018.04.14;stephanevg;Added Attributes parameter. Upgraded to v1.1.1
-        2018.04.14;stephanevg;fix Content bug. Upgraded to v1.1.0
-        2018.04.01;bateskevinhanevg;Creation.
+    Current version 3.2
+        History: 
+            2018.11.11;@ChristopheKumor;Updated to version 3.2
+            2018.10.30;@ChristopheKumor;Updated to version 3.0
+            2018.10.02;bateskevin;Updated to v2
+            2018.04.14;stephanevg;Added Attributes parameter. Upgraded to v1.1.1
+            2018.04.14;stephanevg;fix Content bug. Upgraded to v1.1.0
+            2018.04.01;bateskevinhanevg;Creation.
     .LINK
         https://github.com/Stephanevg/PSHTML
     #>
@@ -77,7 +78,7 @@ Function li {
     Process {
         $tagname = "li"
 
-        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -TagType NonVoid -Cmdlet $PSCmdlet
         
     }
 

@@ -10,8 +10,9 @@ Function br
     
     .Notes
     Author: Ravikanth Chaganti
-    Version: 3.1.0
-    History:
+    Current version 3.2
+    History: 
+        2018.11.11;@ChristopheKumor;Updated to version 3.2
         2018.10.29;rchaganti; Adding br element
     .LINK
         https://github.com/Stephanevg/PSHTML
@@ -34,5 +35,5 @@ Function br
     )
 
     $tagname = "br"
-    Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType void
+    Set-HtmlTag -TagName $tagname -TagType void -Cmdlet $PSCmdlet
 }

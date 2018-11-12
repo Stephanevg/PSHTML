@@ -15,7 +15,12 @@ Function input {
     Tip: Use the <label> element to define labels for <input> elements.
 
     More info: https://www.w3schools.com/tags/tag_input.asp
-    .LINK
+        .NOTES
+        Current version 3.2
+        History: 
+            2018.11.11;@ChristopheKumor;Updated to version 3.2
+
+        .LINK
         https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
@@ -53,7 +58,7 @@ Function input {
 
     Process {
         $tagname = "input"
-        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType Void
+        Set-HtmlTag -TagName $tagname -TagType void -Cmdlet $PSCmdlet
     }
 
 }
