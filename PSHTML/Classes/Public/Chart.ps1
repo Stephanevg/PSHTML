@@ -76,7 +76,7 @@ Class scales {
 
     scales(){
 
-        $this.yAxes.Add(@{"ticks"=@{"beginAtZero"=$true}})
+        $null =$this.yAxes.Add(@{"ticks"=@{"beginAtZero"=$true}})
     }
 }
 
@@ -305,6 +305,8 @@ Function New-PSHTMLBarChart {
 
         [Parameter(Mandatory=$False)]
         [String]$Title
+
+        #[Switch]$Responsive
         
     )
 
@@ -327,6 +329,10 @@ Function New-PSHTMLBarChart {
 
 #Chart -> BarChart (?)
 $BarChart = [BarChart]::New()
+if($Responsive){
+
+}
+#$BarChart.options.responsive = $false
     #Type [String]
         #[ENUM]ChartType
     #Data [ChartData]
@@ -354,10 +360,11 @@ $BarChart = [BarChart]::New()
         $BarChart.SetOptions($ChartOptions)
     
 
-        $Searcher = New-Object -ComObject Microsoft.Update.Searcher;                                      
+        <# $Searcher = New-Object -ComObject Microsoft.Update.Searcher;                                      
         $Searcher.GetTotalHistoryCount()                                            
         $AllUpdatesInstalled = $Searcher.GetTotalHistoryCount()                     
         $Updates = $Searcher.QueryHistory(0,$AllUpdatesInstalled)
+        #>
 
 
     <# foreach($Cdata in $BarChartdata){
@@ -461,7 +468,7 @@ $BarChart.Data.Labels.Add("Label3")
 $BarChart.Data.Labels.Add("Label4")
 $BarChart.Data.Labels.Add("Label5") #>
 
-
+$CanvasID = "canvas01"
 $HTMLPage = html { 
     head {
         title 'Chart JS Demonstration'
@@ -492,7 +499,7 @@ $HTMLPage = html {
             $dataSet2 = [dataSet]::New($Data2,"Dataset2")
             $dataSet2.backgroundColor = [Color]::red
             $Labels = @("Wins","Looses","Draws","Give ups")
-            $CanvasID = "CanvasPlop"
+            
             New-PSHTMLBarChart -DataSet @($DataSet1,$dataSet2) -title "New graph yes" -Labels $Labels -canvasID $CanvasID
         }
 
