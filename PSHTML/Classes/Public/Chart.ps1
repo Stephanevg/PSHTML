@@ -1,4 +1,27 @@
+<#
+Class PieData : ChartData {
+    [Color]$BackGroundColor
+    [Color]$BorderColor
+    [int]$BorderWidth
+    [Color]$HoverBackGroundColor
+    [Color]$hoverBorderColor
+    [int]$hoverBorderWidth
+}
 
+Class PieChart : BaseChart{
+
+    $type = [ChartType]::Pie
+
+    PieChart([ChartData]$Data,[ChartOption]$Options){
+        $this.Data = $Data
+        $This.Options = $Options
+    }
+
+    
+}
+#>
+
+##end of pie
 
 Enum ChartType {
     bar
@@ -20,22 +43,30 @@ Class Color {
     static [string] $Orange = "rgb(255,165,0)"
 }
 
-Class ChartOption {
 
-}
-
-Class ChartDataSet {
+Class dataSet {
     [System.Collections.ArrayList] $data = @()
     [String]$label
     [String] $xAxisID
     [String] $yAxisID
-    [System.Collections.ArrayList]  $backgroundColor = @()
-    [System.Collections.ArrayList]  $borderColor = @()
+    [String]  $backgroundColor
+    [String]  $borderColor
     [int]    $borderWidth
     [String] $borderSkipped
     [Color]  $hoverBackgroundColor
     [Color]  $hoverBorderColor
     [int]    $hoverBorderWidth
+
+    dataSet(){
+
+    }
+
+    dataset([Array]$Data,[String]$Label){
+        $this.label = $Label
+        foreach($D in $Data){
+            $null = $this.data.Add($d)
+        }
+    }
 }
 
 
@@ -49,7 +80,12 @@ Class scales {
     }
 }
 
-Class BarOptions : ChartOption {
+Class ChartTitle {
+    [Bool]$display=$false
+    [String]$text
+}
+
+Class ChartOptions  {
     [int]$barPercentage = 0.9
     [Int]$categoryPercentage = 0.8
     [bool]$responsive = $false
@@ -57,14 +93,56 @@ Class BarOptions : ChartOption {
     [Int]$maxBarThickness
     [Bool] $offsetGridLines = $true
     [scales]$scales = [scales]::New()
+    [ChartTitle]$title = [ChartTitle]::New() 
+
+    <#
+        elements: {
+						rectangle: {
+							borderWidth: 2,
+						}
+					},
+					responsive: true,
+					legend: {
+						position: 'right',
+					},
+					title: {
+						display: true,
+						text: 'Chart.js Horizontal Bar Chart'
+					}
+    #>
 }
 
+Class ChartData {
+    [System.Collections.ArrayList] $labels = @()
+    [DataSet[]] $datasets = @()
+
+    ChartData(){
+        $this.datasets = [dataSet]::New()
+    }
+
+    AddDataSet([DataSet]$Dataset){
+        $this.datasets += $Dataset
+    }
+
+    SetLabels([Array]$Labels){
+        Foreach($l in $Labels){
+
+            $Null = $this.labels.Add($l)
+        }
+    }
+
+}
+
+Class BarData : ChartData {
+    
+    
+}
 
 
 Class BaseChart {
     [ChartType]$type
     [ChartData]$data
-    [ChartOption]$options
+    [ChartOptions]$options
     Hidden [String]$definition
 
     BaseChart(){
@@ -80,7 +158,7 @@ Class BaseChart {
         $this.Data = $Data
     }
 
-    SetOptions([ChartOption]$Options){
+    SetOptions([ChartOptions]$Options){
         $this.Options = $Options
     }
 
@@ -135,18 +213,10 @@ var myChart = new Chart(ctx,
     }
 }
 
-Class ChartData {
-    [System.Collections.ArrayList] $labels = @()
-    [ChartDataSet[]] $datasets = [ChartDataSet]::New()
-
-}
-
-Class BarData : ChartData {
-    
-    
-}
 
 
+
+#Main class (Inherits from BaseChart)
 Class BarChart : BaseChart{
 
     [ChartType] $type = [ChartType]::bar
@@ -156,39 +226,20 @@ Class BarChart : BaseChart{
 
     }
 
-    BarChart([ChartData]$Data,[ChartOption]$Options){
+    BarChart([ChartData]$Data,[ChartOptions]$Options){
         $this.data = $Data
         $This.options = $Options
     }
 
 }
 
-Class PieData : ChartData {
-    [Color]$BackGroundColor
-    [Color]$BorderColor
-    [int]$BorderWidth
-    [Color]$HoverBackGroundColor
-    [Color]$hoverBorderColor
-    [int]$hoverBorderWidth
-}
-
-Class PieChart : BaseChart{
-
-    $type = [ChartType]::Pie
-
-    PieChart([ChartData]$Data,[ChartOption]$Options){
-        $this.Data = $Data
-        $This.Options = $Options
-    }
-
-    
-}
-
+<# 
 Class BarChartData {
     [Int]$data
     [String]$Label
     $BackGroundColor
     $BorderColor
+    [String]$DatasetName
 
     BarChartData(){
 
@@ -200,16 +251,25 @@ Class BarChartData {
         $this.SetDefaultValuesIfNoneSet()
     }
 
-    BarChartData([Int]$Data,[String]$Label,$BackGroundColor){
+    BarChartData([Int]$Data,[String]$Label,[String]$DatasetName){
         $this.Data = $Data
         $this.Label = $Label
-        $this.BackGroundColor = $BackGroundColor
+        $this.DatasetName = $DatasetName
         $this.SetDefaultValuesIfNoneSet()
     }
 
-    BarChartData([Int]$Data,[String]$Label,$BackGroundColor,$borderColor){
+    BarChartData([Int]$Data,[String]$Label,[String]$DatasetName,$BackGroundColor){
         $this.Data = $Data
         $this.Label = $Label
+        $this.BackGroundColor = $BackGroundColor
+        $this.DatasetName = $DatasetName
+        $this.SetDefaultValuesIfNoneSet()
+    }
+
+    BarChartData([Int]$Data,[String]$Label,[String]$DatasetName,$BackGroundColor,$borderColor){
+        $this.Data = $Data
+        $this.Label = $Label
+        $this.DatasetName = $DatasetName
         $this.BackGroundColor = $BackGroundColor
         $this.BorderColor = $this.BorderColor
         $this.SetDefaultValuesIfNoneSet()
@@ -228,46 +288,84 @@ Class BarChartData {
         }
     }
 }
-
+ #>
 Function New-PSHTMLBarChart {
     [CmdletBInding()]
     Param(
-        [Parameter(Mandatory=$False)]
-        [String]$Title,
-
-        # Graph data
-        [Parameter(Mandatory=$false)]
-        [Array]
-        $Data,
-
-        [String]
-        $Label,
-
-        [BarChartData[]]$BarChartData,
+        [Parameter(Mandatory=$true)]
+        [dataSet[]]$DataSet,
 
         [Parameter(Mandatory=$true)]
-        [String]$CanvasID
+        [String[]]
+        $Labels,
+
+
+        [Parameter(Mandatory=$true)]
+        [String]$CanvasID,
+
+        [Parameter(Mandatory=$False)]
+        [String]$Title
         
     )
 
-    $Baroptions = [BarOptions]::New()
-    $BarData = [BarData]::New()
-    #$BarData.datasets += [ChartDataSet]::New()
-    $BarChart = [BarChart]::New($BarData,$Baroptions)
-    #$BarChart.data.DataSets.Clear()
-    if($Title){
 
-        #$BarChart.Data.DataSets[0].Label = $Title
-    }
-    $Total = ($BarChartData | measure).Count
-    $count = 0
-    $null = $BarChart.Data.Labels.Add($Title)
-    foreach($Cdata in $BarChartdata){
+
+
+
+    #Dataset
+        #Label
+        #Data[]
+        #BackGroundColor
+        #BorderWidth
+
+   
+        #Datasets []
+
+
+    #$null = $BarChart.Data.Labels.Add($Title)
+
+
+#Chart -> BarChart (?)
+$BarChart = [BarChart]::New()
+    #Type [String]
+        #[ENUM]ChartType
+    #Data [ChartData]
+    $ChartData = [ChartData]::New()
+    $ChartData.datasets = $null #Hack to avoid to have a 'null' value displayed in the graph
+        #Labels
+        #DataSets
+
+            #$DataSet1.backgroundColor = [Color]::blue
+            foreach($ds in $dataSet){
+
+                $ChartData.AddDataSet($ds)
+            }
+            
+            $ChartData.SetLabels($Labels)
+            $BarChart.SetData($ChartData)
+    #Options [ChartOptions]
+       
+        $ChartOptions = [ChartOptions]::New()
+        if($Title){
+
+            $ChartOptions.Title.Display = $true
+            $ChartOptions.Title.text = $Title
+        }
+        $BarChart.SetOptions($ChartOptions)
+    
+
+        $Searcher = New-Object -ComObject Microsoft.Update.Searcher;                                      
+        $Searcher.GetTotalHistoryCount()                                            
+        $AllUpdatesInstalled = $Searcher.GetTotalHistoryCount()                     
+        $Updates = $Searcher.QueryHistory(0,$AllUpdatesInstalled)
+
+
+    <# foreach($Cdata in $BarChartdata){
 
         
         if($Count -ge 1){
 
-            $Null = $BarChart.data.Datasets +=([ChartDataSet]::new())
+            $Null = $BarChart.data.Datasets +=([DataSet]::new())
         }
         $BarChart.Data.DataSets[$count].Label =$Cdata.Label
         $null = $BarChart.Data.DataSets[$Count].BackgroundColor.Add($Cdata.BackGroundColor)
@@ -278,20 +376,30 @@ Function New-PSHTMLBarChart {
             
         }
         $count++
-    }
+    } #>
 
     return $BarChart.GetDefinition($CanvasID)
     
 }
 
-$Data = @()
 
-$Data +=[BarChartData]::New(5,"reject",[Color]::Yellow,[Color]::red)
-$Data +=[BarChartData]::New(8,"Failed",[Color]::Blue,[Color]::red)
-$Data +=[BarChartData]::New(7,"Skipped",[Color]::Green,[Color]::red)
-$Data +=[BarChartData]::New(14,"Installed",[Color]::Orange,[Color]::blue)
+#New-PSHTMLBarChart -DataSet $DataSet -Labels $Labels -canvasID $CanvasID
+#see for inspiration: https://codepen.io/Shokeen/pen/NpgbKg?editors=1010
+
+
+#BarChart
+    #DataSet
+    #Labels
+    #ChartData
+    
+<# 
+$Data +=[BarChartData]::New(5,'January',"Dataset1",[Color]::Yellow,[Color]::red)
+$Data +=[BarChartData]::New(8,'January',"Dataset2",[Color]::Blue,[Color]::red)
+$Data +=[BarChartData]::New(7,'march',"Dataset2",[Color]::Green,[Color]::red)
+$Data +=[BarChartData]::New(14,'march',"Dataset1",[Color]::Orange,[Color]::blue) #>
 <#
-
+#Vert beau 'rgba(99, 132, 0, 0.6)'
+#Blue beau 'rgba(0, 99, 132, 0.6)'
 $Data +=[BarChartData]::New(2,"two")
 $Data +=[BarChartData]::New(3,"three")
 $Data +=[BarChartData]::New(4,"Four")
@@ -302,8 +410,8 @@ $Data2 +=[BarChartData]::New(6,"six")
 $Data2 +=[BarChartData]::New(7,"seven")
 $Data2 +=[BarChartData]::New(8,"eight") #>
 #$d = $Data + $Data2
-$CanvasID = "CanvasPlop"
-New-PSHTMLBarChart -BarChartData $Data -title "MyTitle" -canvasID $CanvasID
+
+#New-PSHTMLBarChart -BarChartData $DataSet1 -title "New version" -canvasID $CanvasID
 
 
 ##Structure
@@ -322,7 +430,7 @@ New-PSHTMLBarChart -BarChartData $Data -title "MyTitle" -canvasID $CanvasID
                 #Ticks
                     #BeginAtZero [bool]
 
-<# $Baroptions = [BarOptions]::New()
+<# $Baroptions = [ChartOptions]::New()
 $BarData = [BarData]::New()
 
 $BarChart = [BarChart]::New($BarData,$Baroptions)
@@ -377,8 +485,15 @@ $HTMLPage = html {
 
 
         script -content {
-            
-            New-PSHTMLBarChart -BarChartData $data -title "MyTitle" -canvasID $CanvasID
+            $Data1 = @("4","7","11","21")
+            $Data2 = @("7","2","13","17")
+            $dataSet1 = [dataSet]::New($Data1,"Dataset1")
+            $dataSet1.backgroundColor = [Color]::blue
+            $dataSet2 = [dataSet]::New($Data2,"Dataset2")
+            $dataSet2.backgroundColor = [Color]::red
+            $Labels = @("Wins","Looses","Draws","Give ups")
+            $CanvasID = "CanvasPlop"
+            New-PSHTMLBarChart -DataSet @($DataSet1,$dataSet2) -title "New graph yes" -Labels $Labels -canvasID $CanvasID
         }
 
          
