@@ -69,6 +69,20 @@ Class dataSet {
     }
 }
 
+Class datasetbar : dataset {
+
+}
+
+
+Class datasetline : dataset{
+
+}
+
+Class datasetpie : dataset {
+
+}
+
+
 
 Class scales {
     [System.Collections.ArrayList]$yAxes = @()
@@ -399,6 +413,28 @@ if($Responsive){
     
 }
 
+Function New-PSHTMLChart {
+    [CmldetBinding()]
+    Param(
+        [ValidateSet("Bar","Line","Pie")]
+        [String]$Type
+        [Parameter(Mandatory=$true)]
+            [dataSet[]]$DataSet,
+    
+            [Parameter(Mandatory=$true)]
+            [String[]]
+            $Labels,
+    
+    
+            [Parameter(Mandatory=$true)]
+            [String]$CanvasID,
+    
+            [Parameter(Mandatory=$False)]
+            [String]$Title
+    )
+
+}
+
 Function New-PSHTMLPieChart {
     [CmdletBInding()]
     Param(
@@ -614,38 +650,68 @@ Function New-PSHTMLChartDataSet {
         [String]$Name,
 
         [Parameter(Mandatory=$false)]
+        [Parameter(ParameterSetName="Line")]
+        [Parameter(ParameterSetName="Bar")]
+        [Parameter(ParameterSetName="Pie")]
+        [Parameter(ParameterSetName="Doughnut")]
         [ValidateSet("Blue","Red","Yellow","Green")]
         $BackgroundColor,
 
         [Parameter(Mandatory=$false)]
+        [Parameter(ParameterSetName="Line")]
+        [Parameter(ParameterSetName="Bar")]
+        [Parameter(ParameterSetName="Pie")]
+        [Parameter(ParameterSetName="Doughnut")]
         [ValidateSet("Blue","Red","Yellow","Green")]
         $BorderColor,
 
         [Parameter(Mandatory=$false)]
         [ValidateSet("Blue","Red","Yellow","Green")]
+        [Parameter(ParameterSetName="Bar")]
+        [Parameter(ParameterSetName="Pie")]
+        [Parameter(ParameterSetName="Doughnut")]
+        #Not line
         $HoverBackgroundColor,
 
         [Parameter(Mandatory=$false)]
         [ValidateSet("Blue","Red","Yellow","Green")]
+        [Parameter(ParameterSetName="Bar")]
+        [Parameter(ParameterSetName="Pie")]
+        [Parameter(ParameterSetName="Doughnut")]
+        #Not line 
         $hoverBorderColor,
 
         [Parameter(Mandatory=$false)]
+        [Parameter(ParameterSetName="Line")]
+        [Parameter(ParameterSetName="Bar")]
+        [Parameter(ParameterSetName="Pie")]
+        [Parameter(ParameterSetName="Doughnut")]
         [int]
         $BorderWidth,
 
         [Parameter(Mandatory=$false)]
+        [Parameter(ParameterSetName="Bar")]
+        [Parameter(ParameterSetName="Pie")]
+        [Parameter(ParameterSetName="Doughnut")]
+        #Not Line 
         [int]
         $HoverBorderWidth,
 
         [Parameter(Mandatory=$false)]
+        [Parameter(ParameterSetName="Line")]
+        #Not in Bar,Pie & Doughnut
         [String]
         $xAxisID,
 
         [Parameter(Mandatory=$false)]
+        [Parameter(ParameterSetName="Line")]
+        #Not in Bar,Pie & Doughnut
         [String]
         $yAxisID,
 
         [ValidateSet("top","bottom","Left","right")]
+        [Parameter(ParameterSetName="Bar")]
+        #Not Line,Pie & Doughnut
         [String]
         $borderSkipped
     )
