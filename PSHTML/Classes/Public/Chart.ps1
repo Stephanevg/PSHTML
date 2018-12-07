@@ -8,7 +8,7 @@ Class PieData : ChartData {
     [int]$hoverBorderWidth
 }
 
-Class PieChart : BaseChart{
+Class PieChart : Chart{
 
     $type = [ChartType]::Pie
 
@@ -23,16 +23,13 @@ Class PieChart : BaseChart{
 
 ##end of pie
 
+import-module C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\PSHTML.psd1
+
 Enum ChartType {
     bar
     line
     doughnut
     pie
-    polararea
-    bubble
-    scatter
-    area
-    mixed
 }
 
 Class Color {
@@ -41,28 +38,41 @@ Class Color {
     static [string] $Yellow = "rgb(255,255,0)"
     static [string] $Green = "rgb(173,255,47)"
     static [string] $Orange = "rgb(255,165,0)"
+    static [string] $Black = "rgb(0,0,0)"
+    static [string] $White = "rgb(255,255,255)"
+
+    static [string] rgb([int]$r,[int]$g,[int]$b){
+        return "rgb({0},{1},{2})" -f $r,$g,$b
+    }
+    static [string] rgba([int]$r,[int]$g,[int]$b,[double]$a){
+        return "rgba({0},{1},{2},{3})" -f $r,$g,$b,$a
+    }
 }
 
-
+#region dataSet
 Class dataSet {
     [System.Collections.ArrayList] $data = @()
     [String]$label
-    [String] $xAxisID
-    [String] $yAxisID
-    [String]  $backgroundColor
-    [String]  $borderColor
-    [int]    $borderWidth
-    [String] $borderSkipped
-    [String]  $hoverBackgroundColor
-    [String]  $hoverBorderColor
-    [int]    $hoverBorderWidth
 
     dataSet(){
-
+       
     }
 
     dataset([Array]$Data,[String]$Label){
+        
+        $this.SetLabel($Label)
+        foreach($d in $data){
+            $this.AddData($d)
+        }
+        
+        
+    }
+
+    [void]SetLabel([String]$Label){
         $this.label = $Label
+    }
+
+    [void]AddData([Array]$Data){
         foreach($D in $Data){
             $null = $this.data.Add($d)
         }
@@ -70,19 +80,560 @@ Class dataSet {
 }
 
 Class datasetbar : dataset {
+    [String] $xAxisID
+    [String] $yAxisID
+    [String]  $backgroundColor
+    [String]  $borderColor
+    [int]    $borderWidth = 1
+    [String] $borderSkipped
+    [String]  $hoverBackgroundColor
+    [String]  $hoverBorderColor
+    [int]    $hoverBorderWidth
 
+    datasetbar(){
+       
+    }
+
+    datasetbar([Array]$Data,[String]$Label){
+        
+        $this.SetLabel($Label)
+        $this.AddData($Data)
+        
+    }
 }
 
+function New-PSHTMLChartBarDataSet {
+    <#
+    .SYNOPSIS
+        Create a dataset object for a Bar chart
+    .DESCRIPTION
+        Create a dataset object for a Bar chart
+    .EXAMPLE
+       
+    .INPUTS
+        Inputs (if any)
+    .OUTPUTS
+        DataSetLine
+    .NOTES
+    
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
+    [CmdletBinding()]
+    param (
+        [Array]$Data,
+        [String]$label,
+        [String] $xAxisID,
+        [String] $yAxisID,
+        [String]  $backgroundColor,
+        [String]  $borderColor,
+        [int]    $borderWidth = 1,
+        [String] $borderSkipped,
+        [String]  $hoverBackgroundColor,
+        [String]  $hoverBorderColor,
+        [int]    $hoverBorderWidth
+        
+
+    )
+    
+    $Datachart = [datasetBar]::New()
+
+    if($Data){
+        $null = $Datachart.AddData($Data)
+    }
+
+    If($Label){
+        $Datachart.label = $label
+    }
+
+    if($xAxisID){
+        $Datachart.xAxisID = $xAxisID
+    }
+
+    if($yAxisID){
+        $Datachart.yAxisID = $yAxisID
+    }
+
+    if($backgroundColor){
+        $Datachart.backgroundColor = $backgroundColor
+    }
+
+    If($borderColor){
+        $Datachart.borderColor = $borderColor
+    }
+    if ($borderWidth){
+        $Datachart.borderWidth = $borderWidth
+    }
+
+    if($borderSkipped){
+        $Datachart.borderSkipped = $borderSkipped
+    }
+
+    If($hoverBackgroundColor){
+        $Datachart.hoverBackgroundColor = $hoverBackgroundColor
+    }
+    
+    If($HoverBorderColor){
+        $Datachart.hoverBorderColor = $HoverBorderColor
+    }
+    if($HoverBorderWidth){
+        $Datachart.HoverBorderWidth = $HoverBorderWidth
+    }
+
+    return $Datachart
+}
 
 Class datasetline : dataset{
+    #See https://www.chartjs.org/docs/latest/charts/line.html
+    #[String] $xAxisID
+    #[String] $yAxisID
 
+    [String]  $backgroundColor
+    [String]  $borderColor
+    [int]    $borderWidth = 1
+    [int[]]    $borderDash = 0
+    [int]    $borderDashOffSet = 0
+
+    [ValidateSet("butt","round","square")]
+    [String]    $borderCapStyle
+
+    [ValidateSet("bevel","round","miter")]
+    [String]    $borderJoinStyle
+
+    [ValidateSet("default","monotone")]
+    [String] $cubicInterpolationMode = "default"
+    [Bool] $fill = $false
+    [double]$lineTension = 0.5 #Stepped line should not be present, for this one to work.
+    
+    $pointBackgroundColor = "rgb(255,255,255)"
+    $pointBorderColor = "rgb(0,0,0)"
+    [Int[]]$pointBorderWidth = 1
+    [Int]$pointRadius = 4
+    [ValidateSet("circle","cross","crossRot","dash","line","rect","rectRounded","rectRot","star","triangle")]
+    $pointStyle = "circle"
+
+    [int[]]$pointRotation
+    [int[]]$pointHitRadius
+
+    [String]  $PointHoverBackgroundColor
+    [String]  $pointHoverBorderColor
+    [int]    $pointHoverBorderWidth
+    [int] $pointHoverRadius
+    [bool]$showLine = $true
+    [bool]$spanGaps
+
+    #[ValidateSet("true","false","before","after")]
+    #[String] $steppedLine = 'false' #Had to remove it, otherwise lines could not be rounded. It would ignore the $LineTension settings, even when set to false
+
+    datasetline(){
+
+    }
+
+    datasetline([Array]$Data,[String]$Label){
+        Write-verbose "[DatasetLine][Instanciation]Start"
+        $this.SetLabel($Label)
+        $this.AddData($Data)
+        Write-verbose "[DatasetLine][Instanciation]End"
+    }
+
+    SetLineColor([String]$Color,[Bool]$Fill){
+        Write-verbose "[DatasetLine][SetLineColor] Start"
+        $this.borderColor = $Color
+        $this.backgroundColor = $Color
+        if($Fill){
+           $this.SetLineBackGroundColor($Color)
+        }
+        Write-verbose "[DatasetLine][SetLineColor] End"
+    }
+
+    SetLineBackGroundColor(){
+        Write-verbose "[DatasetLine][SetLineBackGroundColor] Start"
+        #Without any color parameter, this will take the existing line color, and simply add 0.4 of alpha to it for the background color
+        if(!($this.borderColor)){
+            $t = $this.borderColor
+            $this.fill = $true
+            $t = $t.replace("rgb","rgba")
+            $backgroundC = $t.replace(")",",0.4)")
+            $this.backgroundColor = $backgroundC
+        }
+        Write-verbose "[DatasetLine][SetLineBackGroundColor] End"
+    }
+
+    SetLineBackGroundColor([String]$Color){
+        #this will take the color, and add 0.4 of alpha to it for the background color
+        Write-verbose "[DatasetLine][SetLineBackGroundColor] Start"
+        $this.fill = $true
+        $t = $Color
+        $t = $t.replace("rgb","rgba")
+        $backgroundC = $t.replace(")",",0.4)")
+        $this.backgroundColor = $backgroundC
+        Write-verbose "[DatasetLine][SetLineBackGroundColor] End"
+    }
+}
+
+function New-PSHTMLChartLineDataSet {
+    <#
+    .SYNOPSIS
+        Create a dataset object for a Line chart
+    .DESCRIPTION
+        Create a dataset object for a Line chart
+     .PARAMETER FillbackgroundColor
+        Allows to specify the background color between the line and the X axis.
+        This should not be used in conjunction with FillBackGround 
+    .PARAMETER Fillbackground
+        fillBackground allows to specify that color should be added between the line and the X Axis.
+        The color will be the Line color, whi
+    .EXAMPLE
+       
+    .NOTES
+    
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
+    [CmdletBinding()]
+    param (
+        [String]$LineColor,
+        [String]$label,
+        [Color]  $FillbackgroundColor,
+        [int]    $LineWidth = 1,
+        [int[]]    $LineDash = 0,
+        [int]    $LineDashOffSet = 0,
+        [Array]$Data,
+        [Switch]$FillBackground,
+        
+        [ValidateSet("rounded","Straight")]
+        $LineChartType = "rounded",
+
+        [ValidateSet("Full","Dashed")]
+        $LineType = "Full"
+
+    )
+    
+    $Datachart = [datasetline]::New()
+    
+    
+    if($Data){
+        $Null = $Datachart.AddData($Data)
+    }
+
+
+    if($lineType -eq "Dashed"){
+        $datachart.borderDash = 10
+    }
+
+    if($Label){
+        $Datachart.label = $label
+    }
+
+    if($LineWidth){
+        $Datachart.borderWidth = $LineWidth
+    }
+
+    if($LineDash){
+        $Datachart.borderDash = $LineDash
+    }
+
+    if($LineDashOffSet){
+        $Datachart.borderDashOffSet = $LineDashOffSet
+    }
+
+    if($LineColor){
+        $DataChart.SetLineColor($LineColor,$false)
+        $Datachart.PointHoverBackgroundColor = $LineColor
+        
+    }
+
+
+
+
+
+    if($FillBackground){
+        $Datachart.SetLineBackGroundColor()
+    }
+    if($FillbackgroundColor){
+        $Datachart.SetLineBackGroundColor($FillbackgroundColor)
+    }
+
+    if($LineChartType){
+        switch($LineChartType){
+            "rounded"{
+                $Datachart.lineTension = 0.5
+                ;Break
+            }
+            "Straight"{
+                $Datachart.lineTension = 0
+                ;break
+            }
+        }
+    }
+
+    Return $Datachart
 }
 
 Class datasetpie : dataset {
 
+
+    [System.Collections.ArrayList]$backgroundColor
+    [String]$borderColor = "white"
+    [int]$borderWidth = 1
+    [System.Collections.ArrayList]$hoverBackgroundColor
+    [Color]$HoverBorderColor
+    [int]$HoverBorderWidth
+
+    datasetpie(){
+
+    }
+
+    datasetpie([Array]$Data,[String]$ChartLabel){
+        Write-verbose "[DatasetPie][Instanciation]Start"
+        $this.SetLabel($ChartLabel)
+        $this.AddData($Data)
+        Write-verbose "[DatasetPie][Instanciation]End"
+    }
+
+    AddBackGroundColor($Color){
+        if($null -eq $this.backgroundColor){
+            $this.backgroundColor = @()
+        }
+        $this.backgroundColor.Add($Color)
+    }
+
+    AddBackGroundColor([Array]$Colors){
+        
+        foreach($c in $Colors){
+            $this.AddBackGroundColor($c)
+        }
+        
+    }
+
+    AddHoverBackGroundColor($Color){
+        if($null -eq $this.HoverbackgroundColor){
+            $this.HoverbackgroundColor = @()
+        }
+        $this.HoverbackgroundColor.Add($Color)
+    }
+
+    AddHoverBackGroundColor([Array]$Colors){
+        foreach($c in $Colors){
+            $this.AddHoverBackGroundColor($c)
+        }
+        
+    }
+
 }
 
+function New-PSHTMLChartPieDataSet {
+    <#
+    .SYNOPSIS
+        Create a dataset object for a Pie chart
+    .DESCRIPTION
+        Create a dataset object for a Line chart
+    .EXAMPLE
+       
+    .INPUTS
+        Inputs (if any)
+    .OUTPUTS
+        DataSetLine
+    .NOTES
+    
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
+    [CmdletBinding()]
+    param (
+        [Array]$Data,
+        [String]$label,
+        [array]$backgroundColor,
+        [String]$borderColor,
+        [int]$borderWidth = 1,
+        [array]$hoverBackgroundColor,
+        [string]$HoverBorderColor,
+        [int]$HoverBorderWidth
+        
 
+    )
+    
+    $Datachart = [datasetPie]::New()
+
+    if($Data){
+        $null = $Datachart.AddData($Data)
+    }
+
+    If($Label){
+        $Datachart.label = $label
+    }
+
+    if($backgroundColor){
+        $Datachart.AddBackGroundColor($backgroundColor)
+        #$Datachart.backgroundColor = $backgroundColor
+    }
+
+    If($borderColor){
+        $Datachart.borderColor = $borderColor
+    }
+    if ($borderWidth){
+        $Datachart.borderWidth = $borderWidth
+    }
+
+    If($hoverBackgroundColor){
+        $Datachart.AddHoverBackGroundColor($hoverBackgroundColor)
+        #$Datachart.hoverBackgroundColor = $hoverBackgroundColor
+    }else{
+        $Datachart.AddHoverBackGroundColor($backgroundColor)
+    }
+
+    if($HoverBorderColor){
+        $Datachart.HoverBorderColor = $HoverBorderColor
+    }
+
+    if ($HoverborderWidth){
+        $Datachart.HoverBorderWidth = $HoverborderWidth
+    }
+
+    return $Datachart
+}
+
+Class datasetDoughnut : dataset {
+
+    [System.Collections.ArrayList]$backgroundColor
+    [String]$borderColor = "white"
+    [int]$borderWidth = 1
+    [System.Collections.ArrayList]$hoverBackgroundColor
+    [Color]$HoverBorderColor
+    [int]$HoverBorderWidth
+
+    datasetpie(){
+
+    }
+
+    datasetpie([Array]$Data,[String]$ChartLabel){
+        Write-verbose "[DatasetDoughnut][Instanciation]Start"
+        $this.SetLabel($ChartLabel)
+        $this.AddData($Data)
+        Write-verbose "[DatasetDoughnut][Instanciation]End"
+    }
+
+    AddBackGroundColor($Color){
+        if($null -eq $this.backgroundColor){
+            $this.backgroundColor = @()
+        }
+        $this.backgroundColor.Add($Color)
+    }
+
+    AddBackGroundColor([Array]$Colors){
+        
+        foreach($c in $Colors){
+            $this.AddBackGroundColor($c)
+        }
+        
+    }
+
+    AddHoverBackGroundColor($Color){
+        if($null -eq $this.HoverbackgroundColor){
+            $this.HoverbackgroundColor = @()
+        }
+        $this.HoverbackgroundColor.Add($Color)
+    }
+
+    AddHoverBackGroundColor([Array]$Colors){
+        foreach($c in $Colors){
+            $this.AddHoverBackGroundColor($c)
+        }
+        
+    }
+
+}
+
+function New-PSHTMLChartDoughnutDataSet {
+    <#
+    .SYNOPSIS
+        Create a dataset object for a dougnut chart
+    .DESCRIPTION
+        Create a dataset object for a dougnut chart
+
+    .PARAMETER HoverBordercolor
+        Accepts RGB values:
+        Examples: RGB(255,255,0)
+
+        Accepts RGBA values:
+        Examples: RGBA(255,255,0,0.4)
+
+        Accept color names:
+
+        (Must be a lower case values)
+        
+        Examples:
+        white,black,orange,red,blue,green,gray,cyan
+
+
+    .EXAMPLE
+       
+    .INPUTS
+        Inputs (if any)
+    .OUTPUTS
+        DataSetLine
+    .NOTES
+    
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
+    [CmdletBinding()]
+    param (
+        [Array]$Data,
+        [String]$label,
+        [Array]$backgroundColor,
+        [String]$borderColor,
+        [int]$borderWidth = 1,
+        [Array]$hoverBackgroundColor,
+        [Array]$HoverBorderColor,
+        [int]$HoverBorderWidth
+        
+
+    )
+    
+    $Datachart = [datasetdoughnut]::New()
+
+    if($Data){
+        $Null =$Datachart.AddData($Data)
+    }
+
+    If($Label){
+        $Datachart.label = $label
+    }
+
+    if($backgroundColor){
+        $Datachart.AddBackGroundColor($backgroundColor)
+        #$Datachart.backgroundColor = $backgroundColor
+    }
+
+    If($borderColor){
+        $Datachart.borderColor = $borderColor
+    }
+    if ($borderWidth){
+        $Datachart.borderWidth = $borderWidth
+    }
+
+    If($hoverBackgroundColor){
+        $Datachart.AddHoverBackGroundColor($hoverBackgroundColor)
+        #$Datachart.hoverBackgroundColor = $hoverBackgroundColor
+    }else{
+        $Datachart.AddHoverBackGroundColor($backgroundColor)
+    }
+    
+    If($HoverBorderColor){
+        $Datachart.hoverBorderColor = $HoverBorderColor
+    }
+    if($HoverBorderWidth){
+        $Datachart.HoverBorderWidth = $HoverBorderWidth
+    }
+
+    return $Datachart
+}
+
+#endregion
+
+
+#region Configuration&Options
 
 Class scales {
     [System.Collections.ArrayList]$yAxes = @()
@@ -126,16 +677,40 @@ Class ChartOptions  {
     #>
 }
 
+#endregion
+
+#region Charts
+
+Class BarChartOptions : ChartOptions {
+
+}
+
+Class PieChartOptions : ChartOptions {
+
+}
+
+Class LineChartOptions : ChartOptions {
+    [Bool] $showLines = $True
+    [Bool] $spanGaps = $False
+}
+
+Class DoughnutChartOptions : ChartOptions {
+    
+}
+
 Class ChartData {
     [System.Collections.ArrayList] $labels = @()
-    [DataSet[]] $datasets = @()
+    [System.Collections.ArrayList] $datasets = @()
+    #[DataSet[]] $datasets = [dataSet]::New()
 
     ChartData(){
-        $this.datasets = [dataSet]::New()
+        #$this.datasets = [dataSet]::New()
+        $this.datasets.add([dataSet]::New())
     }
 
     AddDataSet([DataSet]$Dataset){
-        $this.datasets += $Dataset
+        #$this.datasets += $Dataset
+        $this.datasets.Add($Dataset)
     }
 
     SetLabels([Array]$Labels){
@@ -152,17 +727,16 @@ Class BarData : ChartData {
     
 }
 
-
-Class BaseChart {
+Class Chart {
     [ChartType]$type
     [ChartData]$data
     [ChartOptions]$options
     Hidden [String]$definition
 
-    BaseChart(){
+    Chart(){
         $Currenttype = $this.GetType()
 
-        if ($Currenttype -eq [BaseChart])
+        if ($Currenttype -eq [Chart])
         {
             throw("Class $Currenttype must be inherited")
         }
@@ -227,11 +801,7 @@ var myChart = new Chart(ctx,
     }
 }
 
-
-
-
-#Main class (Inherits from BaseChart)
-Class BarChart : BaseChart{
+Class BarChart : Chart{
 
     [ChartType] $type = [ChartType]::bar
     
@@ -247,7 +817,7 @@ Class BarChart : BaseChart{
 
 }
 
-Class LineChart : BaseChart{
+Class LineChart : Chart{
 
     [ChartType] $type = [ChartType]::line
     
@@ -256,188 +826,81 @@ Class LineChart : BaseChart{
 
     }
 
-    BarChart([ChartData]$Data,[ChartOptions]$Options){
+    LineChart([ChartData]$Data,[ChartOptions]$Options){
         $this.data = $Data
         $This.options = $Options
     }
 
 }
 
-Class PieChart : BaseChart{
+Class PieChart : Chart{
 
     [ChartType] $type = [ChartType]::pie
     
-    LineChart(){
-        #$Type = [ChartType]::bar
+    PieChart(){
+        
 
     }
 
-    BarChart([ChartData]$Data,[ChartOptions]$Options){
+    PieChart([ChartData]$Data,[ChartOptions]$Options){
         $this.data = $Data
         $This.options = $Options
     }
 
 }
 
-<# 
-Class BarChartData {
-    [Int]$data
-    [String]$Label
-    $BackGroundColor
-    $BorderColor
-    [String]$DatasetName
-
-    BarChartData(){
-
-    }
-
-    BarChartData([Int]$Data,[String]$Label){
-        $this.Data = $Data
-        $this.Label = $Label
-        $this.SetDefaultValuesIfNoneSet()
-    }
-
-    BarChartData([Int]$Data,[String]$Label,[String]$DatasetName){
-        $this.Data = $Data
-        $this.Label = $Label
-        $this.DatasetName = $DatasetName
-        $this.SetDefaultValuesIfNoneSet()
-    }
-
-    BarChartData([Int]$Data,[String]$Label,[String]$DatasetName,$BackGroundColor){
-        $this.Data = $Data
-        $this.Label = $Label
-        $this.BackGroundColor = $BackGroundColor
-        $this.DatasetName = $DatasetName
-        $this.SetDefaultValuesIfNoneSet()
-    }
-
-    BarChartData([Int]$Data,[String]$Label,[String]$DatasetName,$BackGroundColor,$borderColor){
-        $this.Data = $Data
-        $this.Label = $Label
-        $this.DatasetName = $DatasetName
-        $this.BackGroundColor = $BackGroundColor
-        $this.BorderColor = $this.BorderColor
-        $this.SetDefaultValuesIfNoneSet()
-    }
-
-
-    Hidden SetDefaultValuesIfNoneSet(){
-        if(!($this.BackGroundColor)){
-
-            $this.BackGroundColor = [Color]::blue
-        }
-
-        if(!($this.BorderColor)){
-
-            $this.BorderColor = [Color]::Yellow
-        }
-    }
-}
- #>
-Function New-PSHTMLBarChart {
-    [CmdletBInding()]
-    Param(
-        [Parameter(Mandatory=$true)]
-        [dataSet[]]$DataSet,
-
-        [Parameter(Mandatory=$true)]
-        [String[]]
-        $Labels,
-
-
-        [Parameter(Mandatory=$true)]
-        [String]$CanvasID,
-
-        [Parameter(Mandatory=$False)]
-        [String]$Title
-
-        #[Switch]$Responsive
+Class doughnutChart : Chart {
+    [ChartType] $type = [ChartType]::doughnut
+    
+    DoughnutChart(){
         
-    )
+    }
 
-
-
-
-
-    #Dataset
-        #Label
-        #Data[]
-        #BackGroundColor
-        #BorderWidth
-
-   
-        #Datasets []
-
-
-    #$null = $BarChart.Data.Labels.Add($Title)
-
-
-#Chart -> BarChart (?)
-$BarChart = [BarChart]::New()
-if($Responsive){
-
+    DoughnutChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
 }
-#$BarChart.options.responsive = $false
-    #Type [String]
-        #[ENUM]ChartType
-    #Data [ChartData]
-    $ChartData = [ChartData]::New()
-    $ChartData.datasets = $null #Hack to avoid to have a 'null' value displayed in the graph
-        #Labels
-        #DataSets
 
-            #$DataSet1.backgroundColor = [Color]::blue
-            foreach($ds in $dataSet){
-
-                $ChartData.AddDataSet($ds)
-            }
-            
-            $ChartData.SetLabels($Labels)
-            $BarChart.SetData($ChartData)
-    #Options [ChartOptions]
-       
-        $ChartOptions = [ChartOptions]::New()
-        if($Title){
-
-            $ChartOptions.Title.Display = $true
-            $ChartOptions.Title.text = $Title
-        }
-        $BarChart.SetOptions($ChartOptions)
-    
-
-
-
-
-    return $BarChart.GetDefinition($CanvasID)
-    
-}
 
 Function New-PSHTMLChart {
-    [CmldetBinding()]
-    Param(
-        [ValidateSet("Bar","Line","Pie")]
-        [String]$Type
-        [Parameter(Mandatory=$true)]
-            [dataSet[]]$DataSet,
-    
-            [Parameter(Mandatory=$true)]
-            [String[]]
-            $Labels,
-    
-    
-            [Parameter(Mandatory=$true)]
-            [String]$CanvasID,
-    
-            [Parameter(Mandatory=$False)]
-            [String]$Title
-    )
+<#
 
-}
+    .SYNOPSIS
+        Creates a PSHMTL Chart.
 
-Function New-PSHTMLPieChart {
-    [CmdletBInding()]
+    .DESCRIPTION
+        Will render a Graph in Javascript using Chart.JS
+
+    .PARAMETER Type
+
+    Specifies the type of chart to generate.
+
+    .EXAMPLE
+
+        This example creates 3 different doughnut charts.
+        In the oposite of a bar or line chart, mixing different datasets on the same doughnut chart won't be as much value as with the other types of charts.
+        It is recommended to create a doughnut chart per dataset.
+
+        $Data1 = @(34,7,11,19)
+        $Data2 = @(40,2,13,17)
+        $Data3 = @(53,0,0,4)
+
+        $Labels = @("Closed","Unresolved","Pending","Open")
+        $colors = @("Yellow","red","Green","Orange")
+        $dsd1 = New-PSHTMLChartDoughnutDataSet -Data $data1 -label "March" -backgroundcolor $colors
+        $dsd2 = New-PSHTMLChartDoughnutDataSet -Data $data2 -label "April" -BackgroundColor $colors
+        $dsd3 = New-PSHTMLChartDoughnutDataSet -Data $data3 -label "Mai" -BackgroundColor $Colors
+
+        New-PSHTMLChart -type doughnut -DataSet @($dsd1) -title "Doughnut Chart v1" -Labels $Labels -CanvasID $DoughnutCanvasID
+        New-PSHTMLChart -type doughnut -DataSet @($dsd2) -title "Doughnut Chart v2" -Labels $Labels -CanvasID $DoughnutCanvasID
+        New-PSHTMLChart -type doughnut -DataSet @($dsd3) -title "Doughnut Chart v3" -Labels $Labels -CanvasID $DoughnutCanvasID
+#>
+    [CmdletBinding()]
     Param(
+        #[ValidateSet("Bar","Line","Pie","doughnut")]
+        [ChartType]$Type,
+
         [Parameter(Mandatory=$true)]
         [dataSet[]]$DataSet,
 
@@ -450,42 +913,55 @@ Function New-PSHTMLPieChart {
         [String]$CanvasID,
 
         [Parameter(Mandatory=$False)]
-        [String]$Title
+        [String]$Title,
 
-        #[Switch]$Responsive
-        
+        [ChartOptions]$Options
     )
 
 
 
-
-
-    #Dataset
-        #Label
-        #Data[]
-        #BackGroundColor
-        #BorderWidth
-
-   
-        #Datasets []
-
-
-    #$null = $BarChart.Data.Labels.Add($Title)
-
-
 #Chart -> BarChart (?)
-$BarChart = [PieChart]::New()
+switch($Type){
+    "doughnut" {
+        $Chart = [DoughnutChart]::New()
+        $ChartOptions = [DoughnutChartOptions]::New()
+        ;Break
+    }
+    "Pie" {
+        $Chart = [PieChart]::New()
+        $ChartOptions = [ChartOptions]::New()
+        ;Break
+    }
+    "Bar"{
+        $Chart = [BarChart]::New()
+        $ChartOptions = [BarChartOptions]::New()
+        ;Break
+    }
+    "Line"{
+        $Chart = [LineChart]::New()
+        $ChartOptions = [LineChartOptions]::New()
+        
+        ;Break
+    }
+    default{
+        Throw "Graph type not supported. Please use a valid value from Enum [ChartType]"
+    }
+}
+
 if($Responsive){
 
 }
-#$BarChart.options.responsive = $false
+
     #Type [String]
         #[ENUM]ChartType
     #Data [ChartData]
-    $ChartData = [ChartData]::New()
-    $ChartData.datasets = $null #Hack to avoid to have a 'null' value displayed in the graph
         #Labels
         #DataSets
+    $ChartData = [ChartData]::New()
+    #Hack to avoid to have a 'null' value displayed in the graph 
+    #This could be fixed by not creating a new empty DataSet on construction.(Just in case, if you have time ;)
+        #$ChartData.datasets = $null 
+        $Chartdata.datasets.RemoveAt(0) #Removing null one.
 
             #$DataSet1.backgroundColor = [Color]::blue
             foreach($ds in $dataSet){
@@ -494,102 +970,28 @@ if($Responsive){
             }
             
             $ChartData.SetLabels($Labels)
-            $BarChart.SetData($ChartData)
+            $Chart.SetData($ChartData)
     #Options [ChartOptions]
        
-        $ChartOptions = [ChartOptions]::New()
-        if($Title){
-
-            $ChartOptions.Title.Display = $true
-            $ChartOptions.Title.text = $Title
-        }
-        $BarChart.SetOptions($ChartOptions)
-    
-
-
-
-
-    return $BarChart.GetDefinition($CanvasID)
-    
-}
-
-Function New-PSHTMLLineChart {
-    [CmdletBInding()]
-    Param(
-        [Parameter(Mandatory=$true)]
-        [dataSet[]]$DataSet,
-
-        [Parameter(Mandatory=$true)]
-        [String[]]
-        $Labels,
-
-
-        [Parameter(Mandatory=$true)]
-        [String]$CanvasID,
-
-        [Parameter(Mandatory=$False)]
-        [String]$Title
-
-        #[Switch]$Responsive
         
-    )
-
-
-
-
-
-    #Dataset
-        #Label
-        #Data[]
-        #BackGroundColor
-        #BorderWidth
-
-   
-        #Datasets []
-
-
-    #$null = $BarChart.Data.Labels.Add($Title)
-
-
-#Chart -> BarChart (?)
-$BarChart = [LineChart]::New()
-if($Responsive){
-
-}
-#$BarChart.options.responsive = $false
-    #Type [String]
-        #[ENUM]ChartType
-    #Data [ChartData]
-    $ChartData = [ChartData]::New()
-    $ChartData.datasets = $null #Hack to avoid to have a 'null' value displayed in the graph
-        #Labels
-        #DataSets
-
-            #$DataSet1.backgroundColor = [Color]::blue
-            foreach($ds in $dataSet){
-
-                $ChartData.AddDataSet($ds)
-            }
-            
-            $ChartData.SetLabels($Labels)
-            $BarChart.SetData($ChartData)
-    #Options [ChartOptions]
-       
-        $ChartOptions = [ChartOptions]::New()
         if($Title){
 
             $ChartOptions.Title.Display = $true
             $ChartOptions.Title.text = $Title
         }
-        $BarChart.SetOptions($ChartOptions)
+        $Chart.SetOptions($ChartOptions)
     
 
 
 
 
-    return $BarChart.GetDefinition($CanvasID)
+    return $Chart.GetDefinition($CanvasID)
     
+
 }
+
+
+#endregion
 
 
 Function New-PSHTMLChartDataSet {
@@ -757,101 +1159,3 @@ Function New-PSHTMLChartDataSet {
 }
        
 
-<# $Searcher = New-Object -ComObject Microsoft.Update.Searcher;                                      
-        $Searcher.GetTotalHistoryCount()                                            
-        $AllUpdatesInstalled = $Searcher.GetTotalHistoryCount()                     
-        $Updates = $Searcher.QueryHistory(0,$AllUpdatesInstalled)
-        #>
-#New-PSHTMLBarChart -DataSet $DataSet -Labels $Labels -canvasID $CanvasID
-#see for inspiration: https://codepen.io/Shokeen/pen/NpgbKg?editors=1010
-
-
-#BarChart
-    #DataSet
-    #Labels
-    #ChartData
-    
-
-
-#New-PSHTMLBarChart -BarChartData $DataSet1 -title "New version" -canvasID $CanvasID
-
-
-##Structure
-    #Type
-    #Data
-        #Labels[]
-        #DataSets[]
-            #Label
-            #Data[]
-            #BackGroundColor[]
-            #BorderColor[]
-            #BorderWidth int
-    #Options
-        #Scales
-            #yAxes []
-                #Ticks
-                    #BeginAtZero [bool]
-
-$BarCanvasID = "barcanvas"
-$PieCanvasID = "piecanvas"
-$lineCanvasID = "linecanvas"
-$HTMLPage = html { 
-    head {
-        title 'Chart JS Demonstration'
-        
-    }
-    body {
-        
-        h1 "PSHTML Graph"
-
-        div {
-            
-           p {
-               "This is a bar graph"
-           }
-           canvas -Height 400px -Width 400px -Id $BarCanvasID {
-    
-           }
-
-           p {
-            "This is a Pie graph"
-            }
-            canvas -Height 400px -Width 400px -Id $PieCanvasID {
-    
-            }
-
-            p {
-                "This is a Line graph"
-            }
-            canvas -Height 400px -Width 400px -Id $LineCanvasID {
-    
-            }
-       }
-
-         script -src "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" -type "text/javascript"
-
-
-        script -content {
-            $Data1 = @("34","7","11","19")
-            $Data2 = @("40","2","13","17")
-            $dataSet1 = [dataSet]::New($Data1,"April")
-            $dataSet1.backgroundColor = [Color]::blue
-            $dataSet2 = [dataSet]::New($Data2,"Mai")
-            $dataSet2.backgroundColor = [Color]::red
-            $Labels = @("Closed","Unresolved","Pending","Open")
-            
-            New-PSHTMLBarChart -DataSet @($DataSet1,$dataSet2) -title "Bar chart" -Labels $Labels -canvasID $BarCanvasID
-
-            New-PSHTMLPieChart -DataSet @($DataSet1,$dataSet2) -title "Pie chart" -Labels $Labels -canvasID $PieCanvasID
-
-            New-PSHTMLLineChart -DataSet @($DataSet1,$dataSet2) -title "Line chart" -Labels $Labels -canvasID $lineCanvasID
-        }
-
-         
-    }
-}
-
-
-$OutPath = "C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\Assets\Charts\3graphs.html"
-$HTMLPage | out-file -FilePath $OutPath -Encoding utf8
-start $outpath

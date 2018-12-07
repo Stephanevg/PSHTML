@@ -22,13 +22,25 @@ foreach ($Private in $PrivateFunctions){
     }
 }
 
-write-verbose -Message "Loading Private Functions"
+write-verbose -Message "Loading Public Functions"
 $PublicFunctions = Get-ChildItem -Path "$ScriptPath\Functions\Public" -Filter *.ps1 | Select-Object -ExpandProperty FullName
 
 foreach ($public in $PublicFunctions){
     write-verbose "importing function $($function)"
     try{
         . $public
+    }catch{
+        write-warning -Message $_
+    }
+}
+
+write-verbose -Message "Loading Public Classes"
+$PublicClasses = Get-ChildItem -Path "$ScriptPath\Classes\Public" -Filter *.ps1 | Select-Object -ExpandProperty FullName
+
+foreach ($pc in $PublicClasses){
+    write-verbose "importing $($pc)"
+    try{
+        . $pc
     }catch{
         write-warning -Message $_
     }
