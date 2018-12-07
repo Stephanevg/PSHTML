@@ -1,8 +1,7 @@
 # Connect against Meetup.com API
 # import-module C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\PSHTML.psd1 -force
 #Import-Module MeetupPS
-$Key = '1tuvvavlcf38a2f5r4skeorjed'
-$Secret = 'f03pp1t8rnk0ub52fdsa9fmpk0'
+
 $MeetupGroupName = 'FrenchPSUG'
 #Set-MeetupConfiguration -ClientID $Key -Secret $Secret
 #Get-MeetupGroup -GroupName $MeetupGroupName
