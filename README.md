@@ -81,6 +81,10 @@ The generated ```HTML``` code is available [here](PSHTML/examples/Example6/Examp
 
 Check out the [Documentation](docs/_HowToUsePSHTML.md) on how to use PSHTML.
 
+## Charts
+
+Since version 0.6.2 PSHTML also supports the creation of beautifull charts. Read the documentation [here](docs/Charts.md) for more info.
+
 ## Check out refferences/blog posts
 
 - Introducing PSHTML on [PowershellDistrict](http://powershelldistrict.com/introducing-pshtml/).
@@ -97,4 +101,4 @@ Find here a few examples where people already used PSHTML in an awesome way.
 
 ## Want to Contribute?
 
-If you're interessted in contributing to PSHTML please be sure to check out the [Contribution Guide](CONTRIBUTING.md).
+If you're interested in contributing to PSHTML please be sure to check out the [Contribution Guide](CONTRIBUTING.md).

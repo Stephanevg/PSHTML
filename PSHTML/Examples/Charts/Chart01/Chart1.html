@@ -1,0 +1,74 @@
+﻿<html ><head ><title >Chart JS Demonstration</title></head><Body ><h1 >PSHTML Graph</h1><div ><p >This is a bar graph</p><canvas Width="400px" Id="barcanvas" Height="400px"  ></canvas></div><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" type="text/javascript"  ></script><script >var ctx = document.getElementById("barcanvas").getContext('2d');
+var myChart = new Chart(ctx, {
+    "type":  "bar",
+    "data":  {
+                 "labels":  [
+                                "January",
+                                "February",
+                                "Mars",
+                                "April",
+                                "Mai",
+                                "June",
+                                "July",
+                                "August",
+                                "September",
+                                "October",
+                                "November",
+                                "december"
+                            ],
+                 "datasets":  [
+                                  {
+                                      "borderWidth":  1,
+                                      "xAxisID":  null,
+                                      "yAxisID":  null,
+                                      "backgroundColor":  "rgb(30,144,255)",
+                                      "borderColor":  null,
+                                      "borderSkipped":  null,
+                                      "hoverBackgroundColor":  null,
+                                      "hoverBorderColor":  null,
+                                      "hoverBorderWidth":  0,
+                                      "data":  [
+                                                   4,
+                                                   1,
+                                                   6,
+                                                   12,
+                                                   17,
+                                                   25,
+                                                   18,
+                                                   17,
+                                                   22,
+                                                   30,
+                                                   35,
+                                                   44
+                                               ],
+                                      "label":  "2018"
+                                  }
+                              ]
+             },
+    "options":  {
+                    "barPercentage":  1,
+                    "categoryPercentage":  1,
+                    "responsive":  false,
+                    "barThickness":  null,
+                    "maxBarThickness":  0,
+                    "offsetGridLines":  true,
+                    "scales":  {
+                                   "yAxes":  [
+                                                 {
+                                                     "ticks":  {
+                                                                   "beginAtZero":  true
+                                                               }
+                                                 }
+                                             ],
+                                   "xAxes":  [
+
+                                             ]
+                               },
+                    "title":  {
+                                  "display":  true,
+                                  "text":  "Bar Chart Example"
+                              }
+                }
+}
+);
+</script></Body></html>
