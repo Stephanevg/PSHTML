@@ -23,8 +23,6 @@ Class PieChart : Chart{
 
 ##end of pie
 
-import-module C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\PSHTML.psd1
-
 Enum ChartType {
     bar
     line
@@ -502,11 +500,11 @@ Class datasetDoughnut : dataset {
     [Color]$HoverBorderColor
     [int]$HoverBorderWidth
 
-    datasetpie(){
+    datasetDoughnut(){
 
     }
 
-    datasetpie([Array]$Data,[String]$ChartLabel){
+    datasetDoughnut([Array]$Data,[String]$ChartLabel){
         Write-verbose "[DatasetDoughnut][Instanciation]Start"
         $this.SetLabel($ChartLabel)
         $this.AddData($Data)
