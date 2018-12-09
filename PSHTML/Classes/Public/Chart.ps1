@@ -31,6 +31,24 @@ Enum ChartType {
 }
 
 Class Color {
+    [int]$r
+    [int]$g
+    [int]$b
+    [double]$a
+
+    color([int]$r,[int]$g,[int]$b){
+        $this.r = $r
+        $this.g = $g
+        $this.b = $b
+    }
+
+    color([int]$r,[int]$g,[int]$b,[double]$a){
+        $this.r = $r
+        $this.g = $g
+        $this.b = $b
+        $this.a = $a
+    }
+
     static [String] $blue = "rgb(30,144,255)"
     static [String] $red = "rgb(220,20,60)"
     static [string] $Yellow = "rgb(255,255,0)"
@@ -736,7 +754,7 @@ Class Chart {
 
         if ($Currenttype -eq [Chart])
         {
-            throw("Class $Currenttype must be inherited")
+            throw("Class $($Currenttype) must be inherited")
         }
     }
 
@@ -748,6 +766,7 @@ Class Chart {
         $this.Options = $Options
     }
 
+    #Is this actually used? Could be removed?
     hidden [void] BuildDefinition(){
         $This.GetDefinitionStart()
         $This.GetDefinitionBody()
@@ -927,7 +946,7 @@ switch($Type){
     }
     "Pie" {
         $Chart = [PieChart]::New()
-        $ChartOptions = [ChartOptions]::New()
+        $ChartOptions = [PieChartOptions]::New()
         ;Break
     }
     "Bar"{
