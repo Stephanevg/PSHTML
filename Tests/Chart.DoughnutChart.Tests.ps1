@@ -16,34 +16,32 @@ InModuleScope PSHTML {
 
     Context "Testing Charts"{
  
-        Describe "BarChart"{
+        Describe "DoughnutChart"{
             it "[Constructor][Parameterless] Should not throw"{
-                {[BarChart]::New()} | should not throw
+                {[DoughnutChart]::New()} | should not throw
             }
 
             it "[Constructor][Parameterless] Should be of correct type"{
-                $Bc = [BarChart]::New()
-                $Bc.type | Should be "bar"
+                $Bc = [DoughnutChart]::New()
+                $Bc.type | Should be "Doughnut"
            
             }
 
-            #$cd = New-MockObject -Type "chartData"
-            $cd = [ChartData]::new()
-            #$co = New-MockObject -Type "ChartOptions"
-            $co = [ChartOptions]::New()
+            $cd = New-MockObject -Type ChartData
+            $co = New-MockObject -Type ChartOptions
             it "[Constructor][ChartData][ChartOptions] Should not throw"{
-                {[BarChart]::New($cd,$co)} | should not throw
+                {[DoughnutChart]::New($cd,$co)} | should not throw
 
             }
 
-            $Bc = [BarChart]::New()
             it '[Method][SetData] Adding DataSet object Should not throw'{
 
+                $Bc = [DoughnutChart]::New()
                 {$bc.SetData($cd)} | should not throw
             }
 
             it '[Method][SetOptions] Adding options object Should not throw'{
-                $Bc = [BarChart]::New()
+                $Bc = [DoughnutChart]::New()
                 {$bc.SetOptions($co)} | should not throw
             }
 
@@ -99,7 +97,7 @@ var myChart = new Chart(ctx,
 
             }
 
-        } -Tag "Chart","Bar"
+        } -tag "Chart","Doughnut"
 
     }
 }

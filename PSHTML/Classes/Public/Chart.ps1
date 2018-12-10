@@ -916,18 +916,14 @@ Function New-PSHTMLChart {
     [CmdletBinding()]
     Param(
         #[ValidateSet("Bar","Line","Pie","doughnut")]
-        [ChartType]$Type,
+        [ChartType]$Type = $(Throw '-Type is required'),
 
-        [Parameter(Mandatory=$true)]
-        [dataSet[]]$DataSet,
+        [dataSet[]]$DataSet = $(Throw '-DataSet is required'),
 
-        [Parameter(Mandatory=$true)]
         [String[]]
-        $Labels,
+        $Labels = $(Throw '-Labels is required'),
 
-
-        [Parameter(Mandatory=$true)]
-        [String]$CanvasID,
+        [String]$CanvasID = $(Throw '-CanvasID is required'),
 
         [Parameter(Mandatory=$False)]
         [String]$Title,
