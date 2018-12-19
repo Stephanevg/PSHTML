@@ -54,6 +54,6 @@ Describe "Testing [DatasetBar]"{
         $d.label | should be "TestLabel"
     }
 
-}
+} -Tag "Chart","Bar"
 
 }

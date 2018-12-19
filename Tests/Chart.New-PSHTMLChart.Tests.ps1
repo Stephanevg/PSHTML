@@ -14,9 +14,7 @@ import-module .\PSHTML -Force
 
 InModuleScope PSHTML {
 
-    Context "Testing Charts"{
- 
-        Describe "DoughnutChart"{
+        Describe "Testing New-PSHTMLChart"{
 
             it '[New-PSHTMLChart][Parameterless] Should throw' {
                 {New-PSHTMLChart} | should throw
@@ -32,11 +30,11 @@ InModuleScope PSHTML {
             } #>
             $bds = New-PSHTMLChartBarDataSet
             
-            it '[New-PSHTMLChart][Parameterless] Should not throw' {
+            it '[New-PSHTMLChart][-Type Bar][-DataSet BarDataSet][Label][Title][CanvasId] Should not throw' {
                 {New-PSHTMLChart -Type bar -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID} | should not throw
             }
 
-            it '[New-PSHTMLChart][Dataset(Mocked)][Labels][Title][CanvasID] Should create ChartJS javascript Code' {
+            it '[New-PSHTMLChart][-Type Bar][-DataSet BarDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
                 $Is = New-PSHTMLChart -Type bar -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID
 #don't touche this part, as the regex is very 'fragile'
 $Should = @'
@@ -102,5 +100,4 @@ var myChart = new Chart(ctx, {
 
         } -tag "Chart"
 
-    }
 }

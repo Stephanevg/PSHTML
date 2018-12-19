@@ -14,8 +14,7 @@ import-module .\PSHTML -Force
 
 InModuleScope PSHTML {
 
-    Context "Testing Charts"{
- 
+
         Describe "BarChartOptions"{
             it "[Constructor][Parameterless] Should not throw"{
                 {[BarChartOptions]::New()} | should not throw
@@ -26,7 +25,7 @@ InModuleScope PSHTML {
                 $co.title | should not benullOrEmpty
                 $co.scales | should not benullOrEmpty
             }
-        }
+        } -Tag "Chart","Bar"
 
-    }
+    
 }

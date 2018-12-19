@@ -14,8 +14,7 @@ import-module .\PSHTML -Force
 
 InModuleScope PSHTML {
 
-    Context "Testing Charts"{
- 
+
         Describe "BarChart"{
             it "[Constructor][Parameterless] Should not throw"{
                 {[BarChart]::New()} | should not throw
@@ -49,6 +48,7 @@ InModuleScope PSHTML {
 
             $CanvasID = "CanvasID01"
             it '[Method][(Hidden)GetDefinitionStart] should return correct value'{
+                
                 $Start = $Bc.GetDefinitionStart($CanvasID)
                 $ShouldString = @"
 var ctx = document.getElementById("CanvasID01").getContext('2d');
@@ -64,6 +64,7 @@ var myChart = new Chart(ctx,
             }
 
             it '[Method][(Hidden)GetDefinitionBody] Should JSON formated string'{
+                $Bc = [BarChart]::New()
                 $Body = $Bc.GetDefinitionBody()
                 $ShouldString = @"
 {
@@ -78,6 +79,7 @@ var myChart = new Chart(ctx,
 
 
             it '[Method][GetDefinition][String] Should return Chart.JS Javascript code'{
+                $Bc = [BarChart]::New()
                 $ShouldStringFull = @"
 var ctx = document.getElementById("CanvasID01").getContext('2d');
 var myChart = new Chart(ctx, 
@@ -95,11 +97,10 @@ var myChart = new Chart(ctx,
 
                 $Is = $Bc.GetDefinition($CanvasID)
 
-                $is | should be $ShouldStringFull
+                $Is | should be $ShouldStringFull
 
             }
 
         } -Tag "Chart","Bar"
 
-    }
 }
