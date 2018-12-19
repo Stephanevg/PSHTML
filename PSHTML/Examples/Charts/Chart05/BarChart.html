@@ -1,0 +1,58 @@
+﻿<html ><head ><title >PSHTML Chart Demonstration</title></head><Body ><h1 >PSHTML Graph</h1><div ><p >This is a bar graph</p><canvas Width="400px" Id="barcanvas" Height="400px"  ></canvas></div><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" type="text/javascript"  ></script><script >var ctx = document.getElementById("barcanvas").getContext('2d');
+var myChart = new Chart(ctx, {
+    "type":  "bar",
+    "data":  {
+                 "labels":  [
+                                "Closed",
+                                "Unresolved",
+                                "Pending",
+                                "Open"
+                            ],
+                 "datasets":  [
+                                  {
+                                      "borderWidth":  1,
+                                      "xAxisID":  null,
+                                      "yAxisID":  null,
+                                      "backgroundColor":  "rgb(30,144,255)",
+                                      "borderColor":  null,
+                                      "borderSkipped":  null,
+                                      "hoverBackgroundColor":  null,
+                                      "hoverBorderColor":  null,
+                                      "hoverBorderWidth":  0,
+                                      "data":  [
+                                                   34,
+                                                   7,
+                                                   11,
+                                                   19
+                                               ],
+                                      "label":  "March"
+                                  }
+                              ]
+             },
+    "options":  {
+                    "barPercentage":  1,
+                    "categoryPercentage":  1,
+                    "responsive":  false,
+                    "barThickness":  null,
+                    "maxBarThickness":  0,
+                    "offsetGridLines":  true,
+                    "scales":  {
+                                   "yAxes":  [
+                                                 {
+                                                     "ticks":  {
+                                                                   "beginAtZero":  true
+                                                               }
+                                                 }
+                                             ],
+                                   "xAxes":  [
+
+                                             ]
+                               },
+                    "title":  {
+                                  "display":  true,
+                                  "text":  "Ticket Statistics"
+                              }
+                }
+}
+);
+</script></Body></html>
