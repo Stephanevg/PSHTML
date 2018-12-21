@@ -14,8 +14,6 @@ import-module .\PSHTML -Force
 
 InModuleScope PSHTML {
 
-    Context "Testing Charts"{
- 
         Describe "Testing New-PSHTMLChartPieDataSet"{
 
             it '[New-PSHTMLChartPieData][Parameterless] Should Not throw'{
@@ -27,7 +25,7 @@ InModuleScope PSHTML {
                 $e.GetType().FullName | should be 'datasetPie'
             }
 
-        } -tag "Chart"
+        } -tag "Chart","Pie"
 
-    }
+    
 }
