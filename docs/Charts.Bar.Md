@@ -68,7 +68,7 @@ In order to create a chart in ```PSHTML``` you need to use the following cmdlet:
 New-PSHTMLChart
 ```
 
-> The ```New-PSHTMLChart```cmdlet is your only entry point to create charts.
+> The ```New-PSHTMLChart```cmdlet is your only entry point needed in order create charts.
 
 ```powershell
 $Labels = @("Closed","Unresolved","Pending","Open") #description of each row from data
@@ -84,7 +84,7 @@ $Labels = @("Closed","Unresolved","Pending","Open")
 
 ```
 
-Which, actually represented from this ticketing system example, the following tickets data:
+Which, actually represented from a ticketing system example, the following data:
 
 |Closed|Unresolved|Pending|open|
 |---|---|---|---|
@@ -92,7 +92,7 @@ Which, actually represented from this ticketing system example, the following ti
 
 This would result in the following graph:
 
-![BasicBarChar](./images/BarChart_basic_01.png)
+![BasicBarChar](./Images/BarChart_basic_01.png)
 
 > Nota: The function must be called within a '-content' block of a 'script' section (See script listing below)
 
