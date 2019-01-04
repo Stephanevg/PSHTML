@@ -14,8 +14,7 @@ import-module .\PSHTML -Force
 
 InModuleScope PSHTML {
 
-    Context "Testing Charts"{
- 
+
         Describe "LineChartOptions"{
             it "[Constructor][Parameterless] Should not throw"{
                 {[LineChartOptions]::New()} | should not throw
@@ -26,7 +25,7 @@ InModuleScope PSHTML {
                 $co.showLines | should be $true
                 $co.spanGaps | should be $false
             }
-        }
+        } -tag "Chart","Line"
 
-    }
+    
 }

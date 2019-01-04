@@ -14,20 +14,18 @@ import-module .\PSHTML -Force
 
 InModuleScope PSHTML {
 
-    Context "Testing Charts"{
- 
-        Describe "Testing New-PSHTMLChartLineData"{
 
-            it '[New-PSHTMLChartLineData][Parameterless] Should Not throw'{
+        Describe "Testing New-PSHTMLChartLineDataSet"{
+
+            it '[New-PSHTMLChartLineDataSet][Parameterless] Should Not throw'{
                 {New-PSHTMLChartLineDataSet} | should not throw
             }
 
-            it '[New-PSHTMLChartLineData][ReturnType] Should return an object of type [datasetLine]'{
+            it '[New-PSHTMLChartLineDataSet][ReturnType] Should return an object of type [datasetLine]'{
                 $e = New-PSHTMLChartLineDataSet
                 $e.GetType().FullName | should be 'datasetLine'
             }
 
-        } -tag "Chart"
+        } -tag "Chart","Line"
 
-    }
 }

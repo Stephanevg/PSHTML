@@ -17,11 +17,11 @@ InModuleScope PSHTML {
 
         Describe "Testing New-PSHTMLChartBarData"{
 
-            it '[New-PSHTMLChartBarData][Parameterless] Should Not throw'{
+            it '[New-PSHTMLChartBarDataSet][Parameterless] Should Not throw'{
                 {New-PSHTMLChartBarDataSet} | should not throw
             }
 
-            it '[New-PSHTMLChartBarData][ReturnType] Should return an object of type [datasetBar]'{
+            it '[New-PSHTMLChartBarDataSet][ReturnType] Should return an object of type [datasetBar]'{
                 $e = New-PSHTMLChartBarDataSet
                 $e.GetType().FullName | should be 'datasetbar'
             }

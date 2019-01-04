@@ -14,8 +14,7 @@ import-module .\PSHTML -Force
 
 InModuleScope PSHTML {
 
-    Context "Testing Charts"{
- 
+
         Describe "PieChart"{
             it "[Constructor][Parameterless] Should not throw"{
                 {[PieChart]::New()} | should not throw
@@ -27,8 +26,17 @@ InModuleScope PSHTML {
            
             }
 
-            $cd = New-MockObject -Type ChartData
-            $co = New-MockObject -Type ChartOptions
+            <#
+            #For some obscure reason, mocking doesn't seem to work with powershell classes
+            # Tracking this here --> https://github.com/Stephanevg/PSHTML/issues/158
+            $cd = New-MockObject -Type "ChartData"
+            $co = New-MockObject -Type "ChartOptions"
+            
+            #>
+
+            $cd = [ChartData]::New()
+            $co = [ChartOptions]::New()
+
             it "[Constructor][ChartData][ChartOptions] Should not throw"{
                 {[PieChart]::New($cd,$co)} | should not throw
 
@@ -41,12 +49,16 @@ InModuleScope PSHTML {
             }
 
             it '[Method][SetOptions] Adding options object Should not throw'{
+                
+                $co = [ChartOptions]::New()
                 $Bc = [PieChart]::New()
                 {$bc.SetOptions($co)} | should not throw
             }
 
             $CanvasID = "CanvasID01"
             it '[Method][(Hidden)GetDefinitionStart] should return correct value'{
+                $co = [ChartOptions]::New()
+                $Bc = [PieChart]::New()
                 $Start = $Bc.GetDefinitionStart($CanvasID)
                 $ShouldString = @"
 var ctx = document.getElementById("CanvasID01").getContext('2d');
@@ -56,16 +68,20 @@ var myChart = new Chart(ctx,
             }
 
             it '[Method][(Hidden)GetDefinitionEnd] Should return correct value'{
+                $co = [ChartOptions]::New()
+                $Bc = [PieChart]::New()
                 $End = $Bc.GetDefinitionEnd()
                 $ShouldString =");"
                 $End | Should be $ShouldString
             }
 
             it '[Method][(Hidden)GetDefinitionBody] Should JSON formated string'{
+                $co = [ChartOptions]::New()
+                $Bc = [PieChart]::New()
                 $Body = $Bc.GetDefinitionBody()
                 $ShouldString = @"
 {
-    "type":  "bar",
+    "type":  "pie",
     "data":  null,
     "options":  null
 }
@@ -76,13 +92,15 @@ var myChart = new Chart(ctx,
 
 
             it '[Method][GetDefinition][String] Should return Chart.JS Javascript code'{
+                
+                $Bc = [PieChart]::New()
                 $ShouldStringFull = @"
 var ctx = document.getElementById("CanvasID01").getContext('2d');
 var myChart = new Chart(ctx, 
 "@
                 $ShouldStringFull += @"
 {
-    "type":  "bar",
+    "type":  "pie",
     "data":  null,
     "options":  null
 }
@@ -99,5 +117,4 @@ var myChart = new Chart(ctx,
 
         } -tag "Chart","Pie"
 
-    }
 }

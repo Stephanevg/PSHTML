@@ -26,9 +26,15 @@ InModuleScope PSHTML {
            
             }
 
-            #$cd = New-MockObject -Type "chartData"
+            <#
+            #For some obscure reason, mocking doesn't seem to work with powershell classes
+            # Tracking this here --> https://github.com/Stephanevg/PSHTML/issues/158
+            $cd = New-MockObject -Type "ChartData"
+            $co = New-MockObject -Type "ChartOptions"
+            
+            #>
+            
             $cd = [ChartData]::new()
-            #$co = New-MockObject -Type "ChartOptions"
             $co = [ChartOptions]::New()
             it "[Constructor][ChartData][ChartOptions] Should not throw"{
                 {[BarChart]::New($cd,$co)} | should not throw

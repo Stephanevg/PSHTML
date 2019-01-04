@@ -43,9 +43,12 @@ InModuleScope PSHTML {
                 
             }
 
-
-           $DataSet = New-MockObject -Type "DataSet" 
-
+            <#
+                Mocking doesn't work for custom classes.
+                https://github.com/Stephanevg/PSHTML/issues/158
+            #>
+           #DataSet = New-MockObject -Type "DataSet" 
+            $DataSet = [DataSet]::new()
             it "[Methods][AddDataset] Should not throw"{
                 $co = [ChartData]::New()
                 {$co.AddDataset($DataSet)} | should not throw

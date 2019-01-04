@@ -14,8 +14,6 @@ import-module .\PSHTML -Force
 
 InModuleScope PSHTML {
 
-    Context "Testing Charts"{
- 
         Describe "DoughnutChart"{
             it "[Constructor][Parameterless] Should not throw"{
                 {[DoughnutChart]::New()} | should not throw
@@ -27,16 +25,23 @@ InModuleScope PSHTML {
            
             }
 
-            $cd = New-MockObject -Type ChartData
-            $co = New-MockObject -Type ChartOptions
+            <#
+            #For some obscure reason, mocking doesn't seem to work with powershell classes
+            # Tracking this here --> https://github.com/Stephanevg/PSHTML/issues/158
+            $cd = New-MockObject -Type "ChartData"
+            $co = New-MockObject -Type "ChartOptions"
+            
+            #>
+            $cd = [ChartData]::new()
+            $Co = [ChartOptions]::New()
             it "[Constructor][ChartData][ChartOptions] Should not throw"{
                 {[DoughnutChart]::New($cd,$co)} | should not throw
 
             }
 
+            $Bc = [DoughnutChart]::New()
             it '[Method][SetData] Adding DataSet object Should not throw'{
 
-                $Bc = [DoughnutChart]::New()
                 {$bc.SetData($cd)} | should not throw
             }
 
@@ -62,10 +67,11 @@ var myChart = new Chart(ctx,
             }
 
             it '[Method][(Hidden)GetDefinitionBody] Should JSON formated string'{
+                $Bc = [DoughnutChart]::New()
                 $Body = $Bc.GetDefinitionBody()
                 $ShouldString = @"
 {
-    "type":  "bar",
+    "type":  "doughnut",
     "data":  null,
     "options":  null
 }
@@ -76,13 +82,14 @@ var myChart = new Chart(ctx,
 
 
             it '[Method][GetDefinition][String] Should return Chart.JS Javascript code'{
+                $Bc = [DoughnutChart]::New()
                 $ShouldStringFull = @"
 var ctx = document.getElementById("CanvasID01").getContext('2d');
 var myChart = new Chart(ctx, 
 "@
                 $ShouldStringFull += @"
 {
-    "type":  "bar",
+    "type":  "Doughnut",
     "data":  null,
     "options":  null
 }
@@ -99,5 +106,5 @@ var myChart = new Chart(ctx,
 
         } -tag "Chart","Doughnut"
 
-    }
+    
 }
