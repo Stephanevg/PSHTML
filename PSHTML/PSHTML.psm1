@@ -46,4 +46,4 @@ foreach ($pc in $PublicClasses){
     }
 }
 
-New-Alias -Name Include -Value 'Get-HTMLTemplate' -Description "Include parts of PSHTML documents using Templates" -Force
+New-Alias -Name Include -Value 'Get-PSHTMLTemplate' -Description "Include parts of PSHTML documents using Templates" -Force
