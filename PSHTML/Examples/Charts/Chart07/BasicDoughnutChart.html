@@ -1,0 +1,62 @@
+﻿<html ><head ><title >Chart JS Demonstration</title></head><Body ><h1 >PSHTML Chart</h1><div ><p >This is a Doughnut graph</p><canvas Width="400px" Id="doughnutcanvas" Height="400px"  ></canvas></div><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" type="text/javascript"  ></script><script >var ctx = document.getElementById("doughnutcanvas").getContext('2d');
+var myChart = new Chart(ctx, {
+    "type":  "doughnut",
+    "data":  {
+                 "labels":  [
+
+                            ],
+                 "datasets":  [
+                                  {
+                                      "borderColor":  "white",
+                                      "borderWidth":  1,
+                                      "backgroundColor":  [
+                                                              "LightGreen",
+                                                              "Red",
+                                                              "LightBlue",
+                                                              "LightYellow"
+                                                          ],
+                                      "hoverBackgroundColor":  [
+                                                                   "LightGreen",
+                                                                   "Red",
+                                                                   "LightBlue",
+                                                                   "LightYellow"
+                                                               ],
+                                      "HoverBorderColor":  null,
+                                      "HoverBorderWidth":  0,
+                                      "data":  [
+                                                   34,
+                                                   7,
+                                                   11,
+                                                   19
+                                               ],
+                                      "label":  "March"
+                                  }
+                              ]
+             },
+    "options":  {
+                    "barPercentage":  1,
+                    "categoryPercentage":  1,
+                    "responsive":  false,
+                    "barThickness":  null,
+                    "maxBarThickness":  0,
+                    "offsetGridLines":  true,
+                    "scales":  {
+                                   "yAxes":  [
+                                                 {
+                                                     "ticks":  {
+                                                                   "beginAtZero":  true
+                                                               }
+                                                 }
+                                             ],
+                                   "xAxes":  [
+
+                                             ]
+                               },
+                    "title":  {
+                                  "display":  true,
+                                  "text":  "Doughnut Chart v2"
+                              }
+                }
+}
+);
+</script></Body></html>

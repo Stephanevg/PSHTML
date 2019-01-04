@@ -1,0 +1,65 @@
+﻿<html ><head ><title >Basic Pie Chart Demo</title></head><Body ><h1 >PSHTML Charts</h1><div ><p >This is a Pie Chart</p><canvas Width="400px" Id="piecanvas" Height="400px"  ></canvas></div><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" type="text/javascript"  ></script><script >var ctx = document.getElementById("piecanvas").getContext('2d');
+var myChart = new Chart(ctx, {
+    "type":  "pie",
+    "data":  {
+                 "labels":  [
+                                "Closed",
+                                "Unresolved",
+                                "Pending",
+                                "Open"
+                            ],
+                 "datasets":  [
+                                  {
+                                      "borderColor":  "white",
+                                      "borderWidth":  1,
+                                      "backgroundColor":  [
+                                                              "Lightgreen",
+                                                              "red",
+                                                              "Blue",
+                                                              "Yellow"
+                                                          ],
+                                      "hoverBackgroundColor":  [
+                                                                   "Lightgreen",
+                                                                   "red",
+                                                                   "Blue",
+                                                                   "Yellow"
+                                                               ],
+                                      "HoverBorderColor":  null,
+                                      "HoverBorderWidth":  0,
+                                      "data":  [
+                                                   34,
+                                                   7,
+                                                   11,
+                                                   19
+                                               ],
+                                      "label":  "March"
+                                  }
+                              ]
+             },
+    "options":  {
+                    "barPercentage":  1,
+                    "categoryPercentage":  1,
+                    "responsive":  false,
+                    "barThickness":  null,
+                    "maxBarThickness":  0,
+                    "offsetGridLines":  true,
+                    "scales":  {
+                                   "yAxes":  [
+                                                 {
+                                                     "ticks":  {
+                                                                   "beginAtZero":  true
+                                                               }
+                                                 }
+                                             ],
+                                   "xAxes":  [
+
+                                             ]
+                               },
+                    "title":  {
+                                  "display":  true,
+                                  "text":  "Pie Chart v2"
+                              }
+                }
+}
+);
+</script></Body></html>
