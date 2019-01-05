@@ -73,9 +73,9 @@ The following example is a tribute to PowerShell GodFather 'Jeffrey Snover' wher
 
 ![screen shot of PSHTML results](PSHTML/Examples/Example6/tribute_snover.png)
 
-The example ```PSHTML / Powershell``` code is available [here](PSHTML/examples/Example6/Example6.ps1)
+The example ```PSHTML / Powershell``` code is available [here](PSHTML/Examples/Example6/Example6.ps1)
 
-The generated ```HTML``` code is available [here](PSHTML/examples/Example6/Example6.html)
+The generated ```HTML``` code is available [here](PSHTML/Examples/Example6/Example6.html)
 
 ## Documenation
 
