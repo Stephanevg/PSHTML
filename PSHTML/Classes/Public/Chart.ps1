@@ -1077,13 +1077,13 @@ Function New-PSHTMLChartDataSet {
 
         data                 : {1, 2, 3}
         label                : plop
-        xAxisID              : 0le dataset
-        yAxisID              : 22","11","21")
+        xAxisID              : 0
+        yAxisID              : 22
         backgroundColor      : rgb(30,144,255)
-        borderColor          : rgb(173,255,47)$Data -Name "Grades"
+        borderColor          : rgb(173,255,47)
         borderWidth          : 0
         borderSkipped        : bottom
-        hoverBackgroundColor : rgb(220,20,60)d creating a chart
+        hoverBackgroundColor : rgb(220,20,60)
         hoverBorderColor     : rgb(173,255,47)
         hoverBorderWidth     : 0
 
