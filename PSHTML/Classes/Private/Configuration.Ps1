@@ -8,8 +8,7 @@ Class ConfigurationFile {
     }
 
     ConfigurationFile ([System.IO.FileInfo]$Path){
-        $this.Path = $Path
-        $this.LoadConfigurationData()
+        $this.SetConfigurationFile($Path)
     }
 
     [void]LoadConfigurationData(){
@@ -19,6 +18,24 @@ Class ConfigurationFile {
     SetConfigurationFile([System.IO.FileInfo]$Path){
         $this.Path = $Path
         $this.LoadConfigurationData()
+    }
+
+    [ConfigurationLog]GetLogConfig(){
+        return $this.Data.Logging
+    }
+
+    [ConfigurationAssets]GetAssetsConfig(){
+        return $this.Data.Assets
+    }
+
+    [ConfigurationGeneral]GetGeneralConfig(){
+        return $this.Data.General
+    }
+    [HashTable[]]GetAsset(){
+        return $this.Data.Assets.Assets
+    }
+    [String]GetAsset($Name){
+        return $this.Data.Assets.Assets.$($Name)
     }
 }
 
@@ -74,7 +91,8 @@ Class PSHTMLConfiguration{
         $json = (gc -Path $Path | ConvertFrom-Json)
         $this.Logging = [ConfigurationLog]::New($json.Logging.Path,$json.Logging.MaxFiles,$json.Logging.MaxTotalSize)
         if($json.Assets.Path.Tolower() -eq 'default' -or $json.Assets.Path -eq '' ){
-            $AssetsPath = "$PSScriptRoot/Assets"
+            $root = $Path.Directory.FullName
+            $AssetsPath = "$Root/Assets"
         }Else{
             $AssetsPath = $json.Assets.Path
         }
@@ -83,17 +101,7 @@ Class PSHTMLConfiguration{
     }
 
 
-    [ConfigurationLog]GetLogConfig(){
-        return $this.Logging
-    }
-
-    [ConfigurationAssets]GetAssetsConfig(){
-        return $this.Assets
-    }
-
-    [ConfigurationGeneral]GetGeneralConfig(){
-        return $this.General
-    }
+   
 
 }
 function Get-PSHTMLConfiguration {
@@ -107,7 +115,7 @@ function Get-PSHTMLConfiguration {
     }
     
     process {
-        if($PSBoundParameters['Path']){
+        if($Path){
             [ConfigurationFile]::New($Path)
         }Else{
 

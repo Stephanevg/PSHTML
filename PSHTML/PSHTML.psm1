@@ -46,4 +46,24 @@ foreach ($pc in $PublicClasses){
     }
 }
 
+write-verbose -Message "Loading private Classes"
+$PublicClasses = Get-ChildItem -Path "$ScriptPath\Classes\Private" -Filter *.ps1 | Select-Object -ExpandProperty FullName
+
+foreach ($pc in $PublicClasses){
+    write-verbose "importing $($pc)"
+    try{
+        . $pc
+    }catch{
+        write-warning -Message $_
+    }
+}
+
+Write-Verbose "Loading aliases:"
 New-Alias -Name Include -Value 'Get-PSHTMLTemplate' -Description "Include parts of PSHTML documents using Templates" -Force
+
+
+
+$ConfigFile = Join-Path -Path $ScriptPath -ChildPath "PSHTML.Configuration.json"
+Write-Verbose "Loading data ConfigFile: $($ConfigFile)"
+
+$Global:PSHTML_CONFIGURATION = Get-PSHTMLConfiguration -Path $ConfigFile -Force

@@ -1,4 +1,5 @@
 {
+    "version":"1.0.0",
     "Configuration": {
         "Verbosity": "Normal"
     },
@@ -8,6 +9,6 @@
         "MaxTotalSize": "5MB"
     },
     "Assets": {
-        "Path": "$PSScriptRoot\\Assets"
+        "Path": "Default"
     }
 }
