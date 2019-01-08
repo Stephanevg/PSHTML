@@ -74,12 +74,9 @@ var myChart = new Chart(ctx,
                 $Bc = [LineChart]::New()
                 $Body = $Bc.GetDefinitionBody()
                 $ShouldString = @"
-{
-    "type":  "Line",
-    "data":  null,
-    "options":  null
-}
+{"type":"line","data":null,"options":null}
 "@
+
                 $Body | should be $ShouldString
             }
 
@@ -87,24 +84,17 @@ var myChart = new Chart(ctx,
 
             it '[Method][GetDefinition][String] Should return Chart.JS Javascript code'{
                 $Bc = [LineChart]::New()
-                $ShouldStringFull = @"
-var ctx = document.getElementById("CanvasID01").getContext('2d');
-var myChart = new Chart(ctx, 
-"@
-                $ShouldStringFull += @"
-{
-    "type":  "line",
-    "data":  null,
-    "options":  null
-}
-);
 
-"@
+$Should = @'
+var ctx = document.getElementById("CanvasID01").getContext('2d'); var myChart = new Chart(ctx, {"type":"line","data":null,"options":null} );
+'@
+
 
 
                 $Is = $Bc.GetDefinition($CanvasID)
 
-                $is | should be $ShouldStringFull
+
+                $Is | should be $Should
             }
         } -tag "Chart","Line"
 

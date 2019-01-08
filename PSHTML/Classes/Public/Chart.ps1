@@ -699,7 +699,7 @@ function New-PSHTMLChartDoughnutDataSet {
 
 Class scales {
     [System.Collections.ArrayList]$yAxes = @()
-    [System.Collections.ArrayList]$xAxes = @()
+    [System.Collections.ArrayList]$xAxes = @("")
 
     scales(){
 
@@ -850,8 +850,9 @@ var myChart = new Chart(ctx,
                         #Ticks
                             #beginAtZero [bool]
                             
-        $Body = $this | select @{N='type';E={$_.type.ToString()}},Data,Options  | convertto-Json -Depth 6
-        Return $Body
+        $Body = $this | select @{N='type';E={$_.type.ToString()}},Data,Options  | convertto-Json -Depth 6 -Compress
+        $BodyCleaned =  Clear-WhiteSpace $Body
+        Return $BodyCleaned
     }
 
     [String] GetDefinition([String]$CanvasID){
@@ -860,7 +861,8 @@ var myChart = new Chart(ctx,
         $FullDefintion.Append($this.GetDefinitionStart([String]$CanvasID))
         $FullDefintion.AppendLine($this.GetDefinitionBody())
         $FullDefintion.AppendLine($this.GetDefinitionEnd())
-        return $FullDefintion
+        $FullDefintionCleaned = Clear-WhiteSpace $FullDefintion
+        return $FullDefintionCleaned
     }
 }
 

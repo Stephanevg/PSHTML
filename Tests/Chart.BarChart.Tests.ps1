@@ -72,13 +72,11 @@ var myChart = new Chart(ctx,
             it '[Method][(Hidden)GetDefinitionBody] Should JSON formated string'{
                 $Bc = [BarChart]::New()
                 $Body = $Bc.GetDefinitionBody()
-                $ShouldString = @"
-{
-    "type":  "bar",
-    "data":  null,
-    "options":  null
-}
-"@
+                $ShouldString = @'
+{"type":"bar","data":null,"options":null}
+'@
+                #$Body | should be $ShouldString
+                #$ShouldStringCleaned = Clear-WhiteSpace $ShouldString
                 $Body | should be $ShouldString
             }
 
@@ -86,24 +84,14 @@ var myChart = new Chart(ctx,
 
             it '[Method][GetDefinition][String] Should return Chart.JS Javascript code'{
                 $Bc = [BarChart]::New()
-                $ShouldStringFull = @"
-var ctx = document.getElementById("CanvasID01").getContext('2d');
-var myChart = new Chart(ctx, 
-"@
-                $ShouldStringFull += @"
-{
-    "type":  "bar",
-    "data":  null,
-    "options":  null
-}
-);
-
-"@
+$Should = @'
+var ctx = document.getElementById("CanvasID01").getContext('2d'); var myChart = new Chart(ctx, {"type":"bar","data":null,"options":null} );
+'@
 
 
                 $Is = $Bc.GetDefinition($CanvasID)
-
-                $Is | should be $ShouldStringFull
+                $ShouldStringFullCleaned = Clear-WhiteSpace $ShouldStringFull
+                $Is | should be $Should
 
             }
 
