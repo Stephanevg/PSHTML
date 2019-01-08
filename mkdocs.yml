@@ -1,0 +1,5 @@
+site_name: PSHTML
+nav:
+    - Home: index.md
+    - About: about.md
+theme: readthedocs
