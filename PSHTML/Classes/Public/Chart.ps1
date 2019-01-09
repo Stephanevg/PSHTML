@@ -1,27 +1,8 @@
-<#
-Class PieData : ChartData {
-    [Color]$BackGroundColor
-    [Color]$BorderColor
-    [int]$BorderWidth
-    [Color]$HoverBackGroundColor
-    [Color]$hoverBorderColor
-    [int]$hoverBorderWidth
+
+#From Jakub Jares (Thanks!)
+function Clear-WhiteSpace ($Text) {
+    "$($Text -replace "(`t|`n|`r)"," " -replace "\s+"," ")".Trim()
 }
-
-Class PieChart : Chart{
-
-    $type = [ChartType]::Pie
-
-    PieChart([ChartData]$Data,[ChartOption]$Options){
-        $this.Data = $Data
-        $This.Options = $Options
-    }
-
-    
-}
-#>
-
-##end of pie
 
 Enum ChartType {
     bar
