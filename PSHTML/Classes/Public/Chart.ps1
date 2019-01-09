@@ -1,27 +1,8 @@
-<#
-Class PieData : ChartData {
-    [Color]$BackGroundColor
-    [Color]$BorderColor
-    [int]$BorderWidth
-    [Color]$HoverBackGroundColor
-    [Color]$hoverBorderColor
-    [int]$hoverBorderWidth
+
+#From Jakub Jares (Thanks!)
+function Clear-WhiteSpace ($Text) {
+    "$($Text -replace "(`t|`n|`r)"," " -replace "\s+"," ")".Trim()
 }
-
-Class PieChart : Chart{
-
-    $type = [ChartType]::Pie
-
-    PieChart([ChartData]$Data,[ChartOption]$Options){
-        $this.Data = $Data
-        $This.Options = $Options
-    }
-
-    
-}
-#>
-
-##end of pie
 
 Enum ChartType {
     bar
@@ -699,7 +680,7 @@ function New-PSHTMLChartDoughnutDataSet {
 
 Class scales {
     [System.Collections.ArrayList]$yAxes = @()
-    [System.Collections.ArrayList]$xAxes = @()
+    [System.Collections.ArrayList]$xAxes = @("")
 
     scales(){
 
@@ -850,8 +831,9 @@ var myChart = new Chart(ctx,
                         #Ticks
                             #beginAtZero [bool]
                             
-        $Body = $this | select @{N='type';E={$_.type.ToString()}},Data,Options  | convertto-Json -Depth 6
-        Return $Body
+        $Body = $this | select @{N='type';E={$_.type.ToString()}},Data,Options  | convertto-Json -Depth 6 -Compress
+        $BodyCleaned =  Clear-WhiteSpace $Body
+        Return $BodyCleaned
     }
 
     [String] GetDefinition([String]$CanvasID){
@@ -860,7 +842,8 @@ var myChart = new Chart(ctx,
         $FullDefintion.Append($this.GetDefinitionStart([String]$CanvasID))
         $FullDefintion.AppendLine($this.GetDefinitionBody())
         $FullDefintion.AppendLine($this.GetDefinitionEnd())
-        return $FullDefintion
+        $FullDefintionCleaned = Clear-WhiteSpace $FullDefintion
+        return $FullDefintionCleaned
     }
 }
 
@@ -1077,13 +1060,13 @@ Function New-PSHTMLChartDataSet {
 
         data                 : {1, 2, 3}
         label                : plop
-        xAxisID              : 0le dataset
-        yAxisID              : 22","11","21")
+        xAxisID              : 0
+        yAxisID              : 22
         backgroundColor      : rgb(30,144,255)
-        borderColor          : rgb(173,255,47)$Data -Name "Grades"
+        borderColor          : rgb(173,255,47)
         borderWidth          : 0
         borderSkipped        : bottom
-        hoverBackgroundColor : rgb(220,20,60)d creating a chart
+        hoverBackgroundColor : rgb(220,20,60)
         hoverBorderColor     : rgb(173,255,47)
         hoverBorderWidth     : 0
 

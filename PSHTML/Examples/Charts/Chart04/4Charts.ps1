@@ -102,6 +102,6 @@ $HTMLPage = html {
 }
 
 
-$OutPath = "C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\Assets\Charts\4graphs.html"
+$OutPath = "$Home\4graphs.html"
 $HTMLPage | out-file -FilePath $OutPath -Encoding utf8
 start $outpath
