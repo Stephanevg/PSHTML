@@ -16,9 +16,9 @@ Using PSHTML, offers code completion and syntax highlighting from the the defaul
 
 ## Status
 
-|master|dev|Docs
+|master|dev|docs
 |---|---|---|
-[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/dev) | [![Docs Status](https://pshtml.readthedocs.io/en/latest/?badge=latest)](https://pshtml.readthedocs.io/en/latest/) |
+[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/dev) | [![Documentation Status](https://readthedocs.org/projects/pshtml/badge/?version=latest)](https://pshtml.readthedocs.io/en/latest/?badge=latest) |
 
 A change log is available [here](Change_Log.md)
 Known issues are tracked [here](Known_Issues.md)
