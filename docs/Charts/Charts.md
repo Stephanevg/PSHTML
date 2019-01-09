@@ -1,11 +1,17 @@
 # Creating charts
 
-Since version v0.6.2 it is possible to create charts using PSHTML. This documentation explains how to do so.
-Charts in PSHTML are supported through Charts.js.
+Charts are supported starting from version v0.7.0. This documentation explains how to use them.
+
+> Charts in PSHTML are supported through [Charts.js](https://chartjs.org).
 
 # Basics
 
-In order to create a graph in pshtml, a few key things needs to be respect.
+In order to create a graph in pshtml, a few key things needs to be respected.
+
+1. A script tag with a reference to Chartjs library
+2. A canvas with a specific ID
+3. A dataset
+4. A chart which contains the dataset(s), and which is assigned the CanvasID.
 
 ## Reference to Chart.js
 
