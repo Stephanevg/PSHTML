@@ -73,7 +73,7 @@ var myChart = new Chart(ctx,
 {"type":"doughnut","data":null,"options":null}
 "@
                 #$Body | should be $ShouldString
-                $ShouldStringCleaned = Clear-WhiteSpace $ShouldString
+                #$ShouldStringCleaned = Clear-WhiteSpace $ShouldString
                 $Body | should be $ShouldString
             }
 
@@ -101,7 +101,7 @@ var ctx = document.getElementById("CanvasID01").getContext('2d'); var myChart = 
                 $Is = $Bc.GetDefinition($CanvasID)
 
                 #$is | should be $ShouldStringFull
-                $ShouldStringFullCleaned = Clear-WhiteSpace $ShouldStringFull
+                #$ShouldStringFullCleaned = Clear-WhiteSpace $ShouldStringFull
                 $Is | should be $Should
 
             }

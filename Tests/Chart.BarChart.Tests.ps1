@@ -90,7 +90,7 @@ var ctx = document.getElementById("CanvasID01").getContext('2d'); var myChart = 
 
 
                 $Is = $Bc.GetDefinition($CanvasID)
-                $ShouldStringFullCleaned = Clear-WhiteSpace $ShouldStringFull
+                
                 $Is | should be $Should
 
             }

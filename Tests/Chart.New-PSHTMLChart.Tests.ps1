@@ -103,7 +103,7 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
 '@
 
             #$Is | should be $Should
-            $ShouldCleaned = Clear-WhiteSpace $Should
+            
             $Is | should be $Should
         }
 
