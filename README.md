@@ -92,6 +92,7 @@ Since version 0.7.0 PSHTML also supports the creation of beautifull charts. Read
 - Introducing PSHTML on [PowershellDistrict](http://powershelldistrict.com/introducing-pshtml/).
 - [Multiple Blog posts](https://chen.about-powershell.com/) from [@ChendrayanV](https://twitter.com/ChendrayanV).
 - Presentation at [Glasgow Super Meetup](https://youtu.be/QS_gppC5UWQ?t=6246) by [@anthonyroud](https://twitter.com/anthonyroud).
+- Powershell Conference Asia - [Presentation from Ravikanti Cheganti on how to build your own API](https://livestream.com/gaelcolas/PSConfAsia/videos/182130806) (Using Polaris and PSHTML). ( for the PSHTML example, check around 32min of the video.)
 
 ## See how community members use PSHTML
 
