@@ -14,11 +14,11 @@ Using PSHTML, offers code completion and syntax highlighting from the the defaul
 
 -----
 
-## Build Status
-|Branch|Status|
-|---|---|
-|master |[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/master) |
-|dev |[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/dev)|
+## Status
+
+|master|dev|Docs
+|---|---|---|
+[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/dev) | [![Docs Status](https://pshtml.readthedocs.io/en/latest/?badge=latest)](https://pshtml.readthedocs.io/en/latest/) |
 
 A change log is available [here](Change_Log.md)
 Known issues are tracked [here](Known_Issues.md)
@@ -30,6 +30,8 @@ Known issues are tracked [here](Known_Issues.md)
 The following quick example displays a simple page, with a few headers, divs, paragraphs, and header elements
 
 ```Powershell
+
+Import-Module PSHTML
 
 html {
 
@@ -79,11 +81,11 @@ The generated ```HTML``` code is available [here](PSHTML/Examples/Example6/Examp
 
 ## Documentation
 
-Check out the [Documentation](docs/_HowToUsePSHTML.md) on how to use PSHTML.
+Check out the [Documentation](https://pshtml.readthedocs.io/en/latest/) on how to use PSHTML.
 
 ## Charts
 
-Since version 0.6.2 PSHTML also supports the creation of beautifull charts. Read the documentation [here](docs/Charts.md) for more info.
+Since version 0.7.0 PSHTML also supports the creation of beautifull charts. Read the documentation [here](docs/Charts.md) for more info.
 
 ## Check out refferences/blog posts
 
