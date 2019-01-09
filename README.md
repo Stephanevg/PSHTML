@@ -101,4 +101,5 @@ Find here a few examples where people already used PSHTML in an awesome way.
 
 ## Want to Contribute?
 
-If you're interested in contributing to PSHTML please be sure to check out the [Contribution Guide](CONTRIBUTING.md).
+If you're interessted in contributing to PSHTML please be sure to check out the [Contribution Guide](CONTRIBUTING.md).
+
