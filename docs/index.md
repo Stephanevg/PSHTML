@@ -26,12 +26,12 @@ Install-Module PSHTML
 
 - Internet access is **not** possible
 
-```
+
 1) Download the sources from the release page [here](https://github.com/Stephanevg/PSHTML/releases/tag/v0.7.0)
-2) Unzip the sources to a temporary location. (Example: $Home/Temp/PSHTMLSources/)
-3) Copy the $Home/Temp/PSHTMLSources/PSHTML/ files to a repository of your PSModulePath (See below)
+2) Unzip the sources to a temporary location. (Example: ```$Home/Temp/PSHTMLSources/```)
+3) Copy the ```$Home/Temp/PSHTMLSources/PSHTML/``` files to a repository of your PSModulePath (See below)
 3.1) To find an acceptable path for the module, run ```  $env:PSModulePath -split ";" ```. Choose simply one from the list.
-```
+
 
 ## Getting started
 
