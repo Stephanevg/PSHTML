@@ -49,7 +49,7 @@ Function script {
         [Hashtable]$Attributes,
 
         [Parameter(Position = 8)]
-        [string]$content
+        $content
 
     )
  

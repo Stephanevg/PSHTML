@@ -3,14 +3,14 @@ PSHTML is a cross platform Powershell module to generate HTML markup language wi
 
 # Summary
 
-`PSHTML` allow people to write a HTML document(s) using `powershell-like` syntax, which makes building webpages easier, and less cumbersome for 'native' powersheller's.
+`PSHTML` allow people to write a HTML document(s) using `powershell-like` syntax, which makes building webpages easier, and less cumbersome for 'native' PowerSheller's.
 
-`PSHTML` offers the flexibility of the PowerShell language, and allows to add logic in ```powershell``` directly in the ```HTML``` structure. This open the possibility to add loops, conditional statements, switchs, functions, classes, calling external modules etc.. all that directly from the same editor.
+`PSHTML` offers the flexibility of the PowerShell language, and allows to add logic in ```powershell``` directly in the ```HTML``` structure. This open the possibility to add loops, conditional statements, switches, functions, classes, calling external modules etc.. all that directly from the same editor.
 
-`PSHTML` comes with a templating functionality which allows one to `include` parts of webpages that are identical throughout the web page Eg: footer, Header,Menu etc..
+`PSHTML` comes with template functionality which allows one to `include` parts of webpages that are identical throughout the web page Eg: footer, Header,Menu etc..
 
 
-Using PSHTML, offers code completition and syntax highliting from the the default powershell langauge. As PSHTML respects the W3C standards, any HTML errors, will be spotted immediatly.
+Using PSHTML, offers code completion and syntax highlighting from the the default powershell language. As PSHTML respects the W3C standards, any HTML errors, will be spotted immediately.
 
 -----
 
@@ -77,15 +77,19 @@ The example ```PSHTML / Powershell``` code is available [here](PSHTML/Examples/E
 
 The generated ```HTML``` code is available [here](PSHTML/Examples/Example6/Example6.html)
 
-## Documenation
+## Documentation
 
 Check out the [Documentation](docs/_HowToUsePSHTML.md) on how to use PSHTML.
+
+## Charts
+
+Since version 0.6.2 PSHTML also supports the creation of beautifull charts. Read the documentation [here](docs/Charts.md) for more info.
 
 ## Check out refferences/blog posts
 
 - Introducing PSHTML on [PowershellDistrict](http://powershelldistrict.com/introducing-pshtml/).
 - [Multiple Blog posts](https://chen.about-powershell.com/) from [@ChendrayanV](https://twitter.com/ChendrayanV).
-- Presentation at [Glasgow Super Meetup](https://youtu.be/QS_gppC5UWQ?t=6246) by [@anthonyroud](https://twitter.com/anthonyroud). 
+- Presentation at [Glasgow Super Meetup](https://youtu.be/QS_gppC5UWQ?t=6246) by [@anthonyroud](https://twitter.com/anthonyroud).
 
 ## See how community members use PSHTML
 
@@ -98,3 +102,4 @@ Find here a few examples where people already used PSHTML in an awesome way.
 ## Want to Contribute?
 
 If you're interessted in contributing to PSHTML please be sure to check out the [Contribution Guide](CONTRIBUTING.md).
+

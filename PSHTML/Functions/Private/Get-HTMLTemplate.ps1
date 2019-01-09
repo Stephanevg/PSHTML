@@ -37,32 +37,5 @@ html{
         $Name
     )
 
-    $callstack = Get-PSCallStack
-    $ScriptCaller = $callstack[-1].ScriptName
-    $ScriptPath = Split-Path $ScriptCaller -Parent
-    $TemplatesFolder = join-path $ScriptPath -ChildPath "Templates"
-
-    if(!(test-path $TemplatesFolder)){
-        throw "The folder templates was not found at $($TemplatesFolder)"
-    }
-    if(!($Name.EndsWith(".ps1"))){
-        $Name = $name + ".ps1"
-    }
-    $Template = get-childItem -Path $templatesFolder -filter "$($Name)"
-
-    if ($template.count -ge 2){
-        throw "One or more files with the same template name $($name) where found, please be more specefic, or rename the templates"
-    }
-    if(!($template)){
-        throw "No template file with the name '$($Name)' could be found in the templates folder."
-    }
-
-    if($template.count -eq 1){
-        write-verbose "Template file found at $($Template.FullName)"
-    }
-
-    $Rawcontent = Get-Content $Template.FullName -Raw
-    $Content = [scriptBlock]::Create($Rawcontent).Invoke()
-    return $content
-
+    Throw "This function has been renamed to 'Get-PSHTMLTemplate' and will be removed in a future release .Either use the Alias 'include' or rename your function calls from Get-PSHTMLTemplate to Get-PSHTMLTemplate"
 }
