@@ -10,6 +10,35 @@
 # Retrieve parent folder
 $ScriptPath = Split-Path -Path $MyInvocation.MyCommand.Path
 
+
+
+write-verbose -Message "Loading private Classes"
+$PublicClasses = Get-ChildItem -Path "$ScriptPath\Classes\Private" -Filter *.ps1 | Select-Object -ExpandProperty FullName
+
+foreach ($pc in $PublicClasses){
+    write-verbose "importing $($pc)"
+    try{
+        . $pc
+    }catch{
+        write-warning -Message $_
+    }
+}
+
+write-verbose -Message "Loading Public Classes"
+$PublicClasses = Get-ChildItem -Path "$ScriptPath\Classes\Public" -Filter *.ps1 | Select-Object -ExpandProperty FullName
+
+foreach ($pc in $PublicClasses){
+    write-verbose "importing $($pc)"
+    try{
+        . $pc
+    }catch{
+        write-warning -Message $_
+    }
+}
+
+
+
+
 write-verbose -Message "Loading Private Functions"
 $PrivateFunctions = Get-ChildItem -Path "$ScriptPath\Functions\Private" -Filter *.ps1 | Select-Object -ExpandProperty FullName
 
@@ -34,16 +63,15 @@ foreach ($public in $PublicFunctions){
     }
 }
 
-write-verbose -Message "Loading Public Classes"
-$PublicClasses = Get-ChildItem -Path "$ScriptPath\Classes\Public" -Filter *.ps1 | Select-Object -ExpandProperty FullName
 
-foreach ($pc in $PublicClasses){
-    write-verbose "importing $($pc)"
-    try{
-        . $pc
-    }catch{
-        write-warning -Message $_
-    }
-}
-
+Write-Verbose "Loading aliases:"
 New-Alias -Name Include -Value 'Get-PSHTMLTemplate' -Description "Include parts of PSHTML documents using Templates" -Force
+
+
+
+$ConfigFile = Join-Path -Path $ScriptPath -ChildPath "pshtml.configuration.json"
+Write-Verbose "Loading data ConfigFile: $($ConfigFile)"
+
+
+
+$Script:PSHTML_CONFIGURATION = New-ConfigurationDocument -Path $ConfigFile -Force
