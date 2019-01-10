@@ -1,6 +1,9 @@
+#Dot sourcing in psm1 works fine, up until we want to access a type that is dotsourced in the psm1.
+#Then, we need to use a nested module.
+
 Class ConfigurationFile {
 
-    [System.IO.FileInfo]$Path = "$PSScriptRoot\PSHTML.Configuration.Json"
+    [System.IO.FileInfo]$Path = "$PSScriptRoot/pshtml.configuration.json"
     [PSHTMLConfiguration]$Data
 
     ConfigurationFile (){
@@ -103,4 +106,28 @@ Class PSHTMLConfiguration{
 
    
 
+}
+
+
+function New-ConfigurationDocument {
+    [CmdletBinding()]
+    param (
+        [System.IO.FileInfo]$Path,
+        [Switch]$Force
+    )
+    
+    begin {
+    }
+    
+    process {
+        if($Path){
+            [ConfigurationFile]::New($Path)
+        }Else{
+
+            [ConfigurationFile]::New()
+        }
+    }
+    
+    end {
+    }
 }
