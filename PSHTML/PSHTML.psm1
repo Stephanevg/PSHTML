@@ -66,4 +66,4 @@ New-Alias -Name Include -Value 'Get-PSHTMLTemplate' -Description "Include parts 
 $ConfigFile = Join-Path -Path $ScriptPath -ChildPath "PSHTML.Configuration.json"
 Write-Verbose "Loading data ConfigFile: $($ConfigFile)"
 
-$Global:PSHTML_CONFIGURATION = Get-PSHTMLConfiguration -Path $ConfigFile -Force
+$Script:PSHTML_CONFIGURATION = New-ConfigurationDocument -Path $ConfigFile -Force
