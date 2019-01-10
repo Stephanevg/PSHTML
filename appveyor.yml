@@ -15,3 +15,9 @@ build_script:
 test_script:
 - ps: >-
     .\CI\04_Tests.ps1
+
+skip_commits:
+  files:
+    - docs/*
+    - README.MD
+    - mkdocs.yml

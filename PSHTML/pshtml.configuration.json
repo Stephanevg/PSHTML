@@ -1,0 +1,14 @@
+{
+    "version":"1.0.0",
+    "Configuration": {
+        "Verbosity": "Normal"
+    },
+    "Logging": {
+        "Path": "C:\\logging",
+        "MaxFiles": 200,
+        "MaxTotalSize": "5MB"
+    },
+    "Assets": {
+        "Path": "Default"
+    }
+}
