@@ -91,4 +91,4 @@ function New-ConfigurationDocument {
 }
 
 
-$Script:PSHTML_CONFIGURATION = New-ConfigurationDocument -Path $ConfigFile -Force
+$Script:PSHTML_CONFIGURATION = [ConfigurationFile]::New($ConfigFile) #New-ConfigurationDocument -Path $ConfigFile -Force
