@@ -70,12 +70,10 @@ var myChart = new Chart(ctx,
                 $Bc = [DoughnutChart]::New()
                 $Body = $Bc.GetDefinitionBody()
                 $ShouldString = @"
-{
-    "type":  "doughnut",
-    "data":  null,
-    "options":  null
-}
+{"type":"doughnut","data":null,"options":null}
 "@
+                #$Body | should be $ShouldString
+                #$ShouldStringCleaned = Clear-WhiteSpace $ShouldString
                 $Body | should be $ShouldString
             }
 
@@ -97,10 +95,14 @@ var myChart = new Chart(ctx,
 
 "@
 
-
+$Should = @'
+var ctx = document.getElementById("CanvasID01").getContext('2d'); var myChart = new Chart(ctx, {"type":"doughnut","data":null,"options":null} );
+'@
                 $Is = $Bc.GetDefinition($CanvasID)
 
-                $is | should be $ShouldStringFull
+                #$is | should be $ShouldStringFull
+                #$ShouldStringFullCleaned = Clear-WhiteSpace $ShouldStringFull
+                $Is | should be $Should
 
             }
 
