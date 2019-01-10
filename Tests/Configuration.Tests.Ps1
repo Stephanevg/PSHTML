@@ -13,32 +13,38 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
 Describe "Testing Configuration" {
+    $Var = Get-pshtmlConfiguration
 
-    it 'Should load variable: PSHTML_Configuration'{
-        Get-Variable PSHTML_Configuration | should not be nullOrEmpty
+    it 'Get-PSHTMLConfiguration Should not Throw'{
+        {Get-pshtmlConfiguration} | should not throw
+        Get-pshtmlConfiguration | Should Not be NullOrEmpty
+    }
+
+    it 'Should load variable: Var'{
+        $Var | should not be nullOrEmpty
     }
     it 'Variable Should of type: [ConfigurationFile]'{
-        $PSHTML_Configuration.GetType().FullName | should -Be "ConfigurationFile"
+        $Var.GetType().FullName | should -Be "ConfigurationFile"
     }
     Context 'Correct data:'{
 
-        it 'Should load variable: PSHTML_Configuration: AssetConfig'{
-            $PSHTML_Configuration.GetAssetsConfig() | should not be nullOrEmpty
+        it 'Should load variable: Var: AssetConfig'{
+            $Var.GetAssetsConfig() | should not be nullOrEmpty
         }
-        it 'Should load variable: PSHTML_Configuration: GeneralConfig'{
-            $PSHTML_Configuration.GetGeneralConfig() | should not be nullOrEmpty
+        it 'Should load variable: Var: GeneralConfig'{
+            $Var.GetGeneralConfig() | should not be nullOrEmpty
         }
-        it 'Should load variable: PSHTML_Configuration: LogConfig'{
-            $PSHTML_Configuration.GetLogConfig() | should not be nullOrEmpty
+        it 'Should load variable: Var: LogConfig'{
+            $Var.GetLogConfig() | should not be nullOrEmpty
         }
     }
 
     Context 'Assets'{
         it 'Should return list of assets'{
-            $PSHTML_Configuration.GetAsset() | should not be nullOrEmpty
+            $Var.GetAsset() | should not be nullOrEmpty
         }
         it 'Should return specific asset (chart)'{
-            $PSHTML_Configuration.GetAsset('Chart') | should not be nullOrEmpty
+            $Var.GetAsset('Chart') | should not be nullOrEmpty
         }
     }
 }
