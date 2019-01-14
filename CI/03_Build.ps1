@@ -18,7 +18,7 @@ $DAte = Get-DAte
 
 Write-Host "[BUILD][Code] Loading Class, public and private functions" -ForegroundColor RED -BackgroundColor White
 
-$PublicClasses = Get-ChildItem -Path "$CodeSourcePath\Classes\" -Filter *.ps1 | sort Name
+$PublicClasses = Get-ChildItem -Path "$CodeSourcePath\Classes\" -Filter *.ps1 | sort-object Name
 $PrivateFunctions = Get-ChildItem -Path "$CodeSourcePath\Functions\Private" -Filter *.ps1
 $PublicFunctions = Get-ChildItem -Path "$CodeSourcePath\Functions\Public" -Filter *.ps1
 
@@ -41,7 +41,7 @@ Foreach($file in $MainPSM1Contents){
 $PostContentPath = Join-Path -Path $Current -ChildPath "03_postContent.ps1"
 $file = Get-item $PostContentPath
 Gc $File.FullName | out-File -FilePath $ExportPath -Encoding utf8 -Append
-start $ExportPath
+
 
 
 Write-Host "[BUILD][END][MAIN PSM1] building main PSM1 " -ForegroundColor RED -BackgroundColor White
