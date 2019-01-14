@@ -1,5 +1,3 @@
-#Dot sourcing in psm1 works fine, up until we want to access a type that is dotsourced in the psm1.
-#Then, we need to use a nested module.
 
 Class ConfigurationFile {
 
