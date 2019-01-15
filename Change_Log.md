@@ -1,4 +1,4 @@
-# Overview of Chagnes
+# Overview of Changes
 
 ## v0.7.1
 - Improved modue loading time by 91% (!!) by switching to single psm1 file.
