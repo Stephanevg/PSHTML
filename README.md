@@ -113,7 +113,7 @@ Find here a few examples where people already used PSHTML in various awesome way
 
 - [Blog post](http://chen.about-powershell.com/2018/12/experiment-using-pshtml-in-node-js-and-host-a-azure-web-app/) about hosting a website on an Azure webApp using PSHTML and NodeJS. Thanks [@ChendrayanV](https://twitter.com/ChendrayanV)!
 - Blog post demonstrating how to [autorefresh pages with Polaris and PSHTML](https://chen.about-powershell.com/2018/10/auto-refresh-polaris-page-to-retrieve-status-using-pshtml/). Thanks [@ChendrayanV](https://twitter.com/ChendrayanV)!
-- [Docker Image](https://hub.docker.com/r/stijnc/pshtml/tags/) with Polaris and PSHTML. Thanks [@StijnCa](https://twitter.com/StijnCa).
+- [Docker Image](https://hub.docker.com/r/stijnc/eleu2018k8sweb) with Polaris and PSHTML. Thanks [@StijnCa](https://twitter.com/StijnCa).
 - [Build your own API](https://livestream.com/accounts/26955461/PSConfAsia/videos/182130806) Presentation by [@ravikanth](https://twitter.com/ravikanth) at PSConfAsia. The PSHTML part starts at 31 minutes, however it is worth to watch the whole video.
 
 ## Contribute
