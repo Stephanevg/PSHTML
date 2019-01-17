@@ -140,9 +140,17 @@ Class Logger{
         #$this.Logfile = $PSHTML_CONFIG.Logging.Path
         $this.Logfile = "$env:HOME/Logging.log"
     }
+    Logger ($Path){
+        $IOF = [System.IO.FileInfo]$Path
+        If(!($IOF.Directory.Exists)){
+            $IOF.Directory.Create()
+        }
+        
+        $this.Logfile = $Path
+    }
 
     Log($Message){
-        $sw = [System.IO.StreamWriter]::new($this.LogFile, [System.Text.Encoding]::UTF8)
+        $sw = [System.IO.StreamWriter]::new($this.LogFile,$true,[System.Text.Encoding]::UTF8)
         $sw.WriteLine($Message)
         $sw.Close()
     }
@@ -152,6 +160,7 @@ Class LogMessage {
     [MessageType]$Type
     $message
     $Timestamp 
+    hidden $TypePrefix
 
     LogMessage (){
         $this.Timestamp = get-date -uformat '%Y%m%d-%T'
@@ -168,34 +177,46 @@ Class LogMessage {
 
     [String] ToString(){
 
-        $typeprefix = '[OK   ]'
+        $this.typeprefix = '[OK   ]'
         switch ($this.type){
             information {
                 $eventType = "Information"
-                $typeprefix = 'INFO '
+                $this.typeprefix = 'INFO '
                 break;
             }
             warning{
                 $eventType = "Warning"
-                $typeprefix = 'WARN '
+                $this.typeprefix = 'WARN '
                 break;
             }
             error{
                 $eventType = "Error"
-                $typeprefix = 'ERROR'
+                $this.typeprefix = 'ERROR'
                 break;
             }
             default {
                 $eventType = "Information"
-                $typeprefix = 'INFO '
+                $this.typeprefix = 'INFO '
                
             }
         }
 
-        return "[{0}][{1}] -> {2}" -f $this.Timestamp,$typeprefix,$this.message
+        return $this.FormatMessage()
         #[$this.timestamp] + $typeprefix + $this.Message
+    }
+    [String]FormatMessage(){
+        return "[{0}][{1}] -> {2}" -f $this.Timestamp,$this.Typeprefix,$this.message
+    }
+
+    Static [String] FormatMessage([String]$MessageType,[String]$msg){
+        $Ts = get-date -uformat '%Y%m%d-%T'
+        If(!($MessageType)){
+            $MessageType = "INFO "
+
+        }
+
+        return "[{0}][{1}] -> {2}" -f $Ts,$MessageType,$msg
     }
 
 }
 
-[Logfile]::New()
