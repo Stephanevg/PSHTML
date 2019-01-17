@@ -21,8 +21,8 @@ Class ConfigurationFile {
         $this.LoadConfigurationData()
     }
 
-    [ConfigurationLog]GetLogConfig(){
-        return $this.Data.Logging
+    [ConfigurationLog]GetConfigurationLog(){
+        return $this.Data.GetConfigurationLog()
     }
 
     [ConfigurationAssets]GetAssetsConfig(){
@@ -38,18 +38,62 @@ Class ConfigurationFile {
     [String]GetAsset($Name){
         return $this.Data.Assets.Assets.$($Name)
     }
+
+    [Void]SetLogConfig([ConfigurationLog]$LogDocument){
+        $this.Data.SetConfigurationLog($LogDocument)
+    }
+
+    [String]GetLogfilePath(){
+        Return $this.Data.GetLogFilePath()
+    }
+    
+
+    
 }
 
 
 Class ConfigurationLog {
     [System.IO.FileInfo]$Path
-    [int]$MaxFiles
-    $MaxTotalSize
+    [int]$MaxFiles = 200
+    $MaxTotalSize = 5
+    hidden $Logfilename = "PSHTML.Log"
+
+    ConfigurationLog(){
+        $DefPath = $this.GetDefaultLogFolderPath()
+        $This.Path = $this.NewLogFile($DefPath)
+
+    }
+
+    ConfigurationLog ([System.IO.FileInfo]$Path){
+        $this.Path = $Path
+    }
+
+    ConfigurationLog ([System.IO.DirectoryInfo]$Path){
+        $this.Path = $this.NewLogFile($Path)
+    }
 
     ConfigurationLog([System.IO.FileInfo]$Path,[int]$Maxfiles,$MaxTotalSize){
         $this.Path = $Path
         $this.MaxFiles = $Maxfiles
         $this.MaxTotalSize = $MaxTotalSize
+    }
+
+    [System.IO.FileInfo] Hidden NewLogFile([System.IO.DirectoryInfo]$Directory){
+
+        Return [System.IO.FileInfo]([System.io.Path]::Combine($Directory.FullName,$this.Logfilename))
+    }
+
+    [String]GetLogfilePath(){
+        Return $This.Path.FullName
+    }
+
+    [String]GetDefaultLogFolderPath(){
+        if($global:IsLinux){
+            $p = "/tmp/pshtml/"
+        }Else{
+            $p = Join-Path $Env:Temp -ChildPath "pshtml"
+        }
+        return $p
     }
 }
 
@@ -90,7 +134,26 @@ Class PSHTMLConfiguration{
 
     PSHTMLConfiguration([System.IO.FileInfo]$Path){
         $json = (gc -Path $Path | ConvertFrom-Json)
-        $this.Logging = [ConfigurationLog]::New($json.Logging.Path,$json.Logging.MaxFiles,$json.Logging.MaxTotalSize)
+        if($json.Logging.Path -Eq 'default' -or $json.logging.Path -eq ""){
+            
+                if($global:IsLinux){
+                    
+                    $LogPath = "/tmp/pshtml/pshtml.log"
+                }Else{
+                    $LogPath = Join-Path $Env:ProgramData -ChildPath "pshtml/pshtml.log"
+                }
+
+
+
+        }else{
+            $P = Join-Path $json.logging.Path -ChildPath 'pshtml.log'
+            #$pa = [System.IO.Path]::Combine($P.FullName,'pshtml.log')
+            $LogPath = $P
+        }
+
+
+
+        $this.Logging = [ConfigurationLog]::New($LogPath,$json.Logging.MaxFiles,$json.Logging.MaxTotalSize)
         if($json.Assets.Path.Tolower() -eq 'default' -or $json.Assets.Path -eq '' ){
             $root = $Path.Directory.FullName
             $AssetsPath = "$Root/Assets"
@@ -101,12 +164,53 @@ Class PSHTMLConfiguration{
         $this.General = [ConfigurationGeneral]::New($Json.Configuration.Verbosity)
     }
 
+    [ConfigurationLog] GetConfigurationLog(){
+        return $this.Logging
+    }
 
+    [ConfigurationGeneral] GetConfigurationGeneral(){
+        return $this.General
+    }
+
+    [ConfigurationAssets] GetConfigurationAssets(){
+        return $this.Assets
+    }
+
+    SetConfigurationLog([ConfigurationLog]$LogDocument){
+        $this.Logging = $LogDocument
+    }
    
+    [String]GetLogfilePath(){
+        return $this.Logging.GetLogfilePath()
+    }
 
+    [String]GetDefaultLogFolderPath(){
+        return $this.Logging.GetDefaultLogFolderPath()
+    }
 }
 
+function New-Logfile {
+    [CmdletBinding()]
+    param (
+        
+        $Path = {Throw "Path parameter is mandatory."}
+    )
+    
+    begin {
+    }
+    
+    process {
+        if($Path -is [System.IO.DirectoryInfo] -or $Path -is [System.IO.fileInfo]){
 
+            Return [ConfigurationLog]::New($Path)
+        }Else{
+            Throw "Log file is of wrong type. Please specify a System.IO.DirectoryInfo or System.IO.fileIno type."
+        }
+    }
+    
+    end {
+    }
+}
 function New-ConfigurationDocument {
     [CmdletBinding()]
     param (
