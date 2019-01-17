@@ -1,4 +1,4 @@
-﻿#Generated at 01/17/2019 23:54:34 by Stephane van Gulick
+﻿#Generated at 01/18/2019 00:17:05 by Stephane van Gulick
 
 Class ConfigurationFile {
 
@@ -90,7 +90,7 @@ Class ConfigurationLog {
 
     [String]GetDefaultLogFolderPath(){
         if($global:IsLinux){
-            $p = "/var/log/pshtml/"
+            $p = "/tmp/pshtml/"
         }Else{
             $p = Join-Path $Env:Temp -ChildPath "pshtml"
         }
@@ -138,7 +138,8 @@ Class PSHTMLConfiguration{
         if($json.Logging.Path -Eq 'default' -or $json.logging.Path -eq ""){
             
                 if($global:IsLinux){
-                    $LogPath = "/var/log/pshtml/pshtml.log"
+                    
+                    $LogPath = "/tmp/pshtml/pshtml.log"
                 }Else{
                     $LogPath = Join-Path $Env:ProgramData -ChildPath "pshtml/pshtml.log"
                 }

@@ -137,7 +137,8 @@ Class PSHTMLConfiguration{
         if($json.Logging.Path -Eq 'default' -or $json.logging.Path -eq ""){
             
                 if($global:IsLinux){
-                    $LogPath = "/var/log/pshtml/pshtml.log"
+                    
+                    $LogPath = "/tmp/pshtml/pshtml.log"
                 }Else{
                     $LogPath = Join-Path $Env:ProgramData -ChildPath "pshtml/pshtml.log"
                 }
