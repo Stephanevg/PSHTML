@@ -89,10 +89,16 @@ Describe "Testing Configuration" {
         }
 
         It 'SetLogdocument'{
+            if($IsLinux){
+                $LogDocument = New-Logfile -Path ([system.io.DirectoryInfo]"/tmp/woop/")
+                $var.SetLogConfig($Logdocument)
+                $Var.GetLogfilePath() | Should be "/tmp/woop/pshtml.log"
+            }else{
 
-            $LogDocument = New-Logfile -Path ([system.io.DirectoryInfo]"C:\temp\pshtml")
-            $var.SetLogConfig($Logdocument)
-            $Var.GetLogfilePath() | Should be "C:\Temp\pshtml\pshtml.log"
+                $LogDocument = New-Logfile -Path ([system.io.DirectoryInfo]"C:\temp\pshtml")
+                $var.SetLogConfig($Logdocument)
+                $Var.GetLogfilePath() | Should be "C:\Temp\pshtml\pshtml.log"
+            }
         }
         
     }
