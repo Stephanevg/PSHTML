@@ -89,7 +89,7 @@ Class ConfigurationLog {
 
     [String]GetDefaultLogFolderPath(){
         if($global:IsLinux){
-            $p = "/var/log/pshtml/"
+            $p = "/tmp/pshtml/"
         }Else{
             $p = Join-Path $Env:Temp -ChildPath "pshtml"
         }

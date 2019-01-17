@@ -80,7 +80,7 @@ Describe "Testing Configuration" {
         It 'Get-LogfilePath | With default value'{
             
             if($IsLinux){
-                $DefaultPath = "/var/log/pshtml/"
+                $DefaultPath = "/tmp/pshtml/"
             }else{
                 $DefaultPath = Join-Path $env:ProgramData -ChildPath 'pshtml'
             }
