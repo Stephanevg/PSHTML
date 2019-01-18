@@ -1,5 +1,9 @@
 # Overview of Changes
 
+## v0.7.2
+- Added support log file 👍
+- Added public functions to export.
+
 ## v0.7.1
 - Improved modue loading time by 91% (!!) by switching to single psm1 file.
 - Added support for configuration 👍
