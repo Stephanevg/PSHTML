@@ -91,7 +91,7 @@ Class ConfigurationLog {
         if($global:IsLinux){
             $p = "/tmp/pshtml/"
         }Else{
-            $p = Join-Path $Env:Temp -ChildPath "pshtml"
+            $p = Join-Path $Env:ProgramData -ChildPath "pshtml/pshtml.log"
         }
         return $p
     }
