@@ -1,4 +1,4 @@
-﻿#Generated at 01/18/2019 00:17:05 by Stephane van Gulick
+﻿#Generated at 01/18/2019 10:15:42 by Stephane van Gulick
 
 Class ConfigurationFile {
 
@@ -92,7 +92,7 @@ Class ConfigurationLog {
         if($global:IsLinux){
             $p = "/tmp/pshtml/"
         }Else{
-            $p = Join-Path $Env:Temp -ChildPath "pshtml"
+            $p = Join-Path $Env:ProgramData -ChildPath "pshtml/pshtml.log"
         }
         return $p
     }
