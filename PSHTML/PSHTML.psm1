@@ -1,4 +1,4 @@
-﻿#Generated at 01/24/2019 17:31:03 by Stephane van Gulick
+#Generated at 01/24/2019 17:31:03 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -144,7 +144,7 @@ Class LogSettings : Setting {
         if($global:IsLinux){
             $p = "/tmp/pshtml/"
         }Else{
-            $p = Join-Path $Env:Temp -ChildPath "pshtml"
+            $p = Join-Path $Env:ProgramData -ChildPath "pshtml/pshtml.log"
         }
         return $p
     }
