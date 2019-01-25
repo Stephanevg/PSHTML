@@ -1,79 +1,131 @@
-﻿#Generated at 01/18/2019 00:17:05 by Stephane van Gulick
+﻿#Generated at 01/24/2019 17:31:03 by Stephane van Gulick
 
-Class ConfigurationFile {
-
-    [System.IO.FileInfo]$Path = "$PSScriptRoot/pshtml.configuration.json"
-    [PSHTMLConfiguration]$Data
-
-    ConfigurationFile (){
-        $this.LoadConfigurationData()
-    }
-
-    ConfigurationFile ([System.IO.FileInfo]$Path){
-        $this.SetConfigurationFile($Path)
-    }
-
-    [void]LoadConfigurationData(){
-        $This.Data = [PSHTMLConfiguration]::New($this.Path)
-    }
-
-    SetConfigurationFile([System.IO.FileInfo]$Path){
-        $this.Path = $Path
-        $this.LoadConfigurationData()
-    }
-
-    [ConfigurationLog]GetConfigurationLog(){
-        return $this.Data.GetConfigurationLog()
-    }
-
-    [ConfigurationAssets]GetAssetsConfig(){
-        return $this.Data.Assets
-    }
-
-    [ConfigurationGeneral]GetGeneralConfig(){
-        return $this.Data.General
-    }
-    [HashTable[]]GetAsset(){
-        return $this.Data.Assets.Assets
-    }
-    [String]GetAsset($Name){
-        return $this.Data.Assets.Assets.$($Name)
-    }
-
-    [Void]SetLogConfig([ConfigurationLog]$LogDocument){
-        $this.Data.SetConfigurationLog($LogDocument)
-    }
-
-    [String]GetLogfilePath(){
-        Return $this.Data.GetLogFilePath()
-    }
-    
-
-    
+Enum SettingType {
+    General
+    Asset
+    Log
 }
 
+Enum AssetType {
+    Script
+    Style
+}
 
-Class ConfigurationLog {
+Class ConfigurationDocument {
+
+    [System.IO.FileInfo]$Path = "$PSScriptRoot/pshtml.configuration.json"
+    [Setting[]]$Settings
+    [Asset[]]$Assets
+
+    #Constructors
+    ConfigurationDocument (){
+        $this.Load()
+    }
+
+    ConfigurationDocument ([System.IO.FileInfo]$Path){
+        $this.Path = $Path
+        $this.Load()
+    }
+
+    #Methods
+    [void]Load(){
+        #Read data from json
+        $this.Settings = [SettingFactory]::Parse($This.Path)
+        $AssetsFolder = Join-Path $This.Path.Directory -ChildPath "Assets"
+        $this.Assets = [AssetsFactory]::CreateAssets($AssetsFolder)
+    }
+
+    [void]Load([System.IO.FileInfo]$Path){
+        $this.Path = $Path
+        $this.Load()
+    }
+
+    [Setting[]]GetSetting(){
+        return $this.Settings
+    }
+
+    [Setting[]]GetSetting([SettingType]$Type){
+        return $this.Settings | ? {$_.Type -eq $type}
+    }
+
+    [Asset[]]GetAsset(){
+        return $this.Assets
+    }
+
+    [Asset[]]GetAsset([AssetType]$Type){
+        return $this.Assets | ? {$_.Type -eq $type}
+    }
+
+    [Void]AddAsset([Asset]$Asset){
+        $this.Assets += $Asset
+    }
+
+    [Void]hidden LoadDataFromFile(){
+        if(!(test-Path $this.Path.FullName)){
+            throw "No configuration file found at $($this.Path.FullName)"
+        }
+        $this.Load()
+
+    }
+
+    [void]hidden LoadLogSettings(){
+
+    }
+
+    [String]GetDefaultLogFilePath(){
+        return $this.GetSetting("Log").GetLogfilePath()
+    }
+
+
+}
+
+Class Setting{
+    [SettingType]$Type
+
+    [SettingType] GetSettingType(){
+        Return $This.Type
+    }
+
+    SetSettingType([SettingType]$SettingType){
+        $This.Type = $SettingType
+    }
+
+}
+
+Class LogSettings : Setting {
+    
     [System.IO.FileInfo]$Path
     [int]$MaxFiles = 200
     $MaxTotalSize = 5
     hidden $Logfilename = "PSHTML.Log"
+    [SettingType]$Type = "Log"
 
-    ConfigurationLog(){
+    LogSettings(){
         $DefPath = $this.GetDefaultLogFolderPath()
         $This.Path = $this.NewLogFile($DefPath)
-
     }
 
-    ConfigurationLog ([System.IO.FileInfo]$Path){
+    LogSettings([PsCustomObject]$Object){
+        $this.MaxFiles = $Object.MaxFiles
+        $this.MaxTotalSize = $Object.MaxTotalSIze
+
+        if($Object.Path.ToLower() -eq "default" -or $Object.Path -eq ""){
+            $DefPath = $this.GetDefaultLogFolderPath()
+            $This.Path = $this.NewLogFile($DefPath)
+        }else{
+            $this.Path = $Object.Path
+        }
+    }
+
+    LogSettings ([System.IO.FileInfo]$Path){
         $this.Path = $Path
     }
 
-    ConfigurationLog ([System.IO.DirectoryInfo]$Path){
+    LogSettings ([System.IO.DirectoryInfo]$Path){
         $this.Path = $this.NewLogFile($Path)
     }
 
-    ConfigurationLog([System.IO.FileInfo]$Path,[int]$Maxfiles,$MaxTotalSize){
+    LogSettings([System.IO.FileInfo]$Path,[int]$Maxfiles,$MaxTotalSize){
         $this.Path = $Path
         $this.MaxFiles = $Maxfiles
         $this.MaxTotalSize = $MaxTotalSize
@@ -98,40 +150,159 @@ Class ConfigurationLog {
     }
 }
 
-Class ConfigurationAssets{
-
-    [System.IO.DirectoryInfo]$Path
-    [hashtable[]]$Assets
-
-    ConfigurationAssets([System.IO.DirectoryInfo]$Path){
-        
-        $this.Path = $Path
-
-        $Folders = Get-ChildItem -Path $Path -Directory
-        Foreach($f in $folders){
-            $Hash = @{}
-            $Hash.$($f.Name) = $F.FullName
-            $This.Assets += $Hash
-        }
-    }
-}
-
-Class ConfigurationGeneral{
+Class GeneralSettings : Setting{
 
     [String]$Verbosity
-
-    ConfigurationGeneral([String]$Verbosity){
-        $this.Verbosity = $Verbosity
+    [Version]$Version
+    [SettingType]$Type = "General"
+    GeneralSettings([PsCustomObject]$Object){
+        $this.Verbosity = $Object.Verbosity
+        $this.Version = $Object.Version
+        $this.SetSettingType("General")
     }
 
-
+    GeneralSettings([String]$Verbosity,[Version]$Version){
+        $this.Verbosity = $Verbosity
+        $This.Version = $Version
+        $this.SetSettingType("General")
+    }
 }
 
+Class AssetSettings : Setting {
+    [System.IO.FileInfo]$Path
+    [Bool]$DefaultPath
+    [SettingType]$Type = "Asset"
+
+    AssetSettings([PsCustomObject]$Object,[System.Io.DirectoryInfo]$ModuleRootPath){
+        $this.SetSettingType("Asset")
+        If ($Object.Path -eq 'Default' -or $Object.Path -eq ""){
+            
+            $this.Path = Join-Path $ModuleRootPath.FullName -ChildPath "Assets"
+            $this.DefaultPath = $True
+        }Else{
+            $this.Path = $Object.Path
+            $This.DefaultPath = $false
+        }
+    }
+<#
+
+if($json.Assets.Path.Tolower() -eq 'default' -or $json.Assets.Path -eq '' ){
+    $root = $this.Path.Directory.FullName
+    $AssetsPath = "$Root/Assets"
+}Else{
+    $AssetsPath = $json.Assets.Path
+}
+#>
+
+    [Bool]IsPathDefault(){
+        return $this.DefaultPath
+    }
+}
+
+
+
+Class SettingFactory{
+
+    static [Setting] CreateSetting([System.IO.FileInfo]$Path){
+
+        $JsonData = ConvertFrom-Json (gc $Path -raw)
+        If($JsonData){
+            $Keys = $JsonData.Psobject.Properties.GetEnumerator().Name
+
+            Foreach($key in $Keys){
+    
+                Switch($Key){
+                    "General"{
+                        return [GeneralSettings]::new($JsonData.$Key)
+                    }
+                    "Logging"{
+                        Return [LogSettings]::New($JsonData.$Key)
+                    }
+                    "Assets"{
+                        REturn [AssetSettings]::New($JsonData.$Key)
+                    }
+                    Default {
+                        Throw "Configuration $_ Not implemented."
+                    }
+                }
+            }
+            Throw "Configuration $($PAth.FullName) Not implemented."
+        }else{
+            throw "Config file not found"
+        }
+    }
+
+    #Return a single setting 'part' (eg: General,Assets,Logging)
+    static [Setting] CreateSetting([String]$Name,[System.IO.FileInfo]$ConfigurationFilePath){
+
+        $JsonData = ConvertFrom-Json (gc $ConfigurationFilePath -raw)
+        If($JsonData){
+            #$Keys = $JsonData.Psobject.Properties.GetEnumerator().Name
+            $RootModulePath = $ConfigurationFilePath.Directory.FullName
+                Switch($Name){
+                    "General"{
+                        return [GeneralSettings]::new($JsonData.$Name)
+                    }
+                    "Logging"{
+                        Return [LogSettings]::New($JsonData.$Name)
+                    }
+                    "Assets"{
+                        
+                        Return [AssetSettings]::New($JsonData.$Name,$RootModulePath)
+                    }
+                    Default {
+                        Throw "Configuration $_ Not implemented."
+                    }
+                }
+            
+            Throw "Configuration $($ConfigurationFilePath.FullName) Not implemented."
+        }else{
+            throw "Config file not found"
+        }
+    }
+
+    #Returns all the setting parts that exists in the config file.
+    static [Setting[]] Parse([System.IO.FileInfo]$ConfigurationFilePath){
+        $AllSettings = @()
+        $JsonData = ConvertFrom-Json (gc $ConfigurationFilePath -raw)
+        If($JsonData){
+            $Keys = $JsonData.Psobject.Properties.GetEnumerator().Name
+            $RootModulePath = $ConfigurationFilePath.Directory.FullName
+            Foreach($Name in $Keys){
+
+                Switch($Name){
+                    "General"{
+                        $AllSettings += [GeneralSettings]::new($JsonData.$Name)
+                        ;Break
+                    }
+                    "Logging"{
+                        $AllSettings += [LogSettings]::New($JsonData.$Name)
+                        ;Break
+                    }
+                    "Assets"{
+                        
+                        $AllSettings += [AssetSettings]::New($JsonData.$Name,$RootModulePath)
+                        ;Break
+                    }
+                    Default {
+                        Throw "Configuration $_ Not implemented."
+                    }
+                }
+            }
+            
+            Return $AllSettings
+        }else{
+            throw "Config file not found $($ConfigurationFilePath)- or config file is empty"
+        }
+    }
+
+}
+<#
 Class PSHTMLConfiguration{
 
-    [ConfigurationGeneral]$General
+    [GeneralSetting]$General
     [ConfigurationAssets]$Assets
-    [ConfigurationLog]$Logging
+    [LogSettings]$Logging
 
     PSHTMLConfiguration([System.IO.FileInfo]$Path){
         $json = (gc -Path $Path | ConvertFrom-Json)
@@ -144,8 +315,6 @@ Class PSHTMLConfiguration{
                     $LogPath = Join-Path $Env:ProgramData -ChildPath "pshtml/pshtml.log"
                 }
 
-
-
         }else{
             $P = Join-Path $json.logging.Path -ChildPath 'pshtml.log'
             #$pa = [System.IO.Path]::Combine($P.FullName,'pshtml.log')
@@ -154,7 +323,7 @@ Class PSHTMLConfiguration{
 
 
 
-        $this.Logging = [ConfigurationLog]::New($LogPath,$json.Logging.MaxFiles,$json.Logging.MaxTotalSize)
+        $this.Logging = [LogSettings]::New($LogPath,$json.Logging.MaxFiles,$json.Logging.MaxTotalSize)
         if($json.Assets.Path.Tolower() -eq 'default' -or $json.Assets.Path -eq '' ){
             $root = $Path.Directory.FullName
             $AssetsPath = "$Root/Assets"
@@ -162,32 +331,163 @@ Class PSHTMLConfiguration{
             $AssetsPath = $json.Assets.Path
         }
         $this.Assets = [ConfigurationAssets]::New($AssetsPath)
-        $this.General = [ConfigurationGeneral]::New($Json.Configuration.Verbosity)
+        $this.General = [GeneralSetting]::New($Json.Configuration.Verbosity)
     }
 
-    [ConfigurationLog] GetConfigurationLog(){
-        return $this.Logging
+
+}
+#>
+# Assets
+
+Class AssetsFactory{
+
+    Static [Asset] CreateAsset([System.Io.FileInfo]$AssetPath){
+        
+        switch($AssetPath.Extension){
+            ".js" {
+                Return [ScriptAsset]::new($AssetPath)
+                ;Break
+            }
+            ".css"{
+                Return [StyleAsset]::new($AssetPath)
+                ;Break
+            }
+            default{
+                Throw "$($AssetPath.Extenion) is not a supported asset aaa type."
+            }
+        }
+
+        Throw "$($AssetPath.FullName) Is not a supported Asset Type."
+        
     }
 
-    [ConfigurationGeneral] GetConfigurationGeneral(){
-        return $this.General
+    Static [Asset[]] CreateAssets([System.IO.DirectoryInfo]$AssetsFolderPath) {
+        $Directories = Get-ChildItem $AssetsFolderPath -Directory
+        $AllItems = @()
+
+        Foreach($Directory in $Directories){
+            $Items = $Directory | Get-ChildItem  -File | ? {$_.Extension -eq ".js" -or $_.Extension -eq ".css"} #If performance becomes important. Change this to -Filter
+            Foreach($Item in $Items){
+                if(!($Item)){
+                    Continue
+                }
+
+                try{
+
+                    $Type = [AssetsFactory]::GetAssetType($Item)
+                }Catch{
+                    
+                    continue
+                }
+               
+                Switch($Type){
+                    "Script" {
+                        $AllItems += [ScriptAsset]::new($Item)
+                        Break;
+                    }
+                    "Style"{
+                        $AllItems += [StyleAsset]::new($Item)
+                        ;Break
+                    }
+                }
+            }
+        }
+
+        Return $AllItems
     }
 
-    [ConfigurationAssets] GetConfigurationAssets(){
-        return $this.Assets
+    hidden Static [AssetType]GetAssetType([System.IO.FileInfo]$File){
+    
+
+        switch($File.Extension){
+            ".js" {
+                Return [AssetType]::Script
+                ;Break
+            }
+            ".css"{
+                Return [AssetType]::Style
+                ;Break
+            }
+            default{
+                return $null
+            }
+            
+        }
+        return $null
+        #Throw "$($File.Extenion) is not a supported asset type."
+        
+    }
+}
+
+Class Asset{
+
+    [String]$Name
+    [System.IO.DirectoryInfo]$FolderPath
+    [System.IO.FileInfo]$FilePath
+    [String]$RelativePath
+    [AssetType]$Type
+
+    Asset(){}
+    
+    Asset([System.IO.FileInfo]$FilePath){
+        
+        $this.FilePath = $FilePath
+        $this.Parse()
+        
     }
 
-    SetConfigurationLog([ConfigurationLog]$LogDocument){
-        $this.Logging = $LogDocument
-    }
-   
-    [String]GetLogfilePath(){
-        return $this.Logging.GetLogfilePath()
+    Asset([System.IO.DirectoryInfo]$Path){
+        
+        $this.FolderPath = $Path
+        $this.Parse()
+        
     }
 
-    [String]GetDefaultLogFolderPath(){
-        return $this.Logging.GetDefaultLogFolderPath()
+    Parse(){
+        $this.FolderPath = $this.FilePath.Directory
+        $this.SetRelativePath()
+        $this.SetName() #I am here
+        <#
+        
+        $Folders = Get-ChildItem -Path $This.Path -Directory
+        Foreach($f in $folders){
+            $Hash = @{}
+            $Hash.$($f.Name) = $F.FullName
+            $This.Assets += $Hash
+        }
+        #>
     }
+
+    [Void]SetName(){
+        $this.Name = $This.FolderPath.Name
+    }
+
+    [Void]SetRelativePath(){
+        $This.RelativePath = [System.Io.Path]::Combine($This.FilePath.Directory.Name,$this.FilePath.Name)
+    }
+
+    [String]GetRelativeRelativePath(){
+        return $this.RelativePath
+    }
+
+    [String]ToString(){
+        Throw "must be overwritten"
+    }
+}
+
+Class ScriptAsset : Asset {
+    ScriptAsset ([System.IO.FileInfo]$FilePath) : base([System.IO.FileInfo]$FilePath) { }
+    ScriptAsset ([System.IO.DirectoryInfo]$Path) : base([System.IO.DirectoryInfo]$Path) { }
+}
+
+Class StyleAsset : Asset {
+    StyleAsset ([System.IO.FileInfo]$FilePath) : base([System.IO.FileInfo]$FilePath) { 
+        $this.Type = [AssetType]::Style
+    }
+    StyleAsset ([System.IO.DirectoryInfo]$Path) : base([System.IO.DirectoryInfo]$Path) {
+        $this.Type = [AssetType]::Style
+     }
+
 }
 
 function New-Logfile {
@@ -203,7 +503,7 @@ function New-Logfile {
     process {
         if($Path -is [System.IO.DirectoryInfo] -or $Path -is [System.IO.fileInfo]){
 
-            Return [ConfigurationLog]::New($Path)
+            Return [LogSettings]::New($Path)
         }Else{
             Throw "Log file is of wrong type. Please specify a System.IO.DirectoryInfo or System.IO.fileIno type."
         }
@@ -212,7 +512,7 @@ function New-Logfile {
     end {
     }
 }
-function New-ConfigurationDocument {
+function Get-ConfigurationDocument {
     [CmdletBinding()]
     param (
         [System.IO.FileInfo]$Path,
@@ -224,10 +524,10 @@ function New-ConfigurationDocument {
     
     process {
         if($Path){
-            [ConfigurationFile]::New($Path)
+            [ConfigurationDocument]::New($Path)
         }Else{
 
-            [ConfigurationFile]::New()
+            [ConfigurationDocument]::New()
         }
     }
     
@@ -2132,6 +2432,50 @@ Function a {
 
 }
  
+function Add-PSHTMLAsset {
+    <#
+    .SYNOPSIS
+      Add script references to your PSHTML scripts.
+    .DESCRIPTION
+        Long description
+    .EXAMPLE
+        PS C:\> <example usage>
+        Explanation of what the example does
+    .INPUTS
+        Inputs (if any)
+    .OUTPUTS
+        Output (if any)
+    .NOTES
+        General notes
+    #>
+    [CmdletBinding()]
+    param (
+        [Switch]$Simple
+
+    )
+
+    Dynamicparam{
+        $ParamAttrib = New-Object  System.Management.Automation.ParameterAttribute
+        $ParamAttrib.Mandatory = $true
+        $ParamAttrib.ParameterSetName = '__AllParameterSets'
+
+        $AttribColl = New-Object  System.Collections.ObjectModel.Collection[System.Attribute]
+        $AttribColl.Add($ParamAttrib)
+        $configurationFileNames = Get-ChildItem -Path  'C:\ConfigurationFiles' | Select-Object -ExpandProperty Name
+        $AttribColl.Add((New-Object  System.Management.Automation.ValidateSetAttribute($configurationFileNames)))
+        $RuntimeParam = New-Object  System.Management.Automation.RuntimeDefinedParameter('Name', [string],  $AttribColl)
+    }
+    
+    begin {
+    }
+    
+    process {
+
+    }
+    
+    end {
+    }
+}
 Function address {
     <#
     .SYNOPSIS
@@ -3991,6 +4335,43 @@ Function Form {
     }
 }
 
+function Get-PSHTMLAssets {
+    <#
+    .SYNOPSIS
+        Returns existing PSHTML assets
+    .DESCRIPTION
+        Long description
+    .EXAMPLE
+        PS C:\> <example usage>
+        Explanation of what the example does
+    .INPUTS
+        Inputs (if any)
+    .OUTPUTS
+        Output (if any)
+    .NOTES
+        General notes
+    #>
+    [CmdletBinding()]
+    param (
+        $Name
+    )
+    
+    begin {
+    }
+    
+    process {
+        $Config = (Get-PSHTMLConfiguration)
+        If($Name){
+
+            $Config.GetAssetRelativePath($Name)
+        }Else{
+            $Config.GetAsset()
+        }
+    }
+    
+    end {
+    }
+}
 Function Get-PSHTMLConfiguration {
     <#
     .SYNOPSIS
@@ -7265,6 +7646,6 @@ New-Alias -Name Include -Value 'Get-PSHTMLTemplate' -Description "Include parts 
 $ConfigFile = Join-Path -Path $ScriptPath -ChildPath "pshtml.configuration.json"
 
 #Setting module variables
-    $Script:PSHTML_CONFIGURATION = New-ConfigurationDocument -Path $ConfigFile -Force
-    $Script:Logfile = $Script:PSHTML_CONFIGURATION.GetLogFilePath()
+    $Script:PSHTML_CONFIGURATION = Get-ConfigurationDocument -Path $ConfigFile -Force
+    $Script:Logfile = $Script:PSHTML_CONFIGURATION.GetDefaultLogFilePath()
     $Script:Logger = [Logger]::New($Script:LogFile)
