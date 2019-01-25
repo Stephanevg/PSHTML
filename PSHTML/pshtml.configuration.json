@@ -1,7 +1,7 @@
 {
-    "version":"1.0.0",
-    "Configuration": {
-        "Verbosity": "Normal"
+    "General": {
+        "Verbosity": "Normal",
+        "version":"1.0.0"
     },
     "Logging": {
         "Path": "Default",
