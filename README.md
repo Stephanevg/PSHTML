@@ -19,9 +19,11 @@ Since version `0.7.0` PSHTML supports the creation of charts.
 
 ## Status
 
-|master|dev|docs
-|---|---|---|
-[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/dev) | [![Documentation Status](https://readthedocs.org/projects/pshtml/badge/?version=latest)](https://pshtml.readthedocs.io/en/latest/?badge=latest) |
+|master|dev|docs|Downloads
+|---|---|---|---|
+[![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/dev) | [![Documentation Status](https://readthedocs.org/projects/pshtml/badge/?version=latest)](https://pshtml.readthedocs.io/en/latest/?badge=latest) | [![PSHTML](https://img.shields.io/powershellgallery/dt/pshtml.svg)](https://www.powershellgallery.com/packages/PSHTML/) |
+
+
 
 A change log is available [here](Change_Log.md)
 Known issues are tracked [here](Known_Issues.md)
