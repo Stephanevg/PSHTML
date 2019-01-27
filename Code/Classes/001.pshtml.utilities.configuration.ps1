@@ -51,8 +51,16 @@ Class ConfigurationDocument {
         return $this.Assets
     }
 
+    [Asset[]]GetAsset([String]$Name){
+        return $this.Assets | ? {$_.Name -eq $NAme}
+    }
+
     [Asset[]]GetAsset([AssetType]$Type){
         return $this.Assets | ? {$_.Type -eq $type}
+    }
+
+    [Asset[]]GetAsset([String]$Name,[AssetType]$Type){
+        return $this.Assets | ? {$_.Type -eq $type -and $_.Name -eq $Name}
     }
 
     [Void]AddAsset([Asset]$Asset){
@@ -413,10 +421,10 @@ Class Asset{
     }
 
     [Void]SetRelativePath(){
-        $This.RelativePath = [System.Io.Path]::Combine($This.FilePath.Directory.Name,$this.FilePath.Name)
+        $This.RelativePath = ([System.Io.Path]::Combine($This.FilePath.Directory.Name,$this.FilePath.Name)).Replace("\","/")
     }
 
-    [String]GetRelativeRelativePath(){
+    [String]GetRelativePath(){
         return $this.RelativePath
     }
 
@@ -428,6 +436,11 @@ Class Asset{
 Class ScriptAsset : Asset {
     ScriptAsset ([System.IO.FileInfo]$FilePath) : base([System.IO.FileInfo]$FilePath) { }
     ScriptAsset ([System.IO.DirectoryInfo]$Path) : base([System.IO.DirectoryInfo]$Path) { }
+
+    [String] ToString(){
+        $S = "<{0} src='{1}'></{0}>" -f "Script",$this.GetRelativePath()
+        Return $S
+    }
 }
 
 Class StyleAsset : Asset {
@@ -438,6 +451,10 @@ Class StyleAsset : Asset {
         $this.Type = [AssetType]::Style
      }
 
+     [String] ToString(){
+        $S = "<{0} src='{1}'></{0}>" -f "Link",$this.GetRelativePath()
+        Return $S
+    }
 }
 
 function New-Logfile {
