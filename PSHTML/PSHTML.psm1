@@ -1,4 +1,4 @@
-﻿#Generated at 01/29/2019 08:08:55 by Stephane van Gulick
+﻿#Generated at 01/29/2019 18:47:54 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -458,7 +458,7 @@ Class StyleAsset : Asset {
 
      [String] ToString(){
          #rel="stylesheet"
-        $S = "<{0} src='{1}' rel='{2}'>" -f "Link",$this.GetFullFilePath(),"stylesheet"
+        $S = "<{0} rel='{1}' type={2} href='{3}' >" -f "Link","stylesheet","text/css",$this.GetFullFilePath()
         Return $S
     }
 }

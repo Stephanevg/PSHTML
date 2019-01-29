@@ -457,7 +457,7 @@ Class StyleAsset : Asset {
 
      [String] ToString(){
          #rel="stylesheet"
-        $S = "<{0} src='{1}' rel='{2}'>" -f "Link",$this.GetFullFilePath(),"stylesheet"
+        $S = "<{0} rel='{1}' type={2} href='{3}' >" -f "Link","stylesheet","text/css",$this.GetFullFilePath()
         Return $S
     }
 }

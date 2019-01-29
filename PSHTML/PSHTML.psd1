@@ -120,7 +120,7 @@ PrivateData = @{
         ReleaseNotes = 'https://github.com/Stephanevg/PSHTML/blob/master/Change_Log.md'
 
         # Prerelease string of this module
-        Prerelease = 'Beta'
+        Prerelease = "Gamma"
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update
         # RequireLicenseAcceptance = $false
