@@ -1,4 +1,4 @@
-#Generated at 01/24/2019 17:31:03 by Stephane van Gulick
+﻿#Generated at 01/29/2019 18:47:54 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -52,8 +52,16 @@ Class ConfigurationDocument {
         return $this.Assets
     }
 
+    [Asset[]]GetAsset([String]$Name){
+        return $this.Assets | ? {$_.Name -eq $NAme}
+    }
+
     [Asset[]]GetAsset([AssetType]$Type){
         return $this.Assets | ? {$_.Type -eq $type}
+    }
+
+    [Asset[]]GetAsset([String]$Name,[AssetType]$Type){
+        return $this.Assets | ? {$_.Type -eq $type -and $_.Name -eq $Name}
     }
 
     [Void]AddAsset([Asset]$Asset){
@@ -144,7 +152,7 @@ Class LogSettings : Setting {
         if($global:IsLinux){
             $p = "/tmp/pshtml/"
         }Else{
-            $p = Join-Path $Env:ProgramData -ChildPath "pshtml/pshtml.log"
+            $p = Join-Path $Env:Temp -ChildPath "pshtml"
         }
         return $p
     }
@@ -297,47 +305,7 @@ Class SettingFactory{
     }
 
 }
-<#
-Class PSHTMLConfiguration{
 
-    [GeneralSetting]$General
-    [ConfigurationAssets]$Assets
-    [LogSettings]$Logging
-
-    PSHTMLConfiguration([System.IO.FileInfo]$Path){
-        $json = (gc -Path $Path | ConvertFrom-Json)
-        if($json.Logging.Path -Eq 'default' -or $json.logging.Path -eq ""){
-            
-                if($global:IsLinux){
-                    
-                    $LogPath = "/tmp/pshtml/pshtml.log"
-                }Else{
-                    $LogPath = Join-Path $Env:ProgramData -ChildPath "pshtml/pshtml.log"
-                }
-
-        }else{
-            $P = Join-Path $json.logging.Path -ChildPath 'pshtml.log'
-            #$pa = [System.IO.Path]::Combine($P.FullName,'pshtml.log')
-            $LogPath = $P
-        }
-
-
-
-        $this.Logging = [LogSettings]::New($LogPath,$json.Logging.MaxFiles,$json.Logging.MaxTotalSize)
-        if($json.Assets.Path.Tolower() -eq 'default' -or $json.Assets.Path -eq '' ){
-            $root = $Path.Directory.FullName
-            $AssetsPath = "$Root/Assets"
-        }Else{
-            $AssetsPath = $json.Assets.Path
-        }
-        $this.Assets = [ConfigurationAssets]::New($AssetsPath)
-        $this.General = [GeneralSetting]::New($Json.Configuration.Verbosity)
-    }
-
-
-}
-#>
-# Assets
 
 Class AssetsFactory{
 
@@ -446,16 +414,7 @@ Class Asset{
     Parse(){
         $this.FolderPath = $this.FilePath.Directory
         $this.SetRelativePath()
-        $this.SetName() #I am here
-        <#
-        
-        $Folders = Get-ChildItem -Path $This.Path -Directory
-        Foreach($f in $folders){
-            $Hash = @{}
-            $Hash.$($f.Name) = $F.FullName
-            $This.Assets += $Hash
-        }
-        #>
+        $this.SetName()
     }
 
     [Void]SetName(){
@@ -463,11 +422,15 @@ Class Asset{
     }
 
     [Void]SetRelativePath(){
-        $This.RelativePath = [System.Io.Path]::Combine($This.FilePath.Directory.Name,$this.FilePath.Name)
+        $This.RelativePath = ([System.Io.Path]::Combine("Assets",$This.FilePath.Directory.Name,$this.FilePath.Name)).Replace("\","/")
     }
 
-    [String]GetRelativeRelativePath(){
+    [String]GetRelativePath(){
         return $this.RelativePath
+    }
+
+    [String]GetFullFilePath(){
+        REturn $This.FilePath.FullName.Replace("\","/")
     }
 
     [String]ToString(){
@@ -478,6 +441,11 @@ Class Asset{
 Class ScriptAsset : Asset {
     ScriptAsset ([System.IO.FileInfo]$FilePath) : base([System.IO.FileInfo]$FilePath) { }
     ScriptAsset ([System.IO.DirectoryInfo]$Path) : base([System.IO.DirectoryInfo]$Path) { }
+
+    [String] ToString(){
+        $S = "<{0} src='{1}'></{0}>" -f "Script",$this.GetFullFilePath()
+        Return $S
+    }
 }
 
 Class StyleAsset : Asset {
@@ -488,6 +456,11 @@ Class StyleAsset : Asset {
         $this.Type = [AssetType]::Style
      }
 
+     [String] ToString(){
+         #rel="stylesheet"
+        $S = "<{0} rel='{1}' type={2} href='{3}' >" -f "Link","stylesheet","text/css",$this.GetFullFilePath()
+        Return $S
+    }
 }
 
 function New-Logfile {
@@ -2432,50 +2405,6 @@ Function a {
 
 }
  
-function Add-PSHTMLAsset {
-    <#
-    .SYNOPSIS
-      Add script references to your PSHTML scripts.
-    .DESCRIPTION
-        Long description
-    .EXAMPLE
-        PS C:\> <example usage>
-        Explanation of what the example does
-    .INPUTS
-        Inputs (if any)
-    .OUTPUTS
-        Output (if any)
-    .NOTES
-        General notes
-    #>
-    [CmdletBinding()]
-    param (
-        [Switch]$Simple
-
-    )
-
-    Dynamicparam{
-        $ParamAttrib = New-Object  System.Management.Automation.ParameterAttribute
-        $ParamAttrib.Mandatory = $true
-        $ParamAttrib.ParameterSetName = '__AllParameterSets'
-
-        $AttribColl = New-Object  System.Collections.ObjectModel.Collection[System.Attribute]
-        $AttribColl.Add($ParamAttrib)
-        $configurationFileNames = Get-ChildItem -Path  'C:\ConfigurationFiles' | Select-Object -ExpandProperty Name
-        $AttribColl.Add((New-Object  System.Management.Automation.ValidateSetAttribute($configurationFileNames)))
-        $RuntimeParam = New-Object  System.Management.Automation.RuntimeDefinedParameter('Name', [string],  $AttribColl)
-    }
-    
-    begin {
-    }
-    
-    process {
-
-    }
-    
-    end {
-    }
-}
 Function address {
     <#
     .SYNOPSIS
@@ -4335,7 +4264,7 @@ Function Form {
     }
 }
 
-function Get-PSHTMLAssets {
+function Get-PSHTMLAsset {
     <#
     .SYNOPSIS
         Returns existing PSHTML assets
@@ -7511,6 +7440,87 @@ Function ul {
 
 }
 
+function Write-PSHTMLAsset {
+    <#
+    .SYNOPSIS
+      Add script references to your PSHTML scripts.
+    .DESCRIPTION
+        Write-PSHTML will scan the 'Assets' folders in the PSHTML module folder, and 
+
+    .EXAMPLE
+        Write-PSHTMLAsset -Type Script -Name ChartJs
+
+        Generates the following results:
+        
+        <Script src='Chartjs/Chart.bundle.min.js'></Script
+
+    .EXAMPLE
+        Write-PSHTMLAsset -Type Style -Name Bootstrap
+
+        Generates the following results:
+        
+        <Link src='BootStrap/bootstrap.min.css'></Link>
+
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
+    [CmdletBinding()]
+    param (
+        [ValidateSet("Script","Style")]$Type
+
+    )
+
+    DynamicParam {
+        $ParameterName = 'Name'
+        if($Type){
+
+            $SelectedAsset = (Get-PSHTMLConfiguration).GetAsset([AssetType]$Type)
+        }Else{
+            $SelectedAsset = (Get-PSHTMLConfiguration).GetAsset()
+        }
+        
+
+        $AssetNames = $SelectedAsset.Name
+ 
+        $AssetAttribute = New-Object System.Management.Automation.ParameterAttribute
+        $AssetAttribute.Position = 2
+        $AssetAttribute.Mandatory = $true
+        $AssetAttribute.HelpMessage = 'Select the asset to add'
+ 
+        $AssetCollection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
+        $AssetCollection.add($AssetAttribute)
+ 
+        $AssetValidateSet = New-Object System.Management.Automation.ValidateSetAttribute($AssetNames)
+        $AssetCollection.add($AssetValidateSet)
+ 
+        $AssetParam = New-Object System.Management.Automation.RuntimeDefinedParameter($ParameterName, [string], $AssetCollection)
+ 
+        $AssetDictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
+        $AssetDictionary.Add($ParameterName, $AssetParam)
+        return $AssetDictionary
+ 
+    }
+    
+    begin {
+        $Name = $PsBoundParameters[$ParameterName]
+    }
+    
+    process {
+        if($Type){
+            $Asset = (Get-PSHTMLConfiguration).GetAsset($Name,[AssetType]$Type)
+        }Else{
+            $Asset = (Get-PSHTMLConfiguration).GetAsset($Name)
+        }
+
+        Foreach($A in $Asset){
+            $A.ToString()
+        }
+        
+    }
+    
+    end {
+    }
+}
 function Write-PSHTMLSymbol {
 
     param (

@@ -1,4 +1,4 @@
-function Get-PSHTMLAssets {
+function Get-PSHTMLAsset {
     <#
     .SYNOPSIS
         Returns existing PSHTML assets
