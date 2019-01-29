@@ -1,4 +1,4 @@
-function Get-PSHTMLAssets {
+function Get-PSHTMLAsset {
     <#
     .SYNOPSIS
         Returns existing PSHTML assets
@@ -16,7 +16,8 @@ function Get-PSHTMLAssets {
     #>
     [CmdletBinding()]
     param (
-        $Name
+        [String]$Name,
+        [ValidateSet("Script","Style")]$Type
     )
     
     begin {
@@ -26,8 +27,10 @@ function Get-PSHTMLAssets {
         $Config = (Get-PSHTMLConfiguration)
         If($Name){
 
-            $Config.GetAssetRelativePath($Name)
-        }Else{
+            $Config.GetAsset($Name)
+        }Elseif($Type){
+            $Config.GetAsset($Name,$Type)
+        }else{
             $Config.GetAsset()
         }
     }
