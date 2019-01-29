@@ -421,11 +421,15 @@ Class Asset{
     }
 
     [Void]SetRelativePath(){
-        $This.RelativePath = ([System.Io.Path]::Combine($This.FilePath.Directory.Name,$this.FilePath.Name)).Replace("\","/")
+        $This.RelativePath = ([System.Io.Path]::Combine("Assets",$This.FilePath.Directory.Name,$this.FilePath.Name)).Replace("\","/")
     }
 
     [String]GetRelativePath(){
         return $this.RelativePath
+    }
+
+    [String]GetFullFilePath(){
+        REturn $This.FilePath.FullName.Replace("\","/")
     }
 
     [String]ToString(){
@@ -438,7 +442,7 @@ Class ScriptAsset : Asset {
     ScriptAsset ([System.IO.DirectoryInfo]$Path) : base([System.IO.DirectoryInfo]$Path) { }
 
     [String] ToString(){
-        $S = "<{0} src='{1}'></{0}>" -f "Script",$this.GetRelativePath()
+        $S = "<{0} src='{1}'></{0}>" -f "Script",$this.GetFullFilePath()
         Return $S
     }
 }
@@ -452,7 +456,8 @@ Class StyleAsset : Asset {
      }
 
      [String] ToString(){
-        $S = "<{0} src='{1}'></{0}>" -f "Link",$this.GetRelativePath()
+         #rel="stylesheet"
+        $S = "<{0} src='{1}' rel='{2}'>" -f "Link",$this.GetFullFilePath(),"stylesheet"
         Return $S
     }
 }
