@@ -1,4 +1,4 @@
-﻿#Generated at 01/29/2019 18:47:54 by Stephane van Gulick
+﻿#Generated at 01/29/2019 23:32:27 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -4282,7 +4282,8 @@ function Get-PSHTMLAsset {
     #>
     [CmdletBinding()]
     param (
-        $Name
+        [String]$Name,
+        [ValidateSet("Script","Style")]$Type
     )
     
     begin {
@@ -4292,8 +4293,10 @@ function Get-PSHTMLAsset {
         $Config = (Get-PSHTMLConfiguration)
         If($Name){
 
-            $Config.GetAssetRelativePath($Name)
-        }Else{
+            $Config.GetAsset($Name)
+        }Elseif($Type){
+            $Config.GetAsset($Name,$Type)
+        }else{
             $Config.GetAsset()
         }
     }

@@ -20,6 +20,10 @@ PSHTML comes with 3 default assets which are considered as the most widley used.
 
 > The later one is needed for the support of PSHTML Charts functionality.
 
+## Finding out available assets
+
+Use ```Get-PSHTMLAsset``` to find out which assets are available on your system.
+
 ## Example 1
 
 The code here under would be defined in script named ```script1.ps1```.
@@ -100,4 +104,35 @@ Executing ```script3.ps1``` returns the following code:
         <h1 >Example Adding all Asset references in one shot</h1>
     </Body>
 </html>
+```
+
+## Adding custom assets
+
+It is possible to add custom Assets to PSHTML.
+
+For this, create a folder in the Assets folder located in the PSHTML module root folder.
+In that newly created folder, copy and paste your .Js/.css files in.
+
+These will become automatically available in through the Get-PSHTMLAsset cmdlet.
+
+### Example
+
+You have a company styles file called ```CoreStyles.css``` which you would like to use in your PSHTML scripts.
+Simply create a folder called ```CompanyCore``` in the Assets folder of the PSHTML module root folder, and copy and paste the ```coreStyles.Css``` file in it.
+Use the ```Write-PSHTMLAsset``` cmdlet and tab through the ```-Name``` parameter values up until you find 'CompanyCore'.
+
+> The name of the folder is actually used under the hood to dynamically generate the different values that the ```-Name``` parameter from the ```Write-PSHTMLAsset``` cmdlet. The ```-Type``` switch will allow to filter either on only CSS files (Styles) or on .JS files (Script). If more then one file is present in the folder, but no type nor name is speicified, then all will be rendered.
+
+Use it like this to use it
+
+```powershell
+html {
+    head {
+        title "Adding CompanyCore style example"
+        Write-PSHTMLAsset -Name CompanyCore
+    }
+    body {
+         h1 'Example Adding all Asset references in one shot'
+    }
+}
 ```
