@@ -1,4 +1,4 @@
-﻿#Generated at 01/29/2019 23:32:27 by Stephane van Gulick
+﻿#Generated at 01/31/2019 12:01:09 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -4269,16 +4269,118 @@ function Get-PSHTMLAsset {
     .SYNOPSIS
         Returns existing PSHTML assets
     .DESCRIPTION
-        Long description
+        Get-PSHTMLAsset allows to retriev one or more of the available assets in PSHTML. It is possible to sort by type, and Name.
+        It is also possible to add custom assets.
+        1) Add a folder in the Assets folder
+        2) place .js or .css files in that folder.
+        3) Voila! Your assets are now available via Get-PSHTMLAsset
+
     .EXAMPLE
-        PS C:\> <example usage>
-        Explanation of what the example does
+        Get-PSHTMLAsset (Version numbers could potentially be different)
+
+        Name         : BootStrap
+        FolderPath   : C:\ModuleLocation\PSHTML\PSHTML\Assets\BootStrap
+        FilePath     : bootstrap.bundle.js
+        RelativePath : Assets/BootStrap/bootstrap.bundle.js
+        Type         : Script
+
+        Name         : BootStrap
+        FolderPath   : C:\ModuleLocation\PSHTML\PSHTML\Assets\BootStrap
+        FilePath     : bootstrap.css
+        RelativePath : Assets/BootStrap/bootstrap.css
+        Type         : Style
+
+        Name         : Chartjs
+        FolderPath   : C:\ModuleLocation\PSHTML\PSHTML\Assets\Chartjs
+        FilePath     : Chart.bundle.min.js
+        RelativePath : Assets/Chartjs/Chart.bundle.min.js
+        Type         : Script
+
+        Name         : Jquery
+        FolderPath   : C:\ModuleLocation\PSHTML\PSHTML\Assets\Jquery
+        FilePath     : jquery-3.3.1.slim.min.js
+        RelativePath : Assets/Jquery/jquery-3.3.1.slim.min.js
+        Type         : Script
+
+    .Parameter Name
+
+        Get-PSHTMLAsset -Name Jquery
+
+        Name         : Jquery
+        FolderPath   : C:\ModuleLocation\PSHTML\PSHTML\Assets\Jquery
+        FilePath     : jquery-3.3.1.slim.min.js
+        RelativePath : Assets/Jquery/jquery-3.3.1.slim.min.js
+        Type         : Script
+
+    .Parameter Type
+
+    Allows to filter on one specific type to return.
+
+        Get-PSHTMLAsset -Type Script
+
+        Name         : BootStrap
+        FolderPath   : C:\ModuleLocation\PSHTML\PSHTML\Assets\BootStrap
+        FilePath     : bootstrap.bundle.js
+        RelativePath : Assets/BootStrap/bootstrap.bundle.js
+        Type         : Script
+
+        Name         : Chartjs
+        FolderPath   : C:\ModuleLocation\PSHTML\PSHTML\Assets\Chartjs
+        FilePath     : Chart.bundle.min.js
+        RelativePath : Assets/Chartjs/Chart.bundle.min.js
+        Type         : Script
+
+        Name         : Jquery
+        FolderPath   : C:\ModuleLocation\PSHTML\PSHTML\Assets\Jquery
+        FilePath     : jquery-3.3.1.slim.min.js
+        RelativePath : Assets/Jquery/jquery-3.3.1.slim.min.js
+        Type         : Script
+
+    .EXAMPLE 
+
+    In the following example, Bootstrap is retrieved. Bootstrap needs one Script file (.js) and one Style (.css) file (at a minimum) to work.
+    Using 'only' the -Name parameter will return all of the found values for that specific name, regardles of the type. To have a type filtering, use the -Type parameter.
+
+    Get-PSHTMLAsset -Name Bootstrap
+
+        Name         : BootStrap
+        FolderPath   : C:\ModuleLocation\PSHTML\PSHTML\Assets\BootStrap
+        FilePath     : bootstrap.bundle.js
+        RelativePath : Assets/BootStrap/bootstrap.bundle.js
+        Type         : Script
+
+        Name         : BootStrap
+        FolderPath   : C:\ModuleLocation\PSHTML\PSHTML\Assets\BootStrap
+        FilePath     : bootstrap.css
+        RelativePath : Assets/BootStrap/bootstrap.css
+        Type         : Style
+
+    .EXAMPLE
+
+    The Asset object it self, comes with a method called ToString() which allows one to write the the html information for that specific asset.
+
+    Place the following code the head{} of your HTML Document.
+
+    $J = Get-PSHTMLAsset -Name Jquery
+    $J.ToString()
+
+    #This will dynamically generate a script tag to that specific asset. 
+    <Script src='C:/ModuleLocation/PSHTML/PSHTML/Assets/Jquery/jquery-3.3.1.slim.min.js'></Script>
+
+    Note: The above code would return the exact same result as Write-PSHTMLAsset:
+
+    Write-PSHTMLAsset -Name Jquery
+
+    #As a best practise, we recommend to use Write-PSHTMLAsset
+
     .INPUTS
-        Inputs (if any)
+        None
     .OUTPUTS
-        Output (if any)
-    .NOTES
-        General notes
+        Asset[]
+    .Notes
+        Author: StÃ©phane van Gulick
+    .Link
+      https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
     param (
@@ -4294,9 +4396,11 @@ function Get-PSHTMLAsset {
         If($Name){
 
             $Config.GetAsset($Name)
-        }Elseif($Type){
+        }Elseif($Type -and $Name){
             $Config.GetAsset($Name,$Type)
-        }else{
+        }elseif($Type){
+            $Config.GetAsset($Type)
+        }Else{
             $Config.GetAsset()
         }
     }
@@ -7446,9 +7550,23 @@ Function ul {
 function Write-PSHTMLAsset {
     <#
     .SYNOPSIS
-      Add script references to your PSHTML scripts.
+        Add asset references to your PSHTML scripts.
     .DESCRIPTION
         Write-PSHTML will scan the 'Assets' folders in the PSHTML module folder, and 
+        One can Use Write-PSHTML (Without any parameter) to add dynamically a link / script tag for every asset that is available in the Asset Folder.
+
+    .PARAMETER Name
+
+    Specify the name of an Asset. This is a dynamic parameter, and calculates the names based on the content of Assets folder.
+
+    .PARAMETER Type
+
+    Allows to specifiy what type of Asset to return. Script (.js) or Style (.css) are the currently supported ones.
+
+    .EXAMPLE
+        Write-PSHTMLAsset
+
+        Will generate all the asset tags, regardless of their type.
 
     .EXAMPLE
         Write-PSHTMLAsset -Type Script -Name ChartJs
@@ -7463,6 +7581,12 @@ function Write-PSHTMLAsset {
         Generates the following results:
         
         <Link src='BootStrap/bootstrap.min.css'></Link>
+
+    .EXAMPLE
+        Write-PSHTMLAsset -Name Bootstrap
+
+        Generates all the links regardless of their type.
+
 
     .LINK
         https://github.com/Stephanevg/PSHTML
@@ -7487,7 +7611,7 @@ function Write-PSHTMLAsset {
  
         $AssetAttribute = New-Object System.Management.Automation.ParameterAttribute
         $AssetAttribute.Position = 2
-        $AssetAttribute.Mandatory = $true
+        $AssetAttribute.Mandatory = $False
         $AssetAttribute.HelpMessage = 'Select the asset to add'
  
         $AssetCollection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
@@ -7509,10 +7633,15 @@ function Write-PSHTMLAsset {
     }
     
     process {
-        if($Type){
+        if($Type -and $Name){
             $Asset = (Get-PSHTMLConfiguration).GetAsset($Name,[AssetType]$Type)
-        }Else{
+        }ElseIf($Name){
             $Asset = (Get-PSHTMLConfiguration).GetAsset($Name)
+        }ElseIf($Type){
+            (Get-PSHTMLConfiguration).GetAsset([AssetType]$Type)
+        }
+        Else{
+            $Asset = (Get-PSHTMLConfiguration).GetAsset()
         }
 
         Foreach($A in $Asset){
