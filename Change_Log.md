@@ -1,7 +1,13 @@
 # Overview of Changes
 
+The latest version of the help documentation is directly available [Here](https://pshtml.readthedocs.io/en/latest/)
+
+## v0.7.4
+- Added documentation for Assets (Get-PSHTMLAsset, Write-PSHTMLAsset)
+- Minor bug fixes.
+
 ## v0.7.3
-- Added Support for Assets -> BootStrap, Jquery and chartjs are now part of PSHTML, and are ready to use. See Write-PSHTMLAsset for more information.
+- Added Support for Assets -> BootStrap, Jquery and chartjs are now part of PSHTML, and are ready to use. See Write-PSHTMLAsset for more information. 👍
 - Added support for Configuration -> it is now to configure PSHTML settings centrally from the ```pshtml.configuration.json``` file located in the module root folder.
 
 ## v0.7.2
