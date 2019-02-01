@@ -2,6 +2,8 @@
 
 The latest version of the help documentation is directly available [Here](https://pshtml.readthedocs.io/en/latest/)
 
+## v0.7.5
+
 ## v0.7.4
 - Added documentation for Assets (Get-PSHTMLAsset, Write-PSHTMLAsset)
 - Minor bug fixes.
