@@ -108,37 +108,7 @@ p{
 Create Tables manually
 
 ```powershell
-p{
-h2 "Example with HTML table"
-
-table{
-        caption "This is a table generated with PSHTML"
-        thead {
-            tr{
-                th "number1"
-                th "number2"
-                th "number3"
-            }
-        }
-        tbody{
-            tr{
-                td "Child 1.1"
-                td "Child 1.2"
-                td "Child 1.3"
-            }
-            tr{
-                td "Child 2.1"
-                td "Child 2.2"
-                td "Child 2.3"
-            }
-        }
-        tfoot{
-            tr{
-                td "Table footer"
-            }
-        }
-    }
-}
+---?gist=Stephanevg/14ac3948bf302bbcfef59dd20dd47a65&lang=powershell
 ```
 
 ---
@@ -146,7 +116,8 @@ table{
 Or generate tables dynamically
 
 ```powershell
-Get-Process | select -First 3 | ConvertTo-PSHTMLTable -Properties "Name","Handles"
+$Process = Get-Process | select -First 3 
+$Process | ConvertTo-PSHTMLTable -Properties "Name","Handles"
 ```
 
 ---
@@ -231,7 +202,9 @@ Out of the box support for assets such as
 * Query
 
 ---
-Create beautifull graphs in seconds
+Create beautifull graphs in seconds using 
+
+---
 
 ```powershell
 #Preparing data
