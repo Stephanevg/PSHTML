@@ -231,10 +231,7 @@ Out of the box support for assets such as
 * Query
 
 ---
-
-## Create beautifull graphs in seconds
-
----
+Create beautifull graphs in seconds
 
 ```powershell
 #Preparing data
@@ -248,10 +245,7 @@ $dsb3 = New-PSHTMLChartBarDataSet -Data $data3 -label "2018" -BackgroundColor ([
 New-PSHTMLChart -type bar -DataSet $dsb3 -title "Bar Chart Example" -Labels $Labels -CanvasID $BarCanvasID
 
 ```
----
-
 ![](PSHTML/Examples/Charts/Chart01/BarChartExample.png)
-
 ---
 
 Add your HTML / CSS knowledge directly in your PSHTML code.
