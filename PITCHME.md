@@ -182,10 +182,7 @@ SelectTag {
 ```
 
 ---
-
-The header / footer of your page is always identical?
-
-Use `includes` to include code in specific places
+Use `includes` to reuse specific chunks of code in different places
 
 ```powershell
 html{
@@ -231,6 +228,25 @@ Out of the box support for assets such as
 * Query
 
 ---
+### You love VSCode? 
+### We do to!
+
+PSHTML comes with VScode snipets ready to be installed.
+
+Install the snipets using
+
+```powershell
+Install-PSHTMLVsCodeSnippets
+```
+
+---
+
+All snippets start with `PSHTML`
+
+![](/Images/snippets.jpg)
+
+---
+
 Create beautifull graphs in seconds using 
 
 ---
