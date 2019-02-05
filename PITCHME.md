@@ -1,12 +1,9 @@
 
 
-@snap[west span-50]
 ## PSHTML
-@snapend
 
-@snap[east span-50]
-in 60 seconds
-@snapend
+### In 60 seconds
+
 
 ---
 
@@ -16,7 +13,7 @@ in 60 seconds
 
 # PSHTML
 
-Is a Powershell module that allows you to script the generation of html documents using powershell like syntax. 
+Is a Crossplatform Powershell module that allows you to script the generation of html documents using powershell like syntax. 
 
 *It makes creating html pages really really easy!*
 
@@ -267,7 +264,7 @@ Add your HTML / CSS knowledge directly in your PSHTML code.
 
 ---
 
-Every cmdlet comes with the following parameters:
+Every PSHTML tag cmdlet comes with the following parameters:
 
 * ```-Class``` -> Add classes to you html tags
 * `-Style` -> Add inline styles to your html tags
@@ -275,10 +272,55 @@ Every cmdlet comes with the following parameters:
 
 ---
 
-Example
+### -Class 
+-> Add classes to you html tags
+
+#### Example
 
 ```powershell
-p -Class "My Class" -Style "color:blue;margin-left:30px;" {
+p -Class "My Class" {
+    "This is simply a paragraph in a div."
+} 
+```
+
+Generates
+
+```html
+<p Class="My Class" >
+  This is simply a paragraph in a div.
+</p>
+```
+
+---
+
+### -Style 
+-> Add inline styles to your html tags
+
+#### Example
+
+```powershell
+p -Style "color:blue;margin-left:30px;" {
+    "This is simply a paragraph in a div."
+} 
+```
+
+Generates
+
+```html
+<p Style="color:blue;margin-left:30px;" >
+  This is simply a paragraph in a div.
+</p>
+```
+
+---
+
+### -Attributes 
+-> Add custom attributes with values to your html tags.
+
+#### Example
+
+```powershell
+p {
     "This is simply a paragraph in a div."
 } -Attributes @{"MyCustomAttribute"="My custom value"}
 ```
@@ -286,15 +328,12 @@ p -Class "My Class" -Style "color:blue;margin-left:30px;" {
 Generates
 
 ```html
-<p Style="color:blue;margin-left:30px;" Class="My Class" MyCustomAttribute="My custom value"  >
+<p MyCustomAttribute="My custom value" >
   This is simply a paragraph in a div.
 </p>
 ```
 ---
 
-Or benefit of abastractions, and focus only on your Powershell knowledge using cmdlets such as `ConvertTo-PSHTMLTable`.
-
----
 # Your only limitation is your imagination
 
 ---
@@ -442,13 +481,20 @@ $Snover > "Example6.html"
 
 ---?image=PSHTML/Examples/Example6/tribute_snover.png&size=50%
 
-* [Download the code](https://github.com/Stephanevg/PSHTML/blob/master/PSHTML/Examples/Example6/Example6.ps1)
-
 ---
+
 
 Get started:
 
 * [Github](https://github.com/Stephanevg/PSHTML)
 * [Read the docs](https://pshtml.readthedocs.io/en/latest/)
 * [PowerShellDistrict](http://www.powershelldistrict.com)
+
+```powershell
+Install-Module PSHTML
+```
+
+Look at code samples
+
+* [Tribute to Snover](https://github.com/Stephanevg/PSHTML/blob/master/PSHTML/Examples/Example6/Example6.ps1)
 ---
