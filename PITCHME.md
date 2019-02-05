@@ -235,8 +235,11 @@ All snippets start with the word `pshtml`
 ![](/Images/snippets.jpg)
 
 ---
+PSHTML support the creation of custom charts
+![](/docs/Images/Charts_Overview.png)
+---
 
-Create beautifull graphs in seconds using
+Create beautifull charts in seconds using
 
 ```powershell
 New-PSHTMLChart
@@ -257,7 +260,7 @@ $dsb3 = New-PSHTMLChartBarDataSet -Data $data3 -label "2018" -BackgroundColor ([
 New-PSHTMLChart -type bar -DataSet $dsb3 -title "Bar Chart Example" -Labels $Labels -CanvasID $BarCanvasID
 
 ```
-![](PSHTML/Examples/Charts/Chart01/BarChartExample.png)
+---?image=PSHTML/Examples/Charts/Chart01/BarChartExample.png&size=75%
 ---
 
 Add your HTML / CSS knowledge directly in your PSHTML code.
