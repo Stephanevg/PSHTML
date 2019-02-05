@@ -1,4 +1,4 @@
----
+
 
 @snap[west span-50]
 ## PSHTML
@@ -14,8 +14,14 @@ in 60 seconds
 
 ---
 
+# PSHTML
+
+Is a Powershell module that allows you to script the generation of html documents using powershell like syntax. It makes creating html pages really easy!
+
+---
+
 @snap[west span-50]
-PSHTML is a PowerShell DSL (Domain Specific Language) to generate HTML language.
+PSHTML is a PowerShell DSL (Domain Specific Language). It allows you to leverage your existing knowledge of powershell to create html documents without leaving your IDE. (No more "html string building").
 
 @snapend
 
