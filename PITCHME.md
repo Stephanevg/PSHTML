@@ -15,45 +15,12 @@ in 60 seconds
 @snap[west span-50]
 It is a PowerShell DSL (Domain Specific Language) to generate HTML language.
 PSHTML is a languge tool.
+
+It allows to use *powershell syntax* to generate HTML.
 @snapend
 
 @snap[east span-50]
-```powershell
-Import-Module PSHTML
-
-html {
-
-    head{
-
-        title "woop title"
-        link "css/normalize.css" "stylesheet"
-    }
-
-    body{
-
-        Header {
-            h1 "This is h1 Title in header"
-            div {
-                p {
-                    "This is simply a paragraph in a div."
-                }
-            }
-        }
-
-
-            p {
-                h1 "This is h1"
-                h2 "This is h2"
-                h3 "This is h3"
-                h4 "This is h4"
-                h5 "This is h5"
-                h6 "This is h6"
-                strong "plop";"Woop"
-            }
-    }
-
-}
-```
+![](/Images/Example01.jpg)
 @snapend
 
 --- 
@@ -65,7 +32,7 @@ html {
 @snapend
 
 @snap[east span-50]
-![](PSHTML\Examples\Example6\tribute_snover.png)
+![](PSHTML/Examples/Example6/tribute_snover.png)
 @snapend
 
 --- 
@@ -93,7 +60,7 @@ New-PSHTMLChart -type bar -DataSet $dsb3 -title "Bar Chart Example" -Labels $Lab
 @snapend
 
 @snap[east span-33]
-![](PSHTML\Examples\Charts\Chart01\BarChartExample.png)
+![](PSHTML/Examples/Charts/Chart01/BarChartExample.png)
 @snapend
 
 ---
