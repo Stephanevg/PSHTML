@@ -212,15 +212,6 @@ html{
 ```
 
 ---
-
-
-* [Get the code](https://github.com/Stephanevg/PSHTML/blob/master/PSHTML/Examples/Example6/Example6.ps1)
-
-![](PSHTML/Examples/Example6/tribute_snover.png)
-
-
----
-
 Out of the box support for assets such as
 
 * BootStrap
@@ -228,29 +219,32 @@ Out of the box support for assets such as
 * Query
 
 ---
-### You love VSCode? 
-### We do to!
+#### You love VSCode? 
+##### So do we!
 
 PSHTML comes with VScode snipets ready to be installed.
-
 Install the snipets using
 
 ```powershell
 Install-PSHTMLVsCodeSnippets
 ```
-
 ---
 
-All snippets start with `PSHTML`
+All snippets start with the word `pshtml`
 
 ![](/Images/snippets.jpg)
 
 ---
 
-Create beautifull graphs in seconds using 
+Create beautifull graphs in seconds using
+
+```powershell
+New-PSHTMLChart
+```
 
 ---
 
+Example:
 ```powershell
 #Preparing data
 $Data3 = @(4,1,6,12,17,25,18,17,22,30,35,44)
@@ -297,4 +291,10 @@ Generates
 
 Or benefit of abastractions, and focus only on your Powershell knowledge using cmdlets such as `ConvertTo-PSHTMLTable`.
 
+---
 
+* [Get the code](https://github.com/Stephanevg/PSHTML/blob/master/PSHTML/Examples/Example6/Example6.ps1)
+
+---?image=PSHTML/Examples/Example6/tribute_snover.png&size=50%
+
+---
