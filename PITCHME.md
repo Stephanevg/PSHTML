@@ -260,7 +260,7 @@ $dsb3 = New-PSHTMLChartBarDataSet -Data $data3 -label "2018" -BackgroundColor ([
 New-PSHTMLChart -type bar -DataSet $dsb3 -title "Bar Chart Example" -Labels $Labels -CanvasID $BarCanvasID
 
 ```
----?image=PSHTML/Examples/Charts/Chart01/BarChartExample.png&size=50%
+---?image=PSHTML/Examples/Charts/Chart01/BarChartExample.png&size=25%
 ---
 
 Add your HTML / CSS knowledge directly in your PSHTML code.
