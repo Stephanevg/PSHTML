@@ -20,7 +20,9 @@ Is a Powershell module that allows you to script the generation of html document
 
 ---
 
-PSHTML is a PowerShell DSL (Domain Specific Language). It allows you to leverage your existing knowledge of powershell to create html documents without leaving your IDE. (No more "html string building").
+PSHTML is a PowerShell DSL (Domain Specific Language). It allows you to leverage your existing knowledge of powershell to create html documents without leaving your IDE. 
+
+No more "html string building"!
 
 ---
 ![](/Images/Example01.jpg)
@@ -60,15 +62,12 @@ New-PSHTMLChart -type bar -DataSet $dsb3 -title "Bar Chart Example" -Labels $Lab
 
 ---
 
-@snap[west span-55]
-## Out of the box support for
-@snapend
+### Out of the box support for
 
-@snap[east span-50]
 * BootStrap
 * ChartJs
 * Query
-@snapend
+
 
 
 ---
