@@ -12,23 +12,23 @@ in 60 seconds
 
 ## What is PSHTML?
 
-@snap[west span-50]
-It is a PowerShell DSL (Domain Specific Language) to generate HTML language.
-PSHTML is a languge tool.
+---
 
-It allows to use *powershell syntax* to generate HTML.
+@snap[west span-50]
+PSHTML is a PowerShell DSL (Domain Specific Language) to generate HTML language.
+
 @snapend
 
 @snap[east span-50]
 ![](/Images/Example01.jpg)
 @snapend
 
---- 
-
+---
+Create websites using *powershell* syntax __only__
 ---
 
 @snap[west span-50]
-## Create websites using *powershell* syntax __only__
+![](/Images/Example02.jpg)
 @snapend
 
 @snap[east span-50]
