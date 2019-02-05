@@ -16,7 +16,9 @@ in 60 seconds
 
 # PSHTML
 
-Is a Powershell module that allows you to script the generation of html documents using powershell like syntax. It makes creating html pages really easy!
+Is a Powershell module that allows you to script the generation of html documents using powershell like syntax. 
+
+*It makes creating html pages really really easy!*
 
 ---
 
@@ -70,24 +72,165 @@ html {
 ```
 ---
 
+Use all the techniques you already know.
+
+* Loops (foreach, while, do while, for)
+* Conditional statement (if elseIf() /Else, switch etc...)
+* Functions, filters, classes
+
 ---
 
-![](PSHTML/Examples/Example6/tribute_snover.png)
+Use all the modules that you have learned to love over time
+
+* ActiveDirectory
+* ConfigMgr
+* FailoverClustering
+* PsClassUtils
+
+---
+
+Create Forms
+
+```powershell
+p{
+    Form -action "CallThisPage.Html" -method get -target _self -Content{
+        "Please input your password"
+        input -type password "woop"
+        "Please Confirm your passwor"
+        input -type password -name "woop2"
+    }
+}
+```
+
+---
+
+
+Create Tables manually
+
+```powershell
+p{
+h2 "Example with HTML table"
+
+table{
+        caption "This is a table generated with PSHTML"
+        thead {
+            tr{
+                th "number1"
+                th "number2"
+                th "number3"
+            }
+        }
+        tbody{
+            tr{
+                td "Child 1.1"
+                td "Child 1.2"
+                td "Child 1.3"
+            }
+            tr{
+                td "Child 2.1"
+                td "Child 2.2"
+                td "Child 2.3"
+            }
+        }
+        tfoot{
+            tr{
+                td "Table footer"
+            }
+        }
+    }
+}
+```
+
+---
+
+Or generate tables dynamically
+
+```powershell
+Get-Process | select -First 3 | ConvertTo-PSHTMLTable -Properties "Name","Handles"
+```
+
+---
+
+Create Drop down boxes
+
+```powershell
+p {
+    "My favorite car is:"
+}
+SelectTag {
+    option -value "Citroen" -Content "Citroen"
+    option -value "Renault" -Content "Renault"
+    option -value "Peugeot" -Content "Peugeot"
+    option -value "DS" -Content "DS"
+}
+```
+
+---
+
+Or generate your drop down boxes 'dynamicaly'
+
+```powershell
+$Languages = @("PowerShell","Ruby","CSharp","Python")
+p {
+    "My favorite language is:"
+}
+SelectTag {
+    foreach($language in $Languages){
+        option -value $language -Content $language
+    }
+}
+```
+
+---
+
+The header / footer of your page is always identical?
+
+Use `includes` to include code in specific places
+
+```powershell
+html{
+    include -Name head
+
+    Body{
+
+        include -name Body
+        
+        $PrimaryColors = @("Red","green","blue")
+
+        H3 "Primary color are:"
+        ul {
+     
+            Foreach($PColor in $PrimaryColors){
+                
+                li $PColor
+            }
+        }
+        p {
+            "This is just content after the unorded list but before the footer."
+        }
+    }
+    
+    Include -Name Footer
+}
+```
+
+---
+
 
 * [Get the code](https://github.com/Stephanevg/PSHTML/blob/master/PSHTML/Examples/Example6/Example6.ps1)
 
+![](PSHTML/Examples/Example6/tribute_snover.png)
+
 
 ---
 
-### Out of the box support for assets such as
+Out of the box support for assets such as
 
 * BootStrap
 * ChartJs
 * Query
 
 ---
-
---- 
 
 ## Create beautifull graphs in seconds
 
@@ -138,7 +281,8 @@ Generates
   This is simply a paragraph in a div.
 </p>
 ```
+---
 
-Or benefit of abastractions, and focus only on your Powershell knowledge.
+Or benefit of abastractions, and focus only on your Powershell knowledge using cmdlets such as `ConvertTo-PSHTMLTable`.
 
 
