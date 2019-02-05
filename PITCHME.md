@@ -104,12 +104,9 @@ p{
 
 ---
 
-
 Create Tables manually
 
-```powershell
 ---?gist=Stephanevg/14ac3948bf302bbcfef59dd20dd47a65&lang=powershell
-```
 
 ---
 
