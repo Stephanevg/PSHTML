@@ -16,39 +16,224 @@ in 60 seconds
 
 # PSHTML
 
-Is a Powershell module that allows you to script the generation of html documents using powershell like syntax. It makes creating html pages really easy!
+Is a Powershell module that allows you to script the generation of html documents using powershell like syntax. 
+
+*It makes creating html pages really really easy!*
 
 ---
 
-@snap[west span-50]
-PSHTML is a PowerShell DSL (Domain Specific Language). It allows you to leverage your existing knowledge of powershell to create html documents without leaving your IDE. (No more "html string building").
+PSHTML is a PowerShell DSL (Domain Specific Language). 
 
-@snapend
+It allows you to leverage your existing knowledge of powershell to create html documents without leaving your IDE. 
 
-@snap[east span-50]
-![](/Images/Example01.jpg)
-@snapend
+No more "html string building" as in 2015!
 
 ---
+
 Create websites using *powershell* syntax __only__
+
 ---
 
-@snap[west span-50]
-![](/Images/Example02.jpg)
-@snapend
+```Powershell
+Import-Module PSHTML
 
-@snap[east span-50]
+html {
+
+    head{
+
+        title "woop title"
+        link "css/normalize.css" "stylesheet"
+    }
+
+    body{
+
+        Header {
+            h1 "This is h1 Title in header"
+            div {
+                p {
+                    "This is simply a paragraph in a div."
+                }
+            }
+        }
+
+
+            p {
+                h1 "This is h1"
+                h2 "This is h2"
+                h3 "This is h3"
+                h4 "This is h4"
+                h5 "This is h5"
+                h6 "This is h6"
+                strong "plop";"Woop"
+            }
+    }
+
+}
+```
+---
+
+Use all the techniques you already know.
+
+* Loops (foreach, while, do while, for)
+* Conditional statement (if elseIf() /Else, switch etc...)
+* Functions, filters, classes
+
+---
+
+Use all the modules that you have learned to love over time
+
+* ActiveDirectory
+* ConfigMgr
+* FailoverClustering
+* PsClassUtils
+
+---
+
+Create Forms
+
+```powershell
+p{
+    Form -action "CallThisPage.Html" -method get -target _self -Content{
+        "Please input your password"
+        input -type password "woop"
+        "Please Confirm your passwor"
+        input -type password -name "woop2"
+    }
+}
+```
+
+---
+
+Create Tables manually
+
+```Powershell
+p{
+h2 "Example with HTML table"
+
+table{
+        caption "This is a table generated with PSHTML"
+        thead {
+            tr{
+                th "number1"
+                th "number2"
+                th "number3"
+            }
+        }
+        tbody{
+            tr{
+                td "Child 1.1"
+                td "Child 1.2"
+                td "Child 1.3"
+            }
+            tr{
+                td "Child 2.1"
+                td "Child 2.2"
+                td "Child 2.3"
+            }
+        }
+        tfoot{
+            tr{
+                td "Table footer"
+            }
+        }
+    }
+}
+```
+
+---
+
+Or generate tables dynamically
+
+```powershell
+$Process = Get-Process | select -First 3 
+$Process | ConvertTo-PSHTMLTable -Properties "Name","Handles"
+```
+
+---
+
+Create Drop down boxes
+
+```powershell
+p {
+    "My favorite car is:"
+}
+SelectTag {
+    option -value "Citroen" -Content "Citroen"
+    option -value "Renault" -Content "Renault"
+    option -value "Peugeot" -Content "Peugeot"
+    option -value "DS" -Content "DS"
+}
+```
+
+---
+
+Or generate your drop down boxes 'dynamicaly'
+
+```powershell
+$Languages = @("PowerShell","Ruby","CSharp","Python")
+p {
+    "My favorite language is:"
+}
+SelectTag {
+    foreach($language in $Languages){
+        option -value $language -Content $language
+    }
+}
+```
+
+---
+
+The header / footer of your page is always identical?
+
+Use `includes` to include code in specific places
+
+```powershell
+html{
+    include -Name head
+
+    Body{
+
+        include -name Body
+        
+        $PrimaryColors = @("Red","green","blue")
+
+        H3 "Primary color are:"
+        ul {
+     
+            Foreach($PColor in $PrimaryColors){
+                
+                li $PColor
+            }
+        }
+        p {
+            "This is just content after the unorded list but before the footer."
+        }
+    }
+    
+    Include -Name Footer
+}
+```
+
+---
+
+
+* [Get the code](https://github.com/Stephanevg/PSHTML/blob/master/PSHTML/Examples/Example6/Example6.ps1)
+
 ![](PSHTML/Examples/Example6/tribute_snover.png)
-@snapend
-
---- 
 
 
-@snap[west span-33]
-## Create beautifull graphs in seconds
-@snapend
+---
 
-@snap[east span-33]
+Out of the box support for assets such as
+
+* BootStrap
+* ChartJs
+* Query
+
+---
+Create beautifull graphs in seconds using 
+
+---
 
 ```powershell
 #Preparing data
@@ -62,43 +247,38 @@ $dsb3 = New-PSHTMLChartBarDataSet -Data $data3 -label "2018" -BackgroundColor ([
 New-PSHTMLChart -type bar -DataSet $dsb3 -title "Bar Chart Example" -Labels $Labels -CanvasID $BarCanvasID
 
 ```
-
-@snapend
-
-@snap[east span-33]
 ![](PSHTML/Examples/Charts/Chart01/BarChartExample.png)
-@snapend
+---
+
+Add your HTML / CSS knowledge directly in your PSHTML code.
 
 ---
 
-@snap[west span-55]
-## Out of the box support for
-@snapend
+Every cmdlet comes with:
 
-@snap[east span-50]
-- BootStrap
-- ChartJs
-- Query
-@snapend
+* `-Class` -> Add classes to you html tags
+* `-Style` -> Add inline styles to your html tags
+* `-Attributes` -> Add custom attributes with values to your html tags.
 
 ---
-@snap[west span-50]
 
-Take advantage of your existing HTML / CSS knowledge
-@snapend
+Example
 
-@snap[east span-50]
+```powershell
+p -Class "My Class" -Style "color:blue;margin-left:30px;" {
+    "This is simply a paragraph in a div."
+} -Attributes @{"MyCustomAttribute"="My custom value"}
+```
 
-## Image of HTML Table creation
-@snapend
+Generates
 
+```html
+<p Style="color:blue;margin-left:30px;" Class="My Class" MyCustomAttribute="My custom value"  >
+  This is simply a paragraph in a div.
+</p>
+```
 ---
-@snap[west span-50]
 
-Or benefit of abastractions, and focus only on your Powershell knowledge.
-@snapend
+Or benefit of abastractions, and focus only on your Powershell knowledge using cmdlets such as `ConvertTo-PSHTMLTable`.
 
-@snap[east span-50]
-## Image of ConvertTo-PSHTMLTable
-@snapend
 
