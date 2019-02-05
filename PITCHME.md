@@ -264,9 +264,9 @@ Add your HTML / CSS knowledge directly in your PSHTML code.
 
 ---
 
-Every cmdlet comes with:
+Every cmdlet comes with the following parameters:
 
-* `-Class` -> Add classes to you html tags
+* ```-Class``` -> Add classes to you html tags
 * `-Style` -> Add inline styles to your html tags
 * `-Attributes` -> Add custom attributes with values to your html tags.
 
