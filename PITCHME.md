@@ -220,7 +220,8 @@ Out of the box support for assets such as
 ##### So do we!
 
 PSHTML comes with VScode snipets ready to be installed.
-Install the snipets using
+
+Install them using
 
 ```powershell
 Install-PSHTMLVsCodeSnippets
@@ -236,7 +237,7 @@ PSHTML support the creation of custom charts
 ![](/docs/Images/Charts_Overview.png)
 ---
 
-Create beautifull charts in seconds using
+It is very easy to do, and needs only a few seconds using
 
 ```powershell
 New-PSHTMLChart
@@ -497,4 +498,3 @@ Install-Module PSHTML
 Look at code samples
 
 * [Tribute to Snover](https://github.com/Stephanevg/PSHTML/blob/master/PSHTML/Examples/Example6/Example6.ps1)
----
