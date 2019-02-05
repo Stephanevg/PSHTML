@@ -20,22 +20,72 @@ Is a Powershell module that allows you to script the generation of html document
 
 ---
 
-PSHTML is a PowerShell DSL (Domain Specific Language). It allows you to leverage your existing knowledge of powershell to create html documents without leaving your IDE. 
+PSHTML is a PowerShell DSL (Domain Specific Language). 
 
-No more "html string building"!
+It allows you to leverage your existing knowledge of powershell to create html documents without leaving your IDE. 
+
+No more "html string building" as in 2015!
 
 ---
-![](/Images/Example01.jpg)
----
-
 
 Create websites using *powershell* syntax __only__
+
+---
+
+```Powershell
+Import-Module PSHTML
+
+html {
+
+    head{
+
+        title "woop title"
+        link "css/normalize.css" "stylesheet"
+    }
+
+    body{
+
+        Header {
+            h1 "This is h1 Title in header"
+            div {
+                p {
+                    "This is simply a paragraph in a div."
+                }
+            }
+        }
+
+
+            p {
+                h1 "This is h1"
+                h2 "This is h2"
+                h3 "This is h3"
+                h4 "This is h4"
+                h5 "This is h5"
+                h6 "This is h6"
+                strong "plop";"Woop"
+            }
+    }
+
+}
+```
+---
 
 ---
 
 ![](PSHTML/Examples/Example6/tribute_snover.png)
 
 * [Get the code](https://github.com/Stephanevg/PSHTML/blob/master/PSHTML/Examples/Example6/Example6.ps1)
+
+
+---
+
+### Out of the box support for assets such as
+
+* BootStrap
+* ChartJs
+* Query
+
+---
 
 --- 
 
@@ -59,18 +109,35 @@ New-PSHTMLChart -type bar -DataSet $dsb3 -title "Bar Chart Example" -Labels $Lab
 
 ![](PSHTML/Examples/Charts/Chart01/BarChartExample.png)
 
+---
+
+Add your HTML / CSS knowledge directly in your PSHTML code.
 
 ---
 
-### Out of the box support for
+Every cmdlet comes with:
 
-* BootStrap
-* ChartJs
-* Query
-
-
+* `-Class` -> Add classes to you html tags
+* `-Style` -> Add inline styles to your html tags
+* `-Attributes` -> Add custom attributes with values to your html tags.
 
 ---
+
+Example
+
+```powershell
+p -Class "My Class" -Style "color:blue;margin-left:30px;" {
+    "This is simply a paragraph in a div."
+} -Attributes @{"MyCustomAttribute"="My custom value"}
+```
+
+Generates
+
+```html
+<p Style="color:blue;margin-left:30px;" Class="My Class" MyCustomAttribute="My custom value"  >
+  This is simply a paragraph in a div.
+</p>
+```
 
 Or benefit of abastractions, and focus only on your Powershell knowledge.
 
