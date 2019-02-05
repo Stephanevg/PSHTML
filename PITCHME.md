@@ -20,35 +20,26 @@ Is a Powershell module that allows you to script the generation of html document
 
 ---
 
-@snap[west span-50]
 PSHTML is a PowerShell DSL (Domain Specific Language). It allows you to leverage your existing knowledge of powershell to create html documents without leaving your IDE. (No more "html string building").
 
-@snapend
-
-@snap[east span-50]
+---
 ![](/Images/Example01.jpg)
-@snapend
-
 ---
+
+
 Create websites using *powershell* syntax __only__
+
 ---
 
-@snap[west span-50]
-![](/Images/Example02.jpg)
-@snapend
-
-@snap[east span-50]
 ![](PSHTML/Examples/Example6/tribute_snover.png)
-@snapend
+
+* [Get the code](https://github.com/Stephanevg/PSHTML/blob/master/PSHTML/Examples/Example6/Example6.ps1)
 
 --- 
 
-
-@snap[west span-33]
 ## Create beautifull graphs in seconds
-@snapend
 
-@snap[east span-33]
+---
 
 ```powershell
 #Preparing data
@@ -62,12 +53,10 @@ $dsb3 = New-PSHTMLChartBarDataSet -Data $data3 -label "2018" -BackgroundColor ([
 New-PSHTMLChart -type bar -DataSet $dsb3 -title "Bar Chart Example" -Labels $Labels -CanvasID $BarCanvasID
 
 ```
+---
 
-@snapend
-
-@snap[east span-33]
 ![](PSHTML/Examples/Charts/Chart01/BarChartExample.png)
-@snapend
+
 
 ---
 
@@ -76,29 +65,14 @@ New-PSHTMLChart -type bar -DataSet $dsb3 -title "Bar Chart Example" -Labels $Lab
 @snapend
 
 @snap[east span-50]
-- BootStrap
-- ChartJs
-- Query
+* BootStrap
+* ChartJs
+* Query
 @snapend
+
 
 ---
-@snap[west span-50]
-
-Take advantage of your existing HTML / CSS knowledge
-@snapend
-
-@snap[east span-50]
-
-## Image of HTML Table creation
-@snapend
-
----
-@snap[west span-50]
 
 Or benefit of abastractions, and focus only on your Powershell knowledge.
-@snapend
 
-@snap[east span-50]
-## Image of ConvertTo-PSHTMLTable
-@snapend
 
