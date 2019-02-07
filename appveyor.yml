@@ -9,6 +9,10 @@ environment:
 install:
 - ps: >-
     .\CI\02_Install.ps1
+build:
+- ps: >-
+    write-host "Nothing to build.Skipping.."
+
 test_script:
 - ps: >-
     .\CI\04_Tests.ps1
