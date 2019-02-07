@@ -2,7 +2,7 @@
 "PsHtml Full Snippet":
   {
     "prefix": "pshtml",
-    "description": "PsHtml Full Snippet",
+    "description": "PsHtml Complete Snippet",
     "body":
     [
       "doctype { ",
