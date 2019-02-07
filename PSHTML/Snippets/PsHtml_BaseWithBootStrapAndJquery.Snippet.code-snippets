@@ -1,0 +1,31 @@
+{ 
+"base - BootStrap/JQuery":
+  {
+    "prefix": "pshtml",
+    "description": "Start with a fresh base PSHTML structure with Bootstrap and Jquery support.",
+    "body":
+    [
+      "doctype { ",
+      "html -Attributes @{lang=\"en\"} {",
+      "    head {",
+      "        meta -charset 'UTF-8'",
+      "        meta -name 'author' -content \"${1:YOUR NAME}\"",
+      "        Title -Content \"${2:YOUR SITE TITLE}\"",
+      "        Write-PSHTMLAsset -Name JQuery ",
+      "        Write-PSHTMLAsset -Name Bootstrap ",
+      "    }",
+      "    body {",
+      "     div -Class 'container' {",
+      "",
+      "        ${3:YOUR MAIN CODE}",
+      "",
+      "}",
+      "        footer {",
+      "",
+      "        }",
+      "    }",
+      "} ",
+      "}"
+    ]
+  }
+}
