@@ -62,5 +62,5 @@ $HtmlDocument = html {
 
 }
 
-$HtmlDocument > $home\Documents\MyPage.Html
+$HtmlDocument | out-file -FilePath $home\Documents\MyPage.Html -Encoding utf8
 start $home\Documents\MyPage.Html
