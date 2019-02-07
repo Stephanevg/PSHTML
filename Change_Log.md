@@ -3,6 +3,11 @@
 The latest version of the help documentation is directly available [Here](https://pshtml.readthedocs.io/en/latest/)
 
 ## v0.7.5
+- Added support for 'span' tag
+- Added 'base - BootStrap/JQuery' vsCode snippet
+- Added 'base - BootStrap/JQuery/ChartJS' vsCode snippet
+- Fixed minor bugs
+
 
 ## v0.7.4
 - Added documentation for Assets (Get-PSHTMLAsset, Write-PSHTMLAsset)
