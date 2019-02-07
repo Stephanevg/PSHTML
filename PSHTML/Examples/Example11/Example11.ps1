@@ -1,5 +1,5 @@
 
-import-module C:\Users\taavast3\OneDrive\Scripting\Repository\Projects\OpenSource\PSHTML\pshtml.psd1 -force
+import-module pshtml -force
 $Document = html {
 
     head {
@@ -30,4 +30,4 @@ $Document = html {
 }
 
 
-$Document > .\PSHTML\Examples\wop.Example11.html
+$Document | out-file -FilePath '.\Example11.html' -Encoding utf8

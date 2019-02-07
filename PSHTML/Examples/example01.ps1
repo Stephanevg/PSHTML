@@ -1,5 +1,5 @@
 
-import-module C:\Users\taavast3\OneDrive\Scripting\Repository\Projects\OpenSource\PSHTML\pshtml.psd1 -force
+import-module pshtml
 $Document = html {
 
     head{
@@ -76,4 +76,4 @@ $Document = html {
 }
 
 
-$Document > .\PSHTML_Example.html
+$Document | Out-File -FilePath '.\PSHTML_Example.html' -Encoding utf8

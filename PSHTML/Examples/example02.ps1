@@ -1,5 +1,5 @@
 
-import-module C:\Users\taavast3\OneDrive\Scripting\Repository\Projects\OpenSource\PSHTML\PSHtml.psm1 -verbose -force
+import-module PSHtml
 $Document = html {
 
     head{
@@ -67,4 +67,4 @@ $Document = html {
 }
 
 
-$Document > "PSHTML_Example2.html"
+$Document | out-file -FilePath ".\PSHTML_Example2.html"

@@ -1,10 +1,9 @@
-﻿<# $Searcher = New-Object -ComObject Microsoft.Update.Searcher;                                      
-        $Searcher.GetTotalHistoryCount()                                            
-        $AllUpdatesInstalled = $Searcher.GetTotalHistoryCount()                     
-        $Updates = $Searcher.QueryHistory(0,$AllUpdatesInstalled)
-        #>
-import-module C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\PSHTML.psd1 -force
-#. "C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\Examples\Charts\Chart04\Chart.ps1"
+﻿
+<#
+    Example combineing different types of charts one the same page.
+#>
+
+import-module PSHTML
 
 $BarCanvasID = "barcanvas"
 $PieCanvasID = "piecanvas"
@@ -71,16 +70,12 @@ $HTMLPage = html {
 
             $dsl2 = New-PSHTMLChartLineDataSet -Data $data2 -label "April" -LineColor ([Color]::Orange )
             $dsl3 = New-PSHTMLChartLineDataSet -Data $data3 -label "Mai" -LineColor ([Color]::Green)
-            #@($dsl1,$dsl2,$dsl3)
-            
+
             
             New-PSHTMLChart -type Line -DataSet @($dsl1,$dsl2,$dsl3) -title "Line Chart v2" -Labels $Labels -CanvasID $lineCanvasID 
 
-            #>
             $colors = @("yellow","red","green","orange")
             $dsp1 = New-PSHTMLChartPieDataSet -Data $data1 -label "March" -BackgroundColor $colors
-            #$dsp2 = New-PSHTMLChartPieDataSet -Data $data2 -label "April" -BackgroundColor ([Color]::red )
-            #$dsp3 = New-PSHTMLChartPieDataSet -Data $data3 -label "Mai" -BackgroundColor ([Color]::Green )
 
             New-PSHTMLChart -type pie -DataSet $dsp1 -title "Pie Chart v2" -Labels $Labels -CanvasID $PieCanvasID 
 

@@ -1,12 +1,16 @@
+<#
+    This example uses download information from a specific meetup group using MeetupPS.
+    The data gathered using Meetup PS will be displayed in a Chart using PSHTML New-PSHTMLChart
+#>
+
 # Connect against Meetup.com API
-# import-module C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\PSHTML.psd1 -force
-#Import-Module MeetupPS
+import-module PSHTML
+Import-Module MeetupPS
 
 $MeetupGroupName = 'FrenchPSUG'
-#Set-MeetupConfiguration -ClientID $Key -Secret $Secret
-#Get-MeetupGroup -GroupName $MeetupGroupName
-
-#Get-MeetupEvent -GroupName $MeetupGroupName -Status past | select time,yes_rsvp_count
+$Key = "" #Set your Meetup key
+$Secret = "" # Your Meetup Secret
+Set-MeetupConfiguration -ClientID $Key -Secret $Secret
 
 $CanvasID = "canvasAttendance"
 $HTMLPageMeetup = html { 
@@ -32,14 +36,7 @@ $HTMLPageMeetup = html {
 
 
         script -content {
-            <# $Data1 = @("4","7","11","21")
-            $Data2 = @("7","2","13","17")
-            $dataSet1 = [dataSet]::New($Data1,"Dataset1")
-            $dataSet1.backgroundColor = [Color]::blue
-            $dataSet2 = [dataSet]::New($Data2,"Dataset2")
-            $dataSet2.backgroundColor = [Color]::red
-            $Labels = @("Wins","Looses","Draws","Give ups") #>
-            
+
             $Data = Get-MeetupEvent -GroupName $MeetupGroupName -Status past | Sort 'local_date' | select Local_date,yes_rsvp_count
             $DataSetMeetup = [dataSet]::New($Data.'yes_rsvp_count',"Num Attendees")
             $DataSetMeetup.backgroundColor = [Color]::blue
@@ -52,6 +49,6 @@ $HTMLPageMeetup = html {
     }
 }
 
-$OutPath = "C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\Assets\Charts\MeetupGraph.html"
+$OutPath = ".\MeetupGraph.html"
 $HTMLPageMeetup | out-file -FilePath $OutPath -Encoding utf8
 start $outpath

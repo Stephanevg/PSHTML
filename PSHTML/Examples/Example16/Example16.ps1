@@ -27,11 +27,5 @@ $h = html -Attributes @{lang = "en"} {
     }
 } 
 
-$ExportPath = "C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\Examples\Example16\Example16.html"
-$h | Out-File -FilePath $ExportPath -Encoding utf8
-start $ExportPath
-
-$arr = 1..6
-Foreach($number in $arr){
-    h$($Number) "This is h$($Number) title"
-}
+$h | Out-File -FilePath '.\Example16.html' -Encoding utf8
+start .\Example16.html
