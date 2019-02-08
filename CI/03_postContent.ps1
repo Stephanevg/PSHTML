@@ -2,7 +2,7 @@
 
 $ScriptPath = Split-Path -Path $MyInvocation.MyCommand.Path
 
-New-Alias -Name Include -Value 'Get-PSHTMLTemplate' -Description "Include parts of PSHTML documents using Templates" -Force
+New-Alias -Name Include -Value 'Get-PSHTMLInclude' -Description "Include parts of PSHTML documents using include files" -Force
 
 $ConfigFile = Join-Path -Path $ScriptPath -ChildPath "pshtml.configuration.json"
 

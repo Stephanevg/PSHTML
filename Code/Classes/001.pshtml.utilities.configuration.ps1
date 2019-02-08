@@ -15,6 +15,7 @@ Class ConfigurationDocument {
     [System.IO.FileInfo]$Path = "$PSScriptRoot/pshtml.configuration.json"
     [Setting[]]$Settings
     [Asset[]]$Assets
+    [Include[]]$Includes
 
     #Constructors
     ConfigurationDocument (){
@@ -32,6 +33,8 @@ Class ConfigurationDocument {
         $this.Settings = [SettingFactory]::Parse($This.Path)
         $AssetsFolder = Join-Path $This.Path.Directory -ChildPath "Assets"
         $this.Assets = [AssetsFactory]::CreateAssets($AssetsFolder)
+        $IncludesFolder = Join-Path $this.Path.Directory -ChildPath 'Includes'
+        $this.Includes = [IncludeFactory]::Create($IncludesFolder)
     }
 
     [void]Load([System.IO.FileInfo]$Path){
@@ -83,6 +86,13 @@ Class ConfigurationDocument {
         return $this.GetSetting("Log").GetLogfilePath()
     }
 
+    [Include[]]GetInclude(){
+        Return $this.Includes
+    }
+
+    [Include[]]GetInclude([String]$Name){
+        Return $this.Includes | ? {$_.Name -eq $Name}
+    }
 
 }
 
@@ -504,5 +514,43 @@ function Get-ConfigurationDocument {
     }
     
     end {
+    }
+}
+
+Class IncludeFile {
+
+}
+
+Class Include : IncludeFile {
+    [String]$Name
+    [System.IO.DirectoryInfo]$FolderPath
+    [System.IO.FileInfo]$FilePath
+
+    Include([System.IO.FileInfo]$FilePath){
+        $this.FilePath = $FilePath
+        $this.FolderPath = $FilePath.Directory
+        $this.Name = $FilePath.BaseName
+    }
+
+    [String]Get(){
+
+        $Rawcontent = [IO.File]::ReadAllLines($this.FilePath.FullName)
+        $Content = [scriptBlock]::Create($Rawcontent).Invoke()
+        return $content
+
+    }
+}
+
+Class IncludeFactory {
+    
+    Static [Include[]] Create([System.IO.DirectoryInfo]$Path){
+        $Items = Get-ChildItem $Path.FullName -Filter "*.ps1"
+        $AllIncludes = @()
+        Foreach($Item in $Items){
+            $AllIncludes += [Include]::New($Item)
+            
+        }
+
+        Return $AllIncludes
     }
 }

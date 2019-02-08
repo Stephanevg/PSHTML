@@ -2,6 +2,9 @@
 
 The latest version of the help documentation is directly available [Here](https://pshtml.readthedocs.io/en/latest/)
 
+## v0.7.6
+- enhanced 'include' functionality of PSHTML. Added Write-PSHTMLInclude, Added Get-PSHTMLInclude. 
+
 ## v0.7.5
 - Added support for 'span' tag
 - Added 'base - BootStrap/JQuery' vsCode snippet
