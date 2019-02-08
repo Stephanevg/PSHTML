@@ -89,7 +89,7 @@ function Write-PSHTMLAsset {
         }ElseIf($Name){
             $Asset = (Get-PSHTMLConfiguration).GetAsset($Name)
         }ElseIf($Type){
-            (Get-PSHTMLConfiguration).GetAsset([AssetType]$Type)
+            $Asset = (Get-PSHTMLConfiguration).GetAsset([AssetType]$Type)
         }
         Else{
             $Asset = (Get-PSHTMLConfiguration).GetAsset()
