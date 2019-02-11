@@ -36,7 +36,7 @@ InModuleScope "PSHTML"{
 
         $FilePath = "$includesFolderPath\head.ps1"
         Set-Content -Path $FilePath -Value $head -Force
-    
+        (Get-PSHTMLConfiguration).Load()
         it 'Get-PSHTMLInclude should not be null or empty '{
             Get-PSHTMLInclude | should not beNullOrEmpty
         }

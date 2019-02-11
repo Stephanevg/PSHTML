@@ -1,4 +1,4 @@
-﻿#Generated at 02/11/2019 09:41:14 by Stephane van Gulick
+﻿#Generated at 02/11/2019 10:31:49 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -515,44 +515,6 @@ function Get-ConfigurationDocument {
     }
     
     end {
-    }
-}
-
-Class IncludeFile {
-
-}
-
-Class Include : IncludeFile {
-    [String]$Name
-    [System.IO.DirectoryInfo]$FolderPath
-    [System.IO.FileInfo]$FilePath
-
-    Include([System.IO.FileInfo]$FilePath){
-        $this.FilePath = $FilePath
-        $this.FolderPath = $FilePath.Directory
-        $this.Name = $FilePath.BaseName
-    }
-
-    [String]ToString(){
-
-        $Rawcontent = [IO.File]::ReadAllText($this.FilePath.FullName)
-        $Content = [scriptBlock]::Create($Rawcontent).Invoke()
-        return $content
-
-    }
-}
-
-Class IncludeFactory {
-    
-    Static [Include[]] Create([System.IO.DirectoryInfo]$Path){
-        $Items = Get-ChildItem $Path.FullName -Filter "*.ps1"
-        $AllIncludes = @()
-        Foreach($Item in $Items){
-            $AllIncludes += [Include]::New($Item)
-            
-        }
-
-        Return $AllIncludes
     }
 }
 
@@ -1312,6 +1274,43 @@ Class doughnutChart : Chart {
 #endregion
 
 
+Class IncludeFile {
+
+}
+
+Class Include : IncludeFile {
+    [String]$Name
+    [System.IO.DirectoryInfo]$FolderPath
+    [System.IO.FileInfo]$FilePath
+
+    Include([System.IO.FileInfo]$FilePath){
+        $this.FilePath = $FilePath
+        $this.FolderPath = $FilePath.Directory
+        $this.Name = $FilePath.BaseName
+    }
+
+    [String]ToString(){
+
+        $Rawcontent = [IO.File]::ReadAllText($this.FilePath.FullName)
+        $Content = [scriptBlock]::Create($Rawcontent).Invoke()
+        return $content
+
+    }
+}
+
+Class IncludeFactory {
+    
+    Static [Include[]] Create([System.IO.DirectoryInfo]$Path){
+        $Items = Get-ChildItem $Path.FullName -Filter "*.ps1"
+        $AllIncludes = @()
+        Foreach($Item in $Items){
+            $AllIncludes += [Include]::New($Item)
+            
+        }
+
+        Return $AllIncludes
+    }
+}
 
 #From Jakub Jares (Thanks!)
 function Clear-WhiteSpace ($Text) {
