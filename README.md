@@ -48,25 +48,41 @@ html {
 
     body{
 
-        Header {
-            h1 "This is h1 Title in header"
-            div {
-                p {
-                    "This is simply a paragraph in a div."
+        
+        h1 "This is h1 Title in header"
+        div {
+            p {
+                "This is simply a paragraph in a div."
+            }
+
+            h1 "This is h1"
+            h2 "This is h2"
+            h3 "This is h3"
+            h4 "This is h4"
+            h5 "This is h5"
+            h6 "This is h6"
+            strong "plop";"Woop"
+        }
+        
+
+        h1 "My favorites Fruits"
+
+        $Fruits = "Apple","Banana","Orange","Ananas"
+
+        ul {
+
+            foreach($fruit in $Fruits){
+                li {
+                    $fruit
                 }
             }
         }
 
-
-            p {
-                h1 "This is h1"
-                h2 "This is h2"
-                h3 "This is h3"
-                h4 "This is h4"
-                h5 "This is h5"
-                h6 "This is h6"
-                strong "plop";"Woop"
-            }
+    }
+    footer {
+        p{
+            "Copyright 2019"
+        }
     }
 
 }
