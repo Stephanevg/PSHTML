@@ -1,4 +1,4 @@
-﻿#Generated at 02/08/2019 01:22:23 by Stephane van Gulick
+﻿#Generated at 02/11/2019 09:41:14 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -533,9 +533,9 @@ Class Include : IncludeFile {
         $this.Name = $FilePath.BaseName
     }
 
-    [String]Get(){
+    [String]ToString(){
 
-        $Rawcontent = [IO.File]::ReadAllLines($this.FilePath.FullName)
+        $Rawcontent = [IO.File]::ReadAllText($this.FilePath.FullName)
         $Content = [scriptBlock]::Create($Rawcontent).Invoke()
         return $content
 
@@ -3771,9 +3771,23 @@ Function Get-PSHTMLInclude {
     .SYNOPSIS
     Retrieve the list of available PSHTML include files.
 
+    .DESCRIPTION
+    Allows to list the current existing include documents available to use.
+
+    .PARAMETER Name
+
+    Specifiy the name of an include file. (The name of an include file is the name of the powershell script containing the code, without the extension.)
+    Example: Footer.ps1 The name will be 'Footer'
+
+    This parameter is a dynamic parameter, and you can tab through the different values up until you find the one you wish to use.
+
     .Example
 
     Get-PSHTMLInclude
+
+    .Example
+
+    Get-PSHTMLInclude -Name Footer
 #>
     [CmdletBinding()]
     Param(
@@ -3785,42 +3799,46 @@ Function Get-PSHTMLInclude {
 
         $Includes = (Get-PSHTMLConfiguration).GetInclude()
 
-        $Names = $Includes.Name
+        if ($Includes) {
+            $Names = $Includes.Name
  
-        $Attribute = New-Object System.Management.Automation.ParameterAttribute
-        $Attribute.Position = 1
-        $Attribute.Mandatory = $False
-        $Attribute.HelpMessage = 'Select which file to include'
+            $Attribute = New-Object System.Management.Automation.ParameterAttribute
+            $Attribute.Position = 1
+            $Attribute.Mandatory = $False
+            $Attribute.HelpMessage = 'Select which file to include'
  
-        $Collection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
-        $Collection.add($Attribute)
+            $Collection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
+            $Collection.add($Attribute)
  
-        $ValidateSet = New-Object System.Management.Automation.ValidateSetAttribute($Names)
-        $Collection.add($ValidateSet)
+            $ValidateSet = New-Object System.Management.Automation.ValidateSetAttribute($Names)
+            $Collection.add($ValidateSet)
  
-        $Param = New-Object System.Management.Automation.RuntimeDefinedParameter($ParameterName, [string], $Collection)
+            $Param = New-Object System.Management.Automation.RuntimeDefinedParameter($ParameterName, [string], $Collection)
  
-        $Dictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
-        $Dictionary.Add($ParameterName, $Param)
-        return $Dictionary
+            $Dictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
+            $Dictionary.Add($ParameterName, $Param)
+            return $Dictionary
+        }
+        
  
     }
 
-    Begin{
+    Begin {
         $Name = $PsBoundParameters[$ParameterName]
     }
-    Process{
+    Process {
 
-        If($Name){
+        If ($Name) {
             $Includes = (Get-PSHTMLConfiguration).GetInclude($Name)
-        }else{
-           $Includes = (Get-PSHTMLConfiguration).GetInclude()
+        }
+        else {
+            $Includes = (Get-PSHTMLConfiguration).GetInclude()
         }
     
         
 
     }
-    End{
+    End {
 
         return $Includes
     }
@@ -7750,7 +7768,19 @@ Function Write-PSHTMLInclude {
     .SYNOPSIS
     Include parts of your PSHTML documents that is identical across pages.
 
-        .Example
+    .DESCRIPTION
+    Write the HTML content of an include file. Write-PSHTMLInclude has an well known alias called: 'include'.
+
+    .PARAMETER Name
+
+    Specifiy the name of an include file. 
+    The name of an include file is the name of the powershell script containing the code, without the extension.
+    Example: Footer.ps1 The name will be 'Footer'
+
+    This parameter is a dynamic parameter, and you can tab through the different values up until you find the one you wish to use.
+
+
+    .Example
 
 
 
@@ -7781,7 +7811,7 @@ html{
             }
             </footer>
         </html>
-    #>
+#>
     [CmdletBinding()]
     Param(
         
@@ -7791,25 +7821,27 @@ html{
         $ParameterName = 'Name'
 
         $Includes = (Get-PSHTMLConfiguration).GetInclude()
-
-        $Names = $Includes.Name
+        If($Includes){
+            $Names = $Includes.Name
  
-        $Attribute = New-Object System.Management.Automation.ParameterAttribute
-        $Attribute.Position = 1
-        $Attribute.Mandatory = $False
-        $Attribute.HelpMessage = 'Select which file to include'
- 
-        $Collection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
-        $Collection.add($Attribute)
- 
-        $ValidateSet = New-Object System.Management.Automation.ValidateSetAttribute($Names)
-        $Collection.add($ValidateSet)
- 
-        $Param = New-Object System.Management.Automation.RuntimeDefinedParameter($ParameterName, [string], $Collection)
- 
-        $Dictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
-        $Dictionary.Add($ParameterName, $Param)
-        return $Dictionary
+            $Attribute = New-Object System.Management.Automation.ParameterAttribute
+            $Attribute.Position = 1
+            $Attribute.Mandatory = $False
+            $Attribute.HelpMessage = 'Select which file to include'
+     
+            $Collection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
+            $Collection.add($Attribute)
+     
+            $ValidateSet = New-Object System.Management.Automation.ValidateSetAttribute($Names)
+            $Collection.add($ValidateSet)
+     
+            $Param = New-Object System.Management.Automation.RuntimeDefinedParameter($ParameterName, [string], $Collection)
+     
+            $Dictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
+            $Dictionary.Add($ParameterName, $Param)
+            return $Dictionary
+        }
+        
  
     }
 
@@ -7825,42 +7857,12 @@ html{
         }
     
         Foreach($Include in $Includes){
-            $Include.Get()
+            $Include.ToString()
         }
 
     }
     End{}
 
-    <#
-    $callstack = Get-PSCallStack
-    $ScriptCaller = $callstack[-1].ScriptName
-    $ScriptPath = Split-Path $ScriptCaller -Parent
-    $TemplatesFolder = join-path $ScriptPath -ChildPath "Templates"
-
-    if(!(test-path $TemplatesFolder)){
-        throw "The folder templates was not found at $($TemplatesFolder)"
-    }
-    if(!($Name.EndsWith(".ps1"))){
-        $Name = $name + ".ps1"
-    }
-    $Template = get-childItem -Path $templatesFolder -filter "$($Name)"
-
-    if ($template.count -ge 2){
-        throw "One or more files with the same template name $($name) where found, please be more specefic, or rename the templates"
-    }
-    if(!($template)){
-        throw "No template file with the name '$($Name)' could be found in the templates folder."
-    }
-
-    if($template.count -eq 1){
-        write-verbose "Template file found at $($Template.FullName)"
-    }
-
-    $Rawcontent = Get-Content $Template.FullName -Raw
-    $Content = [scriptBlock]::Create($Rawcontent).Invoke()
-    return $content
-    #>
-    
 }
 function Write-PSHTMLSymbol {
 
@@ -7992,7 +7994,7 @@ function Write-PSHTMLSymbol {
 
 $ScriptPath = Split-Path -Path $MyInvocation.MyCommand.Path
 
-New-Alias -Name Include -Value 'Get-PSHTMLInclude' -Description "Include parts of PSHTML documents using include files" -Force
+New-Alias -Name Include -Value 'Write-PSHTMLInclude' -Description "Include parts of PSHTML documents using include files" -Force
 
 $ConfigFile = Join-Path -Path $ScriptPath -ChildPath "pshtml.configuration.json"
 

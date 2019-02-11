@@ -532,9 +532,9 @@ Class Include : IncludeFile {
         $this.Name = $FilePath.BaseName
     }
 
-    [String]Get(){
+    [String]ToString(){
 
-        $Rawcontent = [IO.File]::ReadAllLines($this.FilePath.FullName)
+        $Rawcontent = [IO.File]::ReadAllText($this.FilePath.FullName)
         $Content = [scriptBlock]::Create($Rawcontent).Invoke()
         return $content
 
