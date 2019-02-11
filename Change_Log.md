@@ -2,6 +2,11 @@
 
 The latest version of the help documentation is directly available [Here](https://pshtml.readthedocs.io/en/latest/)
 
+## v0.7.7
+- Added help for include functionality.
+- Added pester tests for Include functionality. 
+- Fixed minor bug fixes
+
 ## v0.7.6
 - enhanced 'include' functionality of PSHTML. Added Write-PSHTMLInclude, Added Get-PSHTMLInclude. 
 
