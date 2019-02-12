@@ -2,6 +2,11 @@
 
 The latest version of the help documentation is directly available [Here](https://pshtml.readthedocs.io/en/latest/)
 
+## v0.7.8
+- Depreacted `convertTo-HtmlTable' and replaced it with `ConvertTo-PSHTMLTable`
+- Enahanced ConvertTo-PSHTMLTable for customization with following properties: 
+- TableID,TableClass,TableStyle,TableAttributes,TheadID,TheadClass,TheadStyle,TheadAttributes,TbodyID,TBodyClass,TbodyStyle,TbodyAttributes
+
 ## v0.7.7
 - Added help for include functionality.
 - Added pester tests for Include functionality. 
