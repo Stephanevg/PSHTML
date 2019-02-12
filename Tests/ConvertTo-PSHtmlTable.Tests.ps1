@@ -11,7 +11,7 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
 
-Describe "Testing ConvertTo-HTMLTable" {
+Describe "Testing ConverTo-PSHTMLTable" {
 
 
     $Class = "MyClass"
@@ -20,7 +20,8 @@ Describe "Testing ConvertTo-HTMLTable" {
     $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
     $string = head {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
 
-    $string = Get-Process | Select-Object -Property Handles,ProcessName -first 2 | ConvertTo-HTMLTable
+    $Obb = Get-Process | Select-Object -Property Handles,ProcessName -first 2 
+    $string = ConvertTo-PSHTMLTable -Object $Obb
 
     if($string -is [array]){
         $string = $String -join ""
@@ -61,8 +62,9 @@ Describe "Testing ConvertTo-HTMLTable" {
 
 }
 
-Describe "Testing ConvertTo-HTMLTable Properties Parameter" {
-    $string = Get-Process | Select-Object  -first 2 | ConvertTo-HTMLTable -properties  Handles,ProcessName
+Describe "Testing ConverTo-PSHTMLTable Properties Parameter" {
+    $Obb = Get-Process | Select-Object -Property Handles,ProcessName -first 2 
+    $string = ConvertTo-PSHTMLTable -Object $Obb
     if($string -is [array]){
         $string = $String -join ""
     }
