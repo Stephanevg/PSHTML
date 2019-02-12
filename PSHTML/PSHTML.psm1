@@ -1,4 +1,4 @@
-﻿#Generated at 02/11/2019 10:31:49 by Stephane van Gulick
+﻿#Generated at 02/12/2019 12:18:28 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -1428,7 +1428,7 @@ Function Set-HtmlTag {
     }
     Process {
         $attr = $output = ''
-        $outcontent = $false
+        $outcontent = ''
 
         $AttributesToSkip = "Content","Attributes","httpequiv","content_tag"
 
@@ -1517,7 +1517,7 @@ Function Set-HtmlTag {
         #Fix to avoid a additional space before the content
         $TagAttributes = $TagAttributes.TrimEnd(" ")
     
-        if($outcontent){
+        if($null -ne $outcontent){
 
             $TagContent = -join $outcontent 
         }

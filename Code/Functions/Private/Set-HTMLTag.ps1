@@ -60,7 +60,7 @@ Function Set-HtmlTag {
     }
     Process {
         $attr = $output = ''
-        $outcontent = $false
+        $outcontent = ''
 
         $AttributesToSkip = "Content","Attributes","httpequiv","content_tag"
 
@@ -149,7 +149,7 @@ Function Set-HtmlTag {
         #Fix to avoid a additional space before the content
         $TagAttributes = $TagAttributes.TrimEnd(" ")
     
-        if($outcontent){
+        if($null -ne $outcontent){
 
             $TagContent = -join $outcontent 
         }
