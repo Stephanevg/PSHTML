@@ -1,6 +1,17 @@
 Function Tbody {
     <#
-.LINK
+    .SYNOPSIS
+    Allows to create an Thead HTML element (<Tbody> </Tbody>)
+    .Description
+    Tbody should be used inside a 'table' block, and after a Thead.
+
+    .Example
+
+    Tbody {
+        
+    }
+
+    .LINK
     https://github.com/Stephanevg/PSHTML
     .NOTES
     Version 3.1.0
@@ -13,7 +24,19 @@ Function Tbody {
             Position = 0
         )]
         
-        $Content
+        $Content,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class = "",
+    
+        [String]$Id,
+    
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Style,
+
+        [Hashtable]$Attributes
     )
 
     Process {

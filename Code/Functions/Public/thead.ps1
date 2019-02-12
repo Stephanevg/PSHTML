@@ -1,5 +1,16 @@
 Function Thead {
     <#
+    .SYNOPSIS
+    Allows to create an Thead HTML element (<Thead> </Thead>)
+    .Description
+    Thead should be used inside a 'table' block.
+
+    .Example
+
+    Thead {
+        
+    }
+
     .LINK
     https://github.com/Stephanevg/PSHTML
     .NOTES
@@ -12,8 +23,19 @@ Function Thead {
             Mandatory = $false,
             Position = 0
         )]
-        [scriptblock]
-        $Content
+        $Content,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class = "",
+    
+        [String]$Id,
+    
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Style,
+
+        [Hashtable]$Attributes
     )
 
     Process {
