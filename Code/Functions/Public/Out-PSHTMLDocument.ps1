@@ -26,10 +26,10 @@ function Out-PSHTMLDocument {
 #>
     [CmdletBinding()]
     param (
-        $OutPath = {Throw "Must provide a path"},
+        $OutPath = $(Throw "Must provide a path"),
 
         [Parameter(ValueFromPipeline = $true)]
-        $HTMLDocument = {Throw "HTMLDocument cannot be empty"},
+        $HTMLDocument = $(Throw "HTMLDocument cannot be empty"),
 
         [Parameter(Mandatory = $False)]
         [Switch]$Show

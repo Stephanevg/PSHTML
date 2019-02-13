@@ -1,4 +1,4 @@
-﻿#Generated at 02/13/2019 14:18:03 by Stephane van Gulick
+﻿#Generated at 02/13/2019 16:54:09 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -6501,10 +6501,10 @@ function Out-PSHTMLDocument {
 #>
     [CmdletBinding()]
     param (
-        $OutPath = {Throw "Must provide a path"},
+        $OutPath = $(Throw "Must provide a path"),
 
         [Parameter(ValueFromPipeline = $true)]
-        $HTMLDocument = {Throw "HTMLDocument cannot be empty"},
+        $HTMLDocument = $(Throw "HTMLDocument cannot be empty"),
 
         [Parameter(Mandatory = $False)]
         [Switch]$Show
