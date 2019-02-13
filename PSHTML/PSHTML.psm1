@@ -1,4 +1,4 @@
-﻿#Generated at 02/13/2019 11:58:03 by Stephane van Gulick
+﻿#Generated at 02/13/2019 14:18:03 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -6473,7 +6473,7 @@ Function option {
 
 }
 
-function OUT-PSHTMLDocument {
+function Out-PSHTMLDocument {
     <#
     .SYNOPSIS
     Outputs the HTML document to an output location

@@ -1,4 +1,4 @@
-function OUT-PSHTMLDocument {
+function Out-PSHTMLDocument {
     <#
     .SYNOPSIS
     Outputs the HTML document to an output location
