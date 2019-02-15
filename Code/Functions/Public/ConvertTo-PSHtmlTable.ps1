@@ -152,7 +152,8 @@ function ConvertTo-PSHTMLTable {
             
                 }
             } ## end of the thead is null
-
+            
+            ## Trs must be  generated for every iteration
             $tr = tr {
                         
                 foreach ($propertyName in $Hashtable.properties) {
@@ -172,7 +173,7 @@ function ConvertTo-PSHTMLTable {
     
     end {
 
-        ## TableParams
+        ## No need to generate TableParams in the process block
         $TableParams = @{}
         if ($TableID) {
             $TableParams.Id = $TableID
@@ -204,8 +205,7 @@ function ConvertTo-PSHTMLTable {
         If ($TBodyAttributes) {
             $TBodyParams.Attributes = $TBodyAttributes
         }
-
-        #Table @TableParams -Content { $Hashtable.thead + (Tbody @TBodyParams {$Hashtable.trs} ) + (tfoot) }
+        
         Table @TableParams -Content { $Hashtable.caption + $Hashtable.thead + (Tbody @TBodyParams {$Hashtable.trs} ) }
     }
 }
