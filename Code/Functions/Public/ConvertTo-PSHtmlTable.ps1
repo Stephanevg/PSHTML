@@ -82,6 +82,8 @@ function ConvertTo-PSHTMLTable {
     )
     
     begin {
+        ## Creation of hastable to store the thead, caption, and trs generated in the process
+        ## caption and thead will be generated onlyc one.
         $Hashtable = @{
             caption = $null
             thead   = $null
@@ -93,7 +95,8 @@ function ConvertTo-PSHTMLTable {
     process {
         
         Foreach ($item in $Object) {
-
+            
+            ## thead is null, it means we are in the first iteration, this condition will never be met after the first iteration
             If ( $null -eq $Hashtable.thead ) {
                 if ($Properties) {
                     $HeaderNames = $Properties
@@ -148,7 +151,7 @@ function ConvertTo-PSHTMLTable {
                     }
             
                 }
-            }
+            } ## end of the thead is null
 
             $tr = tr {
                         
