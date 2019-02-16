@@ -2,6 +2,10 @@
 
 The latest version of the help documentation is directly available [Here](https://pshtml.readthedocs.io/en/latest/)
 
+## v0.7.10
+- Updates on 'Form': (See #212 / #213) -> Thanks to @TylerLeonhardt for reporting the issues.
+- Updates on 'ConvertTo-PSHTMLTable': Added support for PipelineInput -> Thanks to @lxlechat
+
 ## v0.7.9
 - Added Out-PSHTMLDocument
 
