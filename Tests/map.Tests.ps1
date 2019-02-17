@@ -13,22 +13,22 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
-    Describe "Testing TextArea" {
+    Describe "Testing map" {
 
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $string = TextArea {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $string = map {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
 
         if($string -is [array]){
             $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
-            $string -match '^<TextArea.*>' | should be $true
-            $string -match '.*</TextArea>$' | should be $true
+            $string -match '^<map.*>' | should be $true
+            $string -match '.*</map>$' | should be $true
 
         }
 
@@ -36,22 +36,22 @@ Context "Testing PSHTML"{
             $string -match "^.*>woop<.*" | should be $true
         }
 
-        it "Testing common paraTextAreas: Class"{
-            $string -match '^<TextArea.*class="myclass".*>' | should be $true
+        it "Testing common parameters: Class"{
+            $string -match '^<map.*class="myclass".*>' | should be $true
         }
-        it "Testing common paraTextAreas: ID"{
-            $string -match '^<TextArea.*id="myid".*>' | should be $true
+        it "Testing common parameters: ID"{
+            $string -match '^<map.*id="myid".*>' | should be $true
         }
-        it "Testing common paraTextAreas: Style"{
-            $string -match '^<TextArea.*style=".+".*>' | should be $true
+        it "Testing common parameters: Style"{
+            $string -match '^<map.*style=".+".*>' | should be $true
         }
 
-        it "Testing Attributes paraTextAreas"{
+        it "Testing Attributes parameters"{
 
             foreach($at in $CustomAtt.Keys){
                 $val = $null
                 $val = $CustomAtt[$at]
-                $string -match "^<TextArea.*$at=`"$val`".*>" | should be $true
+                $string -match "^<map.*$at=`"$val`".*>" | should be $true
             }
 
 

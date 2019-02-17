@@ -13,45 +13,42 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
-    Describe "Testing TextArea" {
+    Describe "Testing br - ScriptBlock" {
 
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $string = TextArea {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $string = br -Attributes $CustomAtt -Style $Style -Class $class -id $id
 
         if($string -is [array]){
             $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
-            $string -match '^<TextArea.*>' | should be $true
-            $string -match '.*</TextArea>$' | should be $true
+            $string -match '^<br.*/>' | should be $true
+            $string -match '.*/>$' | should be $true
 
         }
 
-        it "Testing content in child element"{
-            $string -match "^.*>woop<.*" | should be $true
+
+        it "Testing common parameters: Class"{
+            $string -match '^<br.*class="myclass".*>' | should be $true
+        }
+        it "Testing common parameters: ID"{
+            $string -match '^<br.*id="myid".*>' | should be $true
+        }
+        it "Testing common parameters: Style"{
+            $string -match '^<br.*style=".+".*>' | should be $true
         }
 
-        it "Testing common paraTextAreas: Class"{
-            $string -match '^<TextArea.*class="myclass".*>' | should be $true
-        }
-        it "Testing common paraTextAreas: ID"{
-            $string -match '^<TextArea.*id="myid".*>' | should be $true
-        }
-        it "Testing common paraTextAreas: Style"{
-            $string -match '^<TextArea.*style=".+".*>' | should be $true
-        }
-
-        it "Testing Attributes paraTextAreas"{
+        it "Testing Attributes parameters"{
 
             foreach($at in $CustomAtt.Keys){
                 $val = $null
                 $val = $CustomAtt[$at]
-                $string -match "^<TextArea.*$at=`"$val`".*>" | should be $true
+                $string -match "^<br.*$at=`"$val`".*>" | should be $true
             }
 
 
@@ -59,6 +56,7 @@ Context "Testing PSHTML"{
 
 
     }
+
 
 }
 

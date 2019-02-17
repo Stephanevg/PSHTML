@@ -41,11 +41,17 @@ Function button {
         [AllowNull()]
         $Content,
 
+        [String]$Id,
+
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Class,
 
-        [String]$Id,
+        
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Style,
 
         [Hashtable]$Attributes
     )

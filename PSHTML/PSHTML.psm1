@@ -1,4 +1,4 @@
-#Generated at 02/16/2019 11:30:12 by Stephane van Gulick
+﻿#Generated at 02/17/2019 18:34:16 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -2400,11 +2400,17 @@ Function button {
         [AllowNull()]
         $Content,
 
+        [String]$Id,
+
         [AllowEmptyString()]
         [AllowNull()]
         [String]$Class,
 
-        [String]$Id,
+        
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Style,
 
         [Hashtable]$Attributes
     )
@@ -2793,8 +2799,8 @@ Function ConvertTo-HTMLTable {
     ConvertTo-PSHTMLTable @PSBoundParameters
 }
 
-Function ConvertTo-PSHTMLTable {
-
+function ConvertTo-PSHTMLTable {
+    
     <#
     .SYNOPSIS
         Converts a powershell object to a HTML table.
@@ -2844,6 +2850,7 @@ Function ConvertTo-PSHTMLTable {
     .NOTES
             Current version 0.7.1
             History:
+            2019.02.14;LxLeChat;Miaou
             2018.05.09;stephanevg;Made Linux compatible (changed Get-Serv).
             2018.10.14;Christophe Kumor;Update.
             2018.05.09;stephanevg;Creation.
@@ -2853,11 +2860,10 @@ Function ConvertTo-PSHTMLTable {
         https://github.com/Stephanevg/PSHTML
     #>
     [CmdletBinding()]
-    Param(
+    param (
         [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
         $Object,
         [String[]]$Properties,
-
         [String]$Caption,
 
         [String]$TableID,
@@ -2876,134 +2882,134 @@ Function ConvertTo-PSHTMLTable {
         [HashTable]$TBodyAttributes
     )
     
-    
-    if ($Properties) {
-        $HeaderNames = $Properties
-    }
-    else {
-        $props = $Object | Get-Member -MemberType Properties | Select-Object Name
-        $HeaderNames = @()
-        foreach ($i in $props) {
-            $HeaderNames += $i.name.tostring()
-
+    begin {
+        ## Creation of hastable to store the thead, caption, and trs generated in the process
+        ## caption and thead will be generated onlyc one.
+        $Hashtable = @{
+            caption = $null
+            thead   = $null
+            trs     = $null
+            properties = @()
         }
-
     }
-
-
-    #Table parameters
-    $TableParams = @{}
-    if ($TableID) {
-        $TableParams.Id = $TableID
-    }
-
-    if ($TableClass) {
-        $TableParams.Class = $TableClass
-    }
-
-    if ($TableStyle) {
-        $TableParams.Style = $TableStyle
-    }
-
-    $TheadParams = @{}
-
-    if ($TheadId) {
-        $TheadParams.id = $TheadId
-    }
-
-    if ($TheadClass) {
-        $TheadParams.Class = $TheadClass
-    }
-
-    if ($TheadStyle) {
-        $TheadParams.Style = $TheadStyle
-    }
-
-    if ($TheadAttributes) {
-        $TheadParams.Attributes = $TheadAttributes
-    }
-
-    $TBodyParams = @{}
-
-    if ($TBodyId) {
-        $TBodyParams.Id = $TBodyId
-    }
-
-    if ($TBodyClass) {
-        $TBodyParams.Class = $TBodyClass
-    }
-
-    If ($TBodyStyle) {
-        $TBodyParams.Style = $TBodyStyle
-    }
-
-    If ($TBodyAttributes) {
-        $TBodyParams.Attributes = $TBodyAttributes
-    }
-
-    #tfoot
-    $TFootParams = @{}
-    if ($TFootId) {
-        $TFootParams.Id = $TFootId
-    }
-
-    if ($TFootClass) {
-        $TFootParams.Class = $TFootClass
-    }
-
-    if ($TFootStyle) {
-        $TFootParams.Style = $TFootStyle
-    }
-
-    If ($TFootAttributes) {
-        $TFootParams.Attributes = $TFootAttributes
-    }
-
-    table @TableParams -content {
-        if ($Caption) {
-            Caption -Content {
-                $Caption
-            }
-        }
-        thead @TheadParams -content {
     
-            tr {
-    
-                foreach ($Name in $HeaderNames) {
-    
-                    td {
-                        $Name
-                    }
-    
+    process {
+        
+        Foreach ($item in $Object) {
+            
+            ## thead is null, it means we are in the first iteration, this condition will never be met after the first iteration
+            If ( $null -eq $Hashtable.thead ) {
+                if ($Properties) {
+                    $HeaderNames = $Properties
+                    $Hashtable.properties = $properties
                 }
-    
-            }
-    
-        }
-    
-        tbody @TBodyParams {
+                else {
+                    $props = $item | Get-Member -MemberType Properties | Select-Object Name
+                    $HeaderNames = @()
+                    foreach ($i in $props) {
+                        $HeaderNames += $i.name.tostring()
+                        $Hashtable.properties += $i.name.tostring()
+                    }
+                }
 
-            foreach ($item in $Object) {
-    
-                tr {
-                    
-                    foreach ($propertyName in $HeaderNames) {
+                if ($Caption) {
+                    $Hashtable.caption = Caption -Content {
+                        $Caption
+                    }
+                }
 
-                        td {
-                            $item.$propertyName
+                ## Thead Params
+                $TheadParams = @{}
+
+                if ($TheadId) {
+                    $TheadParams.id = $TheadId
+                }
+            
+                if ($TheadClass) {
+                    $TheadParams.Class = $TheadClass
+                }
+            
+                if ($TheadStyle) {
+                    $TheadParams.Style = $TheadStyle
+                }
+            
+                if ($TheadAttributes) {
+                    $TheadParams.Attributes = $TheadAttributes
+                }
+                
+                $Hashtable.thead = Thead @TheadParams -content {
+            
+                    tr {
+            
+                        foreach ($Name in $HeaderNames) {
+            
+                            td {
+                                $Name
+                            }
+            
                         }
-                     
+            
                     }
-    
+            
+                }
+            } ## end of the thead is null
+            
+            ## Trs must be  generated for every iteration
+            $tr = tr {
+                        
+                foreach ($propertyName in $Hashtable.properties) {
+                    
+                    td {
+                        $item.$propertyName
+                    }
+                    
                 }
 
             }
+
+            $Hashtable.TRs = $Hashtable.TRs + $tr
+            
+        }
+    }
     
+    end {
+
+        ## No need to generate TableParams in the process block
+        $TableParams = @{}
+        if ($TableID) {
+            $TableParams.Id = $TableID
+        }
+    
+        if ($TableClass) {
+            $TableParams.Class = $TableClass
+        }
+    
+        if ($TableStyle) {
+            $TableParams.Style = $TableStyle
         }
 
+        ## TBodyParams
+        $TBodyParams = @{}
+
+        if ($TBodyId) {
+            $TBodyParams.Id = $TBodyId
+        }
+    
+        if ($TBodyClass) {
+            $TBodyParams.Class = $TBodyClass
+        }
+    
+        If ($TBodyStyle) {
+            $TBodyParams.Style = $TBodyStyle
+        }
+    
+        If ($TBodyAttributes) {
+            $TBodyParams.Attributes = $TBodyAttributes
+        }
+        
+        Table @TableParams -Content { $Hashtable.caption + $Hashtable.thead + (Tbody @TBodyParams {$Hashtable.trs} ) }
     }
 }
-
 Function datalist {
     <#
     .SYNOPSIS
@@ -6893,19 +6899,21 @@ Function script {
         [String]$crossorigin,
 
         [Parameter(Position = 4)]
-        [String]$Class,
+        $content,
 
         [Parameter(Position = 5)]
-        [String]$Id,
+        [String]$Class,
 
         [Parameter(Position = 6)]
-        [String]$Style,
+        [String]$Id,
 
         [Parameter(Position = 7)]
-        [Hashtable]$Attributes,
+        [String]$Style,
 
         [Parameter(Position = 8)]
-        $content
+        [Hashtable]$Attributes
+
+
 
     )
  
@@ -7741,7 +7749,24 @@ Function Th {
         Version 3.1.0
 #>
     Param(
-        $Content
+        [Parameter(
+            ValueFromPipeline = $true,
+            Mandatory = $false,
+            Position = 0
+        )]
+        $Content,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class = "",
+    
+        [String]$Id,
+    
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Style,
+
+        [Hashtable]$Attributes
     )
 
     Process {
@@ -7808,7 +7833,24 @@ Function Title {
     Version 3.1.0
 #>
     Param(
-        $Content
+        [Parameter(
+            ValueFromPipeline = $true,
+            Mandatory = $false,
+            Position = 0
+        )]
+        $Content,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class = "",
+    
+        [String]$Id,
+    
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Style,
+
+        [Hashtable]$Attributes
     )
 
     Process {

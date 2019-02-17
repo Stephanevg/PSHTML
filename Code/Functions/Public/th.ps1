@@ -6,7 +6,24 @@ Function Th {
         Version 3.1.0
 #>
     Param(
-        $Content
+        [Parameter(
+            ValueFromPipeline = $true,
+            Mandatory = $false,
+            Position = 0
+        )]
+        $Content,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class = "",
+    
+        [String]$Id,
+    
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Style,
+
+        [Hashtable]$Attributes
     )
 
     Process {

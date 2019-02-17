@@ -37,19 +37,21 @@ Function script {
         [String]$crossorigin,
 
         [Parameter(Position = 4)]
-        [String]$Class,
+        $content,
 
         [Parameter(Position = 5)]
-        [String]$Id,
+        [String]$Class,
 
         [Parameter(Position = 6)]
-        [String]$Style,
+        [String]$Id,
 
         [Parameter(Position = 7)]
-        [Hashtable]$Attributes,
+        [String]$Style,
 
         [Parameter(Position = 8)]
-        $content
+        [Hashtable]$Attributes
+
+
 
     )
  
