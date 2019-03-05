@@ -407,14 +407,12 @@ Class Asset{
     Asset(){}
     
     Asset([System.IO.FileInfo]$FilePath){
-        
         $this.FilePath = $FilePath
         $this.Parse()
         
     }
 
     Asset([System.IO.DirectoryInfo]$Path){
-        
         $this.FolderPath = $Path
         $this.Parse()
         
@@ -448,8 +446,12 @@ Class Asset{
 }
 
 Class ScriptAsset : Asset {
-    ScriptAsset ([System.IO.FileInfo]$FilePath) : base([System.IO.FileInfo]$FilePath) { }
-    ScriptAsset ([System.IO.DirectoryInfo]$Path) : base([System.IO.DirectoryInfo]$Path) { }
+    ScriptAsset ([System.IO.FileInfo]$FilePath) : base([System.IO.FileInfo]$FilePath) { 
+        $this.Type = [AssetType]::Script
+    }
+    ScriptAsset ([System.IO.DirectoryInfo]$Path) : base([System.IO.DirectoryInfo]$Path) { 
+        $this.Type = [AssetType]::Script
+    }
 
     [String] ToString(){
         $S = "<{0} src='{1}'></{0}>" -f "Script",$this.GetFullFilePath()
@@ -458,8 +460,12 @@ Class ScriptAsset : Asset {
 }
 
 Class StyleAsset : Asset {
-    StyleAsset ([System.IO.FileInfo]$FilePath) : base([System.IO.FileInfo]$FilePath) { }
-    StyleAsset ([System.IO.DirectoryInfo]$Path) : base([System.IO.DirectoryInfo]$Path) { }
+    StyleAsset ([System.IO.FileInfo]$FilePath) : base([System.IO.FileInfo]$FilePath) { 
+        $this.Type = [AssetType]::Style
+    }
+    StyleAsset ([System.IO.DirectoryInfo]$Path) : base([System.IO.DirectoryInfo]$Path) { 
+        $this.Type = [AssetType]::Style
+    }
 
 
      [String] ToString(){
