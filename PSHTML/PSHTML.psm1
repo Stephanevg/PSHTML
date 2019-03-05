@@ -1,4 +1,4 @@
-﻿#Generated at 02/17/2019 18:34:16 by Stephane van Gulick
+﻿#Generated at 03/05/2019 17:19:58 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -459,12 +459,9 @@ Class ScriptAsset : Asset {
 }
 
 Class StyleAsset : Asset {
-    StyleAsset ([System.IO.FileInfo]$FilePath) : base([System.IO.FileInfo]$FilePath) { 
-        $this.Type = [AssetType]::Style
-    }
-    StyleAsset ([System.IO.DirectoryInfo]$Path) : base([System.IO.DirectoryInfo]$Path) {
-        $this.Type = [AssetType]::Style
-     }
+    StyleAsset ([System.IO.FileInfo]$FilePath) : base([System.IO.FileInfo]$FilePath) { }
+    StyleAsset ([System.IO.DirectoryInfo]$Path) : base([System.IO.DirectoryInfo]$Path) { }
+
 
      [String] ToString(){
          #rel="stylesheet"
