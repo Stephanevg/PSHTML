@@ -14,7 +14,7 @@ Using PSHTML, offers code completion and syntax highlighting from the the defaul
 
 Since version `0.7.0` PSHTML supports the creation of charts.
 
-
+ 
 -----
 
 ## Status
