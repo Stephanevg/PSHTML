@@ -1,6 +1,6 @@
 image:
 - Visual Studio 2015
-- Ubuntu
+- Ubuntu1804
 
 environment:
   PSgalleryKey:
