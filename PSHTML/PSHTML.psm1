@@ -1,4 +1,4 @@
-﻿#Generated at 03/06/2019 00:13:49 by Stephane van Gulick
+﻿#Generated at 03/19/2019 15:59:51 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -869,17 +869,17 @@ Class datasetline : dataset{
     $pointBackgroundColor = "rgb(255,255,255)"
     $pointBorderColor = "rgb(0,0,0)"
     [Int[]]$pointBorderWidth = 1
-    [Int]$pointRadius = 4
+    [float]$pointRadius = 4
     [ValidateSet("circle","cross","crossRot","dash","line","rect","rectRounded","rectRot","star","triangle")]
     $pointStyle = "circle"
 
     [int[]]$pointRotation
-    [int[]]$pointHitRadius
+    [float]$pointHitRadius
 
     [String]  $PointHoverBackgroundColor
     [String]  $pointHoverBorderColor
     [int]    $pointHoverBorderWidth
-    [int] $pointHoverRadius
+    [float] $pointHoverRadius
     [bool]$showLine = $true
     [bool]$spanGaps
 
@@ -929,6 +929,24 @@ Class datasetline : dataset{
         $backgroundC = $t.replace(")",",0.4)")
         $this.backgroundColor = $backgroundC
         Write-verbose "[DatasetLine][SetLineBackGroundColor] End"
+    }
+
+    SetPointSettings([float]$pointRadius,[float]$pointHitRadius,[float]$pointHoverRadius){
+        Write-Verbose "[DatasetLine][SetPointSettings] Start"
+        $this.pointRadius = $pointRadius
+        $this.pointHitRadius = $pointHitRadius
+        $this.pointHoverRadius = $pointHoverRadius
+        Write-Verbose "[DatasetLine][SetPointSettings] End"
+    }
+
+    [hashtable]GetPointSettings(){
+        Write-Verbose "[DatasetLine][GetPointSettings] Start"
+        return @{
+            PointRadius = $this.pointRadius
+            PointHitRadius = $this.pointHitRadius
+            PointHoverRadius = $this.pointHoverRadius
+        }
+        Write-Verbose "[DatasetLine][GetPointSettings] End"
     }
 }
 
@@ -6125,6 +6143,9 @@ function New-PSHTMLChartLineDataSet {
         [int]    $LineDashOffSet = 0,
         [Array]$Data,
         [Switch]$FillBackground,
+        [float]$PointRadius = 4,
+        [float]$PointHitRadius = 0,
+        [float]$PointHoverRadius = 0,
         
         [ValidateSet("rounded","Straight")]
         $LineChartType = "rounded",
@@ -6165,7 +6186,6 @@ function New-PSHTMLChartLineDataSet {
     if($LineColor){
         $DataChart.SetLineColor($LineColor,$false)
         $Datachart.PointHoverBackgroundColor = $LineColor
-        
     }
 
     if($FillBackground){
@@ -6187,6 +6207,8 @@ function New-PSHTMLChartLineDataSet {
             }
         }
     }
+
+    $Datachart.SetPointSettings($PointRadius,$PointHitRadius,$PointHoverRadius)
 
     Return $Datachart
 }

@@ -125,17 +125,17 @@ Class datasetline : dataset{
     $pointBackgroundColor = "rgb(255,255,255)"
     $pointBorderColor = "rgb(0,0,0)"
     [Int[]]$pointBorderWidth = 1
-    [Int]$pointRadius = 4
+    [float]$pointRadius = 4
     [ValidateSet("circle","cross","crossRot","dash","line","rect","rectRounded","rectRot","star","triangle")]
     $pointStyle = "circle"
 
     [int[]]$pointRotation
-    [int[]]$pointHitRadius
+    [float]$pointHitRadius
 
     [String]  $PointHoverBackgroundColor
     [String]  $pointHoverBorderColor
     [int]    $pointHoverBorderWidth
-    [int] $pointHoverRadius
+    [float] $pointHoverRadius
     [bool]$showLine = $true
     [bool]$spanGaps
 
@@ -185,6 +185,24 @@ Class datasetline : dataset{
         $backgroundC = $t.replace(")",",0.4)")
         $this.backgroundColor = $backgroundC
         Write-verbose "[DatasetLine][SetLineBackGroundColor] End"
+    }
+
+    SetPointSettings([float]$pointRadius,[float]$pointHitRadius,[float]$pointHoverRadius){
+        Write-Verbose "[DatasetLine][SetPointSettings] Start"
+        $this.pointRadius = $pointRadius
+        $this.pointHitRadius = $pointHitRadius
+        $this.pointHoverRadius = $pointHoverRadius
+        Write-Verbose "[DatasetLine][SetPointSettings] End"
+    }
+
+    [hashtable]GetPointSettings(){
+        Write-Verbose "[DatasetLine][GetPointSettings] Start"
+        return @{
+            PointRadius = $this.pointRadius
+            PointHitRadius = $this.pointHitRadius
+            PointHoverRadius = $this.pointHoverRadius
+        }
+        Write-Verbose "[DatasetLine][GetPointSettings] End"
     }
 }
 
