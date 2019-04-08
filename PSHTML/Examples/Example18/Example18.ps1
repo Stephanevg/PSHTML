@@ -25,6 +25,7 @@ Class PesterDocument{
     }
 }
 $FilePath = "C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PsNunit\output.json"
+$FilePath = 'C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\Examples\Example18\TestREsults.Json'
 <#>
 Function Get-PesterRawData {
     [Parameter(Mandatory=$true)]
@@ -78,24 +79,65 @@ $chartColors = @{
     }
     $TableClasses = "table table-bordered table-hover"
             $TableHeaders = "thead-dark"
+            $CanvasFixturesId = 'Chart_FixtureID'
     body {
      div -Class 'container' {
 
+        <#
+        <div class="jumbotron">
+  <h1 class="display-4">Hello, world!</h1>
+  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+  </p>
+</div>
+        #>
+        div -Class 'Jumbotron'{
+            h1 -Class "display-4" {
+                "Pester Report Summary"
+            }
+            p -Class 'lead'{
+                "Detail run statistics from last pester runs. "
+            }
+        }
+
         div -Class 'Summary'{
             H1 {
-                "Pester Reults Summary"
+                "Overview"
             }
 
-            p {
-                "Source File - $($PEsterDoc.Path.FullName)"
+            Table -Class $TableClasses -content {
+                tr {
+                    td {
+                        'Source File'
+                    }
+                    td {
+                        $($PEsterDoc.Path.FullName)
+                    }
+                }
             }
-            
+
             ConvertTo-PSHTMLTable -Object $PesterDoc.Data -Properties TotalCount,PassedCount,FailedCount,SkippedCount,PendingCount,InconclusiveCount -TableClass $TableClasses -TheadClass $TableHeaders
-            $CanvasId = "Chart_Summary"
-            Canvas -Id $CanvasId -Height 400px -Width 400px -Content {
-
-            }
             
+            div -Class "row" -Content {
+                div -Id 'ChartSum' -Class 'col' -content {
+
+                    $CanvasId = "Chart_Summary"
+                    Canvas -Id $CanvasId -Height 400px -Width 400px -Content {
+        
+                    }
+                }
+                div -id 'chartFixture' -Class 'row' -content {
+        
+                    Canvas -Id $CanvasFixturesId -Height 400px -Width 400px -Content {
+        
+                    }
+
+                }
+            }
+
         }
 
         div -Class 'Time'{
@@ -120,7 +162,7 @@ $chartColors = @{
 
             Foreach($ftest in $Failed.Group){
 
-                ConvertTo-PSHTMLTable -Object $ftest -Properties Name,Describe,Parameters,FailureMessage,Time,StackTrace -TableClass $TableClasses -TheadClass $TableHeaders
+                ConvertTo-PSHTMLTable -Object $ftest -Properties Name,Result,Describe,Parameters,FailureMessage,Time,StackTrace -TableClass $TableClasses -TheadClass $TableHeaders
             }
         }
 
@@ -134,16 +176,40 @@ $chartColors = @{
 
             Foreach($ptest in $Passed.Group){
 
-                ConvertTo-PSHTMLTable -Object $ptest -Properties Name,Describe,Parameters,FailureMessage,Time,StackTrace -TableClass $TableHeaders -TheadClass $TableHeaders
+                ConvertTo-PSHTMLTable -Object $ptest -Properties Name,Result,Describe,Parameters,FailureMessage,Time,StackTrace -TableClass $TableClasses -TheadClass $TableHeaders
             }
         }
+
         Script -content {
             $PieData = @($PesterDoc.Data.PassedCount,$PesterDoc.Data.FailedCount,$PesterDoc.Data.SkippedCount,$PesterDoc.Data.InconclusiveCount)
             $Labels = @("Passed","Failed","Skipped","Inconclusive")
-            $colors = @("LightGreen",$chartColors.red,$chartColors.yellow,"LightOrange")
+            $colors = @("LightGreen","Red","Yellow","Orange")
             $BarDataSet = New-PSHTMLChartPieDataSet -Data $PieData -label "Pester Data" -backgroundColor $Colors
-            New-PSHTMLChart -Type Pie -DataSet $BarDataSet -Labels $Labels -CanvasID "Chart_Summary" -Title "Pester run summary"
+            New-PSHTMLChart -Type Pie -DataSet $BarDataSet -Labels $Labels -CanvasID "Chart_Summary" -Title "Pester run summary (Failed 'It' Blocks)"
         }
+
+        $CanvasFixturesId
+
+        Script -content {
+            $Fixtures = $PesterDoc.Data.TestResult | group Describe
+            $FixtureSuccess = 0
+            $FixtureFailed = 0
+            Foreach($Fixture in $Fixtures){
+                If(($Fixture.Group | ? {$_.Result -eq 'Failed'} | measure).Count -eq 0){
+                    
+                    $FixtureFailed++
+                }else{
+                    $FixtureSuccess++
+                }
+            }
+            
+            $PieData = @($FixtureSuccess,$FixtureFailed)
+            $FixtureLabels = @("Passed","Failed")
+            $colors = @("LightGreen","Red")
+            $FixtureDAtaSet = New-PSHTMLChartPieDataSet -Data $PieData -label "Pester Data" -backgroundColor $Colors
+            New-PSHTMLChart -Type Pie -DataSet $FixtureDAtaSet -Labels $FixtureLabels -CanvasID $CanvasFixturesId -Title "Failed Fixtures (Failed 'Describe' blocks)"
+        }
+
 }
         footer {
 
