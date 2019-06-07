@@ -103,6 +103,9 @@ function New-PSHTMLChartBarDataSet {
     If($borderColor){
         $Datachart.borderColor = $borderColor
     }
+    else {
+        $Datachart.borderColor = ''
+    }
     if ($borderWidth){
         $Datachart.borderWidth = $borderWidth
     }

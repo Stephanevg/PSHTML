@@ -1,4 +1,4 @@
-﻿#Generated at 03/06/2019 00:13:49 by Stephane van Gulick
+﻿#Generated at 06/07/2019 18:12:46 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -5824,6 +5824,9 @@ function New-PSHTMLChartBarDataSet {
 
     If($borderColor){
         $Datachart.borderColor = $borderColor
+    }
+    else {
+        $Datachart.borderColor = ''
     }
     if ($borderWidth){
         $Datachart.borderWidth = $borderWidth
