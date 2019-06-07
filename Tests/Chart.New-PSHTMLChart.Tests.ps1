@@ -99,7 +99,7 @@ var myChart = new Chart(ctx, {
 #>
 
 $Should = @'
-var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"bar","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"xAxisID":null,"yAxisID":null,"backgroundColor":null,"borderColor":null,"borderSkipped":null,"hoverBackgroundColor":null,"hoverBorderColor":null,"hoverBorderWidth":0,"data":[3,5],"label":null}]},"options":{"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"}}} );
+var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"bar","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"xAxisID":null,"yAxisID":null,"backgroundColor":null,"borderColor":"","borderSkipped":null,"hoverBackgroundColor":null,"hoverBorderColor":null,"hoverBorderWidth":0,"data":[3,5],"label":null}]},"options":{"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"}}} );
 '@
 
             #$Is | should be $Should
