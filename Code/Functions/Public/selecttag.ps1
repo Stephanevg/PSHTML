@@ -46,7 +46,9 @@ Function selecttag {
 
         [String]$Id,
 
-        [Hashtable]$Attributes
+        [Hashtable]$Attributes,
+
+        [string]$Name
     )
 
     $tagname = "select"

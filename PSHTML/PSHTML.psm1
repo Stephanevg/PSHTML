@@ -1,4 +1,4 @@
-﻿#Generated at 06/08/2019 13:21:30 by Stephane van Gulick
+﻿#Generated at 06/08/2019 13:32:28 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -7143,7 +7143,9 @@ Function selecttag {
 
         [String]$Id,
 
-        [Hashtable]$Attributes
+        [Hashtable]$Attributes,
+
+        [string]$Name
     )
 
     $tagname = "select"
