@@ -6,9 +6,12 @@ function Clear-WhiteSpace ($Text) {
 
 Enum ChartType {
     bar
+    horizontalBar
     line
     doughnut
     pie
+    radar
+    polarArea
 }
 
 Class Color {
@@ -79,12 +82,12 @@ Class dataSet {
 Class datasetbar : dataset {
     [String] $xAxisID
     [String] $yAxisID
-    [String]  $backgroundColor
-    [String]  $borderColor
+    [Array]  $backgroundColor
+    [Array]  $borderColor
     [int]    $borderWidth = 1
     [String] $borderSkipped
-    [String]  $hoverBackgroundColor
-    [String]  $hoverBorderColor
+    [Array]  $hoverBackgroundColor
+    [Array]  $hoverBorderColor
     [int]    $hoverBorderWidth
 
     datasetbar(){
@@ -347,6 +350,10 @@ Class BarChartOptions : ChartOptions {
 
 }
 
+Class horizontalBarChartOptions : ChartOptions {
+
+}
+
 Class PieChartOptions : ChartOptions {
 
 }
@@ -358,6 +365,14 @@ Class LineChartOptions : ChartOptions {
 
 Class DoughnutChartOptions : ChartOptions {
     
+}
+
+Class RadarChartOptions : ChartOptions {
+    [scales]$scales = $null
+}
+
+Class polarAreaChartOptions : ChartOptions {
+    [scales]$scales = $null
 }
 
 Class ChartData {
@@ -482,6 +497,22 @@ Class BarChart : Chart{
 
 }
 
+Class horizontalBarChart : Chart{
+
+    [ChartType] $type = [ChartType]::horizontalBar
+    
+    horizontalBarChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    horizontalBarChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
+}
+
 Class LineChart : Chart{
 
     [ChartType] $type = [ChartType]::line
@@ -525,6 +556,38 @@ Class doughnutChart : Chart {
         $this.data = $Data
         $This.options = $Options
     }
+}
+
+Class RadarChart : Chart{
+
+    [ChartType] $type = [ChartType]::radar
+    
+    RadarChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    RadarChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
+}
+
+Class polarAreaChart : Chart{
+
+    [ChartType] $type = [ChartType]::polarArea
+    
+    polarAreaChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    polarAreaChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
 }
 
 

@@ -1,4 +1,4 @@
-﻿#Generated at 06/07/2019 18:12:46 by Stephane van Gulick
+﻿#Generated at 06/08/2019 13:21:30 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -750,9 +750,12 @@ function Clear-WhiteSpace ($Text) {
 
 Enum ChartType {
     bar
+    horizontalBar
     line
     doughnut
     pie
+    radar
+    polarArea
 }
 
 Class Color {
@@ -823,12 +826,12 @@ Class dataSet {
 Class datasetbar : dataset {
     [String] $xAxisID
     [String] $yAxisID
-    [String]  $backgroundColor
-    [String]  $borderColor
+    [Array]  $backgroundColor
+    [Array]  $borderColor
     [int]    $borderWidth = 1
     [String] $borderSkipped
-    [String]  $hoverBackgroundColor
-    [String]  $hoverBorderColor
+    [Array]  $hoverBackgroundColor
+    [Array]  $hoverBorderColor
     [int]    $hoverBorderWidth
 
     datasetbar(){
@@ -1091,6 +1094,10 @@ Class BarChartOptions : ChartOptions {
 
 }
 
+Class horizontalBarChartOptions : ChartOptions {
+
+}
+
 Class PieChartOptions : ChartOptions {
 
 }
@@ -1102,6 +1109,14 @@ Class LineChartOptions : ChartOptions {
 
 Class DoughnutChartOptions : ChartOptions {
     
+}
+
+Class RadarChartOptions : ChartOptions {
+    [scales]$scales = $null
+}
+
+Class polarAreaChartOptions : ChartOptions {
+    [scales]$scales = $null
 }
 
 Class ChartData {
@@ -1226,6 +1241,22 @@ Class BarChart : Chart{
 
 }
 
+Class horizontalBarChart : Chart{
+
+    [ChartType] $type = [ChartType]::horizontalBar
+    
+    horizontalBarChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    horizontalBarChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
+}
+
 Class LineChart : Chart{
 
     [ChartType] $type = [ChartType]::line
@@ -1269,6 +1300,38 @@ Class doughnutChart : Chart {
         $this.data = $Data
         $This.options = $Options
     }
+}
+
+Class RadarChart : Chart{
+
+    [ChartType] $type = [ChartType]::radar
+    
+    RadarChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    RadarChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
+}
+
+Class polarAreaChart : Chart{
+
+    [ChartType] $type = [ChartType]::polarArea
+    
+    polarAreaChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    polarAreaChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
 }
 
 
@@ -5632,7 +5695,7 @@ Function New-PSHTMLChart {
     #>
         [CmdletBinding()]
         Param(
-            #[ValidateSet("Bar","Line","Pie","doughnut")]
+            #[ValidateSet("Bar","horizontalBar","Line","Pie","doughnut", "radar", "polarArea")]
             [ChartType]$Type = $(Throw '-Type is required'),
     
             [dataSet[]]$DataSet = $(Throw '-DataSet is required'),
@@ -5667,9 +5730,26 @@ Function New-PSHTMLChart {
             $ChartOptions = [BarChartOptions]::New()
             ;Break
         }
+        "horizontalBar" {
+            $Chart = [horizontalBarChart]::New()
+            $ChartOptions = [horizontalBarChartOptions]::New()
+            ;Break
+        }
         "Line"{
             $Chart = [LineChart]::New()
             $ChartOptions = [LineChartOptions]::New()
+            
+            ;Break
+        }
+        "radar"{
+            $Chart = [RadarChart]::New()
+            $ChartOptions = [RadarChartOptions]::New()
+            
+            ;Break
+        }
+        "polarArea" {
+            $Chart = [polarAreaChart]::New()
+            $ChartOptions = [polarAreaChartOptions]::New()
             
             ;Break
         }
@@ -5789,12 +5869,12 @@ function New-PSHTMLChartBarDataSet {
         [String]$label,
         [String] $xAxisID,
         [String] $yAxisID,
-        [String]  $backgroundColor,
-        [String]  $borderColor,
+        [Array]  $backgroundColor,
+        [Array]  $borderColor,
         [int]    $borderWidth = 1,
         [String] $borderSkipped,
-        [String]  $hoverBackgroundColor,
-        [String]  $hoverBorderColor,
+        [Array]  $hoverBackgroundColor,
+        [Array]  $hoverBorderColor,
         [int]    $hoverBorderWidth
         
 

@@ -112,6 +112,109 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
 
     } -tag "Chart", "Bar"
 
+    Describe "Testing New-PSHTMLChart -Type horizontalBar" {
+
+
+        $Labels = @("january", "february")
+        $Data = @(3, 5)
+        $Title = "Test Title"
+        $CanvasID = "TestCanvasID"
+        #$bds = 
+        <# mock -CommandName New-PSHTMLChartBarDataSet -MockWith {
+                New-MockObject -Type "datasetbar"
+            } #>
+        $bds = New-PSHTMLChartBarDataSet -Data $Data
+            
+        it '[New-PSHTMLChart][-Type horizontalBar][-DataSet BarDataSet][Label][Title][CanvasId] Should not throw' {
+            {New-PSHTMLChart -Type horizontalBar -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID} | should not throw
+        }
+
+        it '[New-PSHTMLChart][-Type horizontalBar][-DataSet BarDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
+            $Is = New-PSHTMLChart -Type horizontalBar -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID
+
+$Should = @'
+var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"horizontalBar","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"xAxisID":null,"yAxisID":null,"backgroundColor":null,"borderColor":"","borderSkipped":null,"hoverBackgroundColor":null,"hoverBorderColor":null,"hoverBorderWidth":0,"data":[3,5],"label":null}]},"options":{"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"}}} );
+'@
+
+            #$Is | should be $Should
+            
+            $Is | should be $Should
+        }
+            
+
+
+    } -tag "Chart", "horizontalBar"
+
+    Describe "Testing New-PSHTMLChart -Type Radar" {
+
+
+        $Labels = @("january", "february")
+        $Data = @(3, 5)
+        $Title = "Test Title"
+        $CanvasID = "TestCanvasID"
+        #$bds = 
+        <# mock -CommandName New-PSHTMLChartBarDataSet -MockWith {
+                New-MockObject -Type "datasetbar"
+            } #>
+        $bds = New-PSHTMLChartBarDataSet -Data $Data
+            
+        it '[New-PSHTMLChart][-Type Radar][-DataSet BarDataSet][Label][Title][CanvasId] Should not throw' {
+            {New-PSHTMLChart -Type Radar -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID} | should not throw
+        }
+
+        it '[New-PSHTMLChart][-Type Radar][-DataSet BarDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
+            $Is = New-PSHTMLChart -Type radar -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID
+
+$Should = @'
+var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"radar","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"xAxisID":null,"yAxisID":null,"backgroundColor":null,"borderColor":"","borderSkipped":null,"hoverBackgroundColor":null,"hoverBorderColor":null,"hoverBorderWidth":0,"data":[3,5],"label":null}]},"options":{"scales":null,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"title":{"display":true,"text":"Test Title"}}} );
+'@
+
+            #$Is | should be $Should
+            
+            $Is | should be $Should
+        }
+            
+
+
+    } -tag "Chart", "Radar"
+
+    Describe "Testing New-PSHTMLChart -Type polarArea" {
+
+
+        $Labels = @('red', 'green', 'yellow', 'grey', 'blue')
+        $Data = @(3, 5,7,2,9)
+        $Title = "Test Title"
+        $CanvasID = "TestCanvasID"
+        $BackgroundColor = @('red', 'green', 'yellow', 'grey', 'blue')
+        #$bds = 
+        <# mock -CommandName New-PSHTMLChartBarDataSet -MockWith {
+                New-MockObject -Type "datasetbar"
+            } #>
+
+        it '[New-PSHTMLChartBarDataSet][-Data $Data][-BackgroundColor $BackgroundColor] Should not throw' {
+            $bds = New-PSHTMLChartBarDataSet -Data $Data -BackgroundColor $BackgroundColor
+        }
+
+        it '[New-PSHTMLChart][-Type polarArea][-DataSet BarDataSet][Label][Title][CanvasId] Should not throw' {
+            {New-PSHTMLChart -Type polarArea -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID} | should not throw
+        }
+
+        it '[New-PSHTMLChart][-Type polarArea][-DataSet BarDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
+            $Is = New-PSHTMLChart -Type polarArea -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID
+
+$Should = @'
+var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"polarArea","data":{"labels":["red","green","yellow","grey","blue"],"datasets":[{"borderWidth":1,"xAxisID":null,"yAxisID":null,"backgroundColor":["red","green","yellow","grey","blue"],"borderColor":"","borderSkipped":null,"hoverBackgroundColor":null,"hoverBorderColor":null,"hoverBorderWidth":0,"data":[3,5,7,2,9],"label":null}]},"options":{"scales":null,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"title":{"display":true,"text":"Test Title"}}} );
+'@
+
+            #$Is | should be $Should
+            
+            $Is | should be $Should
+        }
+            
+
+
+    } -tag "Chart", "Radar"
+
 
     Describe "Testing New-PSHTMLChart -Type Pie" {
 
