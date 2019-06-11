@@ -16,7 +16,7 @@ Context "Testing PSHTML"{
     Describe "Testing Form" {
 
         $Action = "action_Page.php"
-        $Method = "post"
+        $Method = "get"
         $Target = "_self"
         $Class = "MyClass"
         $Id = "MyID"
@@ -39,7 +39,7 @@ Context "Testing PSHTML"{
         }
 
         it "Testing primary parameters: Method"{
-            $string -match '^<form.*method="post".*>' | should be $true
+            $string -match '^<form.*method="get".*>' | should be $true
         }
 
         it "Testing primary parameters: target"{
@@ -65,6 +65,28 @@ Context "Testing PSHTML"{
             }
 
 
+        }
+
+        it "#212-Should not throw when parameter -target is not specified"{
+            {form -action "ee" -method Get} | Should not throw
+        }
+
+        it "#212-when target not specified, should set target=_self by default"{
+            $tr = form -action "ee" -method Get
+            $tr -match '<form.*target="_self".*' | Should be $true
+        }
+
+        it "#211-Should throw when parameter -enctype is specified when -Method get"{
+            {form -action "ee" -method Get -enctype "plop"} | Should throw
+        }
+
+        it "#211-Should Not throw when parameter -enctype is specified with -Method Post"{
+            {form -target _self -action "ee" -method Post -enctype "text/plain"} | Should Not throw
+        }
+
+        it "return correct enctype values"{
+            $st = form -target _self -action "ee" -method Post -enctype "text/plain"
+            $st -Match '^<form.*enctype.*text/plain.*' | Should be $true
         }
 
 

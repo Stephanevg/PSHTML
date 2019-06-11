@@ -63,7 +63,7 @@ Context "Testing PSHTML"{
     Describe "Testing Footer - String" {
 
         it 'Should not fail when passing String' {
-            {h5 "woop"} | should not throw
+            {p "woop"} | should not throw
         }
 
 

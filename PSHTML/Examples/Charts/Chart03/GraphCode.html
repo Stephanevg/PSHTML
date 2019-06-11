@@ -1,0 +1,76 @@
+﻿<html ><head ><title >Chart JS Demonstration</title></head><Body ><h1 >PSHTML Graph</h1><div ><p >This is my graph</p><canvas Width="400px" Id="canvas01" Height="400px"  ></canvas></div><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" type="text/javascript"  ></script><script >var ctx = document.getElementById("canvas01").getContext('2d');
+var myChart = new Chart(ctx, {
+    "type":  "bar",
+    "data":  {
+                 "labels":  [
+                                "Wins",
+                                "Looses",
+                                "Draws",
+                                "Give ups"
+                            ],
+                 "datasets":  [
+                                  {
+                                      "data":  [
+                                                   "4",
+                                                   "7",
+                                                   "11",
+                                                   "21"
+                                               ],
+                                      "label":  "Dataset1",
+                                      "xAxisID":  null,
+                                      "yAxisID":  null,
+                                      "backgroundColor":  "rgb(30,144,255)",
+                                      "borderColor":  null,
+                                      "borderWidth":  0,
+                                      "borderSkipped":  null,
+                                      "hoverBackgroundColor":  null,
+                                      "hoverBorderColor":  null,
+                                      "hoverBorderWidth":  0
+                                  },
+                                  {
+                                      "data":  [
+                                                   "7",
+                                                   "2",
+                                                   "13",
+                                                   "17"
+                                               ],
+                                      "label":  "Dataset2",
+                                      "xAxisID":  null,
+                                      "yAxisID":  null,
+                                      "backgroundColor":  "rgb(220,20,60)",
+                                      "borderColor":  null,
+                                      "borderWidth":  0,
+                                      "borderSkipped":  null,
+                                      "hoverBackgroundColor":  null,
+                                      "hoverBorderColor":  null,
+                                      "hoverBorderWidth":  0
+                                  }
+                              ]
+             },
+    "options":  {
+                    "barPercentage":  1,
+                    "categoryPercentage":  1,
+                    "responsive":  false,
+                    "offsetGridLines":  true,
+                    "scales":  {
+                                   "yAxes":  [
+                                                 {
+                                                     "ticks":  {
+                                                                   "beginAtZero":  true
+                                                               }
+                                                 }
+                                             ],
+                                   "xAxes":  [
+
+                                             ]
+                               },
+                    "title":  {
+                                  "display":  true,
+                                  "text":  "New graph yes"
+                              },
+                    "barThickness":  null,
+                    "maxBarThickness":  0
+                }
+}
+);
+</script></Body></html>

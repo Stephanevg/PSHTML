@@ -1,0 +1,34 @@
+{ 
+"PsHtml Full Snippet":
+  {
+    "prefix": "pshtml",
+    "description": "PsHtml Complete Snippet",
+    "body":
+    [
+      "doctype { ",
+      "html -Attributes @{lang=\"en\"} {",
+      "    head {",
+      "        meta -charset 'UTF-8'",
+      "        meta -name 'description' -content \"${1:YOUR DESCRIPTION}\"",
+      "        meta -name 'author' -content \"${2:YOUR NAME}\"",
+      "        ",
+      "        Link -rel 'stylesheet' -href \"${3:POINT TO YOUR CSS FILE}\"",
+      "        Title -Content \"${4:YOUR SITE TITLE}\"",
+      "    }",
+      "    body {",
+      "",
+      "        header {",
+      "            ${5:YOUR HEADER}",
+      "        }",
+      "",
+      "        ${6:YOUR MAIN CODE}",
+      "",
+      "        footer {",
+      "            ${0:YOUR FOOTER}",
+      "        }",
+      "    }",
+      "} ",
+      "}"
+    ]
+  }
+}

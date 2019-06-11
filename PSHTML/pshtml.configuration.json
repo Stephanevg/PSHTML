@@ -1,0 +1,14 @@
+{
+    "General": {
+        "Verbosity": "Normal",
+        "version":"1.0.0"
+    },
+    "Logging": {
+        "Path": "Default",
+        "MaxFiles": 200,
+        "MaxTotalSize": "5MB"
+    },
+    "Assets": {
+        "Path": "Default"
+    }
+}

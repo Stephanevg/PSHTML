@@ -1,0 +1,17 @@
+{
+    "PsHtml_small": {
+        "prefix": "pshtml",
+        "body": [
+            "html {",
+            "\thead {",
+            "\t\ttitle 'iPortal Home Page'",
+            "\t\tlink -href 'assets/home.css' -rel 'stylesheet'",
+            "\t}",
+            "\tbody {",
+            "\t\t h1 'iPortal'",
+            "\t}",
+            "}"
+        ],
+        "description": "PsHtml Small Example Snippet"
+    }
+}

@@ -12,6 +12,7 @@ Write-Verbose "Importing module"
 
 import-module .\PSHTML -Force
 
+Context "Testing PSHTML"{
     Describe "Testing base - ScriptBlock" {
 
 
@@ -63,4 +64,29 @@ import-module .\PSHTML -Force
 
     }
 
+    Describe "Testing base without optional explicit Param" {
+
+        $href = "www.powershelldistrict.com"
+        $string = base -href $href
+
+        if($string -is [array]){
+            $string = $String -join ""
+        }
+
+        it "Should contain opening and closing tags" {
+            $string -match '^<base .*/>$' | should be $true
+
+        }
+
+        it "Testing common parameters: href"{
+            $string -match '^<base.*href="www\.powershelldistrict\.com".*/>' | should be $true
+        }
+
+        <#
+         it "Testing default parameters: Target"{
+            $string -match '^<base.*target="_self".*>' | should be $true
+        }
+ #>
+        }
+    }
 Pop-Location

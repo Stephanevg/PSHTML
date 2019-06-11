@@ -13,22 +13,22 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
-    Describe "Testing output" {
+    Describe "Testing TextArea" {
 
 
         $Class = "MyClass"
         $Id = "MyID"
         $Style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $string = output {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $string = TextArea {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
 
         if($string -is [array]){
             $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
-            $string -match '^<output.*>' | should be $true
-            $string -match '.*</output>$' | should be $true
+            $string -match '^<TextArea.*>' | should be $true
+            $string -match '.*</TextArea>$' | should be $true
 
         }
 
@@ -36,22 +36,22 @@ Context "Testing PSHTML"{
             $string -match "^.*>woop<.*" | should be $true
         }
 
-        it "Testing common paraoutputs: Class"{
-            $string -match '^<output.*class="myclass".*>' | should be $true
+        it "Testing common paraTextAreas: Class"{
+            $string -match '^<TextArea.*class="myclass".*>' | should be $true
         }
-        it "Testing common paraoutputs: ID"{
-            $string -match '^<output.*id="myid".*>' | should be $true
+        it "Testing common paraTextAreas: ID"{
+            $string -match '^<TextArea.*id="myid".*>' | should be $true
         }
-        it "Testing common paraoutputs: Style"{
-            $string -match '^<output.*style=".+".*>' | should be $true
+        it "Testing common paraTextAreas: Style"{
+            $string -match '^<TextArea.*style=".+".*>' | should be $true
         }
 
-        it "Testing Attributes paraoutputs"{
+        it "Testing Attributes paraTextAreas"{
 
             foreach($at in $CustomAtt.Keys){
                 $val = $null
                 $val = $CustomAtt[$at]
-                $string -match "^<output.*$at=`"$val`".*>" | should be $true
+                $string -match "^<TextArea.*$at=`"$val`".*>" | should be $true
             }
 
 

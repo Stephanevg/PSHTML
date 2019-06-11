@@ -1,15 +1,28 @@
+image:
+- Previous Ubuntu
+- Visual Studio 2015
+
+
 environment:
   PSgalleryKey:
     secure: wl8DNkBd6QUSBAEWxCNTTW+cVn32ub6kWSqZxAUrpx4/QPnWYGiLWEj+ZaFp5cuA
+  APPVEYOR_RDP_PASSWORD: Passw0rd
 
 install:
 - ps: >-
-    Install-PackageProvider -Name NuGet -Force
-    
-    Install-Module -Name PSScriptAnalyzer -Force
-    
-    Install-Module -Name Pester -Force
-build: off
+    .\CI\02_Install.ps1
+build_script:
+- ps: >-
+    write-host "Skipping build"
 test_script:
-- ps: >- 
-    .\CI\CI_Start.ps1
+- ps: >-
+    .\CI\04_Tests.ps1
+
+skip_commits:
+  files:
+    - docs/*
+    - README.MD
+    - mkdocs.yml
+
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
