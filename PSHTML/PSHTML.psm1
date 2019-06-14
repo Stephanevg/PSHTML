@@ -1138,6 +1138,10 @@ static [string] hslcalc([int]$r, [int]$g, [int]$b, [double]$a) {
         }
 }
 
+static [string] hex([int]$r,[int]$g,[int]$b){ 
+    return "#({0:X2},{1:X2},{2:X2}" -f $r,$g,$b ;
+}
+
 static [string] hsl([int]$r,[int]$g,[int]$b){ 
     return [Color]::hslcalc($r, $g, $b, 9) ;
 }
