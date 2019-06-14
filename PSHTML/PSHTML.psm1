@@ -1683,7 +1683,60 @@ Class IncludeFactory {
     }
 }
 
-function Get-PSHTMLColor($Type, $Color) {
+function Get-PSHTMLColor {
+    Param(
+        [Parameter(Mandatory=$true)]
+        [ValidateSet("hex","hsl","hsla","rgb","rgba")]
+        [string]
+        $Type, 
+        [Parameter(Mandatory=$true)]
+        [String]
+        $Color
+    )
+<#
+.SYNOPSIS
+
+Returns a color string based on a color type and name
+
+.DESCRIPTION
+
+Returns a color string based on one of the W3C defined color names, using one of the
+formats typically used in HTML.
+
+.PARAMETER Type
+
+The type of color returned. Possible values: hex, hsl, hsla, rgb, rgba
+
+.PARAMETER Color
+
+A color name as defined by the W3C
+
+.EXAMPLE
+
+Get-PSHTMLColor -Type hex -Color lightblue
+#ADD8E6
+
+.EXAMPLE
+
+Get-PSHTMLColor -Type hsl -Color lightblue
+hsl(194,52%,79%)
+
+.EXAMPLE
+
+Get-PSHTMLColor -Type hsla -Color lightblue
+hsla(194,52%,79%,0)
+
+.EXAMPLE
+
+Get-PSHTMLColor -Type rgb -Color lightblue
+rgb(173,216,230)
+
+.EXAMPLE
+
+Get-PSHTMLColor -Type rgba -Color lightblue
+rgba(173,216,230,0)
+
+#>
     $colordef =  "$($color)_def"
     switch ($Type){
         'rgb' {
