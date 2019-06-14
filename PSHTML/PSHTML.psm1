@@ -1141,6 +1141,11 @@ static [string] hslcalc([int]$r, [int]$g, [int]$b, [double]$a) {
 static [string] hsl([int]$r,[int]$g,[int]$b){ 
     return [Color]::hslcalc($r, $g, $b, 9) ;
 }
+
+static [string] hsla([int]$r,[int]$g,[int]$b, [double] $a){ 
+    return [Color]::hslcalc($r, $g, $b, $a) ;
+}
+
     static [string] rgb([int]$r,[int]$g,[int]$b){
         return "rgb({0},{1},{2})" -f $r,$g,$b
     }
