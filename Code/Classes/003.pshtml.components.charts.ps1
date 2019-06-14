@@ -52,15 +52,22 @@ Class Color {
 #region dataSet
 Class dataSet {
     [System.Collections.ArrayList] $data = @()
-    [String]$label
+    [Array]$label
 
     dataSet(){
        
     }
 
-    dataset([Array]$Data,[String]$Label){
+    dataset([Array]$Data,[Array]$Label){
         
-        $this.SetLabel($Label)
+        if ( @( $Label ).Count -eq 1 ) {
+            $this.SetLabel($Label)
+        }
+        else {
+            foreach($l in $Label){
+                $this.AddLabel($l)
+            }
+        }
         foreach($d in $data){
             $this.AddData($d)
         }
@@ -68,9 +75,16 @@ Class dataSet {
         
     }
 
+    [void]AddLabel([Array]$Label){
+        foreach($L in $Label){
+            $null = $this.Label.Add($L)
+        }
+    }
+    
     [void]SetLabel([String]$Label){
         $this.label = $Label
     }
+    
 
     [void]AddData([Array]$Data){
         foreach($D in $Data){
@@ -82,6 +96,27 @@ Class dataSet {
 Class datasetbar : dataset {
     [String] $xAxisID
     [String] $yAxisID
+    [string]  $backgroundColor
+    [string]  $borderColor
+    [int]    $borderWidth = 1
+    [String] $borderSkipped
+    [string]  $hoverBackgroundColor
+    [string]  $hoverBorderColor
+    [int]    $hoverBorderWidth
+
+    datasetbar(){
+       
+    }
+
+    datasetbar([Array]$Data,[Array]$Label){
+        
+        $this.SetLabel($Label)
+        $this.AddData($Data)
+        
+    }
+}
+
+Class datasetPolarArea : dataset {
     [Array]  $backgroundColor
     [Array]  $borderColor
     [int]    $borderWidth = 1
@@ -90,13 +125,17 @@ Class datasetbar : dataset {
     [Array]  $hoverBorderColor
     [int]    $hoverBorderWidth
 
-    datasetbar(){
-       
+    datasetPolarArea(){
+    
     }
 
-    datasetbar([Array]$Data,[String]$Label){
-        
-        $this.SetLabel($Label)
+    datasetPolarArea([Array]$Data,[Array]$Label){
+        if ( @( $Label ).Count -gt 1 ) {
+            $this.AddLabel($Label)
+        }
+        else {
+            $this.SetLabel( @( $Label)[0] )
+        }
         $this.AddData($Data)
         
     }

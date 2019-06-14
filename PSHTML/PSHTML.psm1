@@ -1,4 +1,4 @@
-﻿#Generated at 06/13/2019 16:53:52 by Stephane van Gulick
+﻿#Generated at 06/14/2019 07:51:21 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -796,15 +796,22 @@ Class Color {
 #region dataSet
 Class dataSet {
     [System.Collections.ArrayList] $data = @()
-    [String]$label
+    [Array]$label
 
     dataSet(){
        
     }
 
-    dataset([Array]$Data,[String]$Label){
+    dataset([Array]$Data,[Array]$Label){
         
-        $this.SetLabel($Label)
+        if ( @( $Label ).Count -eq 1 ) {
+            $this.SetLabel($Label)
+        }
+        else {
+            foreach($l in $Label){
+                $this.AddLabel($l)
+            }
+        }
         foreach($d in $data){
             $this.AddData($d)
         }
@@ -812,9 +819,16 @@ Class dataSet {
         
     }
 
+    [void]AddLabel([Array]$Label){
+        foreach($L in $Label){
+            $null = $this.Label.Add($L)
+        }
+    }
+    
     [void]SetLabel([String]$Label){
         $this.label = $Label
     }
+    
 
     [void]AddData([Array]$Data){
         foreach($D in $Data){
@@ -826,6 +840,27 @@ Class dataSet {
 Class datasetbar : dataset {
     [String] $xAxisID
     [String] $yAxisID
+    [string]  $backgroundColor
+    [string]  $borderColor
+    [int]    $borderWidth = 1
+    [String] $borderSkipped
+    [string]  $hoverBackgroundColor
+    [string]  $hoverBorderColor
+    [int]    $hoverBorderWidth
+
+    datasetbar(){
+       
+    }
+
+    datasetbar([Array]$Data,[Array]$Label){
+        
+        $this.SetLabel($Label)
+        $this.AddData($Data)
+        
+    }
+}
+
+Class datasetPolarArea : dataset {
     [Array]  $backgroundColor
     [Array]  $borderColor
     [int]    $borderWidth = 1
@@ -834,13 +869,17 @@ Class datasetbar : dataset {
     [Array]  $hoverBorderColor
     [int]    $hoverBorderWidth
 
-    datasetbar(){
-       
+    datasetPolarArea(){
+    
     }
 
-    datasetbar([Array]$Data,[String]$Label){
-        
-        $this.SetLabel($Label)
+    datasetPolarArea([Array]$Data,[Array]$Label){
+        if ( @( $Label ).Count -gt 1 ) {
+            $this.AddLabel($Label)
+        }
+        else {
+            $this.SetLabel( @( $Label)[0] )
+        }
         $this.AddData($Data)
         
     }
@@ -5990,12 +6029,12 @@ function New-PSHTMLChartBarDataSet {
         [String]$label,
         [String] $xAxisID,
         [String] $yAxisID,
-        [Array]  $backgroundColor,
-        [Array]  $borderColor,
+        [string]  $backgroundColor,
+        [string]  $borderColor,
         [int]    $borderWidth = 1,
         [String] $borderSkipped,
-        [Array]  $hoverBackgroundColor,
-        [Array]  $hoverBorderColor,
+        [string]  $hoverBackgroundColor,
+        [string]  $hoverBorderColor,
         [int]    $hoverBorderWidth
         
 
@@ -6460,6 +6499,133 @@ function New-PSHTMLChartPieDataSet {
 
     if ($HoverborderWidth){
         $Datachart.HoverBorderWidth = $HoverborderWidth
+    }
+
+    return $Datachart
+}
+function New-PSHTMLChartPolarAreaDataSet {
+    <#
+    .SYNOPSIS
+        Create a dataset object for a PolarArea chart
+    .DESCRIPTION
+        Use this function to generate a Dataset for a PolarArea chart. 
+        It allows to specify options such as, the label name, Background / border / hover colors etc..
+    .EXAMPLE
+       
+    .PARAMETER Data
+        Specify an array of values.
+        ex: @(3,5,42,69)
+
+    .PARAMETER Label
+        this String Array defines the labels
+
+    .PARAMETER BackgroundColor
+        The background colors of the PolarArea chart values.
+        
+        Use either: [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+
+    .PARAMETER BorderColor
+        The border colors of the PolarArea chart values.
+
+        Use either: [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+
+    .PARAMETER BorderWidth
+        expressed in px's
+
+    .PARAMETER BorderSkipped
+        border is skipped
+
+    .PARAMETER HoverBorderColor
+        The HoverBorder color of the PolarArea chart values.
+        Use either: 
+        [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+
+    .EXAMPLE
+            $Labels = @('red', 'green', 'yellow', 'grey', 'blue')
+            $BackgroundColor = @('red', 'green', 'yellow', 'grey', 'blue')
+            $Data1 = @(34,7,11,19,12)
+            $dsb1 = New-PSHTMLChartPolarAreaDataSet -Data $data1 -label $Labels -BackgroundColor $BackgroundColor
+
+            
+    .OUTPUTS
+        DataSetPolarArea
+
+    .NOTES
+        Made with love by Stephanevg
+
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
+    [CmdletBinding()]
+    [OutputType([datasetPolarArea])]
+    param (
+        [Array]  $Data,
+        [Array]  $label,
+        [Array]  $backgroundColor,
+        [Array]  $borderColor,
+        [int]    $borderWidth = 1,
+        [String] $borderSkipped,
+        [Array]  $hoverBackgroundColor,
+        [Array]  $hoverBorderColor,
+        [int]    $hoverBorderWidth
+        
+
+    )
+    
+    $Datachart = [datasetPolarArea]::New()
+    
+    if($Data){
+        $null = $Datachart.AddData($Data)
+    }
+
+    If($Label){
+        $Datachart.label = $label
+    }
+
+    if($xAxisID){
+        $Datachart.xAxisID = $xAxisID
+    }
+
+    if($yAxisID){
+        $Datachart.yAxisID = $yAxisID
+    }
+
+    if($backgroundColor){
+        $Datachart.backgroundColor = $backgroundColor
+    }
+
+    If($borderColor){
+        $Datachart.borderColor = $borderColor
+    }
+    else {
+        $Datachart.borderColor = ''
+    }
+    if ($borderWidth){
+        $Datachart.borderWidth = $borderWidth
+    }
+
+    if($borderSkipped){
+        $Datachart.borderSkipped = $borderSkipped
+    }
+
+    If($hoverBackgroundColor){
+        $Datachart.hoverBackgroundColor = $hoverBackgroundColor
+    }
+    
+    If($HoverBorderColor){
+        $Datachart.hoverBorderColor = $HoverBorderColor
+    }
+    if($HoverBorderWidth){
+        $Datachart.HoverBorderWidth = $HoverBorderWidth
     }
 
     return $Datachart

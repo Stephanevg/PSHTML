@@ -67,12 +67,12 @@ function New-PSHTMLChartBarDataSet {
         [String]$label,
         [String] $xAxisID,
         [String] $yAxisID,
-        [Array]  $backgroundColor,
-        [Array]  $borderColor,
+        [string]  $backgroundColor,
+        [string]  $borderColor,
         [int]    $borderWidth = 1,
         [String] $borderSkipped,
-        [Array]  $hoverBackgroundColor,
-        [Array]  $hoverBorderColor,
+        [string]  $hoverBackgroundColor,
+        [string]  $hoverBorderColor,
         [int]    $hoverBorderWidth
         
 
