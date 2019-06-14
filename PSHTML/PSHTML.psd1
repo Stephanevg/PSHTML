@@ -73,7 +73,7 @@ FunctionsToExport = 'a', 'address', 'area', 'article', 'aside', 'base', 'blockqu
                'button', 'canvas', 'caption', 'Clear-WhiteSpace', 'col', 'colgroup', 
                'ConvertTo-HtmlTable', 'ConvertTo-PSHtmlTable', 'datalist', 'dd', 'div', 
                'dl', 'dt', 'em', 'fieldset', 'figcaption', 'figure', 'footer', 'Form', 
-               'Get-PSHTMLAsset', 'Get-PSHTMLConfiguration', 'Get-PSHTMLInclude', 'h1', 
+               'Get-PSHTMLAsset', 'Get-PSHTMLColor','Get-PSHTMLConfiguration', 'Get-PSHTMLInclude', 'h1', 
                'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'Header', 'hr', 'html', 'img', 'input', 
                'Install-PSHTMLVSCodeSnippets', 'keygen', 'label', 'legend', 'li', 'link', 
                'map', 'math', 'meta', 'meter', 'nav', 'New-PSHTMLChart', 
