@@ -3,15 +3,19 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+jobs:
+  - job: Test_Ubuntu
+    pool:
+      vmImage: 'ubuntu-latest','vs2017-win2016'
+      steps:
+      - script: .\CI\04_Tests.ps1
+        displayName: 'Running Tests Ubuntu'
+        
+jobs:
+  - job: Test_windows2016
+    pool:
+      vmImage: 'vs2017-win2016'
+      steps:
+      - script: .\CI\04_Tests.ps1
+        displayName: 'Running Tests Windows 2016'
 
-pool:
-  vmImage: 'ubuntu-latest','vs2017-win2016'
-
-steps:
-- script: .\CI\04_Tests.ps1
-  displayName: 'Running Tests'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
