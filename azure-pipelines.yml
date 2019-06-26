@@ -4,8 +4,7 @@
 # https://aka.ms/yaml
 
 jobs:
-  
-        
+     
   - job: Test_windows2016
     pool:
       vmImage: 'vs2017-win2016'
@@ -23,9 +22,9 @@ jobs:
         get-variable BUILD_SOURCESDIRECTORY
       displayName: displaing BUILD_SOURCESDIRECTORY
    
-- job: Test_Ubuntu
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - script: pwsh -c .\CI\04_Tests.ps1
-      displayName: 'Running Tests Ubuntu'
+  - job: Test_Ubuntu
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+      - script: pwsh -c .\CI\04_Tests.ps1
+        displayName: 'Running Tests Ubuntu'
