@@ -6,7 +6,7 @@
 jobs:
   - job: Test_Ubuntu
     pool:
-      vmImage: 'ubuntu-latest','vs2017-win2016'
+      vmImage: 'ubuntu-latest'
       steps:
       - script: .\CI\04_Tests.ps1
         displayName: 'Running Tests Ubuntu'
