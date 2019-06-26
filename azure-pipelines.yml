@@ -17,11 +17,11 @@ jobs:
     steps:
     - powershell: .\CI\04_Tests.ps1
       displayName: 'Running Tests Windows 2016'
-   - powershell: gci $Env:AGENT_WORKFOLDER
+    - powershell: gci $Env:AGENT_WORKFOLDER
       dispayName:displaing workfolder
-   - powershell: gci $env:AGENT_BUILDDIRECTORY
+    - powershell: gci $env:AGENT_BUILDDIRECTORY
       dispayName:displaing AGENT_BUILDDIRECTORY
-   - powershell: gci $Env:BUILD_SOURCESDIRECTORY
+    - powershell: gci $Env:BUILD_SOURCESDIRECTORY
       dispayName:displaing BUILD_SOURCESDIRECTORY
    
 
