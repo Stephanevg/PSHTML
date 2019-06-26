@@ -11,7 +11,6 @@ jobs:
       - script: .\CI\04_Tests.ps1
         displayName: 'Running Tests Ubuntu'
         
-jobs:
   - job: Test_windows2016
     pool:
       vmImage: 'vs2017-win2016'
