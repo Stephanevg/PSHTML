@@ -18,10 +18,10 @@ jobs:
     - powershell: .\CI\04_Tests.ps1
       displayName: 'Running Tests Windows 2016'
     - powershell: get-variable AGENT_WORKFOLDER
-      dispayName:displaing workfolder
+      dispayName: displaing workfolder
     - powershell: get-variable AGENT_BUILDDIRECTORY
-      dispayName:displaing AGENT_BUILDDIRECTORY
+      dispayName: displaing AGENT_BUILDDIRECTORY
     - powershell: get-variable BUILD_SOURCESDIRECTORY
-      dispayName:displaing BUILD_SOURCESDIRECTORY
+      dispayName: displaing BUILD_SOURCESDIRECTORY
    
 
