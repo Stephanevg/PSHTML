@@ -3,7 +3,7 @@ jobs:
     pool: 
       vmImage: vs2017-win2016
     steps: 
-      - powershell: ".\CI\Tests.AzureDevops.ps1"
+      - powershell: "./CI/Tests.AzureDevops.ps1"
         displayName: "Running Tests Windows 2016"
       - powershell: "get-variable AGENT_WORKFOLDER"
         displayName: "displaing workfolder"
@@ -18,6 +18,6 @@ jobs:
     pool: 
       vmImage: ubuntu-latest
     steps: 
-      - script: "pwsh -c .\CI\Tests.AzureDevops.ps1"
+      - script: "pwsh -c ./CI/Tests.AzureDevops.ps1"
         displayName: "Running Tests Ubuntu"
         
