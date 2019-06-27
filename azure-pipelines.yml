@@ -1,30 +1,26 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-jobs:
-     
-  - job: Test_windows2016
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-    - powershell: |
-        .\CI\04_Tests.ps1
-      displayName: 'Running Tests Windows 2016'
-    - powershell: | 
-        get-variable AGENT_WORKFOLDER
-      displayName: displaing workfolder
-    - powershell: |
-        get-variable AGENT_BUILDDIRECTORY
-      displayName: displaing AGENT_BUILDDIRECTORY
-    - powershell: | 
-        get-variable BUILD_SOURCESDIRECTORY
-      displayName: displaing BUILD_SOURCESDIRECTORY
-   
-  - job: Test_Ubuntu
-      pool:
-        vmImage: 'ubuntu-latest'
-      steps:
-      - script: pwsh -c .\CI\04_Tests.ps1
-        displayName: 'Running Tests Ubuntu'
+jobs: 
+  - 
+    job: Test_windows2016
+    pool: 
+      vmImage: vs2017-win2016
+    steps: 
+      - 
+        displayName: "Running Tests Windows 2016"
+        powershell: ".\\CI\\04_Tests.ps1\n"
+      - 
+        displayName: "displaing workfolder"
+        powershell: "get-variable AGENT_WORKFOLDER\n"
+      - 
+        displayName: "displaing AGENT_BUILDDIRECTORY"
+        powershell: "get-variable AGENT_BUILDDIRECTORY\n"
+      - 
+        displayName: "displaing BUILD_SOURCESDIRECTORY"
+        powershell: "get-variable BUILD_SOURCESDIRECTORY\n"
+  - 
+    job: Test_Ubuntu
+    pool: 
+      vmImage: ubuntu-latest
+    steps: 
+      - 
+        displayName: "Running Tests Ubuntu"
+        script: "pwsh -c .\\CI\\04_Tests.ps1"
