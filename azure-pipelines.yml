@@ -5,6 +5,11 @@ jobs:
     steps: 
       - powershell: "./CI/Tests.AzureDevops.ps1"
         displayName: "Running Tests Windows 2016"
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testRunner: NUnit
+          testResultsFiles: '**/TestsResults.xml'
         
   - job: Test_Ubuntu
     pool: 
@@ -12,9 +17,8 @@ jobs:
     steps: 
       - script: "pwsh -c ./CI/Tests.AzureDevops.ps1"
         displayName: "Running Tests Ubuntu"
-  
-  - task: PublishTestResults@2
-    condition: succeededOrFailed()
-    inputs:
-      testRunner: NUnit
-      testResultsFiles: '**/TestsResults.xml'
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testRunner: NUnit
+          testResultsFiles: '**/TestsResults.xml'
