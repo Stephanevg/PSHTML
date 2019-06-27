@@ -5,14 +5,6 @@ jobs:
     steps: 
       - powershell: "./CI/Tests.AzureDevops.ps1"
         displayName: "Running Tests Windows 2016"
-      - powershell: "get-variable AGENT_WORKFOLDER"
-        displayName: "displaing workfolder"
-        
-      - powershell: "get-variable AGENT_BUILDDIRECTORY"
-        displayName: "displaing AGENT_BUILDDIRECTORY"
-        
-      - powershell: "get-variable BUILD_SOURCESDIRECTORY"
-        displayName: "displaing BUILD_SOURCESDIRECTORY"
         
   - job: Test_Ubuntu
     pool: 
