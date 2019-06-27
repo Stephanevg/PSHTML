@@ -12,4 +12,9 @@ jobs:
     steps: 
       - script: "pwsh -c ./CI/Tests.AzureDevops.ps1"
         displayName: "Running Tests Ubuntu"
-        
+  
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: NUnit
+    testResultsFiles: '**/TestsResults.xml'
