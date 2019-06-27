@@ -1,7 +1,7 @@
 
 install-module pester -Force
-$TestsFolder = "$($env:Build_SourcesDirectory)/Tests"
-write-host "sourcedirectory = $($env:Build_SourcesDirectory)"
-gci $env:Build_SourcesDirectory
+$TestsFolder = join-path -path "$($env:BUILD_SOURCESDIRECTORY)" -childpath "Tests"
+write-host "sourcedirectory = $($env:BUILD_SOURCESDIRECTORY)"
+gci $env:BUILD_SOURCESDIRECTORY
 set-location $TestsFolder
 $res = Invoke-Pester -Path $TestsFolder -OutputFormat NUnitXml -OutputFile TestsResults.xml -PassThru #-CodeCoverage $TestFiles
