@@ -79,12 +79,12 @@ FunctionsToExport = 'a', 'address', 'area', 'article', 'aside', 'b', 'base', 'bl
                'map', 'math', 'meta', 'meter', 'nav', 'New-PSHTMLCDNAssetFile', 
                'New-PSHTMLChart', 'New-PSHTMLChartBarDataSet', 
                'New-PSHTMLChartDataSet', 'New-PSHTMLChartDoughnutDataSet', 
-               'New-PSHTMLChartLineDataSet', 'New-PSHTMLChartPieDataSet', 'noscript', 
-               'ol', 'optgroup', 'option', 'Out-PSHTMLDocument', 'output', 'p', 'pre', 
-               'progress', 'script', 'section', 'selecttag', 'small', 'span', 'strong', 
-               'style', 'sub', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 
-               'title', 'tr', 'ul', 'Write-PSHTMLAsset', 'Write-PSHTMLInclude', 
-               'Write-PSHTMLSymbol'
+               'New-PSHTMLChartLineDataSet', 'New-PSHTMLChartPieDataSet', 
+               'New-PSHTMLChartPolarAreaDataSet', 'noscript', 'ol', 'optgroup', 'option', 
+               'Out-PSHTMLDocument', 'output', 'p', 'pre', 'progress', 'script', 'section', 
+               'selecttag', 'small', 'span', 'strong', 'style', 'sub', 'sup', 'table', 'tbody', 
+               'td', 'textarea', 'tfoot', 'th', 'thead', 'title', 'tr', 'ul', 
+               'Write-PSHTMLAsset', 'Write-PSHTMLInclude', 'Write-PSHTMLSymbol'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
@@ -124,11 +124,17 @@ PrivateData = @{
         # ReleaseNotes of this module
         ReleaseNotes = 'https://github.com/Stephanevg/PSHTML/blob/master/Change_Log.md'
 
+        # Prerelease string of this module
+        # Prerelease = ''
+
+        # Flag to indicate whether the module requires explicit user acceptance for install/update
+        # RequireLicenseAcceptance = $false
+
         # External dependent modules of this module
-        # ExternalModuleDependencies = ''
+        # ExternalModuleDependencies = @()
 
     } # End of PSData hashtable
-    
+
  } # End of PrivateData hashtable
 
 # HelpInfo URI of this module

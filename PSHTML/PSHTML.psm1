@@ -1,4 +1,4 @@
-#Generated at 06/29/2019 00:44:44 by Stephane van Gulick
+﻿#Generated at 06/29/2019 01:05:58 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -217,7 +217,6 @@ if($json.Assets.Path.Tolower() -eq 'default' -or $json.Assets.Path -eq '' ){
         return $this.DefaultPath
     }
 }
-
 
 
 Class SettingFactory{
@@ -3209,7 +3208,7 @@ function ConvertTo-PSHTMLTable {
                         
                 foreach ($propertyName in $Hashtable.properties) {
                     
-                    td {
+                    th {
                         $item.$propertyName
                     }
                     

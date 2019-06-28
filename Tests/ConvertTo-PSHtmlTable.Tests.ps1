@@ -39,9 +39,15 @@ Describe "Testing ConverTo-PSHTMLTable" {
 
     }
 
-    it "Should contain opening and closing <tr> tags" {
+    it "Should contain opening and closing <th> tags" {
         $string -match '.*<tr.*>' | should be $true
         $string -match '.*</tr>.*' | should be $true
+
+    }
+
+    it "Should contain opening and closing <tr> tags" {
+        $string -match '.*<th.*>' | should be $true
+        $string -match '.*</th>.*' | should be $true
 
     }
 
