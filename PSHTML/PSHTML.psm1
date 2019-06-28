@@ -1,4 +1,4 @@
-﻿#Generated at 03/06/2019 00:13:49 by Stephane van Gulick
+﻿#Generated at 06/29/2019 00:44:44 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -9,6 +9,7 @@ Enum SettingType {
 Enum AssetType {
     Script
     Style
+    cdn
 }
 
 Class ConfigurationDocument {
@@ -33,7 +34,7 @@ Class ConfigurationDocument {
         #Read data from json
         $this.Settings = [SettingFactory]::Parse($This.Path)
         $AssetsFolder = Join-Path $This.Path.Directory -ChildPath "Assets"
-        $this.Assets = [AssetsFactory]::CreateAssets($AssetsFolder)
+        $this.Assets = [AssetsFactory]::CreateAsset($AssetsFolder)
         $IncludesFolder = Join-Path $this.Path.Directory -ChildPath 'Includes'
         $this.Includes = [IncludeFactory]::Create($IncludesFolder)
     }
@@ -317,39 +318,52 @@ Class SettingFactory{
 }
 
 
+
 Class AssetsFactory{
 
-    Static [Asset] CreateAsset([System.Io.FileInfo]$AssetPath){
-        
-        switch($AssetPath.Extension){
-            ".js" {
-                Return [ScriptAsset]::new($AssetPath)
-                ;Break
-            }
-            ".css"{
-                Return [StyleAsset]::new($AssetPath)
-                ;Break
-            }
-            default{
-                Throw "$($AssetPath.Extenion) is not a supported asset aaa type."
-            }
-        }
 
-        Throw "$($AssetPath.FullName) Is not a supported Asset Type."
+    Static [Asset[]] CreateAsset([String]$AssetPath){
+        $It = Get-Item $AssetPath
+        
+        Return [AssetsFactory]::CreateAsset($It)
         
     }
 
-    Static [Asset[]] CreateAssets([System.IO.DirectoryInfo]$AssetsFolderPath) {
+    Static [Asset[]] CreateAsset([System.Io.FileInfo]$AssetPath){
+        $r = @()
+        switch($AssetPath.Extension){
+            ".js" {
+                $r += [ScriptAsset]::new($AssetPath)
+                ;Break
+            }
+            ".css"{
+                $r += [StyleAsset]::new($AssetPath)
+                ;Break
+            }
+            ".cdn"{
+                $r += [CDNAsset]::new($AssetPath)
+                ;Break
+            }
+            default{
+                Throw "$($AssetPath.Extenion) is not a supported asset type."
+            }
+        }
+        return $r
+        
+    }
+
+    Static [Asset[]] CreateAsset([System.IO.DirectoryInfo]$AssetsFolderPath) {
+
         $Directories = Get-ChildItem $AssetsFolderPath -Directory
         $AllItems = @()
 
         Foreach($Directory in $Directories){
-            $Items = $Directory | Get-ChildItem  -File | ? {$_.Extension -eq ".js" -or $_.Extension -eq ".css"} #If performance becomes important. Change this to -Filter
+            $Items = $Directory | Get-ChildItem  -File | ? {$_.Extension -eq ".js" -or $_.Extension -eq ".css" -or $_.Extension -eq ".cdn"} #If performance becomes important. Change this to -Filter
             Foreach($Item in $Items){
                 if(!($Item)){
                     Continue
                 }
-
+                <#
                 try{
 
                     $Type = [AssetsFactory]::GetAssetType($Item)
@@ -357,27 +371,41 @@ Class AssetsFactory{
                     
                     continue
                 }
-               
-                Switch($Type){
-                    "Script" {
-                        $AllItems += [ScriptAsset]::new($Item)
-                        Break;
-                    }
-                    "Style"{
-                        $AllItems += [StyleAsset]::new($Item)
-                        ;Break
-                    }
-                }
+                #>
+                 $AllItems += [AssetsFactory]::CreateAsset($Item)
+                
             }
         }
-
-        Return $AllItems
+        return $AllItems
+        
     }
 
     hidden Static [AssetType]GetAssetType([System.IO.FileInfo]$File){
     
 
         switch($File.Extension){
+            ".js" {
+                Return [AssetType]::Script
+                ;Break
+            }
+            ".css"{
+                Return [AssetType]::Style
+                ;Break
+            }
+            default{
+                return $null
+            }
+            
+        }
+        return $null
+        #Throw "$($File.Extenion) is not a supported asset type."
+        
+    }
+    hidden Static [AssetType]GetAssetType([String]$Asset){
+    
+        $null = $Asset -match "^.*(?'extension'.*\..{1,4}$)"
+
+        switch($Matches.Extension){
             ".js" {
                 Return [AssetType]::Script
                 ;Break
@@ -472,6 +500,60 @@ Class StyleAsset : Asset {
      [String] ToString(){
          #rel="stylesheet"
         $S = "<{0} rel='{1}' type={2} href='{3}' >" -f "Link","stylesheet","text/css",$this.GetFullFilePath()
+        Return $S
+    }
+}
+
+Class CDNAsset : Asset {
+    [String]$Integrity
+    [String]$CrossOrigin
+    Hidden [AssetType]$cdnType
+    hidden $raw
+
+    CDNAsset ([System.IO.FileInfo]$FilePath) { 
+        
+
+        $this.raw = Get-Content $filePath.FullName -Raw | ConvertFrom-Json
+        $this.Type = [AssetType]::cdn
+        $this.cdnType = [AssetsFactory]::GetAssetType($This.raw.source)
+        $this.Name = $filePath.BaseName
+        if($this.raw.integrity){
+            $this.Integrity = $this.raw.Integrity
+        }
+
+        if($this.raw.CrossOrigin){
+            $This.CrossOrigin = $This.Raw.CrossOrigin
+        }
+    }
+    
+    [String] ToString(){
+    $t = ""
+    $p = ""
+    $full_CrossOrigin = ""
+    $full_Integrity = ""
+    Switch($this.cdnType){
+        "script" {
+            #$s = "<{0} src='{1}'>" -f "Script",$raw.source
+            $t = 'script'
+            $p = 'src'
+            ;break
+        }
+        "style"{
+            #$t = "<{0} src='{1}'>" -f "Link",$raw.source
+            $t = 'link'
+            $p = 'href'
+        }
+    }
+
+
+        if($this.CrossOrigin){
+            $full_CrossOrigin = "crossorigin='{0}'" -f $this.CrossOrigin
+        }
+
+        If($This.Integrity){
+            $full_Integrity = "integrity='{0}'" -f $this.Integrity
+        }
+        $S = "<{0} {1}='{2}' {3} {4}></{0}>" -f $t,$p,$this.raw.source,$full_CrossOrigin,$full_Integrity
         Return $S
     }
 }
@@ -5597,6 +5679,25 @@ Function nav {
 }
 
 
+Function New-PSHTMLCDNAssetFile {
+    [CmdletBinding()]
+    Param(
+        [String]$Source,
+        [String]$Integrity,
+        [String]$CrossOrigin,
+        [String]$FilePath
+    )
+
+    $hash = @{}
+    $Hash.Source = $Source
+    $Hash.Integrity = $Integrity
+    $Hash.Crossorigin = $CrossOrigin
+
+    $obj = New-Object psobject -Property $hash
+
+    $obj | ConvertTo-Json | out-file -FilePath $FilePath -Encoding utf8
+
+}
 Function New-PSHTMLChart {
     <#
     
@@ -6541,7 +6642,7 @@ function Out-PSHTMLDocument {
 
         $o = Get-PRocess | select ProcessName,Handles | select -first 5
         $FilePath = "C:\temp\OutputFile.html"
-        $E = ConvertTo-HTMLTable -Object $o 
+        $E = ConvertTo-PSHTMLTable -Object $o 
         $e | Out-PSHTMLDocument -OutPath $FilePath -Show
 
     .INPUTS
@@ -7038,6 +7139,10 @@ Function selecttag {
         <option value="audi">Audi</option>
     </select>
 
+    .PARAMETER Form
+        Specify the form ID to wich the selecttag statement should be a part of.
+        
+
     .Notes
     Author: StÃ©phane van Gulick
     Version: 3.1.0
@@ -7059,6 +7164,8 @@ Function selecttag {
         [String]$Class,
 
         [String]$Id,
+
+        [String]$Form,
 
         [Hashtable]$Attributes
     )
@@ -7911,14 +8018,28 @@ Function tr {
         [String]$Style,
 
         [Parameter(Position = 4)]
-        [Hashtable]$Attributes
+        [Hashtable]$Attributes,
 
+        [ScriptBlock]
+        $ClassScript
 
     )
     Process {
-
+        
         $tagname = "tr"
-    
+        If($ClassScript){
+
+            If (!($Class)){
+                $Class = ""
+            }
+
+            
+            $PSBoundParameters.Class = $ClassScript.Invoke($Content)
+
+        }
+
+
+
         Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 }
@@ -8000,7 +8121,9 @@ function Write-PSHTMLAsset {
 
     .PARAMETER Type
 
-    Allows to specifiy what type of Asset to return. Script (.js) or Style (.css) are the currently supported ones.
+    Allows to specifiy what type of Asset to return. Script (.js) Style (.css) or CDN (.CDN) are the currently supported ones.
+
+    The CDN file type must have a specifiy structure, which can be obtained by using the cmdlet New-CDNAssetFile
 
     .EXAMPLE
         Write-PSHTMLAsset
@@ -8032,7 +8155,7 @@ function Write-PSHTMLAsset {
     #>
     [CmdletBinding()]
     param (
-        [ValidateSet("Script","Style")]$Type
+        [ValidateSet("Script","Style","CDN")]$Type
 
     )
 
