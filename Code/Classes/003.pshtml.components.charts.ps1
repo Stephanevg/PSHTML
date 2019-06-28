@@ -6,9 +6,12 @@ function Clear-WhiteSpace ($Text) {
 
 Enum ChartType {
     bar
+    horizontalBar
     line
     doughnut
     pie
+    radar
+    polarArea
 }
 
 Class Color {
@@ -49,15 +52,22 @@ Class Color {
 #region dataSet
 Class dataSet {
     [System.Collections.ArrayList] $data = @()
-    [String]$label
+    [Array]$label
 
     dataSet(){
        
     }
 
-    dataset([Array]$Data,[String]$Label){
+    dataset([Array]$Data,[Array]$Label){
         
-        $this.SetLabel($Label)
+        if ( @( $Label ).Count -eq 1 ) {
+            $this.SetLabel($Label)
+        }
+        else {
+            foreach($l in $Label){
+                $this.AddLabel($l)
+            }
+        }
         foreach($d in $data){
             $this.AddData($d)
         }
@@ -65,9 +75,16 @@ Class dataSet {
         
     }
 
+    [void]AddLabel([Array]$Label){
+        foreach($L in $Label){
+            $null = $this.Label.Add($L)
+        }
+    }
+    
     [void]SetLabel([String]$Label){
         $this.label = $Label
     }
+    
 
     [void]AddData([Array]$Data){
         foreach($D in $Data){
@@ -79,21 +96,46 @@ Class dataSet {
 Class datasetbar : dataset {
     [String] $xAxisID
     [String] $yAxisID
-    [String]  $backgroundColor
-    [String]  $borderColor
+    [string]  $backgroundColor
+    [string]  $borderColor
     [int]    $borderWidth = 1
     [String] $borderSkipped
-    [String]  $hoverBackgroundColor
-    [String]  $hoverBorderColor
+    [string]  $hoverBackgroundColor
+    [string]  $hoverBorderColor
     [int]    $hoverBorderWidth
 
     datasetbar(){
        
     }
 
-    datasetbar([Array]$Data,[String]$Label){
+    datasetbar([Array]$Data,[Array]$Label){
         
         $this.SetLabel($Label)
+        $this.AddData($Data)
+        
+    }
+}
+
+Class datasetPolarArea : dataset {
+    [Array]  $backgroundColor
+    [Array]  $borderColor
+    [int]    $borderWidth = 1
+    [String] $borderSkipped
+    [Array]  $hoverBackgroundColor
+    [Array]  $hoverBorderColor
+    [int]    $hoverBorderWidth
+
+    datasetPolarArea(){
+    
+    }
+
+    datasetPolarArea([Array]$Data,[Array]$Label){
+        if ( @( $Label ).Count -gt 1 ) {
+            $this.AddLabel($Label)
+        }
+        else {
+            $this.SetLabel( @( $Label)[0] )
+        }
         $this.AddData($Data)
         
     }
@@ -347,6 +389,10 @@ Class BarChartOptions : ChartOptions {
 
 }
 
+Class horizontalBarChartOptions : ChartOptions {
+
+}
+
 Class PieChartOptions : ChartOptions {
 
 }
@@ -358,6 +404,14 @@ Class LineChartOptions : ChartOptions {
 
 Class DoughnutChartOptions : ChartOptions {
     
+}
+
+Class RadarChartOptions : ChartOptions {
+    [scales]$scales = $null
+}
+
+Class polarAreaChartOptions : ChartOptions {
+    [scales]$scales = $null
 }
 
 Class ChartData {
@@ -482,6 +536,22 @@ Class BarChart : Chart{
 
 }
 
+Class horizontalBarChart : Chart{
+
+    [ChartType] $type = [ChartType]::horizontalBar
+    
+    horizontalBarChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    horizontalBarChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
+}
+
 Class LineChart : Chart{
 
     [ChartType] $type = [ChartType]::line
@@ -525,6 +595,38 @@ Class doughnutChart : Chart {
         $this.data = $Data
         $This.options = $Options
     }
+}
+
+Class RadarChart : Chart{
+
+    [ChartType] $type = [ChartType]::radar
+    
+    RadarChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    RadarChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
+}
+
+Class polarAreaChart : Chart{
+
+    [ChartType] $type = [ChartType]::polarArea
+    
+    polarAreaChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    polarAreaChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
 }
 
 

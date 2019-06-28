@@ -69,12 +69,12 @@ PowerShellVersion = '5.0'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'a', 'address', 'area', 'article', 'aside', 'base', 'blockquote', 'body', 'br', 
+FunctionsToExport = 'a', 'address', 'area', 'article', 'aside', 'b', 'base', 'blockquote', 'body', 'br', 
                'button', 'canvas', 'caption', 'Clear-WhiteSpace', 'col', 'colgroup', 
                'ConvertTo-HtmlTable', 'ConvertTo-PSHtmlTable', 'datalist', 'dd', 'div', 
                'dl', 'dt', 'em', 'fieldset', 'figcaption', 'figure', 'footer', 'Form', 
                'Get-PSHTMLAsset', 'Get-PSHTMLConfiguration', 'Get-PSHTMLInclude', 'h1', 
-               'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'Header', 'hr', 'html', 'img', 'input', 
+               'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'Header', 'hr', 'html', 'i', 'img', 'input', 
                'Install-PSHTMLVSCodeSnippets', 'keygen', 'label', 'legend', 'li', 'link', 
                'map', 'math', 'meta', 'meter', 'nav', 'New-PSHTMLCDNAssetFile', 
                'New-PSHTMLChart', 'New-PSHTMLChartBarDataSet', 
@@ -90,7 +90,7 @@ FunctionsToExport = 'a', 'address', 'area', 'article', 'aside', 'base', 'blockqu
 CmdletsToExport = @()
 
 # Variables to export from this module
-VariablesToExport = '*'
+# VariablesToExport = @()
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
 AliasesToExport = 'include'
@@ -124,17 +124,11 @@ PrivateData = @{
         # ReleaseNotes of this module
         ReleaseNotes = 'https://github.com/Stephanevg/PSHTML/blob/master/Change_Log.md'
 
-        # Prerelease string of this module
-        # Prerelease = ''
-
-        # Flag to indicate whether the module requires explicit user acceptance for install/update
-        # RequireLicenseAcceptance = $false
-
         # External dependent modules of this module
-        # ExternalModuleDependencies = @()
+        # ExternalModuleDependencies = ''
 
     } # End of PSData hashtable
-
+    
  } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
