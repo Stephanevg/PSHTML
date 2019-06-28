@@ -19,7 +19,7 @@ Function b {
 
 
         .EXAMPLE
-        The following exapmles show cases how to create an empty a, with a class, an ID, and, custom attributes.
+        The following exapmles show cases how to create an empty b, with a class, an ID, and, custom attributes.
         
         b -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}
 
