@@ -25,7 +25,7 @@ Class PesterDocument {
         
     }
 }
-$FilePath = "C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PsNunit\output.json"
+#$FilePath = "C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PsNunit\output.json"
 $FilePath = 'C:\Users\taavast3\OneDrive\Repo\Projects\OpenSource\PSHTML\PSHTML\Examples\Example18\TestREsults.Json'
 <#>
 Function Get-PesterRawData {
@@ -75,6 +75,9 @@ $Html = html -Attributes @{lang = "en" } -Content {
               background-color: #FFDDCC;
               border-color: #792700;
             }
+            td{
+                word-break: break-all;
+            }
 "@
         }
     }
@@ -123,7 +126,7 @@ $Html = html -Attributes @{lang = "en" } -Content {
                 ConvertTo-PSHTMLTable -Object $PesterDoc.Data -Properties TotalCount, PassedCount, FailedCount, SkippedCount, PendingCount, InconclusiveCount -TableClass $TableClasses -TheadClass $TableHeaders
             
                 Div -Class "row" -Content {
-                    Div -Id 'ChartSum' -Class 'col' -content {
+                    Div -Id 'ChartSum' -Class 'row' -content {
 
                         $CanvasId = "Chart_Summary"
                         canvas -Id $CanvasId -Height 400px -Width 400px -Content {
