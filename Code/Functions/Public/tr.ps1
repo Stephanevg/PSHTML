@@ -45,14 +45,28 @@ Function tr {
         [String]$Style,
 
         [Parameter(Position = 4)]
-        [Hashtable]$Attributes
+        [Hashtable]$Attributes,
 
+        [ScriptBlock]
+        $ClassScript
 
     )
     Process {
-
+        
         $tagname = "tr"
-    
+        If($ClassScript){
+
+            If (!($Class)){
+                $Class = ""
+            }
+
+            
+            $PSBoundParameters.Class = $ClassScript.Invoke($Content)
+
+        }
+
+
+
         Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 }
