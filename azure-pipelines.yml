@@ -1,0 +1,24 @@
+jobs: 
+  - job: Test_windows2016
+    pool: 
+      vmImage: vs2017-win2016
+    steps: 
+      - powershell: "./CI/Tests.AzureDevops.ps1"
+        displayName: "Running Tests Windows 2016"
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testRunner: NUnit
+          testResultsFiles: '**/TestsResults.xml'
+        
+  - job: Test_Ubuntu
+    pool: 
+      vmImage: ubuntu-latest
+    steps: 
+      - script: "pwsh -c ./CI/Tests.AzureDevops.ps1"
+        displayName: "Running Tests Ubuntu"
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testRunner: NUnit
+          testResultsFiles: '**/TestsResults.xml'

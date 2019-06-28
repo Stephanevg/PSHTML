@@ -2,12 +2,6 @@ image:
 - Previous Ubuntu
 - Visual Studio 2015
 
-
-environment:
-  PSgalleryKey:
-    secure: wl8DNkBd6QUSBAEWxCNTTW+cVn32ub6kWSqZxAUrpx4/QPnWYGiLWEj+ZaFp5cuA
-  APPVEYOR_RDP_PASSWORD: Passw0rd
-
 install:
 - ps: >-
     .\CI\02_Install.ps1
