@@ -1,4 +1,4 @@
-﻿#Generated at 03/06/2019 00:13:49 by Stephane van Gulick
+﻿#Generated at 06/28/2019 10:33:07 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -750,9 +750,12 @@ function Clear-WhiteSpace ($Text) {
 
 Enum ChartType {
     bar
+    horizontalBar
     line
     doughnut
     pie
+    radar
+    polarArea
 }
 
 Class Color {
@@ -793,15 +796,22 @@ Class Color {
 #region dataSet
 Class dataSet {
     [System.Collections.ArrayList] $data = @()
-    [String]$label
+    [Array]$label
 
     dataSet(){
        
     }
 
-    dataset([Array]$Data,[String]$Label){
+    dataset([Array]$Data,[Array]$Label){
         
-        $this.SetLabel($Label)
+        if ( @( $Label ).Count -eq 1 ) {
+            $this.SetLabel($Label)
+        }
+        else {
+            foreach($l in $Label){
+                $this.AddLabel($l)
+            }
+        }
         foreach($d in $data){
             $this.AddData($d)
         }
@@ -809,9 +819,16 @@ Class dataSet {
         
     }
 
+    [void]AddLabel([Array]$Label){
+        foreach($L in $Label){
+            $null = $this.Label.Add($L)
+        }
+    }
+    
     [void]SetLabel([String]$Label){
         $this.label = $Label
     }
+    
 
     [void]AddData([Array]$Data){
         foreach($D in $Data){
@@ -823,21 +840,46 @@ Class dataSet {
 Class datasetbar : dataset {
     [String] $xAxisID
     [String] $yAxisID
-    [String]  $backgroundColor
-    [String]  $borderColor
+    [string]  $backgroundColor
+    [string]  $borderColor
     [int]    $borderWidth = 1
     [String] $borderSkipped
-    [String]  $hoverBackgroundColor
-    [String]  $hoverBorderColor
+    [string]  $hoverBackgroundColor
+    [string]  $hoverBorderColor
     [int]    $hoverBorderWidth
 
     datasetbar(){
        
     }
 
-    datasetbar([Array]$Data,[String]$Label){
+    datasetbar([Array]$Data,[Array]$Label){
         
         $this.SetLabel($Label)
+        $this.AddData($Data)
+        
+    }
+}
+
+Class datasetPolarArea : dataset {
+    [Array]  $backgroundColor
+    [Array]  $borderColor
+    [int]    $borderWidth = 1
+    [String] $borderSkipped
+    [Array]  $hoverBackgroundColor
+    [Array]  $hoverBorderColor
+    [int]    $hoverBorderWidth
+
+    datasetPolarArea(){
+    
+    }
+
+    datasetPolarArea([Array]$Data,[Array]$Label){
+        if ( @( $Label ).Count -gt 1 ) {
+            $this.AddLabel($Label)
+        }
+        else {
+            $this.SetLabel( @( $Label)[0] )
+        }
         $this.AddData($Data)
         
     }
@@ -1091,6 +1133,10 @@ Class BarChartOptions : ChartOptions {
 
 }
 
+Class horizontalBarChartOptions : ChartOptions {
+
+}
+
 Class PieChartOptions : ChartOptions {
 
 }
@@ -1102,6 +1148,14 @@ Class LineChartOptions : ChartOptions {
 
 Class DoughnutChartOptions : ChartOptions {
     
+}
+
+Class RadarChartOptions : ChartOptions {
+    [scales]$scales = $null
+}
+
+Class polarAreaChartOptions : ChartOptions {
+    [scales]$scales = $null
 }
 
 Class ChartData {
@@ -1226,6 +1280,22 @@ Class BarChart : Chart{
 
 }
 
+Class horizontalBarChart : Chart{
+
+    [ChartType] $type = [ChartType]::horizontalBar
+    
+    horizontalBarChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    horizontalBarChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
+}
+
 Class LineChart : Chart{
 
     [ChartType] $type = [ChartType]::line
@@ -1269,6 +1339,38 @@ Class doughnutChart : Chart {
         $this.data = $Data
         $This.options = $Options
     }
+}
+
+Class RadarChart : Chart{
+
+    [ChartType] $type = [ChartType]::radar
+    
+    RadarChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    RadarChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
+}
+
+Class polarAreaChart : Chart{
+
+    [ChartType] $type = [ChartType]::polarArea
+    
+    polarAreaChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    polarAreaChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
 }
 
 
@@ -2128,6 +2230,69 @@ Function aside {
 
 
 }
+Function b {
+    <#
+        .SYNOPSIS
+
+        Generates a <b> HTML tag.
+        The <b> tag defines a hyperlink, which is used to link from one page to another.
+        
+        .DESCRIPTION
+
+        .PARAMETER Class
+        Allows to specify one (or more) class(es) to assign the html element.
+        More then one class can be assigned by seperating them with a white space.
+
+        .PARAMETER Id
+        Allows to specify an id to assign the html element.
+
+        .PARAMETER Content
+        Allows to add child element(s) inside the current opening and closing HTML tag(s).
+
+
+        .EXAMPLE
+        The following exapmles show cases how to create an empty b, with a class, an ID, and, custom attributes.
+        
+        b -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}
+
+        Generates the following code:
+
+        <b Class="myclass1 MyClass2" Id="myid" custom1="val1" custom2="val2"  >
+        </b>
+
+
+        .NOTES
+        Current version 3.1
+        History:
+            2019.06.18;@Josh_Burkard;initial version
+        .LINK
+            https://github.com/Stephanevg/PSHTML
+    #>
+
+    Param(
+
+        [Parameter(Mandatory = $false)]
+        [AllowEmptyString()]
+        [AllowNull()]
+        $Content,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class,
+
+        [String]$Id,
+        
+        [Hashtable]$Attributes
+
+    )
+    $tagname = "b"
+
+    Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
+    
+    
+
+}
+ 
 Function base {
     <#
     .SYNOPSIS
@@ -4628,6 +4793,69 @@ Function html {
         Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 }
+Function i {
+    <#
+        .SYNOPSIS
+
+        Generates a <i> HTML tag.
+        The <a> tag defines a hyperlink, which is used to link from one page to another.
+        
+        .DESCRIPTION
+
+        .PARAMETER Class
+        Allows to specify one (or more) class(es) to assign the html element.
+        More then one class can be assigned by seperating them with a white space.
+
+        .PARAMETER Id
+        Allows to specify an id to assign the html element.
+
+        .PARAMETER Content
+        Allows to add child element(s) inside the current opening and closing HTML tag(s).
+
+
+        .EXAMPLE
+        The following exapmles show cases how to create an empty i, with a class, an ID, and, custom attributes.
+        
+        i -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}
+
+        Generates the following code:
+
+        <i Class="myclass1 MyClass2" Id="myid" custom1="val1" custom2="val2"  >
+        </i>
+
+
+        .NOTES
+        Current version 3.1
+        History:
+            2019.06.19;@Josh_Burkard;initial version
+        .LINK
+            https://github.com/Stephanevg/PSHTML
+    #>
+
+    Param(
+
+        [Parameter(Mandatory = $false)]
+        [AllowEmptyString()]
+        [AllowNull()]
+        $Content,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class,
+
+        [String]$Id,
+        
+        [Hashtable]$Attributes
+
+    )
+    $tagname = "i"
+
+    Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
+    
+    
+
+}
+ 
 Function img {
     <#
         .SYNOPSIS
@@ -5632,7 +5860,7 @@ Function New-PSHTMLChart {
     #>
         [CmdletBinding()]
         Param(
-            #[ValidateSet("Bar","Line","Pie","doughnut")]
+            #[ValidateSet("Bar","horizontalBar","Line","Pie","doughnut", "radar", "polarArea")]
             [ChartType]$Type = $(Throw '-Type is required'),
     
             [dataSet[]]$DataSet = $(Throw '-DataSet is required'),
@@ -5667,9 +5895,26 @@ Function New-PSHTMLChart {
             $ChartOptions = [BarChartOptions]::New()
             ;Break
         }
+        "horizontalBar" {
+            $Chart = [horizontalBarChart]::New()
+            $ChartOptions = [horizontalBarChartOptions]::New()
+            ;Break
+        }
         "Line"{
             $Chart = [LineChart]::New()
             $ChartOptions = [LineChartOptions]::New()
+            
+            ;Break
+        }
+        "radar"{
+            $Chart = [RadarChart]::New()
+            $ChartOptions = [RadarChartOptions]::New()
+            
+            ;Break
+        }
+        "polarArea" {
+            $Chart = [polarAreaChart]::New()
+            $ChartOptions = [polarAreaChartOptions]::New()
             
             ;Break
         }
@@ -5789,12 +6034,12 @@ function New-PSHTMLChartBarDataSet {
         [String]$label,
         [String] $xAxisID,
         [String] $yAxisID,
-        [String]  $backgroundColor,
-        [String]  $borderColor,
+        [string]  $backgroundColor,
+        [string]  $borderColor,
         [int]    $borderWidth = 1,
         [String] $borderSkipped,
-        [String]  $hoverBackgroundColor,
-        [String]  $hoverBorderColor,
+        [string]  $hoverBackgroundColor,
+        [string]  $hoverBorderColor,
         [int]    $hoverBorderWidth
         
 
@@ -5824,6 +6069,9 @@ function New-PSHTMLChartBarDataSet {
 
     If($borderColor){
         $Datachart.borderColor = $borderColor
+    }
+    else {
+        $Datachart.borderColor = ''
     }
     if ($borderWidth){
         $Datachart.borderWidth = $borderWidth
@@ -6256,6 +6504,133 @@ function New-PSHTMLChartPieDataSet {
 
     if ($HoverborderWidth){
         $Datachart.HoverBorderWidth = $HoverborderWidth
+    }
+
+    return $Datachart
+}
+function New-PSHTMLChartPolarAreaDataSet {
+    <#
+    .SYNOPSIS
+        Create a dataset object for a PolarArea chart
+    .DESCRIPTION
+        Use this function to generate a Dataset for a PolarArea chart. 
+        It allows to specify options such as, the label name, Background / border / hover colors etc..
+    .EXAMPLE
+       
+    .PARAMETER Data
+        Specify an array of values.
+        ex: @(3,5,42,69)
+
+    .PARAMETER Label
+        this String Array defines the labels
+
+    .PARAMETER BackgroundColor
+        The background colors of the PolarArea chart values.
+        
+        Use either: [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+
+    .PARAMETER BorderColor
+        The border colors of the PolarArea chart values.
+
+        Use either: [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+
+    .PARAMETER BorderWidth
+        expressed in px's
+
+    .PARAMETER BorderSkipped
+        border is skipped
+
+    .PARAMETER HoverBorderColor
+        The HoverBorder color of the PolarArea chart values.
+        Use either: 
+        [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+
+    .EXAMPLE
+            $Labels = @('red', 'green', 'yellow', 'grey', 'blue')
+            $BackgroundColor = @('red', 'green', 'yellow', 'grey', 'blue')
+            $Data1 = @(34,7,11,19,12)
+            $dsb1 = New-PSHTMLChartPolarAreaDataSet -Data $data1 -label $Labels -BackgroundColor $BackgroundColor
+
+            
+    .OUTPUTS
+        DataSetPolarArea
+
+    .NOTES
+        Made with love by Stephanevg
+
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
+    [CmdletBinding()]
+    [OutputType([datasetPolarArea])]
+    param (
+        [Array]  $Data,
+        [Array]  $label,
+        [Array]  $backgroundColor,
+        [Array]  $borderColor,
+        [int]    $borderWidth = 1,
+        [String] $borderSkipped,
+        [Array]  $hoverBackgroundColor,
+        [Array]  $hoverBorderColor,
+        [int]    $hoverBorderWidth
+        
+
+    )
+    
+    $Datachart = [datasetPolarArea]::New()
+    
+    if($Data){
+        $null = $Datachart.AddData($Data)
+    }
+
+    If($Label){
+        $Datachart.label = $label
+    }
+
+    if($xAxisID){
+        $Datachart.xAxisID = $xAxisID
+    }
+
+    if($yAxisID){
+        $Datachart.yAxisID = $yAxisID
+    }
+
+    if($backgroundColor){
+        $Datachart.backgroundColor = $backgroundColor
+    }
+
+    If($borderColor){
+        $Datachart.borderColor = $borderColor
+    }
+    else {
+        $Datachart.borderColor = ''
+    }
+    if ($borderWidth){
+        $Datachart.borderWidth = $borderWidth
+    }
+
+    if($borderSkipped){
+        $Datachart.borderSkipped = $borderSkipped
+    }
+
+    If($hoverBackgroundColor){
+        $Datachart.hoverBackgroundColor = $hoverBackgroundColor
+    }
+    
+    If($HoverBorderColor){
+        $Datachart.hoverBorderColor = $HoverBorderColor
+    }
+    if($HoverBorderWidth){
+        $Datachart.HoverBorderWidth = $HoverBorderWidth
     }
 
     return $Datachart
@@ -7060,7 +7435,9 @@ Function selecttag {
 
         [String]$Id,
 
-        [Hashtable]$Attributes
+        [Hashtable]$Attributes,
+
+        [string]$Name
     )
 
     $tagname = "select"
