@@ -49,16 +49,32 @@ InModuleScope -ModuleName PSHTML {
         It '[ConfigurationDocument]-[Constructor]([System.IO.FileInfo]Path) should Not Throw' {
     
             # -- Arrange
-    
+$Configuration = @"
+{
+    "General": {
+        "Verbosity": "Normal",
+        "version":"1.0.0"
+    },
+    "Logging": {
+        "Path": "Default",
+        "MaxFiles": 200,
+        "MaxTotalSize": "5MB"
+    },
+    "Assets": {
+        "Path": "Default"
+    }
+}
+"@
             $FilePath = Join-Path -Path $TestDrive -ChildPath "plop.txt"
             $Null = New-Item -Path $FilePath -Force -Value $Configuration
+            $File = Get-Item -Path $Filepath
             [System.IO.FileInfo]$Path = $FilePath
     
             # -- Act
     
             # -- Assert
-    
-            {[ConfigurationDocument]::New($Path)} | Should Not Throw 
+            [ConfigurationDocument]::New([String]$FilePath)
+            {[ConfigurationDocument]::New([String]$File)} | Should Not Throw 
     
         }# end of it block
     

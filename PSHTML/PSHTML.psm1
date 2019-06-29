@@ -1,4 +1,4 @@
-﻿#Generated at 06/29/2019 01:05:58 by Stephane van Gulick
+﻿#Generated at 06/29/2019 02:47:59 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -324,11 +324,19 @@ Class AssetsFactory{
     Static [Asset[]] CreateAsset([String]$AssetPath){
         $It = Get-Item $AssetPath
         
-        Return [AssetsFactory]::CreateAsset($It)
+        If($It -is [System.Io.FileInfo]){
+            Return [AssetsFactory]::CreateAsset([System.Io.FileInfo]$It)
+        }elseif($It -is [System.IO.DirectoryInfo]){
+            Return [AssetsFactory]::CreateAssets([System.IO.DirectoryInfo]$It)
+        }else{
+            break #No assets are present
+            #throw "Asset file type at $($AssetPath) could not be identified. Please specify a folder or a file."
+        }
+        
         
     }
 
-    Static [Asset[]] CreateAsset([System.Io.FileInfo]$AssetPath){
+    hidden Static [Asset[]] CreateAsset([System.Io.FileInfo]$AssetPath){
         $r = @()
         switch($AssetPath.Extension){
             ".js" {
@@ -351,7 +359,7 @@ Class AssetsFactory{
         
     }
 
-    Static [Asset[]] CreateAsset([System.IO.DirectoryInfo]$AssetsFolderPath) {
+    hidden Static [Asset[]] CreateAssets([System.IO.DirectoryInfo]$AssetsFolderPath) {
 
         $Directories = Get-ChildItem $AssetsFolderPath -Directory
         $AllItems = @()
@@ -391,6 +399,10 @@ Class AssetsFactory{
                 Return [AssetType]::Style
                 ;Break
             }
+            ".cdn"{
+                Return [AssetType]::cdn
+                ;Break
+            }
             default{
                 return $null
             }
@@ -411,6 +423,10 @@ Class AssetsFactory{
             }
             ".css"{
                 Return [AssetType]::Style
+                ;Break
+            }
+            ".cdn"{
+                Return [AssetType]::cdn
                 ;Break
             }
             default{
