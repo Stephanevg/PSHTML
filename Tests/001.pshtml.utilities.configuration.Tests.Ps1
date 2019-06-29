@@ -73,7 +73,7 @@ $Configuration = @"
             # -- Act
     
             # -- Assert
-            [ConfigurationDocument]::New([String]$FilePath)
+            
             {[ConfigurationDocument]::New([String]$File)} | Should Not Throw 
     
         }# end of it block
@@ -249,8 +249,7 @@ $Configuration = @"
     }# end of Describe block
     Describe '[AssetsFactory]-[Constructors]' {
     
-    }# end of Describe block
-    Describe '[Asset]-[Constructors]' {
+    
     
         It '[Asset]-[Constructor] - Parameterless should Not Throw' {
     

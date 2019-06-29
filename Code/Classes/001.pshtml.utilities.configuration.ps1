@@ -159,9 +159,15 @@ Class LogSettings : Setting {
     }
 
     [String]GetDefaultLogFolderPath(){
-        if($global:IsLinux){
+        if($global:PSVersionTable.os -match '^Linux.*'){
+            #Linux
             $p = "/tmp/pshtml/"
-        }Else{
+        }elseif($global:PSVersionTable.OS -match '^Darwin.*'){
+            #Macos
+            $p = $env:TMPDIR
+        }
+        Else{
+            #Windows
             $p = Join-Path $Env:Temp -ChildPath "pshtml"
         }
         return $p

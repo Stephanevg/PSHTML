@@ -1,4 +1,4 @@
-﻿#Generated at 06/29/2019 02:47:59 by Stephane van Gulick
+#Generated at 06/29/2019 10:55:29 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -160,9 +160,15 @@ Class LogSettings : Setting {
     }
 
     [String]GetDefaultLogFolderPath(){
-        if($global:IsLinux){
+        if($global:PSVersionTable.os -match '^Linux.*'){
+            #Linux
             $p = "/tmp/pshtml/"
-        }Else{
+        }elseif($global:PSVersionTable.OS -match '^Darwin.*'){
+            #Macos
+            $p = $env:TMPDIR
+        }
+        Else{
+            #Windows
             $p = Join-Path $Env:Temp -ChildPath "pshtml"
         }
         return $p
@@ -666,7 +672,7 @@ Class LogFile : LogDocument {
             }
         }else{
 
-            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
+            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         }
 
         
@@ -729,7 +735,7 @@ Class LogFile : LogDocument {
     }
 
     hidden [string] CreateFileName() {
-        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
+        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         #Write-Host "cp: $($cp)" -ForegroundColor DarkCyan
         $sr = $psScriptRoot
         $Extension = (get-item -Path $cp).Extension
@@ -2407,7 +2413,7 @@ Function base {
     base "woop1" -Class "class"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Current Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -2649,7 +2655,7 @@ Function button {
     </form>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -3652,7 +3658,7 @@ Function fieldset {
     fieldset {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4121,7 +4127,7 @@ function Get-PSHTMLAsset {
     .OUTPUTS
         Asset[]
     .Notes
-        Author: StÃ©phane van Gulick
+        Author: Stéphane van Gulick
     .Link
       https://github.com/Stephanevg/PSHTML
     #>
@@ -4293,7 +4299,7 @@ Function H1 {
     h1 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4347,7 +4353,7 @@ Function h2 {
     h2 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4399,7 +4405,7 @@ Function h3 {
     h3 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4451,7 +4457,7 @@ Function h4 {
     h4 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4503,7 +4509,7 @@ Function h5 {
     h5 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4555,7 +4561,7 @@ Function h6 {
     h6 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4783,7 +4789,7 @@ Function hr {
     <hr Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 2.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5246,7 +5252,7 @@ Function label {
     </form>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 1.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5302,7 +5308,7 @@ Function legend {
     </form>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5449,7 +5455,7 @@ Function Link {
     <link Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5688,7 +5694,7 @@ Function meta {
     <meta name="author" content="Stephane van Gulick"  >
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5880,7 +5886,7 @@ Function nav {
     </nav>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6257,7 +6263,7 @@ Function New-PSHTMLChartDataSet {
     .OUTPUTS
         [DataSet]
     .NOTES
-        Author: StÃ©phane van Gulick
+        Author: Stéphane van Gulick
     #>
     [CmdletBInding()]
     Param(
@@ -6895,7 +6901,7 @@ Function optgroup {
     
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7028,7 +7034,7 @@ function Out-PSHTMLDocument {
     .DESCRIPTION
         Output the html string into a file.
     .EXAMPLE
-        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imÃ©diatley.
+        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imédiatley.
 
         $o = Get-PRocess | select ProcessName,Handles | select -first 5
         $FilePath = "C:\temp\OutputFile.html"
@@ -7041,7 +7047,7 @@ function Out-PSHTMLDocument {
         None
     .NOTES
 
-        Author: StÃ©phane van Gulick
+        Author: Stéphane van Gulick
                 
         
     .LINK
@@ -7534,7 +7540,7 @@ Function selecttag {
         
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7594,7 +7600,7 @@ Function small {
     </small>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7710,7 +7716,7 @@ Function strong {
 
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7769,7 +7775,7 @@ Function style {
     style {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8837,12 +8843,15 @@ function Write-PSHTMLSymbol {
 #Post Content
 
 $ScriptPath = Split-Path -Path $MyInvocation.MyCommand.Path
-
+$ScriptPath = Split-Path -Path $PSScriptRoot
 New-Alias -Name Include -Value 'Write-PSHTMLInclude' -Description "Include parts of PSHTML documents using include files" -Force
-
-$ConfigFile = Join-Path -Path $ScriptPath -ChildPath "pshtml.configuration.json"
-
+function Get-ScriptDirectory {
+    Split-Path -Parent $PSCommandPath
+}
+$ScriptPath = Get-ScriptDirectory
+$CF = Join-Path -Path $ScriptPath -ChildPath "pshtml.configuration.json"
+#Write-host "loading config file: $($CF)" -ForegroundColor Blue
 #Setting module variables
-    $Script:PSHTML_CONFIGURATION = Get-ConfigurationDocument -Path $ConfigFile -Force
+    $Script:PSHTML_CONFIGURATION = Get-ConfigurationDocument -Path $CF -Force
     $Script:Logfile = $Script:PSHTML_CONFIGURATION.GetDefaultLogFilePath()
     $Script:Logger = [Logger]::New($Script:LogFile)
