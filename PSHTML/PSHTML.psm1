@@ -1,4 +1,4 @@
-﻿#Generated at 06/28/2019 10:33:07 by Stephane van Gulick
+﻿#Generated at 06/29/2019 10:47:05 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -6625,9 +6625,15 @@ function New-PSHTMLChartPolarAreaDataSet {
     If($hoverBackgroundColor){
         $Datachart.hoverBackgroundColor = $hoverBackgroundColor
     }
+    else {
+        $Datachart.hoverBackgroundColor = ''
+    }
     
     If($HoverBorderColor){
         $Datachart.hoverBorderColor = $HoverBorderColor
+    }
+    else {
+        $Datachart.hoverBorderColor = ''
     }
     if($HoverBorderWidth){
         $Datachart.HoverBorderWidth = $HoverBorderWidth
