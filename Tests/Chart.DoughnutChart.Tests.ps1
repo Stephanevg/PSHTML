@@ -58,7 +58,7 @@ var ctx = document.getElementById("CanvasID01").getContext('2d');
 var myChart = new Chart(ctx, 
 "@
 
-            if($PSVersionTable.os -match '^Darwin.*'){
+            if($PSVersionTable.os -match '^Darwin.*' -or $PSVersionTable.os -match '^Linux.*'){
                 #Windows for new lines adds `r`n. Linux based systems only have `n this why the below.
                 $ShouldString = "var ctx = document.getElementById(`"CanvasID01`").getContext('2d');"
                 $ShouldString = $ShouldString + [Environment]::NewLine
