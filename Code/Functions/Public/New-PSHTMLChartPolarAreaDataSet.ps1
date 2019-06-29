@@ -115,9 +115,15 @@ function New-PSHTMLChartPolarAreaDataSet {
     If($hoverBackgroundColor){
         $Datachart.hoverBackgroundColor = $hoverBackgroundColor
     }
+    else {
+        $Datachart.hoverBackgroundColor = ''
+    }
     
     If($HoverBorderColor){
         $Datachart.hoverBorderColor = $HoverBorderColor
+    }
+    else {
+        $Datachart.hoverBorderColor = ''
     }
     if($HoverBorderWidth){
         $Datachart.HoverBorderWidth = $HoverBorderWidth
