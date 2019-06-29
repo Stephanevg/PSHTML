@@ -1,5 +1,5 @@
 image:
-- Previous Ubuntu
+- Ubuntu
 - Visual Studio 2015
 
 install:
@@ -17,6 +17,3 @@ skip_commits:
     - docs/*
     - README.MD
     - mkdocs.yml
-
-on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
