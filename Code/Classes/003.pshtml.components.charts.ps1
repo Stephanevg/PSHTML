@@ -475,10 +475,16 @@ Class Chart {
     }
 
     Hidden [String]GetDefinitionStart([String]$CanvasID){
-        $Start = @"
+<#
+
+$Start = @"
 var ctx = document.getElementById("$($CanvasID)").getContext('2d');
 var myChart = new Chart(ctx, 
 "@
+#>
+$Start = "var ctx = document.getElementById(`"$($CanvasID)`").getContext('2d');"
+$Start = $Start + [Environment]::NewLine
+$Start = $Start + "var myChart = new Chart(ctx, "
     return $Start
     }
 

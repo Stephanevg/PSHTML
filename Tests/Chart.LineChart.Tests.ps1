@@ -56,6 +56,7 @@ InModuleScope PSHTML {
             it '[Method][(Hidden)GetDefinitionStart] should return correct value'{
                 $Bc = [LineChart]::New()
                 $Start = $Bc.GetDefinitionStart($CanvasID)
+                <#
                 $ShouldString = @"
 var ctx = document.getElementById("CanvasID01").getContext('2d');
 var myChart = new Chart(ctx, 
@@ -68,6 +69,10 @@ var myChart = new Chart(ctx,
                     $ShouldString = $ShouldString + "var myChart = new Chart(ctx, " 
 
                 }
+#>
+                $ShouldString = "var ctx = document.getElementById(`"CanvasID01`").getContext('2d');"
+                    $ShouldString = $ShouldString + [Environment]::NewLine
+                    $ShouldString = $ShouldString + "var myChart = new Chart(ctx, "
                 $Start | Should be $ShouldString
             }
 
