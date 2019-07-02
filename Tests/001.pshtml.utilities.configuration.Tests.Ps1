@@ -67,7 +67,9 @@ $Configuration = @"
 "@
             $FilePath = Join-Path -Path $TestDrive -ChildPath "plop.json"
             $AssetsFolder = Join-path -Path $TestDrive -ChildPath "Assets"
-            New-item -Path $AssetsFolder -Force -ItemType Directory
+            $IncludesFolder = join-Path -Path $TestDrive -ChildPath "Includes"
+            $null = New-item -Path $AssetsFolder -Force -ItemType Directory
+            $null = New-item -Path $IncludesFolder -Force -ItemType Directory
             $Null = New-Item -Path $FilePath -Force -Value $Configuration
             $File = Get-Item -Path $Filepath
             [System.IO.FileInfo]$Path = $FilePath
