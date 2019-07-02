@@ -65,7 +65,7 @@ $Configuration = @"
     }
 }
 "@
-            $FilePath = Join-Path -Path $TestDrive -ChildPath "plop.txt"
+            $FilePath = Join-Path -Path $TestDrive -ChildPath "plop.json"
             $Null = New-Item -Path $FilePath -Force -Value $Configuration
             $File = Get-Item -Path $Filepath
             [System.IO.FileInfo]$Path = $FilePath
