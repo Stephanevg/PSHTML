@@ -111,6 +111,9 @@ Class LogFile : LogDocument {
 
     hidden [string] CreateFileName() {
         $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
+        if(!($cp)){
+            $cp = (Get-PSCallStack)[-1].ScriptName 
+        }
         #Write-Host "cp: $($cp)" -ForegroundColor DarkCyan
         $sr = $psScriptRoot
         $Extension = (get-item -Path $cp).Extension
