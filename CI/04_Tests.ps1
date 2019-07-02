@@ -31,7 +31,7 @@ if ($res.FailedCount -gt 0 -or $res.PassedCount -eq 0) {
     $AllFailedTests = $res.TestResult | ? {$_.Passed -eq $false}
     foreach ($failedTest in $AllFailedTests){
 
-        "{Describe: 0}" -f $failedTest.describe
+        "Describe: {0}" -f $failedTest.describe
         "Name: {0}" -f $failedTest.Name
         "Message: {0}" -f $failedTest.FailureMessage
     }
