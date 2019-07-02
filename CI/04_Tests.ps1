@@ -1,4 +1,5 @@
 
+$PSVersionTable
 Write-Host "[TEST][START]" -ForegroundColor RED -BackgroundColor White
 import-module pester
 start-sleep -seconds 2
@@ -26,6 +27,14 @@ $res = Invoke-Pester -Path "$($env:APPVEYOR_BUILD_FOLDER)/Tests" -OutputFormat N
 
 
 if ($res.FailedCount -gt 0 -or $res.PassedCount -eq 0) { 
+    $PSVersionTable
+    $AllFailedTests = $res.TestResult | ? {$_.Passed -eq $false}
+    foreach ($failedTest in $AllFailedTests){
+
+        "{Describe: 0}" -f $failedTest.describe
+        "Name: {0}" -f $failedTest.Name
+        "Message: {0}" -f $failedTest.FailureMessage
+    }
     throw "$($res.FailedCount) tests failed - $($res.PassedCount) successfully passed"
 };
 
