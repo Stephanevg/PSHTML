@@ -50,7 +50,7 @@ Class LogFile : LogDocument {
             $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         }
 
-        
+        $cp = $global:MyInvocation.MyCommand.Definition #fix for Ubuntu appveyor machines.
         $sr = $psScriptRoot
         
         $Extension = (get-item -Path $cp).Extension
