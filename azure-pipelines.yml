@@ -22,3 +22,15 @@ jobs:
         inputs:
           testRunner: NUnit
           testResultsFiles: '**/TestsResults.xml'
+
+  - job: Test_macos
+    pool: 
+      vmImage: macOS-10.14
+    steps: 
+      - script: "pwsh -c ./CI/Tests.AzureDevops.ps1"
+        displayName: "Running Tests MacOS"
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testRunner: NUnit
+          testResultsFiles: '**/TestsResults.xml'
