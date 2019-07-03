@@ -1,4 +1,4 @@
-#Generated at 07/02/2019 22:14:08 by Stephane van Gulick
+#Generated at 07/03/2019 22:08:53 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -675,7 +675,7 @@ Class LogFile : LogDocument {
             $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         }
 
-        
+        $cp = $global:MyInvocation.MyCommand.Definition #fix for Ubuntu appveyor machines.
         $sr = $psScriptRoot
         
         $Extension = (get-item -Path $cp).Extension
