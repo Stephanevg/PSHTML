@@ -5,7 +5,7 @@ Since version **0.7.3** of PSHTML it is possible to work with ~~local assets~~
 Working with assets, allows one to provide references dynamically to scripts and style files that are hosted locally in the PSHTML folder.
 This is **very** usefull for cases where there is no internet connection, and where scenarios like adding bootstrap, or using charts (Using [New-PSHTMLChart](../Charts/Charts.md)) 
 
-> We have specifically tried to eas the user exeperience. writting ```Write-PSHTML -Name ``` and pressing ```TAB``` will list the current assets currently available to you. (Read below for a list of default ones).
+> We have specifically tried to eas the user exeperience. writting ```Write-PSHTMLAsset -Name ``` and pressing ```TAB``` will list the current assets currently available to you. (Read below for a list of default ones).
 
 ## How to
 
@@ -114,6 +114,44 @@ For this, create a folder in the Assets folder located in the PSHTML module root
 In that newly created folder, copy and paste your .Js/.css files in.
 
 These will become automatically available in through the Get-PSHTMLAsset cmdlet.
+
+Currently, these are the supported asset types:
+
+- Script (.js files)
+- styles (.css files)
+- cdn (.cdn files)
+
+## Asset Type: Script
+
+The script asset type allows one to reference JS script files into your html document.
+Script files will be converted to ``` <script src=''> </script> ``` html tags, with the src attribute pointing to script file location on disk.
+
+## Asset Type: style
+
+The script asset type allows one to link .css files into your html.
+CSS files will be converted to ``` <style link=''> </style> ``` html tags, with the link attribute pointing to css file location on disk.
+
+## Asset Type: CDN
+
+The CDN asset type allows one to link .css / reference .js files into your html pages.
+This is convenient for frameworks that offers CDN references, and when your HTML document is located somwhere where it can access the internet.
+
+Style files will be converted to ``` <style link=''> </style> ``` html tags, with the link attribute pointing to css file location on disk.
+Script files will be converted to ``` <script src=''> </script> ``` html tags, with the src attribute pointing to script file location on disk.
+
+### CDN file strucutre
+
+A .CDN file is a file specific to PSHTML. It needs to be located in the Assets folder of your script.
+A .CDN file is nothing more than a .json which contains the following properties:
+
+- Source
+- Integrity
+- Crossorigin
+  
+
+To create an empty CDN file, one can create it from scratch manually / programmatically or by using the cmdlet ``` New-PSHTMLCDNAssetFile ```
+
+
 
 ### Example
 

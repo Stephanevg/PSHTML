@@ -1,9 +1,22 @@
 Function New-PSHTMLCDNAssetFile {
     [CmdletBinding()]
     Param(
+        [ValidateSet('Style','script')]
+        [String]$Type,
+        [Parameter(
+            ParametersetName = "Script"
+        )]
         [String]$Source,
+        [Parameter(
+            ParametersetName = "Style"
+        )]
+        [String]$Link,
+
         [String]$Integrity,
+
         [String]$CrossOrigin,
+
+        [Parameter(mandatory=$false)]
         [String]$FilePath
     )
 
