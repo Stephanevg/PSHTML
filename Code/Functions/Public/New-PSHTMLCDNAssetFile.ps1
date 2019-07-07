@@ -1,4 +1,72 @@
 Function New-PSHTMLCDNAssetFile {
+    <#
+    .SYNOPSIS
+        Allows to create a CDN file.
+        
+    .DESCRIPTION
+        Creates a .CDN file to use as a PSHTML Asset.
+        The CDN file is automatically supported by Write-PSHTMLAsset and will create the CDN automatically based on the content of the CDN file.
+
+    .PARAMETER TYPE
+    Specify if the Asset should cover Script or Style references
+    Parameters allowd: Script / Style
+
+    .PARAMETER Source
+
+    Specify the src attribute of a script tag.
+
+    .PARAMETER Rel
+
+    Specify the rel attribute of a link tag.
+
+    .PARAMETER Href
+
+    Specify the href attribute of a link tag.
+
+    .PARAMETER Integrity
+
+    Specify the integrity attribute.
+
+    .PARAMETER CrossOrigin
+
+    Specify the CrossOrigin attribute.
+
+    .PARAMETER Path
+
+    Specify in which folder path the file should be created (will use the parameter FileName to create the full path)
+
+    .PARAMETER FileName
+
+    Specify the name of the file that the cdn asset file will have (will use the parameter Path to create the full path).
+    The FileName should end with the extension .CDN 
+    If the extension .CDN is omitted, PSHTML will dynamically add it
+
+    .EXAMPLE
+        Add the latest version of Bootstrap CDN
+        #Information of this example comes from -> https://getbootstrap.com/docs/4.3/getting-started/introduction/
+
+        $Source = 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'
+        $Integrity = 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM'
+        $CrossOrigin = 'anonymous'
+        $BootStrapFolder =  $home\BootStrap4.3.1
+        New-PSHTMLCDNAssetFile -Type script -Source $Source -Integrity $Integrity -CrossOrigin $CrossOrigin -Path $BootStrapFolder -FileName 'BootStrap4.3.1.cdn'
+
+    .EXAMPLE
+        Adds the latest version of MetroUI as an CDN asset
+
+        $Href = 'https://cdn.metroui.org.ua/v4/css/metro-all.min.css'
+        $Folder =  $home\MetroUI\
+        New-PSHTMLCDNAssetFile -Type style -href $href -Path $Folder -FileName 'MetroUI.cdn'
+
+    .INPUTS
+        Inputs (if any)
+    .OUTPUTS
+        System.IO.FileInfo
+    .NOTES
+        Author: Stephane van Gulick
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
     [CmdletBinding()]
     Param(
         [ValidateSet('Style','script')]
@@ -7,7 +75,7 @@ Function New-PSHTMLCDNAssetFile {
         [Parameter(
             ParametersetName = "Script"
         )]
-        [String]$Source,
+        [String]$source,
 
         [Parameter(
             ParametersetName = "Style"
@@ -38,7 +106,7 @@ Function New-PSHTMLCDNAssetFile {
     switch($type){
         "Script" {
 
-            $Hash.Source = $Source
+            $Hash.source = $Source
             break
         }
         "Style" {

@@ -1,4 +1,4 @@
-#Generated at 07/07/2019 10:09:05 by Stephane van Gulick
+﻿#Generated at 07/07/2019 12:20:04 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -672,7 +672,7 @@ Class LogFile : LogDocument {
             }
         }else{
 
-            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
+            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
         }
 
         $cp = $global:MyInvocation.MyCommand.Definition #fix for Ubuntu appveyor machines.
@@ -735,7 +735,7 @@ Class LogFile : LogDocument {
     }
 
     hidden [string] CreateFileName() {
-        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
+        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
         if(!($cp)){
             $cp = (Get-PSCallStack)[-1].ScriptName 
         }
@@ -2422,7 +2422,7 @@ Function base {
     base "woop1" -Class "class"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Current Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -2664,7 +2664,7 @@ Function button {
     </form>
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -3667,7 +3667,7 @@ Function fieldset {
     fieldset {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4136,7 +4136,7 @@ function Get-PSHTMLAsset {
     .OUTPUTS
         Asset[]
     .Notes
-        Author: Stéphane van Gulick
+        Author: Stephane van Gulick
     .Link
       https://github.com/Stephanevg/PSHTML
     #>
@@ -4308,7 +4308,7 @@ Function H1 {
     h1 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4362,7 +4362,7 @@ Function h2 {
     h2 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4414,7 +4414,7 @@ Function h3 {
     h3 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4466,7 +4466,7 @@ Function h4 {
     h4 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4518,7 +4518,7 @@ Function h5 {
     h5 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4570,7 +4570,7 @@ Function h6 {
     h6 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4798,7 +4798,7 @@ Function hr {
     <hr Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 2.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5261,7 +5261,7 @@ Function label {
     </form>
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 1.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5317,7 +5317,7 @@ Function legend {
     </form>
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5464,7 +5464,7 @@ Function Link {
     <link Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5703,7 +5703,7 @@ Function meta {
     <meta name="author" content="Stephane van Gulick"  >
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5895,7 +5895,7 @@ Function nav {
     </nav>
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5938,6 +5938,74 @@ Function nav {
 
 
 Function New-PSHTMLCDNAssetFile {
+    <#
+    .SYNOPSIS
+        Allows to create a CDN file.
+        
+    .DESCRIPTION
+        Creates a .CDN file to use as a PSHTML Asset.
+        The CDN file is automatically supported by Write-PSHTMLAsset and will create the CDN automatically based on the content of the CDN file.
+
+    .PARAMETER TYPE
+    Specify if the Asset should cover Script or Style references
+    Parameters allowd: Script / Style
+
+    .PARAMETER Source
+
+    Specify the src attribute of a script tag.
+
+    .PARAMETER Rel
+
+    Specify the rel attribute of a link tag.
+
+    .PARAMETER Href
+
+    Specify the href attribute of a link tag.
+
+    .PARAMETER Integrity
+
+    Specify the integrity attribute.
+
+    .PARAMETER CrossOrigin
+
+    Specify the CrossOrigin attribute.
+
+    .PARAMETER Path
+
+    Specify in which folder path the file should be created (will use the parameter FileName to create the full path)
+
+    .PARAMETER FileName
+
+    Specify the name of the file that the cdn asset file will have (will use the parameter Path to create the full path).
+    The FileName should end with the extension .CDN 
+    If the extension .CDN is omitted, PSHTML will dynamically add it
+
+    .EXAMPLE
+        Add the latest version of Bootstrap CDN
+        #Information of this example comes from -> https://getbootstrap.com/docs/4.3/getting-started/introduction/
+
+        $Source = 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'
+        $Integrity = 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM'
+        $CrossOrigin = 'anonymous'
+        $BootStrapFolder =  $home\BootStrap4.3.1
+        New-PSHTMLCDNAssetFile -Type script -Source $Source -Integrity $Integrity -CrossOrigin $CrossOrigin -Path $BootStrapFolder -FileName 'BootStrap4.3.1.cdn'
+
+    .EXAMPLE
+        Adds the latest version of MetroUI as an CDN asset
+
+        $Href = 'https://cdn.metroui.org.ua/v4/css/metro-all.min.css'
+        $Folder =  $home\MetroUI\
+        New-PSHTMLCDNAssetFile -Type style -href $href -Path $Folder -FileName 'MetroUI.cdn'
+
+    .INPUTS
+        Inputs (if any)
+    .OUTPUTS
+        System.IO.FileInfo
+    .NOTES
+        Author: Stephane van Gulick
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
     [CmdletBinding()]
     Param(
         [ValidateSet('Style','script')]
@@ -5946,7 +6014,7 @@ Function New-PSHTMLCDNAssetFile {
         [Parameter(
             ParametersetName = "Script"
         )]
-        [String]$Source,
+        [String]$source,
 
         [Parameter(
             ParametersetName = "Style"
@@ -5977,7 +6045,7 @@ Function New-PSHTMLCDNAssetFile {
     switch($type){
         "Script" {
 
-            $Hash.Source = $Source
+            $Hash.source = $Source
             break
         }
         "Style" {
@@ -6317,7 +6385,7 @@ Function New-PSHTMLChartDataSet {
     .OUTPUTS
         [DataSet]
     .NOTES
-        Author: Stéphane van Gulick
+        Author: Stephane van Gulick
     #>
     [CmdletBInding()]
     Param(
@@ -6955,7 +7023,7 @@ Function optgroup {
     
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7088,7 +7156,7 @@ function Out-PSHTMLDocument {
     .DESCRIPTION
         Output the html string into a file.
     .EXAMPLE
-        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imédiatley.
+        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imediatley.
 
         $o = Get-PRocess | select ProcessName,Handles | select -first 5
         $FilePath = "C:\temp\OutputFile.html"
@@ -7101,7 +7169,7 @@ function Out-PSHTMLDocument {
         None
     .NOTES
 
-        Author: Stéphane van Gulick
+        Author: Stephane van Gulick
                 
         
     .LINK
@@ -7594,7 +7662,7 @@ Function selecttag {
         
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7654,7 +7722,7 @@ Function small {
     </small>
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7770,7 +7838,7 @@ Function strong {
 
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7829,7 +7897,7 @@ Function style {
     style {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: Stephane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
