@@ -2,6 +2,36 @@
 
 The latest version of the help documentation is directly available [Here](https://pshtml.readthedocs.io/en/latest/)
 
+## v0.8.0 (in progress)
+
+### General
+- Added support for MacOS (yay!)
+- Integrated with Azure pipelines
+
+### Charts 
+- Added support for 3 new chart types:
+    - HorizontalBar
+    - Radar
+    - PolarArea
+
+### Functionality
+- Added a new Asset Type (.CDN)
+    - read more about it in Assets.md
+    - Added cmdlet New-PSHTMLCDNAssetFile
+
+### Tags
+
+- Added support for the following tags:
+    - i
+    - b
+
+### Bugfixes
+
+- Fixed issues:
+    # 228 (Thanks @JOsuaburkard)
+    # 225
+    # 222
+
 ## v0.7.11
 - Fixed minor bug with ConvertTo-PSHTMLTable
 
