@@ -1,4 +1,4 @@
-#Generated at 07/03/2019 22:08:53 by Stephane van Gulick
+#Generated at 07/07/2019 08:33:17 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -5940,12 +5940,22 @@ Function nav {
 Function New-PSHTMLCDNAssetFile {
     [CmdletBinding()]
     Param(
-        [String]$Source,
-        [String]$Integrity,
-        [String]$CrossOrigin,
-        [Parameter(ValidateSet='Style','script')]
+        [ValidateSet('Style','script')]
         [String]$Type,
-        
+        [Parameter(
+            ParametersetName = "Script"
+        )]
+        [String]$Source,
+        [Parameter(
+            ParametersetName = "Style"
+        )]
+        [String]$Link,
+
+        [String]$Integrity,
+
+        [String]$CrossOrigin,
+
+        [Parameter(mandatory=$false)]
         [String]$FilePath
     )
 
