@@ -32,10 +32,62 @@ Class ConfigurationDocument {
     [void]Load(){
         #Read data from json
         $this.Settings = [SettingFactory]::Parse($This.Path)
-        $AssetsFolder = Join-Path $This.Path.Directory -ChildPath "Assets"
-        $this.Assets = [AssetsFactory]::CreateAsset($AssetsFolder)
-        $IncludesFolder = Join-Path $this.Path.Directory -ChildPath 'Includes'
-        $this.Includes = [IncludeFactory]::Create($IncludesFolder)
+
+        $EC = Get-Variable ExecutionContext -ValueOnly
+        $ProjectRootFolder = $ec.SessionState.Path.CurrentLocation.Path 
+        $ModuleFolder = $This.Path.Directory
+
+        #Assets
+            $ModuleAssetsFolder = Join-Path $ModuleFolder -ChildPath "Assets"
+            $ProjectAssetsFolder = Join-Path $ProjectRootFolder -ChildPath "Assets"
+
+            $ModuleAssets = [AssetsFactory]::CreateAsset($ModuleAssetsFolder)
+            $ProjectAssets = [AssetsFactory]::CreateAsset($ProjectAssetsFolder)
+
+            $this.Assets += $ProjectAssets
+
+            foreach ($modass in $ModuleAssets){
+                if($this.Assets.name -contains $modass.name){
+                    
+                    $PotentialConflictingAsset = $this.Assets | ? {$_.Name -eq $modass.Name}
+                    if($PotentialConflictingAsset.Type -eq $modass.type){
+
+                        #write-verbose "Identical asset found at $($modass.name). Keeping project asset."
+                        Continue
+                    }
+                }else{
+                    $This.Assets += $modass
+                }
+            }
+
+        #Includes
+            #$IncludesFolder = Join-Path -Path $ExecutionContext.SessionState.Path.CurrentLocation.Path -ChildPath "Includes" #Join-Path $this.Path.Directory -ChildPath 'Includes'
+            $IncludesFolder = Join-Path -Path $ProjectRootFolder -ChildPath "Includes"
+            $this.Includes = [IncludeFactory]::Create($IncludesFolder)
+
+            $ModuleIncludesFolder = Join-Path $ModuleFolder -ChildPath "Includes"
+            $ProjectIncludesFolder = Join-Path $ProjectRootFolder -ChildPath "Assets"
+
+            $ModuleIncludes = [IncludeFactory]::Create($ModuleIncludesFolder)
+            $ProjectIncludes = [IncludeFactory]::Create($ProjectIncludesFolder)
+
+            $this.Includes += $ProjectIncludes
+
+            foreach ($modinc in $ModuleIncludes){
+                if($this.Includes.name -contains $modinc.name){
+                    
+                    $PotentialConflictingInclude = $this.Includes | ? {$_.Name -eq $modinc.Name}
+                    if($PotentialConflictingInclude.Type -eq $modinc.type){
+
+                        #write-verbose "Identical asset found at $($modinc.name). Keeping project asset."
+                        Continue
+                    }
+                    
+                    Continue
+                }else{
+                    $This.Includes += $modinc
+                }
+            }
     }
 
     [void]Load([System.IO.FileInfo]$Path){

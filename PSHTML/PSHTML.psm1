@@ -1,4 +1,4 @@
-﻿#Generated at 07/07/2019 12:20:04 by Stephane van Gulick
+#Generated at 07/08/2019 01:32:35 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -33,10 +33,62 @@ Class ConfigurationDocument {
     [void]Load(){
         #Read data from json
         $this.Settings = [SettingFactory]::Parse($This.Path)
-        $AssetsFolder = Join-Path $This.Path.Directory -ChildPath "Assets"
-        $this.Assets = [AssetsFactory]::CreateAsset($AssetsFolder)
-        $IncludesFolder = Join-Path $this.Path.Directory -ChildPath 'Includes'
-        $this.Includes = [IncludeFactory]::Create($IncludesFolder)
+
+        $EC = Get-Variable ExecutionContext -ValueOnly
+        $ProjectRootFolder = $ec.SessionState.Path.CurrentLocation.Path 
+        $ModuleFolder = $This.Path.Directory
+
+        #Assets
+            $ModuleAssetsFolder = Join-Path $ModuleFolder -ChildPath "Assets"
+            $ProjectAssetsFolder = Join-Path $ProjectRootFolder -ChildPath "Assets"
+
+            $ModuleAssets = [AssetsFactory]::CreateAsset($ModuleAssetsFolder)
+            $ProjectAssets = [AssetsFactory]::CreateAsset($ProjectAssetsFolder)
+
+            $this.Assets += $ProjectAssets
+
+            foreach ($modass in $ModuleAssets){
+                if($this.Assets.name -contains $modass.name){
+                    
+                    $PotentialConflictingAsset = $this.Assets | ? {$_.Name -eq $modass.Name}
+                    if($PotentialConflictingAsset.Type -eq $modass.type){
+
+                        #write-verbose "Identical asset found at $($modass.name). Keeping project asset."
+                        Continue
+                    }
+                }else{
+                    $This.Assets += $modass
+                }
+            }
+
+        #Includes
+            #$IncludesFolder = Join-Path -Path $ExecutionContext.SessionState.Path.CurrentLocation.Path -ChildPath "Includes" #Join-Path $this.Path.Directory -ChildPath 'Includes'
+            $IncludesFolder = Join-Path -Path $ProjectRootFolder -ChildPath "Includes"
+            $this.Includes = [IncludeFactory]::Create($IncludesFolder)
+
+            $ModuleIncludesFolder = Join-Path $ModuleFolder -ChildPath "Includes"
+            $ProjectIncludesFolder = Join-Path $ProjectRootFolder -ChildPath "Assets"
+
+            $ModuleIncludes = [IncludeFactory]::Create($ModuleIncludesFolder)
+            $ProjectIncludes = [IncludeFactory]::Create($ProjectIncludesFolder)
+
+            $this.Includes += $ProjectIncludes
+
+            foreach ($modinc in $ModuleIncludes){
+                if($this.Includes.name -contains $modinc.name){
+                    
+                    $PotentialConflictingInclude = $this.Includes | ? {$_.Name -eq $modinc.Name}
+                    if($PotentialConflictingInclude.Type -eq $modinc.type){
+
+                        #write-verbose "Identical asset found at $($modinc.name). Keeping project asset."
+                        Continue
+                    }
+                    
+                    Continue
+                }else{
+                    $This.Includes += $modinc
+                }
+            }
     }
 
     [void]Load([System.IO.FileInfo]$Path){
@@ -672,7 +724,7 @@ Class LogFile : LogDocument {
             }
         }else{
 
-            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
+            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         }
 
         $cp = $global:MyInvocation.MyCommand.Definition #fix for Ubuntu appveyor machines.
@@ -735,7 +787,7 @@ Class LogFile : LogDocument {
     }
 
     hidden [string] CreateFileName() {
-        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
+        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         if(!($cp)){
             $cp = (Get-PSCallStack)[-1].ScriptName 
         }
@@ -2422,7 +2474,7 @@ Function base {
     base "woop1" -Class "class"
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Current Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -2664,7 +2716,7 @@ Function button {
     </form>
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -3667,7 +3719,7 @@ Function fieldset {
     fieldset {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4136,7 +4188,7 @@ function Get-PSHTMLAsset {
     .OUTPUTS
         Asset[]
     .Notes
-        Author: Stephane van Gulick
+        Author: Stéphane van Gulick
     .Link
       https://github.com/Stephanevg/PSHTML
     #>
@@ -4308,7 +4360,7 @@ Function H1 {
     h1 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4362,7 +4414,7 @@ Function h2 {
     h2 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4414,7 +4466,7 @@ Function h3 {
     h3 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4466,7 +4518,7 @@ Function h4 {
     h4 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4518,7 +4570,7 @@ Function h5 {
     h5 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4570,7 +4622,7 @@ Function h6 {
     h6 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4798,7 +4850,7 @@ Function hr {
     <hr Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 2.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5261,7 +5313,7 @@ Function label {
     </form>
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 1.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5317,7 +5369,7 @@ Function legend {
     </form>
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5464,7 +5516,7 @@ Function Link {
     <link Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5703,7 +5755,7 @@ Function meta {
     <meta name="author" content="Stephane van Gulick"  >
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5895,7 +5947,7 @@ Function nav {
     </nav>
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6385,7 +6437,7 @@ Function New-PSHTMLChartDataSet {
     .OUTPUTS
         [DataSet]
     .NOTES
-        Author: Stephane van Gulick
+        Author: Stéphane van Gulick
     #>
     [CmdletBInding()]
     Param(
@@ -7023,7 +7075,7 @@ Function optgroup {
     
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7156,7 +7208,7 @@ function Out-PSHTMLDocument {
     .DESCRIPTION
         Output the html string into a file.
     .EXAMPLE
-        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imediatley.
+        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imédiatley.
 
         $o = Get-PRocess | select ProcessName,Handles | select -first 5
         $FilePath = "C:\temp\OutputFile.html"
@@ -7169,7 +7221,7 @@ function Out-PSHTMLDocument {
         None
     .NOTES
 
-        Author: Stephane van Gulick
+        Author: Stéphane van Gulick
                 
         
     .LINK
@@ -7662,7 +7714,7 @@ Function selecttag {
         
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7722,7 +7774,7 @@ Function small {
     </small>
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7838,7 +7890,7 @@ Function strong {
 
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7897,7 +7949,7 @@ Function style {
     style {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: Stephane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
