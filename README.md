@@ -14,11 +14,36 @@ Since version `0.7.0` PSHTML supports the creation of charts.
 
 -----
 
-## Status
+# Status
+
+## Appveyor
 
 |master|dev|docs|Downloads
 |---|---|---|---|
 [![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/dev) | [![Documentation Status](https://readthedocs.org/projects/pshtml/badge/?version=latest)](https://pshtml.readthedocs.io/en/latest/?badge=latest) | [![PSHTML](https://img.shields.io/powershellgallery/dt/pshtml.svg)](https://www.powershellgallery.com/packages/PSHTML/) |
+
+## AzurePipelines
+
+### overall status
+
+| master | dev | 
+|---|---|
+|[![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=master)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=master)|[![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=dev)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=dev)|
+
+### Windows 
+| master | dev | 
+|---|---|
+| [![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=master&jobName=Test_windows2016)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=master) |[![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=dev&jobName=Test_windows2016)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=dev)|
+
+### Linux 
+| master | dev | 
+|---|---|
+|[![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=master&jobName=Test_Ubuntu)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=master) |[![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=dev&jobName=Test_Ubuntu)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=dev)|
+
+### MacOS 
+| master | dev | 
+|---|---|
+| N/A|[![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=dev&jobName=Test_macos)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=dev)|
 
 A change log is available [here](Change_Log.md)
 Known issues are tracked [here](Known_Issues.md)
