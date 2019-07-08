@@ -381,7 +381,7 @@ Class AssetsFactory{
 
 
     Static [Asset[]] CreateAsset([String]$AssetPath){
-        if(TestPath $AssetPath){
+        if(Test-Path $AssetPath){
 
             $It = Get-Item $AssetPath 
         }else{
