@@ -22,6 +22,7 @@ Class LogDocument{
     }
 }
 
+<#
 Class LogFile : LogDocument {
 
     [System.IO.FileInfo]$File
@@ -135,7 +136,7 @@ Class LogFile : LogDocument {
     }
 
 }
-
+#>
 Class Logger{
     [System.IO.FileInfo]$Logfile
     
