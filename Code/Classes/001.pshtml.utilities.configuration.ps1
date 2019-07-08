@@ -385,9 +385,12 @@ Class AssetsFactory{
             Return [AssetsFactory]::CreateAsset([System.Io.FileInfo]$It)
         }elseif($It -is [System.IO.DirectoryInfo]){
             Return [AssetsFactory]::CreateAssets([System.IO.DirectoryInfo]$It)
-        }else{
-            break #No assets are present
+        }elseif($null -eq $It){
+            return $null
+            #No assets are present
             #throw "Asset file type at $($AssetPath) could not be identified. Please specify a folder or a file."
+        }else{
+            Throw "Asset type could not be identified."
         }
         
         
