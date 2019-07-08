@@ -1,4 +1,4 @@
-﻿#Generated at 07/09/2019 00:37:25 by Stephane van Gulick
+﻿#Generated at 07/09/2019 00:42:36 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -382,7 +382,7 @@ Class AssetsFactory{
 
 
     Static [Asset[]] CreateAsset([String]$AssetPath){
-        if(TestPath $AssetPath){
+        if(Test-Path $AssetPath){
 
             $It = Get-Item $AssetPath 
         }else{
