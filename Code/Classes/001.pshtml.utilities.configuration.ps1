@@ -54,6 +54,8 @@ Class ConfigurationDocument {
 
                         #write-verbose "Identical asset found at $($modass.name). Keeping project asset."
                         Continue
+                    }else{
+                        $This.Assets += $modass
                     }
                 }else{
                     $This.Assets += $modass

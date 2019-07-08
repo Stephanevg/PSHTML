@@ -1,4 +1,4 @@
-#Generated at 07/08/2019 22:49:55 by Stephane van Gulick
+#Generated at 07/08/2019 23:39:27 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -55,6 +55,8 @@ Class ConfigurationDocument {
 
                         #write-verbose "Identical asset found at $($modass.name). Keeping project asset."
                         Continue
+                    }else{
+                        $This.Assets += $modass
                     }
                 }else{
                     $This.Assets += $modass
