@@ -381,7 +381,12 @@ Class AssetsFactory{
 
 
     Static [Asset[]] CreateAsset([String]$AssetPath){
-        $It = Get-Item $AssetPath
+        if(TestPath $AssetPath){
+
+            $It = Get-Item $AssetPath 
+        }else{
+            Return $Null
+        }
         
         If($It -is [System.Io.FileInfo]){
             Return [AssetsFactory]::CreateAsset([System.Io.FileInfo]$It)
