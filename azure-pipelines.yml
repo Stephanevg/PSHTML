@@ -1,4 +1,17 @@
-jobs: 
+jobs:
+
+  - job: Test_windows2019
+    pool: 
+      vmImage: windows-2019
+    steps: 
+      - powershell: "./CI/Tests.AzureDevops.ps1"
+        displayName: "Running Tests Windows 2019"
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testRunner: NUnit
+          testResultsFiles: '**/TestsResults.xml'
+
   - job: Test_windows2016
     pool: 
       vmImage: vs2017-win2016
@@ -9,8 +22,20 @@ jobs:
         condition: succeededOrFailed()
         inputs:
           testRunner: NUnit
+
+  - job: Test_windows2012R2
+    pool: 
+      vmImage: vs2015-win2012r2
+    steps: 
+      - powershell: "./CI/Tests.AzureDevops.ps1"
+        displayName: "Running Tests Windows 2016"
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testRunner: NUnit
           testResultsFiles: '**/TestsResults.xml'
-        
+
+
   - job: Test_Ubuntu
     pool: 
       vmImage: ubuntu-latest
