@@ -34,6 +34,8 @@ InModuleScope -ModuleName PSHTML {
         } #End of it block
 
     }# end of Describe block
+
+    <#
     Describe '[LogFile]-[Constructors]' {
     
         It '[LogFile]-[Constructor] - Parameterless - should Not Throw' {
@@ -64,6 +66,8 @@ InModuleScope -ModuleName PSHTML {
     
     
     }# end of Describe block
+
+    #>
     Describe '[Logger]-[Constructors]' {
     
         It '[Logger]-[Constructor] - Parameterless - should Not Throw' {
