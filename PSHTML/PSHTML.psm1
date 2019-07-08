@@ -1,4 +1,4 @@
-﻿#Generated at 07/09/2019 00:42:36 by Stephane van Gulick
+﻿#Generated at 07/09/2019 00:51:09 by Stephane van Gulick
 
 Enum SettingType {
     General
