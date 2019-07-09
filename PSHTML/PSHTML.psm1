@@ -1,4 +1,4 @@
-﻿#Generated at 07/09/2019 17:26:16 by Stephane van Gulick
+﻿#Generated at 07/09/2019 17:50:25 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -7889,7 +7889,6 @@ Function span {
         [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]
         $Content,
 
         [AllowEmptyString()]
