@@ -24,6 +24,10 @@ Function selecttag {
         <option value="audi">Audi</option>
     </select>
 
+    .PARAMETER Form
+        Specify the form ID to wich the selecttag statement should be a part of.
+        
+
     .Notes
     Author: Stéphane van Gulick
     Version: 3.1.0
@@ -46,9 +50,11 @@ Function selecttag {
 
         [String]$Id,
 
-        [Hashtable]$Attributes,
+        [String]$Form,
 
-        [string]$Name
+        [string]$Name,
+
+        [Hashtable]$Attributes
     )
 
     $tagname = "select"

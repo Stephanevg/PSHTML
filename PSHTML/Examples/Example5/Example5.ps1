@@ -5,12 +5,12 @@
     We use foreach to create multiple <p> or <li> elements.
 #>
 
-import-module .\pshtml.psd1
+import-module pshtml
 
 $Snover = Html {
     header -content {
         Title "Tribute to snover"
-        #Linking to bootstrap
+        Write-PSHTMLAsset
         link -rel stylesheet -href "MyStyles.css"
     }
     Body{
@@ -18,7 +18,7 @@ $Snover = Html {
 
         div -Class "Photo" {
 
-            img -src "https://pbs.twimg.com/profile_images/618804166631145473/2q6yharL_400x400.jpg" -alt "Jeffrey Snover photo" -height "400" -width "400" -Class "Photo"
+            img -src "https://pbs.twimg.com/profile_images/1039650689620688896/ZZgN5c9Y_400x400.jpg" -alt "Jeffrey Snover photo" -height "400" -width "400" -Class "Photo"
         }
 
         div -id "Bio" {
