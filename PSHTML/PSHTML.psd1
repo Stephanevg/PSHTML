@@ -72,7 +72,7 @@ PowerShellVersion = '5.0'
 FunctionsToExport = 'a', 'address', 'area', 'article', 'aside', 'b', 'base', 'blockquote', 'body', 'br', 
                'button', 'canvas', 'caption', 'Clear-WhiteSpace', 'col', 'colgroup', 
                'ConvertTo-HtmlTable', 'ConvertTo-PSHtmlTable', 'datalist', 'dd', 'div', 
-               'dl', 'dt', 'em', 'fieldset', 'figcaption', 'figure', 'footer', 'Form', 
+               'dl', 'doctype', 'dt', 'em', 'fieldset', 'figcaption', 'figure', 'footer', 'Form', 
                'Get-PSHTMLAsset', 'Get-PSHTMLConfiguration', 'Get-PSHTMLInclude', 'h1', 
                'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'Header', 'hr', 'html', 'i', 'img', 'input', 
                'Install-PSHTMLVSCodeSnippets', 'keygen', 'label', 'legend', 'li', 'link', 
