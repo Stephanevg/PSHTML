@@ -6,7 +6,8 @@ The latest version of the help documentation is directly available [Here](https:
 
 ### General
 - Added support for MacOS (yay!)
-- Integrated with Azure pipelines
+- Integrated project with Azure pipelines
+- Added support for Assets / includes 'Locations' (Module & Project)
 
 ### Charts 
 - Added support for 3 new chart types:
