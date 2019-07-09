@@ -121,7 +121,9 @@ Executing ```script3.ps1``` returns the following code:
 It is possible to add custom Assets to PSHTML.
 
 For this, create a folder in the Assets folder located in the PSHTML module root folder.
-In that newly created folder, copy and paste your .Js/.css files in.
+In that newly created folder, copy and paste your .Js/.css files in. 
+
+> The assets can be placed in either a `Module`or `Project` location. Read the `Location`part further down below to learn more about this. 
 
 To list ones currently available to you, use `Get-PSHTMLAsset`
 
@@ -178,7 +180,7 @@ The following properties will be additionaly present in a `style .CDN` file.
 - href
 - link (has a default of 'stylesheet' but can be overwritten using `New-PSHTMLCDNASsetFile -Link`)
 
-To create an empty CDN file, one can create it from scratch manually / programmatically or by using the cmdlet ``` New-PSHTMLCDNAssetFile ```
+To create an empty CDN file, one can create it from scratch manually or programmatically using the cmdlet ``` New-PSHTMLCDNAssetFile ```
 
 
 
@@ -188,9 +190,9 @@ You have a company styles file called ```CoreStyles.css``` which you would like 
 Simply create a folder called ```CompanyCore``` in the Assets folder of the PSHTML module root folder, and copy and paste the ```coreStyles.Css``` file in it.
 Use the ```Write-PSHTMLAsset``` cmdlet and tab through the ```-Name``` parameter values up until you find 'CompanyCore'.
 
-> The name of the folder is actually used under the hood to dynamically generate the different values that the ```-Name``` parameter from the ```Write-PSHTMLAsset``` cmdlet. The ```-Type``` switch will allow to filter either on only CSS files (Styles) or on .JS files (Script). If more then one file is present in the folder, but no type nor name is speicified, then all will be rendered.
+> The name of the folder is actually used under the hood to dynamically generate the different values that the ```-Name``` parameter will allow you to tab through from the ```Write-PSHTMLAsset``` cmdlet. The ```-Type``` switch will allow to filter either on only CSS files (Styles) or on .JS files (Script). If more then one file is present in the folder, but no type nor name is speicified, then all will be rendered.
 
-Use it like this to use it
+Use it like below in order to add a reference to your custom script.
 
 ```powershell
 html {
@@ -203,3 +205,15 @@ html {
     }
 }
 ```
+
+## ASset locations
+
+Assets can be located in two different locations:
+- Module
+- Project
+
+### Module
+
+The module location is by default, located at `$ModuleRoot\Assets`.
+It already contains assets which ship by default with the module (BootStrap,JQuery, ChartJS). More can be easily added by following the `Add custom Assets` section of this documentation.
+
