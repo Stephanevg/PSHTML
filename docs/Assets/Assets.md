@@ -206,14 +206,10 @@ html {
 }
 ```
 
-## ASset locations
+## Asset locations
 
 Assets can be located in two different locations:
 - Module
 - Project
 
-### Module
-
-The module location is by default, located at `$ModuleRoot\Assets`.
-It already contains assets which ship by default with the module (BootStrap,JQuery, ChartJS). More can be easily added by following the `Add custom Assets` section of this documentation.
-
+To read me about locations, see the [Locations](../Locations/Locations.md) documentation

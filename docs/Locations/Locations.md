@@ -1,4 +1,4 @@
-# Locations
+## Locations
 
 PSHTML locations is a simple concept which applies for `Assets` and `Includes`.
 
