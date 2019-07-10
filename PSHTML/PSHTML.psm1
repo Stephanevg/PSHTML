@@ -1684,15 +1684,6 @@ Class IncludeFactory {
 }
 
 function Get-PSHTMLColor {
-    Param(
-        [Parameter(Mandatory=$true)]
-        [ValidateSet("hex","hsl","hsla","rgb","rgba")]
-        [string]
-        $Type, 
-        [Parameter(Mandatory=$true)]
-        [String]
-        $Color
-    )
 <#
 .SYNOPSIS
 
@@ -1737,6 +1728,16 @@ Get-PSHTMLColor -Type rgba -Color lightblue
 rgba(173,216,230,0)
 
 #>
+    Param(
+        [Parameter(Mandatory=$false)]
+        [ValidateSet("hex","hsl","hsla","rgb","rgba")]
+        [string]
+        $Type="rgb", 
+        [Parameter(Mandatory=$true)]
+        [String]
+        $Color
+    )
+
     $colordef =  "$($color)_def"
     switch ($Type){
         'rgb' {
