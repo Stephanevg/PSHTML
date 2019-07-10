@@ -1088,31 +1088,37 @@ static [string] $yellowgreen = "rgb({0},{1},{2})" -f [Color]::yellowgreen_def.r,
 
 #logic from http://www.niwa.nu/2013/05/math-behind-colorspace-conversions-rgb-hsl/
 static [string] hslcalc([int]$r, [int]$g, [int]$b, [double]$a) {
-        $rc = [Math]::Round($r/255,2)
-        $bc = [Math]::Round($b/255,2)
-        $gc = [Math]::Round($g/255,2)
+    $rc = [Math]::Round($r/255,2)
+    $bc = [Math]::Round($b/255,2)
+    $gc = [Math]::Round($g/255,2)
 
-        $h = 0
+    $h = 0
 
-        $m = $rc,$bc,$gc | Measure-Object -Maximum -Minimum
-        $m
+    $m = $rc,$bc,$gc | Measure-Object -Maximum -Minimum
+    $m
 
-        $l = [Math]::Round(($m.Maximum + $m.Minimum)/2,2)
+    $l = [Math]::Round(($m.Maximum + $m.Minimum)/2,2)
+    Write-Verbose "L: $l"
 
-        if ($m.Maximum -eq $m.Minimum) {
-            $s = 0
+    if ($m.Maximum -eq $m.Minimum) {
+        $s = 0
+    }
+    else {
+        if ($l -le 0.5) {
+            $s = ($m.Maximum - $m.Minimum)/($m.Maximum + $m.Minimum)
         }
         else {
-            if ($l -le 0.5 ) {
-                $s = ($m.Maximum - $m.Minimum)/($m.Maximum + $m.Minimum)
-            }
-            else {
-                $s = ($m.Maximum - $m.Minimum)/(2 - $m.Maximum - $m.Minimum)
-            }
+            $s = ($m.Maximum - $m.Minimum)/(2 - $m.Maximum - $m.Minimum)
         }
+    }
+    Write-Verbose "S: $s"
 
+    if ($s -eq 0) {
+        $h = 0
+    }
+    else {
         if ($rc -eq $m.Maximum) {
-            $h =  ($rc-$bc)/($m.Maximum-$m.Minimum)
+            $h =  ($gc-$bc)/($m.Maximum-$m.Minimum)
         }
 
         if ($gc -eq $m.Maximum) {
@@ -1128,14 +1134,16 @@ static [string] hslcalc([int]$r, [int]$g, [int]$b, [double]$a) {
         }
 
         $h = $h * 60
+    }
+    Write-Verbose "H: $h"
+    
+    if ($a -le 1) {
+        return "hsla({0},{1:p0},{2:p0},{3})" -f [Math]::Round($h), [Math]::Round($s,2), $l, $a
+    }
+    else {
+        return "hsl({0},{1:p0},{2:p0})" -f [Math]::Round($h), [Math]::Round($s,2), $l
         
-        if ($a -le 1) {
-            return "hsla({0},{1:p0},{2:p0},{3})" -f [Math]::Round($h), [Math]::Round($s,2), $l, $a
-        }
-        else {
-            return "hsl({0},{1:p0},{2:p0})" -f [Math]::Round($h), [Math]::Round($s,2), $l
-            
-        }
+    }
 }
 
 static [string] hex([int]$r,[int]$g,[int]$b){ 
