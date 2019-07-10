@@ -36,13 +36,13 @@ function Out-PSHTMLDocument {
     )
     
     begin {
-        $Writer = [System.IO.StreamWriter]$OutPath
+        $Writer = [System.IO.StreamWriter]::New($OutPath,$false,[System.Text.Encoding]::UTF8)
     }
     
     process {
         #[System.IO.TextWriter]
         Foreach ($Line in $HTMLDocument) {
-            $writer.WriteLine($Line, "utf8")
+            $writer.WriteLine($Line)
         }
     }
     
