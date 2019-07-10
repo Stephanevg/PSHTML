@@ -13,22 +13,22 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
-    Describe "Testing span" {
+    Describe "Testing b" {
 
 
         $Class = "MyClass"
         $Id = "MyID"
-        $Style = "Background:green"
+        
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-        $string = span -content {"woop"} -Attributes $CustomAtt -Style $Style -Class $class -id $id
+        $string = b {"woop"} -Attributes $CustomAtt -Class $class -id $id
 
         if($string -is [array]){
             $string = $String -join ""
         }
 
         it "Should contain opening and closing tags" {
-            $string -match '^<span.*>' | should be $true
-            $string -match '.*</span>$' | should be $true
+            $string -match '^<b.*>' | should be $true
+            $string -match '.*</b>$' | should be $true
 
         }
 
@@ -36,14 +36,12 @@ Context "Testing PSHTML"{
             $string -match "^.*>woop<.*" | should be $true
         }
 
+
         it "Testing common parameters: Class"{
-            $string -match '^<span.*class="myclass".*>' | should be $true
+            $string -match '^<b.*class="myclass".*>' | should be $true
         }
         it "Testing common parameters: ID"{
-            $string -match '^<span.*id="myid".*>' | should be $true
-        }
-        it "Testing common parameters: Style"{
-            $string -match '^<span.*style=".+".*>' | should be $true
+            $string -match '^<b.*id="myid".*>' | should be $true
         }
 
         it "Testing Attributes parameters"{
@@ -51,23 +49,27 @@ Context "Testing PSHTML"{
             foreach($at in $CustomAtt.Keys){
                 $val = $null
                 $val = $CustomAtt[$at]
-                $string -match "^<span.*$at=`"$val`".*>" | should be $true
+                $string -match "^<b.*$at=`"$val`".*>" | should be $true
             }
-
-
         }
-
-        It 'Should expand variables' {
-            #Test for bug https://github.com/Stephanevg/PSHTML/issues/234
-            $e = 3
-            $res = span -content {$e}
-
-            $res -Match "^<span >3</span>"
-        }
-
-
     }
 
-}
+    Describe "Testing b without optional explicit Param" {
 
-Pop-Location
+        $string = b {"woop"}
+
+        if($string -is [array]){
+            $string = $String -join ""
+        }
+
+        it "Should contain opening and closing tags" {
+            $string -match '^<b.*>' | should be $true
+            $string -match '.*</b>$' | should be $true
+
+        }
+
+        it "Testing content in child element"{
+            $string -match "^.*>woop<.*" | should be $true
+        }
+    }
+}

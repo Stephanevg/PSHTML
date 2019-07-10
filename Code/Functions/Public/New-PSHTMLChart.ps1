@@ -33,7 +33,7 @@ Function New-PSHTMLChart {
     #>
         [CmdletBinding()]
         Param(
-            #[ValidateSet("Bar","Line","Pie","doughnut")]
+            #[ValidateSet("Bar","horizontalBar","Line","Pie","doughnut", "radar", "polarArea")]
             [ChartType]$Type = $(Throw '-Type is required'),
     
             [dataSet[]]$DataSet = $(Throw '-DataSet is required'),
@@ -68,9 +68,26 @@ Function New-PSHTMLChart {
             $ChartOptions = [BarChartOptions]::New()
             ;Break
         }
+        "horizontalBar" {
+            $Chart = [horizontalBarChart]::New()
+            $ChartOptions = [horizontalBarChartOptions]::New()
+            ;Break
+        }
         "Line"{
             $Chart = [LineChart]::New()
             $ChartOptions = [LineChartOptions]::New()
+            
+            ;Break
+        }
+        "radar"{
+            $Chart = [RadarChart]::New()
+            $ChartOptions = [RadarChartOptions]::New()
+            
+            ;Break
+        }
+        "polarArea" {
+            $Chart = [polarAreaChart]::New()
+            $ChartOptions = [polarAreaChartOptions]::New()
             
             ;Break
         }

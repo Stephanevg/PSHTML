@@ -13,6 +13,7 @@
       "        Title -Content \"${2:YOUR SITE TITLE}\"",
       "        Write-PSHTMLAsset -Name JQuery ",
       "        Write-PSHTMLAsset -Name Bootstrap ",
+      "        Write-PSHTMLAsset -Name ChartJS ",
       "    }",
       "    body {",
       "     div -Class 'container' {",

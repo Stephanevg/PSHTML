@@ -25,13 +25,18 @@ Class Include : IncludeFile {
 Class IncludeFactory {
     
     Static [Include[]] Create([System.IO.DirectoryInfo]$Path){
-        $Items = Get-ChildItem $Path.FullName -Filter "*.ps1"
-        $AllIncludes = @()
-        Foreach($Item in $Items){
-            $AllIncludes += [Include]::New($Item)
-            
-        }
+        If(test-Path $Path){
 
-        Return $AllIncludes
+            $Items = Get-ChildItem $Path.FullName -Filter "*.ps1"
+            $AllIncludes = @()
+            Foreach($Item in $Items){
+                $AllIncludes += [Include]::New($Item)
+                
+            }
+    
+            Return $AllIncludes
+        }Else{
+            Return $null
+        }
     }
 }

@@ -9,7 +9,7 @@ function Out-PSHTMLDocument {
 
         $o = Get-PRocess | select ProcessName,Handles | select -first 5
         $FilePath = "C:\temp\OutputFile.html"
-        $E = ConvertTo-HTMLTable -Object $o 
+        $E = ConvertTo-PSHTMLTable -Object $o 
         $e | Out-PSHTMLDocument -OutPath $FilePath -Show
 
     .INPUTS

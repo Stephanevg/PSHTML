@@ -27,7 +27,6 @@ Function span {
         [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]
         $Content,
 
         [AllowEmptyString()]

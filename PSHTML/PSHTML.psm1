@@ -1,4 +1,4 @@
-﻿#Generated at 03/06/2019 00:13:49 by Stephane van Gulick
+﻿#Generated at 07/09/2019 17:50:25 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -9,6 +9,7 @@ Enum SettingType {
 Enum AssetType {
     Script
     Style
+    cdn
 }
 
 Class ConfigurationDocument {
@@ -32,10 +33,64 @@ Class ConfigurationDocument {
     [void]Load(){
         #Read data from json
         $this.Settings = [SettingFactory]::Parse($This.Path)
-        $AssetsFolder = Join-Path $This.Path.Directory -ChildPath "Assets"
-        $this.Assets = [AssetsFactory]::CreateAssets($AssetsFolder)
-        $IncludesFolder = Join-Path $this.Path.Directory -ChildPath 'Includes'
-        $this.Includes = [IncludeFactory]::Create($IncludesFolder)
+
+        $EC = Get-Variable ExecutionContext -ValueOnly
+        $ProjectRootFolder = $ec.SessionState.Path.CurrentLocation.Path 
+        $ModuleFolder = $This.Path.Directory
+
+        #Assets
+            $ModuleAssetsFolder = Join-Path $ModuleFolder -ChildPath "Assets"
+            $ProjectAssetsFolder = Join-Path $ProjectRootFolder -ChildPath "Assets"
+
+            $ModuleAssets = [AssetsFactory]::CreateAsset($ModuleAssetsFolder)
+            $ProjectAssets = [AssetsFactory]::CreateAsset($ProjectAssetsFolder)
+
+            $this.Assets += $ProjectAssets
+
+            foreach ($modass in $ModuleAssets){
+                if($this.Assets.name -contains $modass.name){
+                    
+                    $PotentialConflictingAsset = $this.Assets | ? {$_.Name -eq $modass.Name}
+                    if($PotentialConflictingAsset.Type -eq $modass.type){
+
+                        #write-verbose "Identical asset found at $($modass.name). Keeping project asset."
+                        Continue
+                    }else{
+                        $This.Assets += $modass
+                    }
+                }else{
+                    $This.Assets += $modass
+                }
+            }
+
+        #Includes
+            #$IncludesFolder = Join-Path -Path $ExecutionContext.SessionState.Path.CurrentLocation.Path -ChildPath "Includes" #Join-Path $this.Path.Directory -ChildPath 'Includes'
+            $IncludesFolder = Join-Path -Path $ProjectRootFolder -ChildPath "Includes"
+            $this.Includes = [IncludeFactory]::Create($IncludesFolder)
+
+            $ModuleIncludesFolder = Join-Path $ModuleFolder -ChildPath "Includes"
+            $ProjectIncludesFolder = Join-Path $ProjectRootFolder -ChildPath "Assets"
+
+            $ModuleIncludes = [IncludeFactory]::Create($ModuleIncludesFolder)
+            $ProjectIncludes = [IncludeFactory]::Create($ProjectIncludesFolder)
+
+            $this.Includes += $ProjectIncludes
+
+            foreach ($modinc in $ModuleIncludes){
+                if($this.Includes.name -contains $modinc.name){
+                    
+                    $PotentialConflictingInclude = $this.Includes | ? {$_.Name -eq $modinc.Name}
+                    if($PotentialConflictingInclude.Type -eq $modinc.type){
+
+                        #write-verbose "Identical asset found at $($modinc.name). Keeping project asset."
+                        Continue
+                    }
+                    
+                    Continue
+                }else{
+                    $This.Includes += $modinc
+                }
+            }
     }
 
     [void]Load([System.IO.FileInfo]$Path){
@@ -159,9 +214,15 @@ Class LogSettings : Setting {
     }
 
     [String]GetDefaultLogFolderPath(){
-        if($global:IsLinux){
+        if($global:PSVersionTable.os -match '^Linux.*'){
+            #Linux
             $p = "/tmp/pshtml/"
-        }Else{
+        }elseif($global:PSVersionTable.OS -match '^Darwin.*'){
+            #Macos
+            $p = $env:TMPDIR
+        }
+        Else{
+            #Windows
             $p = Join-Path $Env:Temp -ChildPath "pshtml"
         }
         return $p
@@ -216,7 +277,6 @@ if($json.Assets.Path.Tolower() -eq 'default' -or $json.Assets.Path -eq '' ){
         return $this.DefaultPath
     }
 }
-
 
 
 Class SettingFactory{
@@ -317,39 +377,68 @@ Class SettingFactory{
 }
 
 
+
 Class AssetsFactory{
 
-    Static [Asset] CreateAsset([System.Io.FileInfo]$AssetPath){
-        
-        switch($AssetPath.Extension){
-            ".js" {
-                Return [ScriptAsset]::new($AssetPath)
-                ;Break
-            }
-            ".css"{
-                Return [StyleAsset]::new($AssetPath)
-                ;Break
-            }
-            default{
-                Throw "$($AssetPath.Extenion) is not a supported asset aaa type."
-            }
-        }
 
-        Throw "$($AssetPath.FullName) Is not a supported Asset Type."
+    Static [Asset[]] CreateAsset([String]$AssetPath){
+        if(Test-Path $AssetPath){
+
+            $It = Get-Item $AssetPath 
+        }else{
+            Return $Null
+        }
+        
+        If($It -is [System.Io.FileInfo]){
+            Return [AssetsFactory]::CreateAsset([System.Io.FileInfo]$It)
+        }elseif($It -is [System.IO.DirectoryInfo]){
+            Return [AssetsFactory]::CreateAssets([System.IO.DirectoryInfo]$It)
+        }elseif($null -eq $It){
+            return $null
+            #No assets are present
+            #throw "Asset file type at $($AssetPath) could not be identified. Please specify a folder or a file."
+        }else{
+            Throw "Asset type could not be identified."
+        }
+        
         
     }
 
-    Static [Asset[]] CreateAssets([System.IO.DirectoryInfo]$AssetsFolderPath) {
+    hidden Static [Asset[]] CreateAsset([System.Io.FileInfo]$AssetPath){
+        $r = @()
+        switch($AssetPath.Extension){
+            ".js" {
+                $r += [ScriptAsset]::new($AssetPath)
+                ;Break
+            }
+            ".css"{
+                $r += [StyleAsset]::new($AssetPath)
+                ;Break
+            }
+            ".cdn"{
+                $r += [CDNAsset]::new($AssetPath)
+                ;Break
+            }
+            default{
+                Throw "$($AssetPath.Extenion) is not a supported asset type."
+            }
+        }
+        return $r
+        
+    }
+
+    hidden Static [Asset[]] CreateAssets([System.IO.DirectoryInfo]$AssetsFolderPath) {
+
         $Directories = Get-ChildItem $AssetsFolderPath -Directory
         $AllItems = @()
 
         Foreach($Directory in $Directories){
-            $Items = $Directory | Get-ChildItem  -File | ? {$_.Extension -eq ".js" -or $_.Extension -eq ".css"} #If performance becomes important. Change this to -Filter
+            $Items = $Directory | Get-ChildItem  -File | ? {$_.Extension -eq ".js" -or $_.Extension -eq ".css" -or $_.Extension -eq ".cdn"} #If performance becomes important. Change this to -Filter
             Foreach($Item in $Items){
                 if(!($Item)){
                     Continue
                 }
-
+                <#
                 try{
 
                     $Type = [AssetsFactory]::GetAssetType($Item)
@@ -357,21 +446,13 @@ Class AssetsFactory{
                     
                     continue
                 }
-               
-                Switch($Type){
-                    "Script" {
-                        $AllItems += [ScriptAsset]::new($Item)
-                        Break;
-                    }
-                    "Style"{
-                        $AllItems += [StyleAsset]::new($Item)
-                        ;Break
-                    }
-                }
+                #>
+                 $AllItems += [AssetsFactory]::CreateAsset($Item)
+                
             }
         }
-
-        Return $AllItems
+        return $AllItems
+        
     }
 
     hidden Static [AssetType]GetAssetType([System.IO.FileInfo]$File){
@@ -384,6 +465,36 @@ Class AssetsFactory{
             }
             ".css"{
                 Return [AssetType]::Style
+                ;Break
+            }
+            ".cdn"{
+                Return [AssetType]::cdn
+                ;Break
+            }
+            default{
+                return $null
+            }
+            
+        }
+        return $null
+        #Throw "$($File.Extenion) is not a supported asset type."
+        
+    }
+    hidden Static [AssetType]GetAssetType([String]$Asset){
+    
+        $null = $Asset -match "^.*(?'extension'.*\..{1,4}$)"
+
+        switch($Matches.Extension){
+            ".js" {
+                Return [AssetType]::Script
+                ;Break
+            }
+            ".css"{
+                Return [AssetType]::Style
+                ;Break
+            }
+            ".cdn"{
+                Return [AssetType]::cdn
                 ;Break
             }
             default{
@@ -476,6 +587,60 @@ Class StyleAsset : Asset {
     }
 }
 
+Class CDNAsset : Asset {
+    [String]$Integrity
+    [String]$CrossOrigin
+    Hidden [AssetType]$cdnType
+    hidden $raw
+
+    CDNAsset ([System.IO.FileInfo]$FilePath) { 
+        
+
+        $this.raw = Get-Content $filePath.FullName -Raw | ConvertFrom-Json
+        $this.Type = [AssetType]::cdn
+        $this.cdnType = [AssetsFactory]::GetAssetType($This.raw.source)
+        $this.Name = $filePath.BaseName
+        if($this.raw.integrity){
+            $this.Integrity = $this.raw.Integrity
+        }
+
+        if($this.raw.CrossOrigin){
+            $This.CrossOrigin = $This.Raw.CrossOrigin
+        }
+    }
+    
+    [String] ToString(){
+    $t = ""
+    $p = ""
+    $full_CrossOrigin = ""
+    $full_Integrity = ""
+    Switch($this.cdnType){
+        "script" {
+            #$s = "<{0} src='{1}'>" -f "Script",$raw.source
+            $t = 'script'
+            $p = 'src'
+            ;break
+        }
+        "style"{
+            #$t = "<{0} src='{1}'>" -f "Link",$raw.source
+            $t = 'link'
+            $p = 'href'
+        }
+    }
+
+
+        if($this.CrossOrigin){
+            $full_CrossOrigin = "crossorigin='{0}'" -f $this.CrossOrigin
+        }
+
+        If($This.Integrity){
+            $full_Integrity = "integrity='{0}'" -f $this.Integrity
+        }
+        $S = "<{0} {1}='{2}' {3} {4}></{0}>" -f $t,$p,$this.raw.source,$full_CrossOrigin,$full_Integrity
+        Return $S
+    }
+}
+
 function New-Logfile {
     [CmdletBinding()]
     param (
@@ -544,6 +709,7 @@ Class LogDocument{
     }
 }
 
+<#
 Class LogFile : LogDocument {
 
     [System.IO.FileInfo]$File
@@ -572,7 +738,7 @@ Class LogFile : LogDocument {
             $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
         }
 
-        
+        $cp = $global:MyInvocation.MyCommand.Definition #fix for Ubuntu appveyor machines.
         $sr = $psScriptRoot
         
         $Extension = (get-item -Path $cp).Extension
@@ -633,6 +799,9 @@ Class LogFile : LogDocument {
 
     hidden [string] CreateFileName() {
         $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
+        if(!($cp)){
+            $cp = (Get-PSCallStack)[-1].ScriptName 
+        }
         #Write-Host "cp: $($cp)" -ForegroundColor DarkCyan
         $sr = $psScriptRoot
         $Extension = (get-item -Path $cp).Extension
@@ -654,7 +823,7 @@ Class LogFile : LogDocument {
     }
 
 }
-
+#>
 Class Logger{
     [System.IO.FileInfo]$Logfile
     
@@ -750,9 +919,12 @@ function Clear-WhiteSpace ($Text) {
 
 Enum ChartType {
     bar
+    horizontalBar
     line
     doughnut
     pie
+    radar
+    polarArea
 }
 
 Class Color {
@@ -1169,15 +1341,22 @@ static [string] hsla([int]$r,[int]$g,[int]$b, [double] $a){
 #region dataSet
 Class dataSet {
     [System.Collections.ArrayList] $data = @()
-    [String]$label
+    [Array]$label
 
     dataSet(){
        
     }
 
-    dataset([Array]$Data,[String]$Label){
+    dataset([Array]$Data,[Array]$Label){
         
-        $this.SetLabel($Label)
+        if ( @( $Label ).Count -eq 1 ) {
+            $this.SetLabel($Label)
+        }
+        else {
+            foreach($l in $Label){
+                $this.AddLabel($l)
+            }
+        }
         foreach($d in $data){
             $this.AddData($d)
         }
@@ -1185,9 +1364,16 @@ Class dataSet {
         
     }
 
+    [void]AddLabel([Array]$Label){
+        foreach($L in $Label){
+            $null = $this.Label.Add($L)
+        }
+    }
+    
     [void]SetLabel([String]$Label){
         $this.label = $Label
     }
+    
 
     [void]AddData([Array]$Data){
         foreach($D in $Data){
@@ -1199,21 +1385,46 @@ Class dataSet {
 Class datasetbar : dataset {
     [String] $xAxisID
     [String] $yAxisID
-    [String]  $backgroundColor
-    [String]  $borderColor
+    [string]  $backgroundColor
+    [string]  $borderColor
     [int]    $borderWidth = 1
     [String] $borderSkipped
-    [String]  $hoverBackgroundColor
-    [String]  $hoverBorderColor
+    [string]  $hoverBackgroundColor
+    [string]  $hoverBorderColor
     [int]    $hoverBorderWidth
 
     datasetbar(){
        
     }
 
-    datasetbar([Array]$Data,[String]$Label){
+    datasetbar([Array]$Data,[Array]$Label){
         
         $this.SetLabel($Label)
+        $this.AddData($Data)
+        
+    }
+}
+
+Class datasetPolarArea : dataset {
+    [Array]  $backgroundColor
+    [Array]  $borderColor
+    [int]    $borderWidth = 1
+    [String] $borderSkipped
+    [Array]  $hoverBackgroundColor
+    [Array]  $hoverBorderColor
+    [int]    $hoverBorderWidth
+
+    datasetPolarArea(){
+    
+    }
+
+    datasetPolarArea([Array]$Data,[Array]$Label){
+        if ( @( $Label ).Count -gt 1 ) {
+            $this.AddLabel($Label)
+        }
+        else {
+            $this.SetLabel( @( $Label)[0] )
+        }
         $this.AddData($Data)
         
     }
@@ -1467,6 +1678,10 @@ Class BarChartOptions : ChartOptions {
 
 }
 
+Class horizontalBarChartOptions : ChartOptions {
+
+}
+
 Class PieChartOptions : ChartOptions {
 
 }
@@ -1478,6 +1693,14 @@ Class LineChartOptions : ChartOptions {
 
 Class DoughnutChartOptions : ChartOptions {
     
+}
+
+Class RadarChartOptions : ChartOptions {
+    [scales]$scales = $null
+}
+
+Class polarAreaChartOptions : ChartOptions {
+    [scales]$scales = $null
 }
 
 Class ChartData {
@@ -1541,10 +1764,16 @@ Class Chart {
     }
 
     Hidden [String]GetDefinitionStart([String]$CanvasID){
-        $Start = @"
+<#
+
+$Start = @"
 var ctx = document.getElementById("$($CanvasID)").getContext('2d');
 var myChart = new Chart(ctx, 
 "@
+#>
+$Start = "var ctx = document.getElementById(`"$($CanvasID)`").getContext('2d');"
+$Start = $Start + [Environment]::NewLine
+$Start = $Start + "var myChart = new Chart(ctx, "
     return $Start
     }
 
@@ -1602,6 +1831,22 @@ Class BarChart : Chart{
 
 }
 
+Class horizontalBarChart : Chart{
+
+    [ChartType] $type = [ChartType]::horizontalBar
+    
+    horizontalBarChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    horizontalBarChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
+}
+
 Class LineChart : Chart{
 
     [ChartType] $type = [ChartType]::line
@@ -1647,6 +1892,38 @@ Class doughnutChart : Chart {
     }
 }
 
+Class RadarChart : Chart{
+
+    [ChartType] $type = [ChartType]::radar
+    
+    RadarChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    RadarChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
+}
+
+Class polarAreaChart : Chart{
+
+    [ChartType] $type = [ChartType]::polarArea
+    
+    polarAreaChart(){
+        #$Type = [ChartType]::bar
+
+    }
+
+    polarAreaChart([ChartData]$Data,[ChartOptions]$Options){
+        $this.data = $Data
+        $This.options = $Options
+    }
+
+}
+
 
 
 
@@ -1680,14 +1957,19 @@ Class Include : IncludeFile {
 Class IncludeFactory {
     
     Static [Include[]] Create([System.IO.DirectoryInfo]$Path){
-        $Items = Get-ChildItem $Path.FullName -Filter "*.ps1"
-        $AllIncludes = @()
-        Foreach($Item in $Items){
-            $AllIncludes += [Include]::New($Item)
-            
-        }
+        If(test-Path $Path){
 
-        Return $AllIncludes
+            $Items = Get-ChildItem $Path.FullName -Filter "*.ps1"
+            $AllIncludes = @()
+            Foreach($Item in $Items){
+                $AllIncludes += [Include]::New($Item)
+                
+            }
+    
+            Return $AllIncludes
+        }Else{
+            Return $null
+        }
     }
 }
 
@@ -2583,6 +2865,69 @@ Function aside {
 
 
 }
+Function b {
+    <#
+        .SYNOPSIS
+
+        Generates a <b> HTML tag.
+        The <b> tag defines a hyperlink, which is used to link from one page to another.
+        
+        .DESCRIPTION
+
+        .PARAMETER Class
+        Allows to specify one (or more) class(es) to assign the html element.
+        More then one class can be assigned by seperating them with a white space.
+
+        .PARAMETER Id
+        Allows to specify an id to assign the html element.
+
+        .PARAMETER Content
+        Allows to add child element(s) inside the current opening and closing HTML tag(s).
+
+
+        .EXAMPLE
+        The following exapmles show cases how to create an empty b, with a class, an ID, and, custom attributes.
+        
+        b -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}
+
+        Generates the following code:
+
+        <b Class="myclass1 MyClass2" Id="myid" custom1="val1" custom2="val2"  >
+        </b>
+
+
+        .NOTES
+        Current version 3.1
+        History:
+            2019.06.18;@Josh_Burkard;initial version
+        .LINK
+            https://github.com/Stephanevg/PSHTML
+    #>
+
+    Param(
+
+        [Parameter(Mandatory = $false)]
+        [AllowEmptyString()]
+        [AllowNull()]
+        $Content,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class,
+
+        [String]$Id,
+        
+        [Hashtable]$Attributes
+
+    )
+    $tagname = "b"
+
+    Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
+    
+    
+
+}
+ 
 Function base {
     <#
     .SYNOPSIS
@@ -3417,7 +3762,7 @@ function ConvertTo-PSHTMLTable {
                         
                 foreach ($propertyName in $Hashtable.properties) {
                     
-                    td {
+                    th {
                         $item.$propertyName
                     }
                     
@@ -3705,6 +4050,43 @@ Function dl {
         Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
         
     }
+
+}
+Function doctype {
+    <#
+        .SYNOPSIS
+        Generates a html doctype tag.
+
+        .DESCRIPTION
+
+        The <!DOCTYPE> declaration must be the very first thing in your HTML document, before the <html> tag.
+
+        The <!DOCTYPE> declaration is not an HTML tag; it is an instruction to the web browser about what version of HTML the page is written in.
+
+
+
+        .EXAMPLE
+
+        doctype
+
+        .NOTES
+        Current version 0.1.0
+        History:
+            2019.07.09;@stephanevg;created
+
+        .LINK
+            https://github.com/Stephanevg/PSHTML
+    #>
+
+    Param(
+
+    )
+
+    #As described here: https://www.w3schools.com/tags/tag_doctype.asp
+    #$tagname = "doctype"
+    
+    #Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType 'void'
+    return "<!DOCTYPE html>"
 
 }
 Function dt {
@@ -5083,6 +5465,69 @@ Function html {
         Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 }
+Function i {
+    <#
+        .SYNOPSIS
+
+        Generates a <i> HTML tag.
+        The <a> tag defines a hyperlink, which is used to link from one page to another.
+        
+        .DESCRIPTION
+
+        .PARAMETER Class
+        Allows to specify one (or more) class(es) to assign the html element.
+        More then one class can be assigned by seperating them with a white space.
+
+        .PARAMETER Id
+        Allows to specify an id to assign the html element.
+
+        .PARAMETER Content
+        Allows to add child element(s) inside the current opening and closing HTML tag(s).
+
+
+        .EXAMPLE
+        The following exapmles show cases how to create an empty i, with a class, an ID, and, custom attributes.
+        
+        i -Class "myclass1 MyClass2" -Id myid -Attributes @{"custom1"='val1';custom2='val2'}
+
+        Generates the following code:
+
+        <i Class="myclass1 MyClass2" Id="myid" custom1="val1" custom2="val2"  >
+        </i>
+
+
+        .NOTES
+        Current version 3.1
+        History:
+            2019.06.19;@Josh_Burkard;initial version
+        .LINK
+            https://github.com/Stephanevg/PSHTML
+    #>
+
+    Param(
+
+        [Parameter(Mandatory = $false)]
+        [AllowEmptyString()]
+        [AllowNull()]
+        $Content,
+
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class,
+
+        [String]$Id,
+        
+        [Hashtable]$Attributes
+
+    )
+    $tagname = "i"
+
+    Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
+    
+    
+
+}
+ 
 Function img {
     <#
         .SYNOPSIS
@@ -6052,6 +6497,138 @@ Function nav {
 }
 
 
+Function New-PSHTMLCDNAssetFile {
+    <#
+    .SYNOPSIS
+        Allows to create a CDN file.
+        
+    .DESCRIPTION
+        Creates a .CDN file to use as a PSHTML Asset.
+        The CDN file is automatically supported by Write-PSHTMLAsset and will create the CDN automatically based on the content of the CDN file.
+
+    .PARAMETER TYPE
+    Specify if the Asset should cover Script or Style references
+    Parameters allowd: Script / Style
+
+    .PARAMETER Source
+
+    Specify the src attribute of a script tag.
+
+    .PARAMETER Rel
+
+    Specify the rel attribute of a link tag.
+
+    .PARAMETER Href
+
+    Specify the href attribute of a link tag.
+
+    .PARAMETER Integrity
+
+    Specify the integrity attribute.
+
+    .PARAMETER CrossOrigin
+
+    Specify the CrossOrigin attribute.
+
+    .PARAMETER Path
+
+    Specify in which folder path the file should be created (will use the parameter FileName to create the full path)
+
+    .PARAMETER FileName
+
+    Specify the name of the file that the cdn asset file will have (will use the parameter Path to create the full path).
+    The FileName should end with the extension .CDN 
+    If the extension .CDN is omitted, PSHTML will dynamically add it
+
+    .EXAMPLE
+        Add the latest version of Bootstrap CDN
+        #Information of this example comes from -> https://getbootstrap.com/docs/4.3/getting-started/introduction/
+
+        $Source = 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'
+        $Integrity = 'sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM'
+        $CrossOrigin = 'anonymous'
+        $BootStrapFolder =  $home\BootStrap4.3.1
+        New-PSHTMLCDNAssetFile -Type script -Source $Source -Integrity $Integrity -CrossOrigin $CrossOrigin -Path $BootStrapFolder -FileName 'BootStrap4.3.1.cdn'
+
+    .EXAMPLE
+        Adds the latest version of MetroUI as an CDN asset
+
+        $Href = 'https://cdn.metroui.org.ua/v4/css/metro-all.min.css'
+        $Folder =  $home\MetroUI\
+        New-PSHTMLCDNAssetFile -Type style -href $href -Path $Folder -FileName 'MetroUI.cdn'
+
+    .INPUTS
+        Inputs (if any)
+    .OUTPUTS
+        System.IO.FileInfo
+    .NOTES
+        Author: Stephane van Gulick
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
+    [CmdletBinding()]
+    Param(
+        [ValidateSet('Style','script')]
+        [String]$Type,
+
+        [Parameter(
+            ParametersetName = "Script"
+        )]
+        [String]$source,
+
+        [Parameter(
+            ParametersetName = "Style"
+        )]
+        [String]$rel= "stylesheet",
+
+        [Parameter(
+            ParametersetName = "Style"
+        )]
+        [String]$href,
+
+        [String]$Integrity,
+
+        [String]$CrossOrigin,
+
+        
+        [Parameter(mandatory=$false)]
+        [String]$FileName = (Throw "Please specifiy a file name"),
+
+        [Parameter(mandatory=$false)]
+        [String]$Path
+    )
+
+    $hash = @{}
+    $Hash.Integrity = $Integrity
+    $Hash.Crossorigin = $CrossOrigin
+    
+    switch($type){
+        "Script" {
+
+            $Hash.source = $Source
+            break
+        }
+        "Style" {
+            $Hash.rel = $rel
+            $hash.href = $href
+            break
+        }
+        default {"Type $($Type) no supported."}
+    }
+
+    If(!($FileName.EndsWith('.cdn'))){
+        $FileName = $FileName + '.cdn'
+    }
+
+    $FilePath = Join-Path -Path $Path -ChildPath $FileName
+
+    $obj = New-Object psobject -Property $hash
+
+    $obj | ConvertTo-Json | out-file -FilePath $FilePath -Encoding utf8
+
+    return Get-Item $FilePath
+
+}
 Function New-PSHTMLChart {
     <#
     
@@ -6087,7 +6664,7 @@ Function New-PSHTMLChart {
     #>
         [CmdletBinding()]
         Param(
-            #[ValidateSet("Bar","Line","Pie","doughnut")]
+            #[ValidateSet("Bar","horizontalBar","Line","Pie","doughnut", "radar", "polarArea")]
             [ChartType]$Type = $(Throw '-Type is required'),
     
             [dataSet[]]$DataSet = $(Throw '-DataSet is required'),
@@ -6122,9 +6699,26 @@ Function New-PSHTMLChart {
             $ChartOptions = [BarChartOptions]::New()
             ;Break
         }
+        "horizontalBar" {
+            $Chart = [horizontalBarChart]::New()
+            $ChartOptions = [horizontalBarChartOptions]::New()
+            ;Break
+        }
         "Line"{
             $Chart = [LineChart]::New()
             $ChartOptions = [LineChartOptions]::New()
+            
+            ;Break
+        }
+        "radar"{
+            $Chart = [RadarChart]::New()
+            $ChartOptions = [RadarChartOptions]::New()
+            
+            ;Break
+        }
+        "polarArea" {
+            $Chart = [polarAreaChart]::New()
+            $ChartOptions = [polarAreaChartOptions]::New()
             
             ;Break
         }
@@ -6244,12 +6838,12 @@ function New-PSHTMLChartBarDataSet {
         [String]$label,
         [String] $xAxisID,
         [String] $yAxisID,
-        [String]  $backgroundColor,
-        [String]  $borderColor,
+        [string]  $backgroundColor,
+        [string]  $borderColor,
         [int]    $borderWidth = 1,
         [String] $borderSkipped,
-        [String]  $hoverBackgroundColor,
-        [String]  $hoverBorderColor,
+        [string]  $hoverBackgroundColor,
+        [string]  $hoverBorderColor,
         [int]    $hoverBorderWidth
         
 
@@ -6279,6 +6873,9 @@ function New-PSHTMLChartBarDataSet {
 
     If($borderColor){
         $Datachart.borderColor = $borderColor
+    }
+    else {
+        $Datachart.borderColor = ''
     }
     if ($borderWidth){
         $Datachart.borderWidth = $borderWidth
@@ -6715,6 +7312,133 @@ function New-PSHTMLChartPieDataSet {
 
     return $Datachart
 }
+function New-PSHTMLChartPolarAreaDataSet {
+    <#
+    .SYNOPSIS
+        Create a dataset object for a PolarArea chart
+    .DESCRIPTION
+        Use this function to generate a Dataset for a PolarArea chart. 
+        It allows to specify options such as, the label name, Background / border / hover colors etc..
+    .EXAMPLE
+       
+    .PARAMETER Data
+        Specify an array of values.
+        ex: @(3,5,42,69)
+
+    .PARAMETER Label
+        this String Array defines the labels
+
+    .PARAMETER BackgroundColor
+        The background colors of the PolarArea chart values.
+        
+        Use either: [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+
+    .PARAMETER BorderColor
+        The border colors of the PolarArea chart values.
+
+        Use either: [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+
+    .PARAMETER BorderWidth
+        expressed in px's
+
+    .PARAMETER BorderSkipped
+        border is skipped
+
+    .PARAMETER HoverBorderColor
+        The HoverBorder color of the PolarArea chart values.
+        Use either: 
+        [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+
+    .EXAMPLE
+            $Labels = @('red', 'green', 'yellow', 'grey', 'blue')
+            $BackgroundColor = @('red', 'green', 'yellow', 'grey', 'blue')
+            $Data1 = @(34,7,11,19,12)
+            $dsb1 = New-PSHTMLChartPolarAreaDataSet -Data $data1 -label $Labels -BackgroundColor $BackgroundColor
+
+            
+    .OUTPUTS
+        DataSetPolarArea
+
+    .NOTES
+        Made with love by Stephanevg
+
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
+    [CmdletBinding()]
+    [OutputType([datasetPolarArea])]
+    param (
+        [Array]  $Data,
+        [Array]  $label,
+        [Array]  $backgroundColor,
+        [Array]  $borderColor,
+        [int]    $borderWidth = 1,
+        [String] $borderSkipped,
+        [Array]  $hoverBackgroundColor,
+        [Array]  $hoverBorderColor,
+        [int]    $hoverBorderWidth
+        
+
+    )
+    
+    $Datachart = [datasetPolarArea]::New()
+    
+    if($Data){
+        $null = $Datachart.AddData($Data)
+    }
+
+    If($Label){
+        $Datachart.label = $label
+    }
+
+    if($xAxisID){
+        $Datachart.xAxisID = $xAxisID
+    }
+
+    if($yAxisID){
+        $Datachart.yAxisID = $yAxisID
+    }
+
+    if($backgroundColor){
+        $Datachart.backgroundColor = $backgroundColor
+    }
+
+    If($borderColor){
+        $Datachart.borderColor = $borderColor
+    }
+    else {
+        $Datachart.borderColor = ''
+    }
+    if ($borderWidth){
+        $Datachart.borderWidth = $borderWidth
+    }
+
+    if($borderSkipped){
+        $Datachart.borderSkipped = $borderSkipped
+    }
+
+    If($hoverBackgroundColor){
+        $Datachart.hoverBackgroundColor = $hoverBackgroundColor
+    }
+    
+    If($HoverBorderColor){
+        $Datachart.hoverBorderColor = $HoverBorderColor
+    }
+    if($HoverBorderWidth){
+        $Datachart.HoverBorderWidth = $HoverBorderWidth
+    }
+
+    return $Datachart
+}
 Function Noscript {
     <#
     .SYNOPSIS
@@ -6996,7 +7720,7 @@ function Out-PSHTMLDocument {
 
         $o = Get-PRocess | select ProcessName,Handles | select -first 5
         $FilePath = "C:\temp\OutputFile.html"
-        $E = ConvertTo-HTMLTable -Object $o 
+        $E = ConvertTo-PSHTMLTable -Object $o 
         $e | Out-PSHTMLDocument -OutPath $FilePath -Show
 
     .INPUTS
@@ -7493,6 +8217,10 @@ Function selecttag {
         <option value="audi">Audi</option>
     </select>
 
+    .PARAMETER Form
+        Specify the form ID to wich the selecttag statement should be a part of.
+        
+
     .Notes
     Author: StÃ©phane van Gulick
     Version: 3.1.0
@@ -7514,6 +8242,10 @@ Function selecttag {
         [String]$Class,
 
         [String]$Id,
+
+        [String]$Form,
+
+        [string]$Name,
 
         [Hashtable]$Attributes
     )
@@ -7612,7 +8344,6 @@ Function span {
         [Parameter(Mandatory = $false)]
         [AllowEmptyString()]
         [AllowNull()]
-        [String]
         $Content,
 
         [AllowEmptyString()]
@@ -8366,14 +9097,28 @@ Function tr {
         [String]$Style,
 
         [Parameter(Position = 4)]
-        [Hashtable]$Attributes
+        [Hashtable]$Attributes,
 
+        [ScriptBlock]
+        $ClassScript
 
     )
     Process {
-
+        
         $tagname = "tr"
-    
+        If($ClassScript){
+
+            If (!($Class)){
+                $Class = ""
+            }
+
+            
+            $PSBoundParameters.Class = $ClassScript.Invoke($Content)
+
+        }
+
+
+
         Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
     }
 }
@@ -8455,7 +9200,9 @@ function Write-PSHTMLAsset {
 
     .PARAMETER Type
 
-    Allows to specifiy what type of Asset to return. Script (.js) or Style (.css) are the currently supported ones.
+    Allows to specifiy what type of Asset to return. Script (.js) Style (.css) or CDN (.CDN) are the currently supported ones.
+
+    The CDN file type must have a specifiy structure, which can be obtained by using the cmdlet New-CDNAssetFile
 
     .EXAMPLE
         Write-PSHTMLAsset
@@ -8487,7 +9234,7 @@ function Write-PSHTMLAsset {
     #>
     [CmdletBinding()]
     param (
-        [ValidateSet("Script","Style")]$Type
+        [ValidateSet("Script","Style","CDN")]$Type
 
     )
 
@@ -8777,12 +9524,15 @@ function Write-PSHTMLSymbol {
 #Post Content
 
 $ScriptPath = Split-Path -Path $MyInvocation.MyCommand.Path
-
+$ScriptPath = Split-Path -Path $PSScriptRoot
 New-Alias -Name Include -Value 'Write-PSHTMLInclude' -Description "Include parts of PSHTML documents using include files" -Force
-
-$ConfigFile = Join-Path -Path $ScriptPath -ChildPath "pshtml.configuration.json"
-
+function Get-ScriptDirectory {
+    Split-Path -Parent $PSCommandPath
+}
+$ScriptPath = Get-ScriptDirectory
+$CF = Join-Path -Path $ScriptPath -ChildPath "pshtml.configuration.json"
+#Write-host "loading config file: $($CF)" -ForegroundColor Blue
 #Setting module variables
-    $Script:PSHTML_CONFIGURATION = Get-ConfigurationDocument -Path $ConfigFile -Force
+    $Script:PSHTML_CONFIGURATION = Get-ConfigurationDocument -Path $CF -Force
     $Script:Logfile = $Script:PSHTML_CONFIGURATION.GetDefaultLogFilePath()
     $Script:Logger = [Logger]::New($Script:LogFile)
