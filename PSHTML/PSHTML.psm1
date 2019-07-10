@@ -1,6 +1,4 @@
-
- #Generated at 07/09/2019 17:50:25 by Stephane van Gulick
-
+#Generated at 07/10/2019 23:24:51 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -737,7 +735,7 @@ Class LogFile : LogDocument {
             }
         }else{
 
-            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
+            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         }
 
         $cp = $global:MyInvocation.MyCommand.Definition #fix for Ubuntu appveyor machines.
@@ -800,7 +798,7 @@ Class LogFile : LogDocument {
     }
 
     hidden [string] CreateFileName() {
-        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
+        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         if(!($cp)){
             $cp = (Get-PSCallStack)[-1].ScriptName 
         }
@@ -1315,7 +1313,10 @@ static [string] hslcalc([int]$r, [int]$g, [int]$b, [double]$a) {
         return "hsla({0},{1:p0},{2:p0},{3})" -f [Math]::Round($h), [Math]::Round($s,2), $l, $a
     }
     else {
-        return "hsl({0},{1:p0},{2:p0})" -f [Math]::Round($h), [Math]::Round($s,2), $l
+        $value = "hsl({0},{1:p0},{2:p0})" -f [Math]::Round($h), [Math]::Round($s,2), $l
+        #on macOS, output is like this: hsl(240,100 %,50 %)
+        $return = $value.Replace(" ","")
+        return $return
         
     }
 }
@@ -1339,6 +1340,7 @@ static [string] hsla([int]$r,[int]$g,[int]$b, [double] $a){
         return "rgba({0},{1},{2},{3})" -f $r,$g,$b,$a
     }
 }
+
 
 #region dataSet
 Class dataSet {
@@ -1973,85 +1975,6 @@ Class IncludeFactory {
             Return $null
         }
     }
-}
-
-function Get-PSHTMLColor {
-<#
-.SYNOPSIS
-
-Returns a color string based on a color type and name
-
-.DESCRIPTION
-
-Returns a color string based on one of the W3C defined color names, using one of the
-formats typically used in HTML.
-
-.PARAMETER Type
-
-The type of color returned. Possible values: hex, hsl, hsla, rgb, rgba
-
-.PARAMETER Color
-
-A color name as defined by the W3C
-
-.EXAMPLE
-
-Get-PSHTMLColor -Type hex -Color lightblue
-#ADD8E6
-
-.EXAMPLE
-
-Get-PSHTMLColor -Type hsl -Color lightblue
-hsl(194,52%,79%)
-
-.EXAMPLE
-
-Get-PSHTMLColor -Type hsla -Color lightblue
-hsla(194,52%,79%,0)
-
-.EXAMPLE
-
-Get-PSHTMLColor -Type rgb -Color lightblue
-rgb(173,216,230)
-
-.EXAMPLE
-
-Get-PSHTMLColor -Type rgba -Color lightblue
-rgba(173,216,230,0)
-
-#>
-    Param(
-        [Parameter(Mandatory=$false)]
-        [ValidateSet("hex","hsl","hsla","rgb","rgba")]
-        [string]
-        $Type="rgb", 
-        [Parameter(Mandatory=$true)]
-        [String]
-        $Color
-    )
-
-    $colordef =  "$($color)_def"
-    switch ($Type){
-        'rgb' {
-            Return [Color]::$color
-            }
-        'rgba' {
-            Return [Color]::rgba([Color]::$colordef.R,[Color]::$colordef.G,[Color]::$colordef.B,0)
-            }
-        'hex' {
-            Return [Color]::hex([Color]::$colordef.R,[Color]::$colordef.G,[Color]::$colordef.B)
-            }
-        'hsl'{
-            Return [Color]::hsl([Color]::$colordef.R,[Color]::$colordef.G,[Color]::$colordef.B)
-        }
-        'hsla' {
-            Return [Color]::hsla([Color]::$colordef.R,[Color]::$colordef.G,[Color]::$colordef.B,0)
-        }
-        default {
-            Return [Color]::$Color
-            }
-    }
-    
 }
 
 #From Jakub Jares (Thanks!)
@@ -2947,7 +2870,7 @@ Function base {
     base "woop1" -Class "class"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Current Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -3189,7 +3112,7 @@ Function button {
     </form>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -4229,7 +4152,7 @@ Function fieldset {
     fieldset {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4698,7 +4621,7 @@ function Get-PSHTMLAsset {
     .OUTPUTS
         Asset[]
     .Notes
-        Author: StÃ©phane van Gulick
+        Author: Stéphane van Gulick
     .Link
       https://github.com/Stephanevg/PSHTML
     #>
@@ -4728,6 +4651,84 @@ function Get-PSHTMLAsset {
     end {
     }
 }
+function Get-PSHTMLColor {
+    <#
+    .SYNOPSIS
+    
+    Returns a color string based on a color type and name
+    
+    .DESCRIPTION
+    
+    Returns a color string based on one of the W3C defined color names, using one of the
+    formats typically used in HTML.
+    
+    .PARAMETER Type
+    
+    The type of color returned. Possible values: hex, hsl, hsla, rgb, rgba
+    
+    .PARAMETER Color
+    
+    A color name as defined by the W3C
+    
+    .EXAMPLE
+    
+    Get-PSHTMLColor -Type hex -Color lightblue
+    #ADD8E6
+    
+    .EXAMPLE
+    
+    Get-PSHTMLColor -Type hsl -Color lightblue
+    hsl(194,52%,79%)
+    
+    .EXAMPLE
+    
+    Get-PSHTMLColor -Type hsla -Color lightblue
+    hsla(194,52%,79%,0)
+    
+    .EXAMPLE
+    
+    Get-PSHTMLColor -Type rgb -Color lightblue
+    rgb(173,216,230)
+    
+    .EXAMPLE
+    
+    Get-PSHTMLColor -Type rgba -Color lightblue
+    rgba(173,216,230,0)
+    
+    #>
+        Param(
+            [Parameter(Mandatory=$false)]
+            [ValidateSet("hex","hsl","hsla","rgb","rgba")]
+            [string]
+            $Type="rgb", 
+            [Parameter(Mandatory=$true)]
+            [String]
+            $Color
+        )
+    
+        $colordef =  "$($color)_def"
+        switch ($Type){
+            'rgb' {
+                Return [Color]::$color
+                }
+            'rgba' {
+                Return [Color]::rgba([Color]::$colordef.R,[Color]::$colordef.G,[Color]::$colordef.B,0)
+                }
+            'hex' {
+                Return [Color]::hex([Color]::$colordef.R,[Color]::$colordef.G,[Color]::$colordef.B)
+                }
+            'hsl'{
+                Return [Color]::hsl([Color]::$colordef.R,[Color]::$colordef.G,[Color]::$colordef.B)
+            }
+            'hsla' {
+                Return [Color]::hsla([Color]::$colordef.R,[Color]::$colordef.G,[Color]::$colordef.B,0)
+            }
+            default {
+                Return [Color]::$Color
+                }
+        }
+        
+    }
 Function Get-PSHTMLConfiguration {
     <#
     .SYNOPSIS
@@ -4870,7 +4871,7 @@ Function H1 {
     h1 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4924,7 +4925,7 @@ Function h2 {
     h2 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4976,7 +4977,7 @@ Function h3 {
     h3 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5028,7 +5029,7 @@ Function h4 {
     h4 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5080,7 +5081,7 @@ Function h5 {
     h5 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5132,7 +5133,7 @@ Function h6 {
     h6 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5360,7 +5361,7 @@ Function hr {
     <hr Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 2.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5823,7 +5824,7 @@ Function label {
     </form>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 1.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5879,7 +5880,7 @@ Function legend {
     </form>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6026,7 +6027,7 @@ Function Link {
     <link Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6265,7 +6266,7 @@ Function meta {
     <meta name="author" content="Stephane van Gulick"  >
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6457,7 +6458,7 @@ Function nav {
     </nav>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6947,7 +6948,7 @@ Function New-PSHTMLChartDataSet {
     .OUTPUTS
         [DataSet]
     .NOTES
-        Author: StÃ©phane van Gulick
+        Author: Stéphane van Gulick
     #>
     [CmdletBInding()]
     Param(
@@ -7591,7 +7592,7 @@ Function optgroup {
     
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7724,7 +7725,7 @@ function Out-PSHTMLDocument {
     .DESCRIPTION
         Output the html string into a file.
     .EXAMPLE
-        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imÃ©diatley.
+        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imédiatley.
 
         $o = Get-PRocess | select ProcessName,Handles | select -first 5
         $FilePath = "C:\temp\OutputFile.html"
@@ -7737,7 +7738,7 @@ function Out-PSHTMLDocument {
         None
     .NOTES
 
-        Author: StÃ©phane van Gulick
+        Author: Stéphane van Gulick
                 
         
     .LINK
@@ -7755,13 +7756,13 @@ function Out-PSHTMLDocument {
     )
     
     begin {
-        $Writer = [System.IO.StreamWriter]$OutPath
+        $Writer = [System.IO.StreamWriter]::New($OutPath,$false,[System.Text.Encoding]::UTF8)
     }
     
     process {
         #[System.IO.TextWriter]
         Foreach ($Line in $HTMLDocument) {
-            $writer.WriteLine($Line, "utf8")
+            $writer.WriteLine($Line)
         }
     }
     
@@ -8230,7 +8231,7 @@ Function selecttag {
         
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8290,7 +8291,7 @@ Function small {
     </small>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8405,7 +8406,7 @@ Function strong {
 
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8464,7 +8465,7 @@ Function style {
     style {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
