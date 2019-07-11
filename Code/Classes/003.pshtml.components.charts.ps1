@@ -14,6 +14,7 @@ Enum ChartType {
     polarArea
 }
 
+<#
 Class Color {
     [int]$r
     [int]$g
@@ -48,6 +49,7 @@ Class Color {
         return "rgba({0},{1},{2},{3})" -f $r,$g,$b,$a
     }
 }
+#>
 
 #region dataSet
 Class dataSet {
