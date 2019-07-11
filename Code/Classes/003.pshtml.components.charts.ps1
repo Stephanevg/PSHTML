@@ -345,6 +345,8 @@ static [string] $whitesmoke = "rgb({0},{1},{2})" -f [Color]::whitesmoke_def.r, [
 static [string] $yellow = "rgb({0},{1},{2})" -f [Color]::yellow_def.r, [Color]::yellow_def.g, [Color]::yellow_def.b
 static [string] $yellowgreen = "rgb({0},{1},{2})" -f [Color]::yellowgreen_def.r, [Color]::yellowgreen_def.g, [Color]::yellowgreen_def.b
 
+static [string[]]$colornames = ([Color].GetProperties()  | Where-Object { $_.PropertyType.ToString() -EQ 'System.String'} | Select -Expand Name)
+
 #logic from http://www.niwa.nu/2013/05/math-behind-colorspace-conversions-rgb-hsl/
 static [string] hslcalc([int]$r, [int]$g, [int]$b, [double]$a) {
     $rc = [Math]::Round($r/255,2)
