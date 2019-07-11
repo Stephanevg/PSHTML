@@ -49,6 +49,7 @@ function Get-PSHTMLColor {
             [string]
             $Type="rgb", 
             [Parameter(Mandatory=$true)]
+            [ArgumentCompleter({[Color]::colornames})]
             [String]
             $Color
         )
