@@ -6,7 +6,7 @@
     We use foreach to create multiple <p> or <li> elements.
 #>
 
-import-module .\pshtml.psd1
+import-module pshtml
 
 $Snover = Html {
     head -content {
@@ -78,7 +78,7 @@ $Snover = Html {
 
                 h1 "Tribute to Jeffrey Snover" -Class "Title"
 
-                img -src "https://pbs.twimg.com/profile_images/618804166631145473/2q6yharL_400x400.jpg" -class "rounded-circle" -alt "Jeffrey Snover photo" -height "400" -width "400"
+                img -src "https://pbs.twimg.com/profile_images/1039650689620688896/ZZgN5c9Y_400x400.jpg" -class "rounded-circle" -alt "Jeffrey Snover photo" -height "400" -width "400"
 
 
             }
@@ -136,3 +136,4 @@ $Snover = Html {
 }
 
 $Snover > "Example6.html"
+start .\Example6.html

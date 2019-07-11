@@ -67,12 +67,12 @@ function New-PSHTMLChartBarDataSet {
         [String]$label,
         [String] $xAxisID,
         [String] $yAxisID,
-        [String]  $backgroundColor,
-        [String]  $borderColor,
+        [string]  $backgroundColor,
+        [string]  $borderColor,
         [int]    $borderWidth = 1,
         [String] $borderSkipped,
-        [String]  $hoverBackgroundColor,
-        [String]  $hoverBorderColor,
+        [string]  $hoverBackgroundColor,
+        [string]  $hoverBorderColor,
         [int]    $hoverBorderWidth
         
 
@@ -102,6 +102,9 @@ function New-PSHTMLChartBarDataSet {
 
     If($borderColor){
         $Datachart.borderColor = $borderColor
+    }
+    else {
+        $Datachart.borderColor = ''
     }
     if ($borderWidth){
         $Datachart.borderWidth = $borderWidth

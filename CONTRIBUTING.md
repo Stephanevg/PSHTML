@@ -6,7 +6,7 @@ To determine what you could help you can:
 
 - Open an issue if you have an idea for improvement.
 - Check in the Issues if something needs to be fixed.
-- Check out [Todo List](docs/ToDo.md).
+- Are you a beginner? Search for issues with the 'Beginner friendly' label
 
 ## Name your branch
 
@@ -16,17 +16,29 @@ According to the type of submission you are planning to make, create a branch ca
 - BugFix: "BugFix_<Description>"
 - Minor: "Minor_<Description>"
 
+## Developement
+
+Functions and classes should be written in a seperate files.
+
+> Exception to this rules apply. Sometimes it makes more sense to group things by 'theme' (EG: The charts classes and functions). That is also ok. The thing to keep in mind, is to **not** write your code directly in the `pshtml.psm1` file.
+
+
+### Functions
+
+Functions need to go in `Code\Functions\Public\$FunctionName.ps1` Or `Code\Functions\Private\$FunctionName.ps1` for private functions.
+
+### Classes
+
+Classes should be located in `Code\Classes\$ClassName.ps1`
+
+## Building the module
+
+Once the developement is done, you need to build the module by calling `CI\03_Build.ps1` file. It will generate the `pshtml.psm1` and the `pshtml.psd1` 
+
+All the files that have been generated (`pshtml.ps1` and `pshtml.psd1`) and the developement file that are part of you PR
+
 ## When creating a Pull Request (PR) be sure to
 
 1. Have added comment
 2. If it is a new feature / cmdlet, some help (comment based help will suffice in most cases)
 3. One or two examples on how to use it
-
-### Adding a new HTML tag, please follow these steps
-
-1. Create a branch Using the tagName (Please wrap it in Set-HTMLTag
-    - For examples, see 'Style' for non-void tags or 'Base' for voided tag)
-2. Commit only feature additions (Use commit --amend to add bug fixes to previous commits)
-3. Do a pull request, and don't be offended if it is refused. It doesn't mean that your code sucks, it simply means that it doesn't fit 100% our standards
-4. Once validated, please comment this issue with your PR number -> <https://github.com/Stephanevg/PSHTML/issues/7> and which element you have just done
-

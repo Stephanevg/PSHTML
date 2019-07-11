@@ -8,6 +8,7 @@ Enum SettingType {
 Enum AssetType {
     Script
     Style
+    cdn
 }
 
 Class ConfigurationDocument {
@@ -31,10 +32,64 @@ Class ConfigurationDocument {
     [void]Load(){
         #Read data from json
         $this.Settings = [SettingFactory]::Parse($This.Path)
-        $AssetsFolder = Join-Path $This.Path.Directory -ChildPath "Assets"
-        $this.Assets = [AssetsFactory]::CreateAssets($AssetsFolder)
-        $IncludesFolder = Join-Path $this.Path.Directory -ChildPath 'Includes'
-        $this.Includes = [IncludeFactory]::Create($IncludesFolder)
+
+        $EC = Get-Variable ExecutionContext -ValueOnly
+        $ProjectRootFolder = $ec.SessionState.Path.CurrentLocation.Path 
+        $ModuleFolder = $This.Path.Directory
+
+        #Assets
+            $ModuleAssetsFolder = Join-Path $ModuleFolder -ChildPath "Assets"
+            $ProjectAssetsFolder = Join-Path $ProjectRootFolder -ChildPath "Assets"
+
+            $ModuleAssets = [AssetsFactory]::CreateAsset($ModuleAssetsFolder)
+            $ProjectAssets = [AssetsFactory]::CreateAsset($ProjectAssetsFolder)
+
+            $this.Assets += $ProjectAssets
+
+            foreach ($modass in $ModuleAssets){
+                if($this.Assets.name -contains $modass.name){
+                    
+                    $PotentialConflictingAsset = $this.Assets | ? {$_.Name -eq $modass.Name}
+                    if($PotentialConflictingAsset.Type -eq $modass.type){
+
+                        #write-verbose "Identical asset found at $($modass.name). Keeping project asset."
+                        Continue
+                    }else{
+                        $This.Assets += $modass
+                    }
+                }else{
+                    $This.Assets += $modass
+                }
+            }
+
+        #Includes
+            #$IncludesFolder = Join-Path -Path $ExecutionContext.SessionState.Path.CurrentLocation.Path -ChildPath "Includes" #Join-Path $this.Path.Directory -ChildPath 'Includes'
+            $IncludesFolder = Join-Path -Path $ProjectRootFolder -ChildPath "Includes"
+            $this.Includes = [IncludeFactory]::Create($IncludesFolder)
+
+            $ModuleIncludesFolder = Join-Path $ModuleFolder -ChildPath "Includes"
+            $ProjectIncludesFolder = Join-Path $ProjectRootFolder -ChildPath "Assets"
+
+            $ModuleIncludes = [IncludeFactory]::Create($ModuleIncludesFolder)
+            $ProjectIncludes = [IncludeFactory]::Create($ProjectIncludesFolder)
+
+            $this.Includes += $ProjectIncludes
+
+            foreach ($modinc in $ModuleIncludes){
+                if($this.Includes.name -contains $modinc.name){
+                    
+                    $PotentialConflictingInclude = $this.Includes | ? {$_.Name -eq $modinc.Name}
+                    if($PotentialConflictingInclude.Type -eq $modinc.type){
+
+                        #write-verbose "Identical asset found at $($modinc.name). Keeping project asset."
+                        Continue
+                    }
+                    
+                    Continue
+                }else{
+                    $This.Includes += $modinc
+                }
+            }
     }
 
     [void]Load([System.IO.FileInfo]$Path){
@@ -158,9 +213,15 @@ Class LogSettings : Setting {
     }
 
     [String]GetDefaultLogFolderPath(){
-        if($global:IsLinux){
+        if($global:PSVersionTable.os -match '^Linux.*'){
+            #Linux
             $p = "/tmp/pshtml/"
-        }Else{
+        }elseif($global:PSVersionTable.OS -match '^Darwin.*'){
+            #Macos
+            $p = $env:TMPDIR
+        }
+        Else{
+            #Windows
             $p = Join-Path $Env:Temp -ChildPath "pshtml"
         }
         return $p
@@ -215,7 +276,6 @@ if($json.Assets.Path.Tolower() -eq 'default' -or $json.Assets.Path -eq '' ){
         return $this.DefaultPath
     }
 }
-
 
 
 Class SettingFactory{
@@ -316,39 +376,68 @@ Class SettingFactory{
 }
 
 
+
 Class AssetsFactory{
 
-    Static [Asset] CreateAsset([System.Io.FileInfo]$AssetPath){
-        
-        switch($AssetPath.Extension){
-            ".js" {
-                Return [ScriptAsset]::new($AssetPath)
-                ;Break
-            }
-            ".css"{
-                Return [StyleAsset]::new($AssetPath)
-                ;Break
-            }
-            default{
-                Throw "$($AssetPath.Extenion) is not a supported asset aaa type."
-            }
-        }
 
-        Throw "$($AssetPath.FullName) Is not a supported Asset Type."
+    Static [Asset[]] CreateAsset([String]$AssetPath){
+        if(Test-Path $AssetPath){
+
+            $It = Get-Item $AssetPath 
+        }else{
+            Return $Null
+        }
+        
+        If($It -is [System.Io.FileInfo]){
+            Return [AssetsFactory]::CreateAsset([System.Io.FileInfo]$It)
+        }elseif($It -is [System.IO.DirectoryInfo]){
+            Return [AssetsFactory]::CreateAssets([System.IO.DirectoryInfo]$It)
+        }elseif($null -eq $It){
+            return $null
+            #No assets are present
+            #throw "Asset file type at $($AssetPath) could not be identified. Please specify a folder or a file."
+        }else{
+            Throw "Asset type could not be identified."
+        }
+        
         
     }
 
-    Static [Asset[]] CreateAssets([System.IO.DirectoryInfo]$AssetsFolderPath) {
+    hidden Static [Asset[]] CreateAsset([System.Io.FileInfo]$AssetPath){
+        $r = @()
+        switch($AssetPath.Extension){
+            ".js" {
+                $r += [ScriptAsset]::new($AssetPath)
+                ;Break
+            }
+            ".css"{
+                $r += [StyleAsset]::new($AssetPath)
+                ;Break
+            }
+            ".cdn"{
+                $r += [CDNAsset]::new($AssetPath)
+                ;Break
+            }
+            default{
+                Throw "$($AssetPath.Extenion) is not a supported asset type."
+            }
+        }
+        return $r
+        
+    }
+
+    hidden Static [Asset[]] CreateAssets([System.IO.DirectoryInfo]$AssetsFolderPath) {
+
         $Directories = Get-ChildItem $AssetsFolderPath -Directory
         $AllItems = @()
 
         Foreach($Directory in $Directories){
-            $Items = $Directory | Get-ChildItem  -File | ? {$_.Extension -eq ".js" -or $_.Extension -eq ".css"} #If performance becomes important. Change this to -Filter
+            $Items = $Directory | Get-ChildItem  -File | ? {$_.Extension -eq ".js" -or $_.Extension -eq ".css" -or $_.Extension -eq ".cdn"} #If performance becomes important. Change this to -Filter
             Foreach($Item in $Items){
                 if(!($Item)){
                     Continue
                 }
-
+                <#
                 try{
 
                     $Type = [AssetsFactory]::GetAssetType($Item)
@@ -356,21 +445,13 @@ Class AssetsFactory{
                     
                     continue
                 }
-               
-                Switch($Type){
-                    "Script" {
-                        $AllItems += [ScriptAsset]::new($Item)
-                        Break;
-                    }
-                    "Style"{
-                        $AllItems += [StyleAsset]::new($Item)
-                        ;Break
-                    }
-                }
+                #>
+                 $AllItems += [AssetsFactory]::CreateAsset($Item)
+                
             }
         }
-
-        Return $AllItems
+        return $AllItems
+        
     }
 
     hidden Static [AssetType]GetAssetType([System.IO.FileInfo]$File){
@@ -383,6 +464,36 @@ Class AssetsFactory{
             }
             ".css"{
                 Return [AssetType]::Style
+                ;Break
+            }
+            ".cdn"{
+                Return [AssetType]::cdn
+                ;Break
+            }
+            default{
+                return $null
+            }
+            
+        }
+        return $null
+        #Throw "$($File.Extenion) is not a supported asset type."
+        
+    }
+    hidden Static [AssetType]GetAssetType([String]$Asset){
+    
+        $null = $Asset -match "^.*(?'extension'.*\..{1,4}$)"
+
+        switch($Matches.Extension){
+            ".js" {
+                Return [AssetType]::Script
+                ;Break
+            }
+            ".css"{
+                Return [AssetType]::Style
+                ;Break
+            }
+            ".cdn"{
+                Return [AssetType]::cdn
                 ;Break
             }
             default{
@@ -471,6 +582,60 @@ Class StyleAsset : Asset {
      [String] ToString(){
          #rel="stylesheet"
         $S = "<{0} rel='{1}' type={2} href='{3}' >" -f "Link","stylesheet","text/css",$this.GetFullFilePath()
+        Return $S
+    }
+}
+
+Class CDNAsset : Asset {
+    [String]$Integrity
+    [String]$CrossOrigin
+    Hidden [AssetType]$cdnType
+    hidden $raw
+
+    CDNAsset ([System.IO.FileInfo]$FilePath) { 
+        
+
+        $this.raw = Get-Content $filePath.FullName -Raw | ConvertFrom-Json
+        $this.Type = [AssetType]::cdn
+        $this.cdnType = [AssetsFactory]::GetAssetType($This.raw.source)
+        $this.Name = $filePath.BaseName
+        if($this.raw.integrity){
+            $this.Integrity = $this.raw.Integrity
+        }
+
+        if($this.raw.CrossOrigin){
+            $This.CrossOrigin = $This.Raw.CrossOrigin
+        }
+    }
+    
+    [String] ToString(){
+    $t = ""
+    $p = ""
+    $full_CrossOrigin = ""
+    $full_Integrity = ""
+    Switch($this.cdnType){
+        "script" {
+            #$s = "<{0} src='{1}'>" -f "Script",$raw.source
+            $t = 'script'
+            $p = 'src'
+            ;break
+        }
+        "style"{
+            #$t = "<{0} src='{1}'>" -f "Link",$raw.source
+            $t = 'link'
+            $p = 'href'
+        }
+    }
+
+
+        if($this.CrossOrigin){
+            $full_CrossOrigin = "crossorigin='{0}'" -f $this.CrossOrigin
+        }
+
+        If($This.Integrity){
+            $full_Integrity = "integrity='{0}'" -f $this.Integrity
+        }
+        $S = "<{0} {1}='{2}' {3} {4}></{0}>" -f $t,$p,$this.raw.source,$full_CrossOrigin,$full_Integrity
         Return $S
     }
 }

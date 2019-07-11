@@ -12,7 +12,9 @@ function Write-PSHTMLAsset {
 
     .PARAMETER Type
 
-    Allows to specifiy what type of Asset to return. Script (.js) or Style (.css) are the currently supported ones.
+    Allows to specifiy what type of Asset to return. Script (.js) Style (.css) or CDN (.CDN) are the currently supported ones.
+
+    The CDN file type must have a specifiy structure, which can be obtained by using the cmdlet New-CDNAssetFile
 
     .EXAMPLE
         Write-PSHTMLAsset
@@ -44,7 +46,7 @@ function Write-PSHTMLAsset {
     #>
     [CmdletBinding()]
     param (
-        [ValidateSet("Script","Style")]$Type
+        [ValidateSet("Script","Style","CDN")]$Type
 
     )
 
