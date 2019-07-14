@@ -1,4 +1,4 @@
-#Generated at 07/10/2019 23:24:51 by Stephane van Gulick
+﻿#Generated at 07/14/2019 06:19:30 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -735,7 +735,7 @@ Class LogFile : LogDocument {
             }
         }else{
 
-            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
+            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
         }
 
         $cp = $global:MyInvocation.MyCommand.Definition #fix for Ubuntu appveyor machines.
@@ -798,7 +798,7 @@ Class LogFile : LogDocument {
     }
 
     hidden [string] CreateFileName() {
-        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
+        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
         if(!($cp)){
             $cp = (Get-PSCallStack)[-1].ScriptName 
         }
@@ -1258,6 +1258,8 @@ static [string] $whitesmoke = "rgb({0},{1},{2})" -f [Color]::whitesmoke_def.r, [
 static [string] $yellow = "rgb({0},{1},{2})" -f [Color]::yellow_def.r, [Color]::yellow_def.g, [Color]::yellow_def.b
 static [string] $yellowgreen = "rgb({0},{1},{2})" -f [Color]::yellowgreen_def.r, [Color]::yellowgreen_def.g, [Color]::yellowgreen_def.b
 
+static [string[]]$colornames = ([Color].GetProperties()  | Where-Object { $_.PropertyType.ToString() -EQ 'System.String'} | Select -Expand Name)
+
 #logic from http://www.niwa.nu/2013/05/math-behind-colorspace-conversions-rgb-hsl/
 static [string] hslcalc([int]$r, [int]$g, [int]$b, [double]$a) {
     $rc = [Math]::Round($r/255,2)
@@ -1460,17 +1462,17 @@ Class datasetline : dataset{
     $pointBackgroundColor = "rgb(255,255,255)"
     $pointBorderColor = "rgb(0,0,0)"
     [Int[]]$pointBorderWidth = 1
-    [Int]$pointRadius = 4
+    [float]$pointRadius = 4
     [ValidateSet("circle","cross","crossRot","dash","line","rect","rectRounded","rectRot","star","triangle")]
     $pointStyle = "circle"
 
     [int[]]$pointRotation
-    [int[]]$pointHitRadius
+    [float]$pointHitRadius
 
     [String]  $PointHoverBackgroundColor
     [String]  $pointHoverBorderColor
     [int]    $pointHoverBorderWidth
-    [int] $pointHoverRadius
+    [float] $pointHoverRadius
     [bool]$showLine = $true
     [bool]$spanGaps
 
@@ -1520,6 +1522,24 @@ Class datasetline : dataset{
         $backgroundC = $t.replace(")",",0.4)")
         $this.backgroundColor = $backgroundC
         Write-verbose "[DatasetLine][SetLineBackGroundColor] End"
+    }
+
+    SetPointSettings([float]$pointRadius,[float]$pointHitRadius,[float]$pointHoverRadius){
+        Write-Verbose "[DatasetLine][SetPointSettings] Start"
+        $this.pointRadius = $pointRadius
+        $this.pointHitRadius = $pointHitRadius
+        $this.pointHoverRadius = $pointHoverRadius
+        Write-Verbose "[DatasetLine][SetPointSettings] End"
+    }
+
+    [hashtable]GetPointSettings(){
+        Write-Verbose "[DatasetLine][GetPointSettings] Start"
+        return @{
+            PointRadius = $this.pointRadius
+            PointHitRadius = $this.pointHitRadius
+            PointHoverRadius = $this.pointHoverRadius
+        }
+        Write-Verbose "[DatasetLine][GetPointSettings] End"
     }
 }
 
@@ -4702,6 +4722,7 @@ function Get-PSHTMLColor {
             [string]
             $Type="rgb", 
             [Parameter(Mandatory=$true)]
+            [ArgumentCompleter({[Color]::colornames})]
             [String]
             $Color
         )
@@ -7180,6 +7201,9 @@ function New-PSHTMLChartLineDataSet {
         [int]    $LineDashOffSet = 0,
         [Array]$Data,
         [Switch]$FillBackground,
+        [float]$PointRadius = 4,
+        [float]$PointHitRadius = 0,
+        [float]$PointHoverRadius = 0,
         
         [ValidateSet("rounded","Straight")]
         $LineChartType = "rounded",
@@ -7220,7 +7244,6 @@ function New-PSHTMLChartLineDataSet {
     if($LineColor){
         $DataChart.SetLineColor($LineColor,$false)
         $Datachart.PointHoverBackgroundColor = $LineColor
-        
     }
 
     if($FillBackground){
@@ -7242,6 +7265,8 @@ function New-PSHTMLChartLineDataSet {
             }
         }
     }
+
+    $Datachart.SetPointSettings($PointRadius,$PointHitRadius,$PointHoverRadius)
 
     Return $Datachart
 }
