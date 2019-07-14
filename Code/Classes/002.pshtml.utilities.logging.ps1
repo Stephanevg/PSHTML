@@ -22,6 +22,7 @@ Class LogDocument{
     }
 }
 
+<#
 Class LogFile : LogDocument {
 
     [System.IO.FileInfo]$File
@@ -50,7 +51,7 @@ Class LogFile : LogDocument {
             $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         }
 
-        
+        $cp = $global:MyInvocation.MyCommand.Definition #fix for Ubuntu appveyor machines.
         $sr = $psScriptRoot
         
         $Extension = (get-item -Path $cp).Extension
@@ -111,6 +112,9 @@ Class LogFile : LogDocument {
 
     hidden [string] CreateFileName() {
         $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
+        if(!($cp)){
+            $cp = (Get-PSCallStack)[-1].ScriptName 
+        }
         #Write-Host "cp: $($cp)" -ForegroundColor DarkCyan
         $sr = $psScriptRoot
         $Extension = (get-item -Path $cp).Extension
@@ -132,7 +136,7 @@ Class LogFile : LogDocument {
     }
 
 }
-
+#>
 Class Logger{
     [System.IO.FileInfo]$Logfile
     

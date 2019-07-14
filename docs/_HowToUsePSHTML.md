@@ -108,7 +108,7 @@ html {
 ```
 Which generate the following HTML page :
 
-![screen shot of PSHTML ConvertTo-HTMLtable results](/Examples/Example-ConvertTo-HTMLtable.png)
+![screen shot of PSHTML ConvertTo-HTMLtable results](/PSHTML/Examples/Example-ConvertTo-HTMLtable.png)
 
 # Dynamic pages:
 

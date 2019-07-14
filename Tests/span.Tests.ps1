@@ -33,7 +33,7 @@ Context "Testing PSHTML"{
         }
 
         it "Testing content in child element"{
-            $string -match "^.*>`"woop`"<.*" | should be $true
+            $string -match "^.*>woop<.*" | should be $true
         }
 
         it "Testing common parameters: Class"{
@@ -55,6 +55,14 @@ Context "Testing PSHTML"{
             }
 
 
+        }
+
+        It 'Should expand variables' {
+            #Test for bug https://github.com/Stephanevg/PSHTML/issues/234
+            $e = 3
+            $res = span -content {$e}
+
+            $res -Match "^<span >3</span>"
         }
 
 

@@ -49,16 +49,36 @@ InModuleScope -ModuleName PSHTML {
         It '[ConfigurationDocument]-[Constructor]([System.IO.FileInfo]Path) should Not Throw' {
     
             # -- Arrange
-    
-            $FilePath = Join-Path -Path $TestDrive -ChildPath "plop.txt"
+$Configuration = @"
+{
+    "General": {
+        "Verbosity": "Normal",
+        "version":"1.0.0"
+    },
+    "Logging": {
+        "Path": "Default",
+        "MaxFiles": 200,
+        "MaxTotalSize": "5MB"
+    },
+    "Assets": {
+        "Path": "Default"
+    }
+}
+"@
+            $FilePath = Join-Path -Path $TestDrive -ChildPath "plop.json"
+            $AssetsFolder = Join-path -Path $TestDrive -ChildPath "Assets"
+            $IncludesFolder = join-Path -Path $TestDrive -ChildPath "Includes"
+            $null = New-item -Path $AssetsFolder -Force -ItemType Directory
+            $null = New-item -Path $IncludesFolder -Force -ItemType Directory
             $Null = New-Item -Path $FilePath -Force -Value $Configuration
+            $File = Get-Item -Path $Filepath
             [System.IO.FileInfo]$Path = $FilePath
     
             # -- Act
     
             # -- Assert
-    
-            {[ConfigurationDocument]::New($Path)} | Should Not Throw 
+            
+            {[ConfigurationDocument]::New([String]$File)} | Should Not Throw 
     
         }# end of it block
     
@@ -233,8 +253,7 @@ InModuleScope -ModuleName PSHTML {
     }# end of Describe block
     Describe '[AssetsFactory]-[Constructors]' {
     
-    }# end of Describe block
-    Describe '[Asset]-[Constructors]' {
+    
     
         It '[Asset]-[Constructor] - Parameterless should Not Throw' {
     
