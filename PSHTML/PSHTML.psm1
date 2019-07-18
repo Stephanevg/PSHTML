@@ -1,4 +1,4 @@
-#Generated at 07/10/2019 23:24:51 by Stephane van Gulick
+﻿#Generated at 07/18/2019 18:46:58 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -735,7 +735,7 @@ Class LogFile : LogDocument {
             }
         }else{
 
-            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
+            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
         }
 
         $cp = $global:MyInvocation.MyCommand.Definition #fix for Ubuntu appveyor machines.
@@ -798,7 +798,7 @@ Class LogFile : LogDocument {
     }
 
     hidden [string] CreateFileName() {
-        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
+        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
         if(!($cp)){
             $cp = (Get-PSCallStack)[-1].ScriptName 
         }
@@ -1257,6 +1257,8 @@ static [string] $white = "rgb({0},{1},{2})" -f [Color]::white_def.r, [Color]::wh
 static [string] $whitesmoke = "rgb({0},{1},{2})" -f [Color]::whitesmoke_def.r, [Color]::whitesmoke_def.g, [Color]::whitesmoke_def.b
 static [string] $yellow = "rgb({0},{1},{2})" -f [Color]::yellow_def.r, [Color]::yellow_def.g, [Color]::yellow_def.b
 static [string] $yellowgreen = "rgb({0},{1},{2})" -f [Color]::yellowgreen_def.r, [Color]::yellowgreen_def.g, [Color]::yellowgreen_def.b
+
+static [string[]]$colornames = ([Color].GetProperties()  | Where-Object { $_.PropertyType.ToString() -EQ 'System.String'} | Select -Expand Name)
 
 #logic from http://www.niwa.nu/2013/05/math-behind-colorspace-conversions-rgb-hsl/
 static [string] hslcalc([int]$r, [int]$g, [int]$b, [double]$a) {
@@ -2870,7 +2872,7 @@ Function base {
     base "woop1" -Class "class"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Current Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -3112,7 +3114,7 @@ Function button {
     </form>
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -4152,7 +4154,7 @@ Function fieldset {
     fieldset {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4621,7 +4623,7 @@ function Get-PSHTMLAsset {
     .OUTPUTS
         Asset[]
     .Notes
-        Author: Stéphane van Gulick
+        Author: StÃ©phane van Gulick
     .Link
       https://github.com/Stephanevg/PSHTML
     #>
@@ -4702,6 +4704,7 @@ function Get-PSHTMLColor {
             [string]
             $Type="rgb", 
             [Parameter(Mandatory=$true)]
+            [ArgumentCompleter({[Color]::colornames})]
             [String]
             $Color
         )
@@ -4871,7 +4874,7 @@ Function H1 {
     h1 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4925,7 +4928,7 @@ Function h2 {
     h2 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4977,7 +4980,7 @@ Function h3 {
     h3 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5029,7 +5032,7 @@ Function h4 {
     h4 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5081,7 +5084,7 @@ Function h5 {
     h5 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5133,7 +5136,7 @@ Function h6 {
     h6 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5361,7 +5364,7 @@ Function hr {
     <hr Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 2.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5824,7 +5827,7 @@ Function label {
     </form>
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 1.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5880,7 +5883,7 @@ Function legend {
     </form>
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6027,7 +6030,7 @@ Function Link {
     <link Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6266,7 +6269,7 @@ Function meta {
     <meta name="author" content="Stephane van Gulick"  >
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6458,7 +6461,7 @@ Function nav {
     </nav>
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6948,7 +6951,7 @@ Function New-PSHTMLChartDataSet {
     .OUTPUTS
         [DataSet]
     .NOTES
-        Author: Stéphane van Gulick
+        Author: StÃ©phane van Gulick
     #>
     [CmdletBInding()]
     Param(
@@ -7448,6 +7451,171 @@ function New-PSHTMLChartPolarAreaDataSet {
 
     return $Datachart
 }
+function New-PSHTMLDropDownList {
+    <#
+    .SYNOPSIS
+        Generate a New Drop Down List.
+    .DESCRIPTION
+        Generate a New Drop Down List.
+    .EXAMPLE
+        PS C:\> Get-Service | New-DropDownList -Property Name
+        Create a dropdownlist of service names
+    .EXAMPLE
+        PS C:\> $items = 'apples','oranges','tomatoes','blueberries'
+        PS C:\> New-PSHTMLDropDownList -Items $Items
+        Create new simple dropdownlist, array based
+    .EXAMPLE
+        PS C:\> $ArrayOfDropDownOptions = @()
+        PS C:\> $items = 'apples','oranges','tomatoes','blueberries'
+        PS C:\> Foreach ( $item in $items ) { $ArrayOfDropDownOptions += New-PSHTMLDropDownListItem -value $item -content $item }
+        PS C:\> New-PSHTMLDropDownList -Items $ArrayOfDropDownOptions
+        Create new simple dropdownlist, array based
+    .INPUTS
+        Array
+    .OUTPUTS
+        Output (if any)
+    .NOTES
+        Issue #201: https://github.com/Stephanevg/PSHTML/issues/201
+    #>
+
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$False,ValueFromPipeline=$True)]
+        [AllowNull()]
+        [Array]
+        $Items,
+        [Parameter(Mandatory = $False)]
+        [String]$Property,
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class,
+        [String]$Id,
+        [Hashtable]$Attributes
+    )
+    
+    begin {
+        $Option = @()
+    }
+    
+    process {
+        If ( $null -ne $items ) {
+
+            ## Assuming its coming from New-DropDownListItem
+            If ( $items[0] -match '^<option') {
+                $Option += $items
+            } Else {
+                If ( $Property) {
+                    $Option += New-PSHTMLDropDownListItem -Items $items -Property $Property
+                } Else {
+                    foreach ( $item in $items ) {
+                        $Option += New-PSHTMLDropDownListItem -Content $item -value $item
+                    }
+                }
+            }
+        }
+    }
+    
+    end {
+        selecttag -Content {
+            $option
+        } -Class $Class -Id $Id -Attributes $Attributes
+    }
+}
+function New-PSHTMLDropDownListItem {
+    <#
+    .SYNOPSIS
+        Generate a New Drop Down Item.
+    .DESCRIPTION
+        Generate a New Drop Down Item.
+    .EXAMPLE
+        PS C:\> Get-Service | New-PSHTMLDropDownListItem -Property Name
+        Create a String representing a list of drop down items representing service name.
+    .EXAMPLE
+        PS C:\> $Services = Get-Service
+        PS C:\> New-PSHTMLDropDownListItem -Items $Services -Property Name
+        Create a String representing a list of drop down items representing service name.
+    .EXAMPLE
+        PS C:\> New-PSHTMLDropDownListItem -value 'aaaa' -content 'aaaaaaa'
+        Create a new dropdown option
+    .INPUTS
+        Inputs (if any)
+    .OUTPUTS
+        Output (if any)
+    .NOTES
+        Issue #201: https://github.com/Stephanevg/PSHTML/issues/201
+    #>
+    [CmdletBinding(DefaultParameterSetName='Classic')]
+    param (
+        [Parameter(Mandatory=$True,ValueFromPipeline=$True,ParameterSetName='Items')]
+        [Array]$Items,
+        [Parameter(Mandatory=$True,ParameterSetName='Items')]
+        [string]$Property,
+        [Parameter(Mandatory=$false,ParameterSetName='Classic')]
+        [AllowEmptyString()]
+        [AllowNull()]
+        $Content = '',
+        [Parameter(Mandatory=$false,ParameterSetName='Classic')]
+        [AllowEmptyString()]
+        [AllowNull()]
+        [string]$value = '',
+        [string]$label,
+        [Switch]$Disabled,
+        [Switch]$Selected,
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Class = "",
+        [String]$Id,
+        [AllowEmptyString()]
+        [AllowNull()]
+        [String]$Style,
+        [String]$title,
+        [Hashtable]$Attributes
+
+    )
+    
+    begin {
+        $options = @()
+    }
+    
+    process {
+
+        $BoundParameters = $PSBoundParameters
+
+        Switch ( $PSCmdlet.ParameterSetName ) {
+
+            'Items' {
+
+                If ( @($items | get-member -name $property).Count -eq 0  ) {
+                    Throw ("Please specify an existing property. {0} does not exist ...." -f $property)
+                } 
+
+                Foreach ( $item in $items ) {
+
+                    $Content = ($Item | Select-Object -Property $property).$property
+                    $value = $Property
+
+                    $BoundParameters.Remove('Items') | out-null
+                    $BoundParameters.Remove('Property') | out-null
+                    $BoundParameters.Value = $value
+                    $BoundParameters.Content = $Content
+
+                    $options += option @BoundParameters
+                }
+            }
+
+            'Classic' {
+                $options += option @PSBoundParameters
+            }
+
+            Default {
+            }
+        }
+    }
+    
+    end {
+        $options -join ''
+    }
+}
 Function Noscript {
     <#
     .SYNOPSIS
@@ -7592,7 +7760,7 @@ Function optgroup {
     
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7725,7 +7893,7 @@ function Out-PSHTMLDocument {
     .DESCRIPTION
         Output the html string into a file.
     .EXAMPLE
-        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imédiatley.
+        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imÃ©diatley.
 
         $o = Get-PRocess | select ProcessName,Handles | select -first 5
         $FilePath = "C:\temp\OutputFile.html"
@@ -7738,7 +7906,7 @@ function Out-PSHTMLDocument {
         None
     .NOTES
 
-        Author: Stéphane van Gulick
+        Author: StÃ©phane van Gulick
                 
         
     .LINK
@@ -8231,7 +8399,7 @@ Function selecttag {
         
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8291,7 +8459,7 @@ Function small {
     </small>
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8406,7 +8574,7 @@ Function strong {
 
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8465,7 +8633,7 @@ Function style {
     style {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: Stéphane van Gulick
+    Author: StÃ©phane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
