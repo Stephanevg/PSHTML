@@ -1,8 +1,8 @@
 import-module PSHTML
 
 
-$BarCanvasID = "barcanvas"
-$HTMLPage = html { 
+$radarCanvasID = "radarcanvas"
+$HTMLDocument = html { 
     head {
         title 'Chart JS Demonstration'
         
@@ -16,7 +16,7 @@ $HTMLPage = html {
             p {
                 "This is a radar graph"
             }
-            canvas -Height 400px -Width 400px -Id $BarCanvasID {
+            canvas -Height 400px -Width 400px -Id $radarCanvasID {
     
             }
 
@@ -34,7 +34,7 @@ $HTMLPage = html {
             $Data2 = @(4,1,6,12,17,25,18,17,22,30,35,44)
             $dsb1 += New-PSHTMLChartBarDataSet -Data $data2 -label "2019" -borderColor (get-pshtmlColor -color red) -backgroundColor "transparent" -hoverBackgroundColor (get-pshtmlColor -color yellow)
 
-            New-PSHTMLChart -type radar -DataSet $dsb1 -title "Radar Chart Example" -Labels $Labels -CanvasID $BarCanvasID
+            New-PSHTMLChart -type radar -DataSet $dsb1 -title "Radar Chart Example" -Labels $Labels -CanvasID $radarCanvasID
 
         }
 
@@ -43,6 +43,5 @@ $HTMLPage = html {
 }
 
 
-$OutPath = "$Home\BarChart1.html"
-$HTMLPage | out-file -FilePath $OutPath -Encoding utf8
-start $outpath
+$OutPath = "$Home/RadarChart1.html"
+Out-PSHTMLDocument -HTMLDocument $HTMLDocument -OutPath $OutPath -Show
