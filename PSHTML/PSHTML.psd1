@@ -146,4 +146,3 @@ HelpInfoURI = 'https://pshtml.readthedocs.io/en/latest/'
 # DefaultCommandPrefix = ''
 
 }
-

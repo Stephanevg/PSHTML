@@ -51,7 +51,16 @@ Use the function ```New-PSHTMLChartLineDataSet``` to save the dataset in a varia
 
 ```powershell
     $Data = @(34,7,11,19) #Get your data using any type of powershell cmdlet / function
-    $dataset = New-PSHTMLChartLineDataSet -Data $Data -label "March" -BackgroundColor ([Color]::Orange)
+    $chartLineParams = @{
+        Data = $Data
+        Label = 'March'
+        FillbackgroundColor = ([color]::new(0,0,0))
+        LineColor = 'LightGreen'
+        PointRadius = 4
+        PointHitRadius = 0
+        PointHoverRadius = 0
+    }
+    $dataset = New-PSHTMLChartLineDataSet @chartLineParams
 
 ```
 
@@ -92,7 +101,7 @@ Which represents data from a ticketing system:
 
 This would result in the following graph:
 
-![BasicLineChar](./Images/LineChart_basic_01.png)
+![BasicLineChar](../Images/LineChart_basic_01.png)
 
 > Nota: The function must be called within a '-content' block of a 'script' section (See script listing below)
 
@@ -114,7 +123,6 @@ $HTMLPage = html {
         h1 "PSHTML Chart"
 
         div {
-            
 
             p {
                 "This is a Line graph"
@@ -130,17 +138,12 @@ $HTMLPage = html {
         script -content {
 
             $Data1 = @(34,7,11,19)
+            $Labels = @("Closed","Unresolved","Pending","Open")
 
-
-            $colors = @("LightGreen","Red","LightBlue","LightYellow")
-            $dsd1 = New-PSHTMLChartLineDataSet -Data $data1 -label "March" -backgroundcolor $colors -hoverbackgroundColor $Colors
+            $dsd1 = New-PSHTMLChartLineDataSet -Data $data1 -label "March" -FillbackgroundColor ([color]::new(0,0,0)) -LineColor 'LightGreen'
 
             New-PSHTMLChart -type Line -DataSet @($dsd1) -title "Line Chart v2" -Labels $Labels -CanvasID $LineCanvasID
- 
-            
         }
-
-         
     }
 }
 
