@@ -1,8 +1,6 @@
 import-module PSHTML
-
-
 $BarCanvasID = "barcanvas"
-$HTMLPage = html { 
+$htmlDocument = html { 
     head {
         title 'Chart JS Demonstration'
         
@@ -30,9 +28,10 @@ $HTMLPage = html {
             $dsb1 = @() 
 
             $Data1 = @(17,25,18,17,22,30,35,44,4,1,6,12)
-            $dsb1 += New-PSHTMLChartBarDataSet -Data $data1 -label "2018" -BackgroundColor ([Color]::blue ) -hoverBackgroundColor ( [Color]::green )
+
+            $dsb1 += New-PSHTMLChartBarDataSet -Data $data1 -label "2018" -BackgroundColor (get-pshtmlColor -color blue) -hoverBackgroundColor (get-pshtmlColor -color green)
             $Data2 = @(4,1,6,12,17,25,18,17,22,30,35,44)
-            $dsb1 += New-PSHTMLChartBarDataSet -Data $data2 -label "2019" -BackgroundColor ([Color]::red ) -hoverBackgroundColor ( [Color]::yellow )
+            $dsb1 += New-PSHTMLChartBarDataSet -Data $data2 -label "2019" -BackgroundColor (get-pshtmlColor -color red) -hoverBackgroundColor (get-pshtmlColor -color yellow)
 
             New-PSHTMLChart -type horizontalBar -DataSet $dsb1 -title "Horizontal Bar Chart Example" -Labels $Labels -CanvasID $BarCanvasID
 
@@ -43,6 +42,5 @@ $HTMLPage = html {
 }
 
 
-$OutPath = "$Home\BarChart1.html"
-$HTMLPage | out-file -FilePath $OutPath -Encoding utf8
-start $outpath
+$OutPath = "$Home/BarChart2.html"
+Out-PSHTMLDocument -HTMLDocument $htmlDocument -OutPath $outpath -Show

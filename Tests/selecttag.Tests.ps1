@@ -18,8 +18,8 @@ import-module .\PSHTML -Force
         $Id = "MyID"
         $style = "Background:green"
         $CustomAtt = @{"MyAttribute1"='MyValue1';"MyAttribute2"="MyValue2"}
-
-        $string = selecttag {"woop"} -Attributes $CustomAtt -Class $class -id $id
+        $FormID = 'myform'
+        $string = selecttag {"woop"} -Attributes $CustomAtt -Class $class -id $id -form $formID
 
         if($string -is [array]){
             $string = $String -join ""
@@ -53,6 +53,9 @@ import-module .\PSHTML -Force
 
         }
 
+        it "Testing form parameter"{
+            $string -match "^<select.*Form=`"$($formId)`".*>" | should be $true
+        }
 
     }
 
