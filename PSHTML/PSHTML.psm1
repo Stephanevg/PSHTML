@@ -1,6 +1,4 @@
-
-#Generated at 07/18/2019 18:46:58 by Stephane van Gulick
-
+﻿#Generated at 07/22/2019 00:41:02 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -8424,7 +8422,7 @@ Function selecttag {
 
     .Notes
     Author: StÃ©phane van Gulick
-    Version: 3.1.0
+    Version: 3.2.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.05.09;@Stephanevg; Creation
