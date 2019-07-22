@@ -83,10 +83,10 @@ p "This is footer from Module"
         #Remove-item $FooterModuleFilePath -force
 
         $ScriptFolder = Join-Path $testdrive -ChildPath 'PlopScript'
-        $Null = Mkdir $Scriptfolder
+        $Null = New-Item -type directory -Path $Scriptfolder
         #Set-Location $TestDrive
         $includesScriptFolderPath = Join-Path $ScriptFolder -ChildPath "Includes"
-        $null = mkdir $includesScriptFolderPath
+        $null = New-Item -type directory -Path $includesScriptFolderPath
 
         $footer = @"
 p "This is footer from script"
