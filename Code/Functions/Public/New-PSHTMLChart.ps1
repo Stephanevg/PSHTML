@@ -46,7 +46,9 @@ Function New-PSHTMLChart {
             [Parameter(Mandatory=$False)]
             [String]$Title,
     
-            [ChartOptions]$Options
+            [ChartOptions]$Options,
+            [switch]$tobase64 = $false
+
         )
     
     
@@ -127,13 +129,18 @@ Function New-PSHTMLChart {
                 $ChartOptions.Title.Display = $true
                 $ChartOptions.Title.text = $Title
             }
+            if ($tobase64) {
+                $ChartOptions.Animation.OnComplete = 'RemoveCanvasAndCreateBase64Image'
+            }
             $Chart.SetOptions($ChartOptions)
-        
     
     
     
-    
-        return $Chart.GetDefinition($CanvasID)
+            if ($tobase64) {
+                return $Chart.GetDefinition($CanvasID,$true)
+            } else {
+                return $Chart.GetDefinition($CanvasID)
+            }
         
     
     }
