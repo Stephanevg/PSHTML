@@ -22,8 +22,10 @@ InModuleScope "PSHTML"{
             (Get-Alias Include).Definition | should be "Write-PSHTMLInclude"
         }
 
+        #set-location -Path $RootFolder.FullName
     }
 
+    
     Describe "Write-PSHTMLInclude with existing include files." {
         $includesFolderPath = Join-Path .\PSHTML\ -ChildPath "Includes"
 
@@ -49,9 +51,11 @@ InModuleScope "PSHTML"{
 
 
         #Cleaning up
+        #set-location -Path $RootFolder.FullName
         remove-item $FilePath -Force
     }
 
+    
     Describe "Write-pshtmlInclude Validating Location working" {
 
         $includesModuleFolderPath = Join-Path .\PSHTML\ -ChildPath "Includes"
@@ -76,11 +80,11 @@ p "This is footer from Module"
         }
 
         #Cleanup 
-        Remove-item $FooterModuleFilePath -force
+        #Remove-item $FooterModuleFilePath -force
 
         $ScriptFolder = Join-Path $testdrive -ChildPath 'PlopScript'
         $Null = Mkdir $Scriptfolder
-        Set-Location $TestDrive
+        #Set-Location $TestDrive
         $includesScriptFolderPath = Join-Path $ScriptFolder -ChildPath "Includes"
         $null = mkdir $includesScriptFolderPath
 
@@ -113,5 +117,9 @@ p "This is head from script"
                 Write-PSHTMLInclude -Name footer | should Match '.*<p >This is footer from script</p>.*'
             }
         }
+
+        set-location -Path $home
     }
+
+    
 }
