@@ -1,9 +1,7 @@
 
 # Radar chart
 
-
-
-![PolarArea](../Images/Chart.radar.Example.jpg)
+![RadarChartExample](../Images/Chart.Radar.Example.jpg)
 
 ## Dataset
 
