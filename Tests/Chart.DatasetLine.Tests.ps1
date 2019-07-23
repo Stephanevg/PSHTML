@@ -54,6 +54,19 @@ Describe "Testing [DatasetLine]"{
         $d.label | should be "TestLabel"
     }
 
+    it "[DatasetLine][Methods][SetPointSettings][Float] Should not throw"{
+        $d = [DatasetLine]::new(@(2,3),"Plop")
+        {$d.SetPointSettings(4,0,0)} | should not throw
+    }
+
+    it "[DatasetLine][Methods][SetPointSettings][Float] Should Set Point Settings"{
+        $d = [DatasetLine]::new(@(2,3),"Plop")
+        $d.SetPointSettings(1,2,3)
+        $d.GetPointSettings()['PointRadius'] | should be 1
+        $d.GetPointSettings()['PointHitRadius'] | should be 2
+        $d.GetPointSettings()['PointHoverRadius'] | should be 3
+    }
+
 }
 
 }

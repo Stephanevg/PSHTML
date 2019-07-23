@@ -28,6 +28,9 @@ function New-PSHTMLChartLineDataSet {
         [int]    $LineDashOffSet = 0,
         [Array]$Data,
         [Switch]$FillBackground,
+        [float]$PointRadius = 4,
+        [float]$PointHitRadius = 0,
+        [float]$PointHoverRadius = 0,
         
         [ValidateSet("rounded","Straight")]
         $LineChartType = "rounded",
@@ -68,7 +71,6 @@ function New-PSHTMLChartLineDataSet {
     if($LineColor){
         $DataChart.SetLineColor($LineColor,$false)
         $Datachart.PointHoverBackgroundColor = $LineColor
-        
     }
 
     if($FillBackground){
@@ -90,6 +92,8 @@ function New-PSHTMLChartLineDataSet {
             }
         }
     }
+
+    $Datachart.SetPointSettings($PointRadius,$PointHitRadius,$PointHoverRadius)
 
     Return $Datachart
 }

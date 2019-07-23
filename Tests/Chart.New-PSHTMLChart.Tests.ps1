@@ -457,7 +457,7 @@ var myChart = new Chart(ctx, {
                                       "PointHoverBackgroundColor":  null,
                                       "pointHoverBorderColor":  null,
                                       "pointHoverBorderWidth":  0,
-                                      "pointHoverRadius":  0,
+                                      "pointHoverRadius":  null,
                                       "spanGaps":  false,
                                       "data":  [
 
@@ -497,9 +497,16 @@ var myChart = new Chart(ctx, {
 '@
 #>
 
-        $Should = @'
-var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"line","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"borderDash":[0],"borderDashOffSet":0,"cubicInterpolationMode":"default","fill":false,"lineTension":0.5,"pointBackgroundColor":"rgb(255,255,255)","pointBorderColor":"rgb(0,0,0)","pointBorderWidth":[1],"pointRadius":4,"pointStyle":"circle","showLine":true,"backgroundColor":null,"borderColor":null,"borderCapStyle":null,"borderJoinStyle":null,"pointRotation":null,"pointHitRadius":null,"PointHoverBackgroundColor":null,"pointHoverBorderColor":null,"pointHoverBorderWidth":0,"pointHoverRadius":0,"spanGaps":false,"data":[3,5],"label":null}]},"options":{"showLines":true,"spanGaps":false,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"}}} );
+If($PSVersionTable.PsEdition -eq 'Core'){
+
+    $Should = @'
+var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"line","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"borderDash":[0],"borderDashOffSet":0,"cubicInterpolationMode":"default","fill":false,"lineTension":0.5,"pointBackgroundColor":"rgb(255,255,255)","pointBorderColor":"rgb(0,0,0)","pointBorderWidth":[1],"pointRadius":4.0,"pointStyle":"circle","showLine":true,"backgroundColor":null,"borderColor":null,"borderCapStyle":null,"borderJoinStyle":null,"pointRotation":null,"pointHitRadius":0.0,"PointHoverBackgroundColor":null,"pointHoverBorderColor":null,"pointHoverBorderWidth":0,"pointHoverRadius":0.0,"spanGaps":false,"data":[3,5],"label":null}]},"options":{"showLines":true,"spanGaps":false,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"}}} );
 '@
+}else{
+    $Should = @'
+var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"line","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"borderDash":[0],"borderDashOffSet":0,"cubicInterpolationMode":"default","fill":false,"lineTension":0.5,"pointBackgroundColor":"rgb(255,255,255)","pointBorderColor":"rgb(0,0,0)","pointBorderWidth":[1],"pointRadius":4,"pointStyle":"circle","showLine":true,"backgroundColor":null,"borderColor":null,"borderCapStyle":null,"borderJoinStyle":null,"pointRotation":null,"pointHitRadius":0,"PointHoverBackgroundColor":null,"pointHoverBorderColor":null,"pointHoverBorderWidth":0,"pointHoverRadius":0,"spanGaps":false,"data":[3,5],"label":null}]},"options":{"showLines":true,"spanGaps":false,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"}}} );
+'@
+}
 
         $Is | should be $Should
         }

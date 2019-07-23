@@ -12,9 +12,18 @@ Using PSHTML, offers code completion and syntax highlighting from the the defaul
 
 Since version `0.7.0` PSHTML supports the creation of charts.
 
+
 -----
 
-# Status
+# Detailed introduction
+
+You can find [here](https://www.youtube.com/watch?v=IiWRslFtl9A&t=1868s) , an introduction talk about `PSHTML` by `Stéphane van Gulick` which teach you in the first step everything you need to know to get started with `PSHTML` and show concret implementation examples. In the second part of the talk, Stéphane explains how one can extend PSHTML further by coupling it together with `Polaris`.
+
+![PsConfEU PSHTML Introduction](docs/Images/psconf_intro.jpg)
+
+-----
+
+# Project Status
 
 ## Appveyor
 
@@ -119,9 +128,10 @@ The generated ```HTML``` code is available [here](PSHTML/Examples/Example6/Examp
 
 ## Charts
 
-Since version 0.7.0 PSHTML also supports the creation of beautifull charts.
+With version `0.7.0` PSHTML introduced the functionality of `charting`. In `v0.8.0` this functionality has been extended and offers now a total of 7 different chart types to communicate your data to your end users, and to make your webpages look amazingly cool!
 
 ![Charts Overview](docs/Images/Charts_Overview.png)
+![Charts Overview](docs/Images/Chartsoverview2.jpg)
 
 Read more about charts and how easy it is to create them using PSHTML [here](https://pshtml.readthedocs.io/en/latest/Charts/Charts/).
 

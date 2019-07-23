@@ -1,4 +1,4 @@
-﻿#Generated at 07/23/2019 15:43:26 by Stephane van Gulick
+#Generated at 07/22/2019 00:41:02 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -1462,17 +1462,17 @@ Class datasetline : dataset{
     $pointBackgroundColor = "rgb(255,255,255)"
     $pointBorderColor = "rgb(0,0,0)"
     [Int[]]$pointBorderWidth = 1
-    [Int]$pointRadius = 4
+    [float]$pointRadius = 4
     [ValidateSet("circle","cross","crossRot","dash","line","rect","rectRounded","rectRot","star","triangle")]
     $pointStyle = "circle"
 
     [int[]]$pointRotation
-    [int[]]$pointHitRadius
+    [float]$pointHitRadius
 
     [String]  $PointHoverBackgroundColor
     [String]  $pointHoverBorderColor
     [int]    $pointHoverBorderWidth
-    [int] $pointHoverRadius
+    [float] $pointHoverRadius
     [bool]$showLine = $true
     [bool]$spanGaps
 
@@ -1522,6 +1522,24 @@ Class datasetline : dataset{
         $backgroundC = $t.replace(")",",0.4)")
         $this.backgroundColor = $backgroundC
         Write-verbose "[DatasetLine][SetLineBackGroundColor] End"
+    }
+
+    SetPointSettings([float]$pointRadius,[float]$pointHitRadius,[float]$pointHoverRadius){
+        Write-Verbose "[DatasetLine][SetPointSettings] Start"
+        $this.pointRadius = $pointRadius
+        $this.pointHitRadius = $pointHitRadius
+        $this.pointHoverRadius = $pointHoverRadius
+        Write-Verbose "[DatasetLine][SetPointSettings] End"
+    }
+
+    [hashtable]GetPointSettings(){
+        Write-Verbose "[DatasetLine][GetPointSettings] Start"
+        return @{
+            PointRadius = $this.pointRadius
+            PointHitRadius = $this.pointHitRadius
+            PointHoverRadius = $this.pointHoverRadius
+        }
+        Write-Verbose "[DatasetLine][GetPointSettings] End"
     }
 }
 
@@ -1649,10 +1667,6 @@ Class ChartTitle {
     [String]$text
 }
 
-Class ChartAnimation {
-    $onComplete = $null
-}
-
 Class ChartOptions  {
     [int]$barPercentage = 0.9
     [Int]$categoryPercentage = 0.8
@@ -1661,8 +1675,7 @@ Class ChartOptions  {
     [Int]$maxBarThickness
     [Bool] $offsetGridLines = $true
     [scales]$scales = [scales]::New()
-    [ChartTitle]$title = [ChartTitle]::New()
-    [ChartAnimation]$animation = [ChartAnimation]::New()
+    [ChartTitle]$title = [ChartTitle]::New() 
 
     <#
         elements: {
@@ -1821,38 +1834,6 @@ $Start = $Start + "var myChart = new Chart(ctx, "
         $FullDefintion.Append($this.GetDefinitionStart([String]$CanvasID))
         $FullDefintion.AppendLine($this.GetDefinitionBody())
         $FullDefintion.AppendLine($this.GetDefinitionEnd())
-        $FullDefintionCleaned = Clear-WhiteSpace $FullDefintion
-        return $FullDefintionCleaned
-    }
-
-    [String] GetDefinition([String]$CanvasID,[Bool]$ToBase64){
-        
-        $FullDefintion = [System.Text.StringBuilder]::new()
-        $FullDefintion.Append($this.GetDefinitionStart([String]$CanvasID))
-        $FullDefintion.AppendLine($this.GetDefinitionBody())
-        $FullDefintion.AppendLine($this.GetDefinitionEnd())
-        $FullDefintion.AppendLine("function RemoveCanvasAndCreateBase64Image (){")
-        $FullDefintion.AppendLine("var base64 = this.toBase64Image();")
-        $FullDefintion.AppendLine("var element = this.canvas;")
-        $FullDefintion.AppendLine("var parent = element.parentNode;")
-        $FullDefintion.AppendLine("var img = document.createElement('img');")
-        $FullDefintion.AppendLine("img.src = base64;")
-        $FullDefintion.AppendLine("img.name = element.id;")
-        $FullDefintion.AppendLine("element.before(img);")
-        $FullDefintion.AppendLine("parent.removeChild(element);")
-        $FullDefintion.AppendLine("document.getElementById('pshtml_script_chart_$canvasid').parentNode.removeChild(document.getElementById('pshtml_script_chart_$canvasid'))")
-        $FullDefintion.AppendLine("};")
-        $FullDefintion.replace('"RemoveCanvasAndCreateBase64Image"','RemoveCanvasAndCreateBase64Image')
-        
-        <# somewhere along the line, we will need to remove script tags associated to the charts creation ... in order to send it to mail
-        //var scripttags = document.getElementsByTagName('script');
-        //var scripttags = document.getElementsByTagName('script');
-        //for (i=0;i<scripttags.length;){
-        //    var parent = scripttags[i].parentNode;
-        //    parent.removeChild(scripttags[i]);
-        //}
-        };
-        #>
         $FullDefintionCleaned = Clear-WhiteSpace $FullDefintion
         return $FullDefintionCleaned
     }
@@ -6703,7 +6684,7 @@ Function New-PSHTMLChart {
     
             New-PSHTMLChart -type doughnut -DataSet @($dsd1) -title "Doughnut Chart v1" -Labels $Labels -CanvasID $DoughnutCanvasID
             New-PSHTMLChart -type doughnut -DataSet @($dsd2) -title "Doughnut Chart v2" -Labels $Labels -CanvasID $DoughnutCanvasID
-            New-PSHTMLChart -type doughnut -DataSet @($dsd3) -title "Doughnut Chart v3" -Labels $Labels -CanvasID $DoughnutCanvasID -tobase64
+            New-PSHTMLChart -type doughnut -DataSet @($dsd3) -title "Doughnut Chart v3" -Labels $Labels -CanvasID $DoughnutCanvasID
     #>
         [CmdletBinding()]
         Param(
@@ -6720,9 +6701,7 @@ Function New-PSHTMLChart {
             [Parameter(Mandatory=$False)]
             [String]$Title,
     
-            [ChartOptions]$Options,
-            [switch]$tobase64 = $false
-
+            [ChartOptions]$Options
         )
     
     
@@ -6803,23 +6782,13 @@ Function New-PSHTMLChart {
                 $ChartOptions.Title.Display = $true
                 $ChartOptions.Title.text = $Title
             }
-            if ($tobase64) {
-                $ChartOptions.animation.onComplete = 'RemoveCanvasAndCreateBase64Image'
-            }
             $Chart.SetOptions($ChartOptions)
+        
     
     
-            if ($tobase64) {
-                script -content {
-                    $Chart.GetDefinition($CanvasID,$true)
-                } -Id "pshtml_script_chart_$CanvasID"
-                #return $toreturn
-            } else {
-                script -content {
-                    $Chart.GetDefinition($CanvasID)
-                } -Id "pshtml_script_chart_$CanvasID"
-                #return $toreturn
-            }
+    
+    
+        return $Chart.GetDefinition($CanvasID)
         
     
     }
@@ -7232,6 +7201,9 @@ function New-PSHTMLChartLineDataSet {
         [int]    $LineDashOffSet = 0,
         [Array]$Data,
         [Switch]$FillBackground,
+        [float]$PointRadius = 4,
+        [float]$PointHitRadius = 0,
+        [float]$PointHoverRadius = 0,
         
         [ValidateSet("rounded","Straight")]
         $LineChartType = "rounded",
@@ -7272,7 +7244,6 @@ function New-PSHTMLChartLineDataSet {
     if($LineColor){
         $DataChart.SetLineColor($LineColor,$false)
         $Datachart.PointHoverBackgroundColor = $LineColor
-        
     }
 
     if($FillBackground){
@@ -7294,6 +7265,8 @@ function New-PSHTMLChartLineDataSet {
             }
         }
     }
+
+    $Datachart.SetPointSettings($PointRadius,$PointHitRadius,$PointHoverRadius)
 
     Return $Datachart
 }
@@ -8449,7 +8422,7 @@ Function selecttag {
 
     .Notes
     Author: StÃ©phane van Gulick
-    Version: 3.1.0
+    Version: 3.2.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
         2018.05.09;@Stephanevg; Creation

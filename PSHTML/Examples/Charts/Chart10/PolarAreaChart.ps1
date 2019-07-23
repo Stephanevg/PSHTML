@@ -1,8 +1,9 @@
+
 import-module PSHTML
 
 
-$BarCanvasID = "barcanvas"
-$HTMLPage = html { 
+$PolarCanvasID = "Polarcanvas"
+$HTMLDocument = html { 
     head {
         title 'Chart JS Demonstration'
         
@@ -39,6 +40,5 @@ $HTMLPage = html {
 }
 
 
-$OutPath = "$Home\BarChart1.html"
-$HTMLPage | out-file -FilePath $OutPath -Encoding utf8
-start $outpath
+$OutPath = "$Home/PolarChart1.html"
+Out-PSHtmlDocument -HTMLDocument $HTMLDocument -OutPath $OutPath -Show
