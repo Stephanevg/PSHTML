@@ -3,7 +3,7 @@
 #
 # Généré par : StÃ©phane van Gulick
 #
-# Généré le : 22/07/2019
+# Généré le : 23/07/2019
 #
 
 @{
@@ -23,7 +23,7 @@ GUID = 'bdb3c0ee-e687-4774-9cf7-a3c67aa22118'
 # Auteur de ce module
 Author = 'StÃ©phane van Gulick'
 
-# Société ou fournisseur de ce module
+# Company or vendor of this module
 CompanyName = 'District'
 
 # Déclaration de copyright pour ce module
@@ -129,14 +129,14 @@ PrivateData = @{
         # Prerelease string of this module
         # Prerelease = ''
 
-        # Flag to indicate whether the module requires explicit user acceptance for install/update/save
+        # Flag to indicate whether the module requires explicit user acceptance for install/update
         # RequireLicenseAcceptance = $false
 
         # External dependent modules of this module
         # ExternalModuleDependencies = @()
 
     } # End of PSData hashtable
-
+    
  } # End of PrivateData hashtable
 
 # URI HelpInfo de ce module

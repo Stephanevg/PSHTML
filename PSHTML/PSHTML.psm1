@@ -1,4 +1,4 @@
-﻿#Generated at 07/22/2019 20:22:53 by Stephane van Gulick
+﻿#Generated at 07/23/2019 15:43:26 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -1650,7 +1650,7 @@ Class ChartTitle {
 }
 
 Class ChartAnimation {
-    $OnComplete = 'void(0)'
+    $onComplete = $null
 }
 
 Class ChartOptions  {
@@ -1662,7 +1662,7 @@ Class ChartOptions  {
     [Bool] $offsetGridLines = $true
     [scales]$scales = [scales]::New()
     [ChartTitle]$title = [ChartTitle]::New()
-    [ChartAnimation]$Animation = [ChartAnimation]::New()
+    [ChartAnimation]$animation = [ChartAnimation]::New()
 
     <#
         elements: {
@@ -1840,9 +1840,11 @@ $Start = $Start + "var myChart = new Chart(ctx, "
         $FullDefintion.AppendLine("img.name = element.id;")
         $FullDefintion.AppendLine("element.before(img);")
         $FullDefintion.AppendLine("parent.removeChild(element);")
-        $FullDefintion.AppendLine("parent.removeChild(element);")
+        $FullDefintion.AppendLine("document.getElementById('pshtml_script_chart_$canvasid').parentNode.removeChild(document.getElementById('pshtml_script_chart_$canvasid'))")
         $FullDefintion.AppendLine("};")
-        <#
+        $FullDefintion.replace('"RemoveCanvasAndCreateBase64Image"','RemoveCanvasAndCreateBase64Image')
+        
+        <# somewhere along the line, we will need to remove script tags associated to the charts creation ... in order to send it to mail
         //var scripttags = document.getElementsByTagName('script');
         //var scripttags = document.getElementsByTagName('script');
         //for (i=0;i<scripttags.length;){
@@ -6701,7 +6703,7 @@ Function New-PSHTMLChart {
     
             New-PSHTMLChart -type doughnut -DataSet @($dsd1) -title "Doughnut Chart v1" -Labels $Labels -CanvasID $DoughnutCanvasID
             New-PSHTMLChart -type doughnut -DataSet @($dsd2) -title "Doughnut Chart v2" -Labels $Labels -CanvasID $DoughnutCanvasID
-            New-PSHTMLChart -type doughnut -DataSet @($dsd3) -title "Doughnut Chart v3" -Labels $Labels -CanvasID $DoughnutCanvasID
+            New-PSHTMLChart -type doughnut -DataSet @($dsd3) -title "Doughnut Chart v3" -Labels $Labels -CanvasID $DoughnutCanvasID -tobase64
     #>
         [CmdletBinding()]
         Param(
@@ -6802,16 +6804,21 @@ Function New-PSHTMLChart {
                 $ChartOptions.Title.text = $Title
             }
             if ($tobase64) {
-                $ChartOptions.Animation.OnComplete = 'RemoveCanvasAndCreateBase64Image'
+                $ChartOptions.animation.onComplete = 'RemoveCanvasAndCreateBase64Image'
             }
             $Chart.SetOptions($ChartOptions)
     
     
-    
             if ($tobase64) {
-                return $Chart.GetDefinition($CanvasID,$true)
+                script -content {
+                    $Chart.GetDefinition($CanvasID,$true)
+                } -Id "pshtml_script_chart_$CanvasID"
+                #return $toreturn
             } else {
-                return $Chart.GetDefinition($CanvasID)
+                script -content {
+                    $Chart.GetDefinition($CanvasID)
+                } -Id "pshtml_script_chart_$CanvasID"
+                #return $toreturn
             }
         
     

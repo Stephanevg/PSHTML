@@ -737,7 +737,7 @@ Class ChartTitle {
 }
 
 Class ChartAnimation {
-    $OnComplete = 'void(0)'
+    $onComplete = $null
 }
 
 Class ChartOptions  {
@@ -749,7 +749,7 @@ Class ChartOptions  {
     [Bool] $offsetGridLines = $true
     [scales]$scales = [scales]::New()
     [ChartTitle]$title = [ChartTitle]::New()
-    [ChartAnimation]$Animation = [ChartAnimation]::New()
+    [ChartAnimation]$animation = [ChartAnimation]::New()
 
     <#
         elements: {
@@ -927,9 +927,11 @@ $Start = $Start + "var myChart = new Chart(ctx, "
         $FullDefintion.AppendLine("img.name = element.id;")
         $FullDefintion.AppendLine("element.before(img);")
         $FullDefintion.AppendLine("parent.removeChild(element);")
-        $FullDefintion.AppendLine("parent.removeChild(element);")
+        $FullDefintion.AppendLine("document.getElementById('pshtml_script_chart_$canvasid').parentNode.removeChild(document.getElementById('pshtml_script_chart_$canvasid'))")
         $FullDefintion.AppendLine("};")
-        <#
+        $FullDefintion.replace('"RemoveCanvasAndCreateBase64Image"','RemoveCanvasAndCreateBase64Image')
+        
+        <# somewhere along the line, we will need to remove script tags associated to the charts creation ... in order to send it to mail
         //var scripttags = document.getElementsByTagName('script');
         //var scripttags = document.getElementsByTagName('script');
         //for (i=0;i<scripttags.length;){
