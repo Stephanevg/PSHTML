@@ -754,6 +754,10 @@ Class ChartTitle {
     [String]$text
 }
 
+Class ChartAnimation {
+    $onComplete = $null
+}
+
 Class ChartOptions  {
     [int]$barPercentage = 0.9
     [Int]$categoryPercentage = 0.8
@@ -762,7 +766,8 @@ Class ChartOptions  {
     [Int]$maxBarThickness
     [Bool] $offsetGridLines = $true
     [scales]$scales = [scales]::New()
-    [ChartTitle]$title = [ChartTitle]::New() 
+    [ChartTitle]$title = [ChartTitle]::New()
+    [ChartAnimation]$animation = [ChartAnimation]::New()
 
     <#
         elements: {
@@ -921,6 +926,38 @@ $Start = $Start + "var myChart = new Chart(ctx, "
         $FullDefintion.Append($this.GetDefinitionStart([String]$CanvasID))
         $FullDefintion.AppendLine($this.GetDefinitionBody())
         $FullDefintion.AppendLine($this.GetDefinitionEnd())
+        $FullDefintionCleaned = Clear-WhiteSpace $FullDefintion
+        return $FullDefintionCleaned
+    }
+
+    [String] GetDefinition([String]$CanvasID,[Bool]$ToBase64){
+        
+        $FullDefintion = [System.Text.StringBuilder]::new()
+        $FullDefintion.Append($this.GetDefinitionStart([String]$CanvasID))
+        $FullDefintion.AppendLine($this.GetDefinitionBody())
+        $FullDefintion.AppendLine($this.GetDefinitionEnd())
+        $FullDefintion.AppendLine("function RemoveCanvasAndCreateBase64Image (){")
+        $FullDefintion.AppendLine("var base64 = this.toBase64Image();")
+        $FullDefintion.AppendLine("var element = this.canvas;")
+        $FullDefintion.AppendLine("var parent = element.parentNode;")
+        $FullDefintion.AppendLine("var img = document.createElement('img');")
+        $FullDefintion.AppendLine("img.src = base64;")
+        $FullDefintion.AppendLine("img.name = element.id;")
+        $FullDefintion.AppendLine("element.before(img);")
+        $FullDefintion.AppendLine("parent.removeChild(element);")
+        $FullDefintion.AppendLine("document.getElementById('pshtml_script_chart_$canvasid').parentNode.removeChild(document.getElementById('pshtml_script_chart_$canvasid'))")
+        $FullDefintion.AppendLine("};")
+        $FullDefintion.replace('"RemoveCanvasAndCreateBase64Image"','RemoveCanvasAndCreateBase64Image')
+        
+        <# somewhere along the line, we will need to remove script tags associated to the charts creation ... in order to send it to mail
+        //var scripttags = document.getElementsByTagName('script');
+        //var scripttags = document.getElementsByTagName('script');
+        //for (i=0;i<scripttags.length;){
+        //    var parent = scripttags[i].parentNode;
+        //    parent.removeChild(scripttags[i]);
+        //}
+        };
+        #>
         $FullDefintionCleaned = Clear-WhiteSpace $FullDefintion
         return $FullDefintionCleaned
     }

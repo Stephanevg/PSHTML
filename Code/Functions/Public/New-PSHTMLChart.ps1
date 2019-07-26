@@ -29,7 +29,7 @@ Function New-PSHTMLChart {
     
             New-PSHTMLChart -type doughnut -DataSet @($dsd1) -title "Doughnut Chart v1" -Labels $Labels -CanvasID $DoughnutCanvasID
             New-PSHTMLChart -type doughnut -DataSet @($dsd2) -title "Doughnut Chart v2" -Labels $Labels -CanvasID $DoughnutCanvasID
-            New-PSHTMLChart -type doughnut -DataSet @($dsd3) -title "Doughnut Chart v3" -Labels $Labels -CanvasID $DoughnutCanvasID
+            New-PSHTMLChart -type doughnut -DataSet @($dsd3) -title "Doughnut Chart v3" -Labels $Labels -CanvasID $DoughnutCanvasID -tobase64
     #>
         [CmdletBinding()]
         Param(
@@ -46,7 +46,9 @@ Function New-PSHTMLChart {
             [Parameter(Mandatory=$False)]
             [String]$Title,
     
-            [ChartOptions]$Options
+            [ChartOptions]$Options,
+            [switch]$tobase64 = $false
+
         )
     
     
@@ -127,13 +129,21 @@ Function New-PSHTMLChart {
                 $ChartOptions.Title.Display = $true
                 $ChartOptions.Title.text = $Title
             }
+            if ($tobase64) {
+                $ChartOptions.animation.onComplete = 'RemoveCanvasAndCreateBase64Image'
+            }
             $Chart.SetOptions($ChartOptions)
-        
     
     
-    
-    
-        return $Chart.GetDefinition($CanvasID)
+            if ($tobase64) {
+                script -content {
+                    $Chart.GetDefinition($CanvasID,$true)
+                } -Id "pshtml_script_chart_$CanvasID"
+            } else {
+                script -content {
+                    $Chart.GetDefinition($CanvasID)
+                } -Id "pshtml_script_chart_$CanvasID"
+            }
         
     
     }
