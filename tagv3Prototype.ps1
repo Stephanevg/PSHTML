@@ -49,12 +49,6 @@ Class Htmltag {
 
     }
 
-    [htmltag]SetContent($Content){
-        $this.Content = $Content
-        
-        return $this
-    }
-
     [htmltag]SetId($Id){
         $this.Id = $Id
         return $this
