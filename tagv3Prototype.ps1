@@ -248,14 +248,7 @@ function p {
     
 }
 
-<#
 
-The following two examples work well. 
-But we have 'ScriptBlocks' as child elements and not HTMLTag.
-The nested functionality doesn't work yet as I would like to
-
-#>
-#div -id 'rr' -Content "my string div content" -Class "eee rrer"
 $e = div -id 'TopheaderDiv' -Class "class1 class2" -Content {
 
         div -id "niv2.0" -Class "aaa bbb" -Content {
