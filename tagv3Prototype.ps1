@@ -1,10 +1,11 @@
 
 Class Htmltag {
     [String]$TagName
-    [Object]$Content
+    #[Object]$Content
     [String]$id
     [String]$Class
-    [System.Collections.ArrayList] $Children = @()
+    [System.Collections.ArrayList] $Children = [System.Collections.ArrayList]::new()
+
     
     htmltag(){
 
@@ -75,11 +76,13 @@ Class htmlParentElement : Htmltag {
 
 
     [object] GetChildren(){
-        return $this.Children
+        return $this.Children.GetEnumerator()
     }
 
     AddChild($Child){
         $this.Children.Add($Child)
+        #$this.Children += $Child
+    
     }
 
     RemoveChild([htmltag]$Child){
@@ -87,8 +90,8 @@ Class htmlParentElement : Htmltag {
     }
 
     [htmltag]SetContent($Content){
-        $this.Content = $Content
-        $this.AddChild($Content)
+        #$this.Content = $Content
+        $this.AddChild($Content.invoke())
         return $this
     }
 
@@ -102,8 +105,10 @@ Class htmlParentElement : Htmltag {
         }else{
             $Html = $this.SetStartTag()
         }
+        
+        $arr = $this.GetChildren()
 
-        foreach($CHild in $this.GetChildren()){
+        foreach($Child in $arr){
             
             if($html){
 
@@ -120,7 +125,10 @@ Class htmlParentElement : Htmltag {
                 }else{
                     $html = $invokedcontent
                 }
-            }Else{
+            }elseif($child[0] -is [string]){
+                $html = $html + $Child
+            }
+            Else{
                $html = $Child.GenerateHtml() 
             }
 
@@ -143,7 +151,7 @@ Class htmlParentElement : Htmltag {
 
 Class HtmlElement : Htmltag {
 
-    [String]GenerateHTML(){
+    [String]GenerateHtml(){
         $html = ''
         if($html){
 
@@ -152,7 +160,7 @@ Class HtmlElement : Htmltag {
             $Html = $this.SetStartTag()
         }
 
-        $html = $html + $this.Content
+        #$html = $html + $this.Content
 
         $html = $html + $this.SetEndTag()
 
@@ -195,9 +203,47 @@ function div {
         $tag = $tag.SetContent($Content)
     }
 
-    return $tag.GenerateHTML()
 
-    #return $tag
+    return $tag
+
+    
+}
+
+function p {
+    Param(
+        
+        $Content,
+        $id,
+        $Class
+    )
+
+    $TagName = 'p'
+
+    If($Content -is [scriptblock]){
+        #Create a parent HTMLElement
+        $tag = [htmlParentElement]::New()
+    }Else{
+        
+        $tag = [HtmlElement]::New()
+        
+    }
+
+    $tag.SetTagName($TagName)
+
+    if($id){
+        $tag = $tag.SetId($id)
+    }
+
+    if($Class){
+        $tag = $tag.SetClass($Class)
+    }
+
+    if($Content){
+        $tag = $tag.SetContent($Content)
+    }
+
+
+    return $tag
 
     
 }
@@ -209,11 +255,37 @@ But we have 'ScriptBlocks' as child elements and not HTMLTag.
 The nested functionality doesn't work yet as I would like to
 
 #>
-div -id 'rr' -Content "my string div content" -Class "eee rrer"
+#div -id 'rr' -Content "my string div content" -Class "eee rrer"
 $e = div -id 'TopheaderDiv' -Class "class1 class2" -Content {
 
-        div "plop scriptblock content in my superdiv" 
+        div -id "niv2.0" -Class "aaa bbb" -Content {
+
+            p id "niv3" -Class "ccc eee" -content {
+                "11111" 
+            }
+
+            p id "niv3" -Class "ccc eee" -content {
+                "22222" 
+            }
+
+            p id "niv3" -Class "ccc eee" -content {
+                "333333" 
+            }
+        }
+        div -id "niv2.1" -Class "ccc eee" -content {
+            "level 2.1" 
+        }
 } 
 
+$e
+$e.GetChildren()
+$e.generatehtml()
 
-    
+<#
+
+#For some strange reason, this doesn't work:
+# $e.Children[1]
+$e.Children # Contains two entries but it is not an array: Why??
+
+
+#>
