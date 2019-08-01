@@ -142,7 +142,7 @@ function ConvertTo-PSHTMLTable {
             
                         foreach ($Name in $HeaderNames) {
             
-                            td {
+                            th {
                                 $Name
                             }
             
@@ -158,7 +158,7 @@ function ConvertTo-PSHTMLTable {
                         
                 foreach ($propertyName in $Hashtable.properties) {
                     
-                    th {
+                    td {
                         $item.$propertyName
                     }
                     

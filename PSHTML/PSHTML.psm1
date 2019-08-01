@@ -1,4 +1,4 @@
-﻿#Generated at 07/23/2019 18:58:07 by Stephane van Gulick
+﻿#Generated at 08/01/2019 09:17:02 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -3728,7 +3728,7 @@ function ConvertTo-PSHTMLTable {
             
                         foreach ($Name in $HeaderNames) {
             
-                            td {
+                            th {
                                 $Name
                             }
             
@@ -3744,7 +3744,7 @@ function ConvertTo-PSHTMLTable {
                         
                 foreach ($propertyName in $Hashtable.properties) {
                     
-                    th {
+                    td {
                         $item.$propertyName
                     }
                     
