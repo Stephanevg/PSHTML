@@ -1,4 +1,4 @@
-﻿#Generated at 08/01/2019 09:17:02 by Stephane van Gulick
+﻿#Generated at 08/01/2019 10:12:28 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -6738,8 +6738,8 @@ Function New-PSHTMLChart {
             [Parameter(Mandatory=$False)]
             [String]$Title,
     
-            [ChartOptions]$Options,
-            [switch]$tobase64 = $false
+            [ChartOptions]$Options
+            #[switch]$tobase64 = $false
 
         )
     
@@ -6825,8 +6825,11 @@ Function New-PSHTMLChart {
                 $ChartOptions.animation.onComplete = 'RemoveCanvasAndCreateBase64Image'
             }
             $Chart.SetOptions($ChartOptions)
+            $Chart.GetDefinition($CanvasID)
     
-    
+            <#
+            Chunk ready for 8.1
+
             if ($tobase64) {
                 script -content {
                     $Chart.GetDefinition($CanvasID,$true)
@@ -6836,6 +6839,7 @@ Function New-PSHTMLChart {
                     $Chart.GetDefinition($CanvasID)
                 } -Id "pshtml_script_chart_$CanvasID"
             }
+            #>
         
     
     }
