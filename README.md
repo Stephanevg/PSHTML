@@ -17,7 +17,7 @@ Since version `0.7.0` PSHTML supports the creation of charts.
 
 # Detailed introduction
 
-You can find [here](https://www.youtube.com/watch?v=IiWRslFtl9A&t=1868s) , an introduction talk about `PSHTML` by `Stéphane van Gulick` which teach you in the first step everything you need to know to get started with `PSHTML` and show concret implementation examples. In the second part of the talk, Stéphane explains how one can extend PSHTML further by coupling it together with `Polaris`.
+You can find [here](https://www.youtube.com/watch?v=IiWRslFtl9A&t=1868s) , an introduction talk about `PSHTML` by `Stéphane van Gulick` which teach you in the first step everything you need to know to get started with `PSHTML` and show concret implementation examples. In the second part of the talk, Stéphane explains how one can extend PSHTML further by coupling it together with `Polaris` creating a full webserver 100% in powershell.
 
 ![PsConfEU PSHTML Introduction](docs/Images/psconf_intro.jpg)
 
