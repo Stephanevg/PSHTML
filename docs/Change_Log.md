@@ -2,7 +2,7 @@
 
 The latest version of the help documentation is directly available [Here](https://pshtml.readthedocs.io/en/latest/)
 
-## v0.8.0 (in progress)
+## v0.8.0
 
 ### General
 - Added support for Assets / includes ['Locations'](https://pshtml.readthedocs.io/en/latest/Locations/Locations/) (Module & Project)
