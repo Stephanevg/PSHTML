@@ -243,19 +243,20 @@ function p {
 }
 
 
+
 $e = div -id 'TopheaderDiv' -Class "class1 class2" -Content {
 
         div -id "niv2.0" -Class "aaa bbb" -Content {
 
-            p id "niv3" -Class "ccc eee" -content {
+            p -id "niv3" -Class "ccc eee" -content {
                 "11111" 
             }
 
-            p id "niv3" -Class "ccc eee" -content {
+            p -id "niv3" -Class "ccc eee" -content {
                 "22222" 
             }
 
-            p id "niv3" -Class "ccc eee" -content {
+            p -id "niv3" -Class "ccc eee" -content {
                 "333333" 
             }
         }
@@ -267,6 +268,29 @@ $e = div -id 'TopheaderDiv' -Class "class1 class2" -Content {
 $e
 $e.GetChildren()
 $e.generatehtml()
+
+
+$array = @(1,2,3,5,67,88,32,33,76)
+$a = div -id 'TopheaderDiv' -Class "class1 class2" -Content {
+
+    div -id "niv2.0" -Class "aaa bbb" -Content {
+
+
+        Foreach($val in $Array){
+
+
+            p -id "niv_$($val)" -Class "ccc eee" -content {
+                "Favorite number is: $($val)" 
+            }
+        }
+
+
+        
+    }
+    div -id "niv2.1" -Class "ccc eee" -content {
+        "level 2.1" 
+    }
+} 
 
 <#
 
