@@ -1,14 +1,11 @@
 # Asset management in PSHTML
 
-Since version **0.7.3** of PSHTML it is possible to work with __assets__
+Assets have been introduced in version  **0.7.3** of PSHTML.
 
-Working with assets, allows one to provide references dynamically to scripts and style files that are hosted locally, in the PSHTML folder.
-```
-Since version 0.8.0 It is possible to create CDN assets. Which allows to create references for script / styles tags and to point them to internet locations.
-More below..
-```
+Working with assets, allows one to provide references dynamically to scripts and style files that are on the file system or hosted on a CDN. 
+It allows to set a `<script>` or `<style>` tag pointing to a file. 
 
-This is **very** usefull for cases where there is no internet connection, and where scenarios like adding bootstrap, or using charts (Using [New-PSHTMLChart](../Charts/Charts.md)) 
+Assets is **very** usefull for cases where there is no internet connection, and where scenarios like adding bootstrap, or using charts (Using [New-PSHTMLChart](../Charts/Charts.md)) 
 
 > We have specifically tried to eas the user exeperience. writting ```Write-PSHTMLAsset -Name ``` and pressing ```TAB``` will list the current assets currently available to you. (Read below for a list of default ones).
 
@@ -30,9 +27,10 @@ There is also a more `generic` type of asset called `cdn asset`.
 
 It cover cases where the webframeworks you want to link in your HTML document, are located on CDN's on the internet / intranet.
 
-## Finding out available assets
+## Discovering available assets
 
 Use ```Get-PSHTMLAsset``` to find out which assets are available on your system.
+
 
 ## Example 1
 
