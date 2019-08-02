@@ -4,7 +4,7 @@ Class Htmltag {
     #[Object]$Content
     [String]$id
     [String]$Class
-    [System.Collections.ArrayList] $Children = [System.Collections.ArrayList]::new()
+    [System.Collections.ArrayList] $Children = [System.Collections.ArrayList]@()
 
     
     htmltag(){
@@ -68,15 +68,20 @@ Class Htmltag {
 
 Class htmlParentElement : Htmltag {
 
-
-    [object] GetChildren(){
-        return $this.Children.GetEnumerator()
+    [object[]] GetChildren(){
+        $a = @()
+        foreach( $child in $this.Children ) {
+            $a+=$child
+            If ( !($child -is [String]) ) {
+                $a+=$child.GetChildren()
+            }
+            
+        }
+        return $a
     }
 
     AddChild($Child){
         $this.Children.Add($Child)
-        #$this.Children += $Child
-    
     }
 
     RemoveChild([htmltag]$Child){
@@ -85,7 +90,10 @@ Class htmlParentElement : Htmltag {
 
     [htmltag]SetContent($Content){
         #$this.Content = $Content
-        $this.AddChild($Content.invoke())
+        #$this.AddChild($Content.invoke())
+        $Content.Invoke().foreach({
+            $this.AddChild($_)
+        })
         return $this
     }
 
