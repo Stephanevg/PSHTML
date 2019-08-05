@@ -443,7 +443,7 @@ $Should = @'
 #>
 
 $Should = @'
-var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"doughnut","data":{"labels":["Closed","Unresolved","Pending","Open"],"datasets":[{"borderColor":"white","borderWidth":1,"backgroundColor":["LightGreen","Red","LightBlue","LightYellow"],"hoverBackgroundColor":["LightGreen","Red","LightBlue","LightYellow"],"HoverBorderColor":null,"HoverBorderWidth":0,"data":[34,7,11,19],"label":["March"]}]},"options":{"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"},"animation": {"onComplete":null}}} );
+var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"doughnut","data":{"labels":["Closed","Unresolved","Pending","Open"],"datasets":[{"borderColor":"white","borderWidth":1,"backgroundColor":["LightGreen","Red","LightBlue","LightYellow"],"hoverBackgroundColor":["LightGreen","Red","LightBlue","LightYellow"],"HoverBorderColor":null,"HoverBorderWidth":0,"data":[34,7,11,19],"label":["March"]}]},"options":{"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"},"animation":{"onComplete":null}}} );
 '@
             $Is | should be $Should
         }
