@@ -37,7 +37,7 @@ Class Htmltag {
             $StartTag = $StartTag + " class='{0}'" -f $this.class
         }
 
-        return  $StartTag + " {0}" -f '/>'
+        return  $StartTag + " {0}" -f '>'
 
         
     }
@@ -155,7 +155,7 @@ Class htmlParentElement : Htmltag {
         $html = $this.SetStartTag()
         Foreach( $child in $this.Children ){
             If ( $child -is [String] ) {
-                If ( $html -match '\/\>$') {
+                If ( $html -match '\>$') {
                     $html = $html + $child
                 }
             } Else {
