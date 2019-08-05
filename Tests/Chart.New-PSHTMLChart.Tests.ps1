@@ -454,6 +454,7 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
 
         $Labels = @("january", "february")
         $Data = @(3, 5)
+        $Data2 = @(12, 15)
         $Title = "Test Title"
         $CanvasID = "TestCanvasID"
         #$bds = 
@@ -461,6 +462,7 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
                 New-MockObject -Type "datasetbar"
             } #>
         $bds = New-PSHTMLChartLineDataSet -Data $Data
+        $bds2 = New-PSHTMLChartLineDataSet -Data $Data2
             
         it '[New-PSHTMLChart][-Type Line][-DataSet LineDataSet][Label][Title][CanvasId] Should not throw' {
             {New-PSHTMLChart -Type Line -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID} | should not throw
@@ -580,7 +582,13 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
         $Is | should be $Should
         }
 
-            
+        it '[New-PSHTMLChart][-Type Line][-DataSet Multiple LineDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
+            $Is = New-PSHTMLChart -Type Line -DataSet $bds,$bds2 -Labels $Labels -Title $Title -CanvasID $CanvasID
+            $Should =@'
+var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"line","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"borderDash":[0],"borderDashOffSet":0,"cubicInterpolationMode":"default","fill":false,"lineTension":0.5,"pointBackgroundColor":"rgb(255,255,255)","pointBorderColor":"rgb(0,0,0)","pointBorderWidth":[1],"pointRadius":4,"pointStyle":"circle","showLine":true,"backgroundColor":null,"borderColor":null,"borderCapStyle":null,"borderJoinStyle":null,"pointRotation":null,"pointHitRadius":0,"PointHoverBackgroundColor":null,"pointHoverBorderColor":null,"pointHoverBorderWidth":0,"pointHoverRadius":0,"spanGaps":false,"data":[3,5],"label":null},{"borderWidth":1,"borderDash":[0],"borderDashOffSet":0,"cubicInterpolationMode":"default","fill":false,"lineTension":0.5,"pointBackgroundColor":"rgb(255,255,255)","pointBorderColor":"rgb(0,0,0)","pointBorderWidth":[1],"pointRadius":4,"pointStyle":"circle","showLine":true,"backgroundColor":null,"borderColor":null,"borderCapStyle":null,"borderJoinStyle":null,"pointRotation":null,"pointHitRadius":0,"PointHoverBackgroundColor":null,"pointHoverBorderColor":null,"pointHoverBorderWidth":0,"pointHoverRadius":0,"spanGaps":false,"data":[12,15],"label":null}]},"options":{"showLines":true,"spanGaps":false,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"}}} );
+'@
+            $Is | should be $Should
+        }
 
 
     } -tag "Chart", "Line"
