@@ -149,6 +149,22 @@ Class htmlParentElement : Htmltag {
 
 
     }
+    
+    ## New Method to return HTML
+    [String]GetHtml(){
+        $html = $this.SetStartTag()
+        Foreach( $child in $this.Children ){
+            If ( $child -is [String] ) {
+                If ( $html -match '\/\>$') {
+                    $html = $html + $child
+                }
+            } Else {
+                $html = $html+$child.gethtml()
+            }
+        }
+        $html = $html + $this.SetEndTag()
+        return $html
+    }
 }
 
 Class HtmlElement : Htmltag {
@@ -277,6 +293,8 @@ $e
 $e.GetChildren()
 $e.generatehtml()
 
+## TRY NEW METHOD
+$e.GetHtml()
 
 $array = @(1,2,3,5,67,88,32,33,76)
 $a = div -id 'TopheaderDiv' -Class "class1 class2" -Content {
