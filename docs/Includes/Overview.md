@@ -73,3 +73,11 @@ To find a specific include file, use the `-Name` parameter of Get-PSHTMLInclude.
 
 > The name of an include file is the name of the powershell script containing the code, without the extension.
     Example: Footer.ps1 The name will be 'Footer'
+
+## Locations
+
+Since version `0.8.0` it is possible to create the `Includes` in two different places called `Locations`:
+- Module
+- Project
+
+For more information on this, read the [Location](https://pshtml.readthedocs.io/en/latest/Locations/Locations/) documentation.

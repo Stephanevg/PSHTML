@@ -29,11 +29,11 @@ Function New-PSHTMLChart {
     
             New-PSHTMLChart -type doughnut -DataSet @($dsd1) -title "Doughnut Chart v1" -Labels $Labels -CanvasID $DoughnutCanvasID
             New-PSHTMLChart -type doughnut -DataSet @($dsd2) -title "Doughnut Chart v2" -Labels $Labels -CanvasID $DoughnutCanvasID
-            New-PSHTMLChart -type doughnut -DataSet @($dsd3) -title "Doughnut Chart v3" -Labels $Labels -CanvasID $DoughnutCanvasID
+            New-PSHTMLChart -type doughnut -DataSet @($dsd3) -title "Doughnut Chart v3" -Labels $Labels -CanvasID $DoughnutCanvasID -tobase64
     #>
         [CmdletBinding()]
         Param(
-            #[ValidateSet("Bar","Line","Pie","doughnut")]
+            #[ValidateSet("Bar","horizontalBar","Line","Pie","doughnut", "radar", "polarArea")]
             [ChartType]$Type = $(Throw '-Type is required'),
     
             [dataSet[]]$DataSet = $(Throw '-DataSet is required'),
@@ -47,6 +47,8 @@ Function New-PSHTMLChart {
             [String]$Title,
     
             [ChartOptions]$Options
+            #[switch]$tobase64 = $false
+
         )
     
     
@@ -68,9 +70,26 @@ Function New-PSHTMLChart {
             $ChartOptions = [BarChartOptions]::New()
             ;Break
         }
+        "horizontalBar" {
+            $Chart = [horizontalBarChart]::New()
+            $ChartOptions = [horizontalBarChartOptions]::New()
+            ;Break
+        }
         "Line"{
             $Chart = [LineChart]::New()
             $ChartOptions = [LineChartOptions]::New()
+            
+            ;Break
+        }
+        "radar"{
+            $Chart = [RadarChart]::New()
+            $ChartOptions = [RadarChartOptions]::New()
+            
+            ;Break
+        }
+        "polarArea" {
+            $Chart = [polarAreaChart]::New()
+            $ChartOptions = [polarAreaChartOptions]::New()
             
             ;Break
         }
@@ -110,13 +129,25 @@ Function New-PSHTMLChart {
                 $ChartOptions.Title.Display = $true
                 $ChartOptions.Title.text = $Title
             }
+            if ($tobase64) {
+                $ChartOptions.animation.onComplete = 'RemoveCanvasAndCreateBase64Image'
+            }
             $Chart.SetOptions($ChartOptions)
-        
+            $Chart.GetDefinition($CanvasID)
     
-    
-    
-    
-        return $Chart.GetDefinition($CanvasID)
+            <#
+            Chunk ready for 8.1
+
+            if ($tobase64) {
+                script -content {
+                    $Chart.GetDefinition($CanvasID,$true)
+                } -Id "pshtml_script_chart_$CanvasID"
+            } else {
+                script -content {
+                    $Chart.GetDefinition($CanvasID)
+                } -Id "pshtml_script_chart_$CanvasID"
+            }
+            #>
         
     
     }

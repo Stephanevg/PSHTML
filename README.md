@@ -1,4 +1,3 @@
-
 PSHTML is a cross platform Powershell module to generate HTML markup language within a DSL on Windows and Linux.
 
 # Summary
@@ -9,21 +8,51 @@ PSHTML is a cross platform Powershell module to generate HTML markup language wi
 
 `PSHTML` comes with template functionality which allows one to `include` parts of webpages that are identical throughout the web page Eg: footer, Header,Menu etc..
 
-
 Using PSHTML, offers code completion and syntax highlighting from the the default powershell language. As PSHTML respects the W3C standards, any HTML errors, will be spotted immediately.
 
 Since version `0.7.0` PSHTML supports the creation of charts.
 
- 
+
 -----
 
-## Status
+# Detailed introduction
+
+You can find [here](https://www.youtube.com/watch?v=IiWRslFtl9A&t=1868s) , an introduction talk about `PSHTML` by `Stéphane van Gulick` which teach you in the first step everything you need to know to get started with `PSHTML` and show concret implementation examples. In the second part of the talk, Stéphane explains how one can extend PSHTML further by coupling it together with `Polaris` creating a full webserver 100% in powershell.
+
+![PsConfEU PSHTML Introduction](docs/Images/psconf_intro.jpg)
+
+-----
+
+# Project Status
+
+## Appveyor
 
 |master|dev|docs|Downloads
 |---|---|---|---|
 [![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/master) | [![Build status](https://ci.appveyor.com/api/projects/status/tuv9pjxd2bkcgl3x/branch/master?svg=true)](https://ci.appveyor.com/project/Stephanevg/pshtml/branch/dev) | [![Documentation Status](https://readthedocs.org/projects/pshtml/badge/?version=latest)](https://pshtml.readthedocs.io/en/latest/?badge=latest) | [![PSHTML](https://img.shields.io/powershellgallery/dt/pshtml.svg)](https://www.powershellgallery.com/packages/PSHTML/) |
 
+## AzurePipelines
 
+### overall status
+
+| master | dev | 
+|---|---|
+|[![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=master)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=master)|[![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=dev)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=dev)|
+
+### Windows 
+| master | dev | 
+|---|---|
+| [![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=master&jobName=Test_windows2016)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=master) |[![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=dev&jobName=Test_windows2016)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=dev)|
+
+### Linux 
+| master | dev | 
+|---|---|
+|[![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=master&jobName=Test_Ubuntu)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=master) |[![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=dev&jobName=Test_Ubuntu)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=dev)|
+
+### MacOS 
+| master | dev | 
+|---|---|
+| N/A|[![Build Status](https://dev.azure.com/svangulick0207/PSHTML/_apis/build/status/Stephanevg.PSHTML?branchName=dev&jobName=Test_macos)](https://dev.azure.com/svangulick0207/PSHTML/_build/latest?definitionId=1&branchName=dev)|
 
 A change log is available [here](Change_Log.md)
 Known issues are tracked [here](Known_Issues.md)
@@ -48,7 +77,6 @@ html {
 
     body{
 
-        
         h1 "This is h1 Title in header"
         div {
             p {
@@ -63,7 +91,6 @@ html {
             h6 "This is h6"
             strong "plop";"Woop"
         }
-        
 
         h1 "My favorites Fruits"
 
@@ -89,10 +116,9 @@ html {
 
 ```
 
-## A more advanced example:
+## A more advanced example
 
 The following example is a tribute to PowerShell GodFather 'Jeffrey Snover' where we generated a BIO of the ShellFather gathering data from Wikipedia and other sources, all that using Powershell.
-
 
 ![screen shot of PSHTML results](PSHTML/Examples/Example6/tribute_snover.png)
 
@@ -100,12 +126,12 @@ The example ```PSHTML / Powershell``` code is available [here](PSHTML/Examples/E
 
 The generated ```HTML``` code is available [here](PSHTML/Examples/Example6/Example6.html)
 
-
 ## Charts
 
-Since version 0.7.0 PSHTML also supports the creation of beautifull charts.
+With version `0.7.0` PSHTML introduced the functionality of `charting`. In `v0.8.0` this functionality has been extended and offers now a total of 7 different chart types to communicate your data to your end users, and to make your webpages look amazingly cool!
 
 ![Charts Overview](docs/Images/Charts_Overview.png)
+![Charts Overview](docs/Images/Chartsoverview2.jpg)
 
 Read more about charts and how easy it is to create them using PSHTML [here](https://pshtml.readthedocs.io/en/latest/Charts/Charts/).
 
@@ -113,7 +139,7 @@ Read more about charts and how easy it is to create them using PSHTML [here](htt
 
 Check out the [Documentation](https://pshtml.readthedocs.io/en/latest/) on how to use PSHTML.
 
-## Check out references / mentions of PSHTML around the web 
+## Check out references / mentions of PSHTML around the web
 
 The community is actively using PSHTML. Check out what people are saying about it, and how they use PSHTML to implement business solutions.
 There might be a case answering your specific need?
@@ -136,6 +162,5 @@ Find here a few examples where people already used PSHTML in various awesome way
 
 ## Contribute
 
-Are you interested in contributing to the PSHTML project? 
+Are you interested in contributing to the PSHTML project?
 Read our contribution guide [Here](CONTRIBUTING.md).
-

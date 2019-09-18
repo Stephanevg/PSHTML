@@ -39,6 +39,12 @@ Describe "Testing ConverTo-PSHTMLTable" {
 
     }
 
+    it "Should contain opening and closing <th> tags" {
+        $string -match '.*<th.*>' | should be $true
+        $string -match '.*</th>.*' | should be $true
+
+    }
+
     it "Should contain opening and closing <tr> tags" {
         $string -match '.*<tr.*>' | should be $true
         $string -match '.*</tr>.*' | should be $true
@@ -47,7 +53,7 @@ Describe "Testing ConverTo-PSHTMLTable" {
 
 
     it "Header should match Handles and ProcessName"{
-        $string -match ".*<td.*>Handles</td><td.*>ProcessName</td>.*" | should be $true
+        $string -match ".*<th.*>Handles</th><th.*>ProcessName</th>.*" | should be $true
     }
 
     it "Should contain opening and closing <td> tags" {
@@ -71,7 +77,7 @@ Describe "Testing ConverTo-PSHTMLTable Properties Parameter" {
 
     it "The header Names of the Table should be the values passed to the properties parameter" {
     
-        $string -match ".*<td.*>Handles</td><td.*>ProcessName</td>.*" | should be $true
+        $string -match ".*<th.*>Handles</th><th.*>ProcessName</th>.*" | should be $true
 
     }
     

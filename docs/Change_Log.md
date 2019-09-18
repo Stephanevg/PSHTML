@@ -2,6 +2,45 @@
 
 The latest version of the help documentation is directly available [Here](https://pshtml.readthedocs.io/en/latest/)
 
+## v0.8.0
+
+Thanks a lot to the community members without the release of v0.8.0 would not have been possible:
+
+- @lxlechat
+- @Josuaburkard
+- @lxlechat
+
+### General
+- Added support for Assets / includes ['Locations'](https://pshtml.readthedocs.io/en/latest/Locations/Locations/) (Module & Project)
+- Added support for MacOS (yay!)
+- Integrated project with Azure pipelines
+- Simplified color management through `get-PSHTMLColor`. Read more about it [here](https://pshtml.readthedocs.io/en/latest/Colors/Colors/)
+
+### Charts 
+- Added support for 3 new chart types:
+    - [HorizontalBar](https://pshtml.readthedocs.io/en/latest/Charts/charts.horizontalBar/)
+    - [Radar](https://pshtml.readthedocs.io/en/latest/Charts/Charts.Radar/)
+    - [PolarArea](https://pshtml.readthedocs.io/en/latest/Charts/Charts.PolarArea/)
+
+### Functionality
+- Added a new Asset Type (.CDN)
+    - read more about it in [here](https://pshtml.readthedocs.io/en/latest/Assets/Assets/#asset-type-cdn)
+    - Added new cmdlet `New-PSHTMLCDNAssetFile`
+    - Added support for Asset `Locations`. Read more about it [here](https://pshtml.readthedocs.io/en/latest/Assets/Assets/#asset-locations)
+
+### Tags
+
+- Added support for the following tags:
+    - i
+    - b
+
+### Bugfixes
+
+- Fixed issues:
+    - 228 (Thanks @Josuaburkard)
+    - 225
+    - 222
+
 ## v0.7.11
 - Fixed minor bug with ConvertTo-PSHTMLTable
 
