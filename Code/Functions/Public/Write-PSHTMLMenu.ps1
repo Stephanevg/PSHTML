@@ -1,4 +1,4 @@
-function New-PSHTMLMenu {
+function Write-PSHTMLMenu {
     <#
     .SYNOPSIS
         Generate a New Menu.
