@@ -2,7 +2,7 @@ PSHTML is a cross platform Powershell module to generate HTML markup language wi
 
 # Summary
 
-`PSHTML` allow people to write a HTML document(s) using `powershell-like` syntax, which makes building webpages easier, and less cumbersome for 'native' PowerSheller's.
+`PSHTML` allow people to write a HTML document(s) using `powershell-like` syntax, which makes building webpages easier, and less cumbersome for 'native' PowerSheller's
 
 `PSHTML` offers the flexibility of the PowerShell language, and allows to add logic in ```powershell``` directly in the ```HTML``` structure. This open the possibility to add loops, conditional statements, switches, functions, classes, calling external modules etc.. all that directly from the same editor.
 
