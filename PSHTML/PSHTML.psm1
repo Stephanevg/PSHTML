@@ -7689,7 +7689,7 @@ function New-PSHTMLDropDownListItem {
         $options -join ''
     }
 }
-function New-PSHTMLMenu {
+function Write-PSHTMLMenu {
     <#
     .SYNOPSIS
         Generate a New Menu.
