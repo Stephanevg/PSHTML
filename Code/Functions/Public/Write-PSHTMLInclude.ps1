@@ -82,6 +82,7 @@ html{
 
     Begin{
         $Name = $PsBoundParameters[$ParameterName]
+        $Location = $PsBoundParameters[$ParameterName]
     }
     Process{
 

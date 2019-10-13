@@ -1,12 +1,15 @@
-Class IncludeFile {
+Class Include {
 
 }
 
-Class Include : IncludeFile {
+Class IncludeFile : Include {
     [String]$Name
     [System.IO.DirectoryInfo]$FolderPath
     [System.IO.FileInfo]$FilePath
-
+    Location([System.IO.FileInfo]$Module){
+        $this.ModuleRoot = $Module.FullName 
+        $this.Scriptroot = $Module.Name
+    }
     Include([System.IO.FileInfo]$FilePath){
         $this.FilePath = $FilePath
         $this.FolderPath = $FilePath.Directory
@@ -14,12 +17,12 @@ Class Include : IncludeFile {
     }
 
     [String]ToString(){
-
         $Rawcontent = [IO.File]::ReadAllText($this.FilePath.FullName)
         $Content = [scriptBlock]::Create($Rawcontent).Invoke()
         return $content
 
     }
+    
 }
 
 Class IncludeFactory {
