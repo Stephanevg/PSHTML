@@ -30,9 +30,9 @@ $HTMLDocument = html {
             $dsb1 = @() 
 
             $Data1 = @(17,25,18,17,22,30,35,44,4,1,6,12)
-            $dsb1 += New-PSHTMLChartBarDataSet -Data $data1 -label "2018" -borderColor (get-pshtmlColor -color blue) -backgroundColor "transparent" -hoverBackgroundColor (get-pshtmlColor -color green)
+            $dsb1 += New-PSHTMLChartRadarDataSet -Data $data1 -label "2018" -borderColor (get-pshtmlColor -color blue) -backgroundColor "transparent" -hoverBackgroundColor (get-pshtmlColor -color green) -PointRadius 2 
             $Data2 = @(4,1,6,12,17,25,18,17,22,30,35,44)
-            $dsb1 += New-PSHTMLChartBarDataSet -Data $data2 -label "2019" -borderColor (get-pshtmlColor -color red) -backgroundColor "transparent" -hoverBackgroundColor (get-pshtmlColor -color yellow)
+            $dsb1 += New-PSHTMLChartRadarDataSet -Data $data2 -label "2019" -borderColor (get-pshtmlColor -color red) -backgroundColor "transparent" -hoverBackgroundColor (get-pshtmlColor -color yellow) -PointRadius 10 -pointBackgroundColor (get-pshtmlColor -color red) -pointBorderColor (get-pshtmlColor -color blue)
 
             New-PSHTMLChart -type radar -DataSet $dsb1 -title "Radar Chart Example" -Labels $Labels -CanvasID $radarCanvasID
 

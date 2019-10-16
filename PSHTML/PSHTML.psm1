@@ -1,4 +1,4 @@
-#Generated at 10/16/2019 06:42:56 by Stephane van Gulick
+#Generated at 10/16/2019 09:11:33 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -1408,6 +1408,66 @@ Class datasetbar : dataset {
         $this.SetLabel($Label)
         $this.AddData($Data)
         
+    }
+}
+
+Class datasetRadar : dataset {
+    [String] $xAxisID
+    [String] $yAxisID
+    [string]  $backgroundColor
+    [string]  $borderColor
+    [int]    $borderWidth = 1
+    [String] $borderSkipped
+    [string]  $hoverBackgroundColor
+    [string]  $hoverBorderColor
+    [int]    $hoverBorderWidth
+
+    [String]$pointBackgroundColor = "rgba(0, 0, 0, 0.1)"
+    [String]$pointBorderColor = "rgba(0, 0, 0, 0.1)"
+    [Int[]]$pointBorderWidth = 1
+    [float]$pointRadius = 4
+    [ValidateSet("circle","cross","crossRot","dash","line","rect","rectRounded","rectRot","star","triangle")]
+    $pointStyle = "circle"
+
+    [int[]]$pointRotation
+    [float]$pointHitRadius
+
+    [String]  $PointHoverBackgroundColor
+    [String]  $pointHoverBorderColor
+    [int]    $pointHoverBorderWidth
+    [float] $pointHoverRadius
+
+    datasetRadar(){
+       
+    }
+
+    datasetRadar([Array]$Data,[Array]$Label){
+        
+        $this.SetLabel($Label)
+        $this.AddData($Data)
+        
+    }
+
+    SetPointSettings([float]$pointRadius,[float]$pointHitRadius,[float]$pointHoverRadius,[string]$pointBackgroundColor,[string]$pointBorderColor){
+        Write-Verbose "[DatasetLine][SetPointSettings] Start"
+        $this.pointRadius = $pointRadius
+        $this.pointHitRadius = $pointHitRadius
+        $this.pointHoverRadius = $pointHoverRadius
+        $this.pointBackgroundColor = $pointBackgroundColor
+        $this.pointBorderColor = $pointBorderColor
+        Write-Verbose "[DatasetLine][SetPointSettings] End"
+    }
+
+    [hashtable]GetPointSettings(){
+        Write-Verbose "[DatasetLine][GetPointSettings] Start"
+        return @{
+            PointRadius = $this.pointRadius
+            PointHitRadius = $this.pointHitRadius
+            PointHoverRadius = $this.pointHoverRadius
+            pointBackgroundColor = $this.pointBackgroundColor
+            pointBorderColor = $this.pointBorderColor
+        }
+        Write-Verbose "[DatasetLine][GetPointSettings] End"
     }
 }
 
@@ -7522,6 +7582,140 @@ function New-PSHTMLChartPolarAreaDataSet {
         $Datachart.HoverBorderWidth = $HoverBorderWidth
     }
 
+    return $Datachart
+}
+function New-PSHTMLChartRadarDataSet {
+    <#
+    .SYNOPSIS
+        Create a dataset object for a Radar chart
+    .DESCRIPTION
+        Use this function to generate a Dataset for a Radar chart. 
+        It allows to specify options such as, the label name, Background / border / hover colors etc..
+    .EXAMPLE
+       
+    .PARAMETER Data
+        Specify an array of values.
+        ex: @(3,5,42,69)
+    .PARAMETER Label
+        Name of the dataset
+    .PARAMETER xAxisID
+        X axis ID 
+    .PARAMETER yAxisID
+        Y axis ID 
+    .PARAMETER BackgroundColor
+        The background color of the bar chart values.
+        Use either: [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+    .PARAMETER BorderColor
+        The border color of the bar chart values.
+        Use either: [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+    .PARAMETER BorderWidth
+        expressed in px's
+    .PARAMETER BorderSkipped
+        border is skipped
+
+    .PARAMETER HoverBorderColor
+        The HoverBorder color of the bar chart values.
+        Use either: 
+        [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+    .EXAMPLE
+            $Data1 = @(34,7,11,19)
+            $dsb1 = New-PSHTMLChartBarDataSet -Data $data1 -label "March" -BackgroundColor ([Color]::Orange)
+
+            #Dataset containg data from 'March'
+            
+    .EXAMPLE
+
+            $Data2 = @(40,2,13,17)
+            $dsb2 = New-PSHTMLChartBarDataSet -Data $data2 -label "April" -BackgroundColor ([Color]::red)
+
+            #DataSet Containg data from 'April'
+    
+    .OUTPUTS
+        DataSetBar
+    .NOTES
+        Made with love by Stephanevg
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
+    [CmdletBinding()]
+    [OutputType([datasetBar])]
+    param (
+        [Array]$Data,
+        [String]$label,
+        [String] $xAxisID,
+        [String] $yAxisID,
+        [string]  $backgroundColor,
+        [string]  $borderColor,
+        [int]    $borderWidth = 1,
+        [String] $borderSkipped,
+        [string]  $hoverBackgroundColor,
+        [string]  $hoverBorderColor,
+        [int]    $hoverBorderWidth,
+        [float]$PointRadius = 4,
+        [float]$PointHitRadius = 0,
+        [float]$PointHoverRadius = 0,
+        [String]$pointBackgroundColor = "rgba(0, 0, 0, 0.1)",
+        [String]$pointBorderColor = "rgba(0, 0, 0, 0.1)"
+    )
+    
+    $Datachart = [datasetRadar]::New()
+
+    if($Data){
+        $null = $Datachart.AddData($Data)
+    }
+
+    If($Label){
+        $Datachart.label = $label
+    }
+
+    if($xAxisID){
+        $Datachart.xAxisID = $xAxisID
+    }
+
+    if($yAxisID){
+        $Datachart.yAxisID = $yAxisID
+    }
+
+    if($backgroundColor){
+        $Datachart.backgroundColor = $backgroundColor
+    }
+
+    If($borderColor){
+        $Datachart.borderColor = $borderColor
+    }
+    else {
+        $Datachart.borderColor = ''
+    }
+    if ($borderWidth){
+        $Datachart.borderWidth = $borderWidth
+    }
+
+    if($borderSkipped){
+        $Datachart.borderSkipped = $borderSkipped
+    }
+
+    If($hoverBackgroundColor){
+        $Datachart.hoverBackgroundColor = $hoverBackgroundColor
+    }
+    
+    If($HoverBorderColor){
+        $Datachart.hoverBorderColor = $HoverBorderColor
+    }
+    if($HoverBorderWidth){
+        $Datachart.HoverBorderWidth = $HoverBorderWidth
+    }
+
+    $Datachart.SetPointSettings($PointRadius,$PointHitRadius,$PointHoverRadius,$pointBackgroundColor,$pointBorderColor)
+    
     return $Datachart
 }
 function New-PSHTMLDropDownList {

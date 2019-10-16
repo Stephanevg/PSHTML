@@ -81,12 +81,12 @@ FunctionsToExport = 'a', 'address', 'area', 'article', 'aside', 'b', 'base', 'bl
                'New-PSHTMLChartBarDataSet', 'New-PSHTMLChartDataSet', 
                'New-PSHTMLChartDoughnutDataSet', 'New-PSHTMLChartLineDataSet', 
                'New-PSHTMLChartPieDataSet', 'New-PSHTMLChartPolarAreaDataSet', 
-               'New-PSHTMLDropDownList', 'New-PSHTMLDropDownListItem', 
-               'New-PSHTMLMenu', 'noscript', 'ol', 'optgroup', 'option', 
-               'Out-PSHTMLDocument', 'output', 'p', 'pre', 'progress', 'script', 'section', 
-               'selecttag', 'small', 'span', 'strong', 'style', 'sub', 'sup', 'table', 'tbody', 
-               'td', 'textarea', 'tfoot', 'th', 'thead', 'title', 'tr', 'ul', 
-               'Write-PSHTMLAsset', 'Write-PSHTMLInclude', 'Write-PSHTMLSymbol'
+               'New-PSHTMLChartRadarDataSet', 'New-PSHTMLDropDownList', 
+               'New-PSHTMLDropDownListItem', 'New-PSHTMLMenu', 'noscript', 'ol', 
+               'optgroup', 'option', 'Out-PSHTMLDocument', 'output', 'p', 'pre', 'progress', 
+               'script', 'section', 'selecttag', 'small', 'span', 'strong', 'style', 'sub', 
+               'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'title', 'tr', 
+               'ul', 'Write-PSHTMLAsset', 'Write-PSHTMLInclude', 'Write-PSHTMLSymbol'
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()

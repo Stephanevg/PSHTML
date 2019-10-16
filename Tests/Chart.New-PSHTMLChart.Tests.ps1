@@ -164,14 +164,10 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
 
 
         $Labels = @("january", "february")
-        $Data = @(3, 5)
         $Title = "Test Title"
         $CanvasID = "TestCanvasID"
-        #$bds = 
-        <# mock -CommandName New-PSHTMLChartBarDataSet -MockWith {
-                New-MockObject -Type "datasetbar"
-            } #>
-        $bds = New-PSHTMLChartBarDataSet -Data $Data
+        $Data1 = @(17,25,18,17,22,30,35,44,4,1,6,12)
+        $bds = New-PSHTMLChartRadarDataSet -Data $data1 -label "2018" -borderColor (get-pshtmlColor -color blue) -backgroundColor "transparent" -hoverBackgroundColor (get-pshtmlColor -color green) -PointRadius 2 
             
         it '[New-PSHTMLChart][-Type Radar][-DataSet BarDataSet][Label][Title][CanvasId] Should not throw' {
             {New-PSHTMLChart -Type Radar -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID} | should not throw
@@ -179,19 +175,11 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
 
         it '[New-PSHTMLChart][-Type Radar][-DataSet BarDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
             $Is = New-PSHTMLChart -Type radar -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID
-<#
 
-$Should = @'
-<script Id="pshtml_script_chart_TestCanvasID"  >var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"radar","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"xAxisID":null,"yAxisID":null,"backgroundColor":null,"borderColor":"","borderSkipped":null,"hoverBackgroundColor":null,"hoverBorderColor":null,"hoverBorderWidth":0,"data":[3,5],"label":null}]},"options":{"scales":null,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"title":{"display":true,"text":"Test Title"},"animation":{"onComplete":null}}} );</script>
-'@
-#>
-
-$Should = @'
-var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"radar","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"xAxisID":null,"yAxisID":null,"backgroundColor":null,"borderColor":"","borderSkipped":null,"hoverBackgroundColor":null,"hoverBorderColor":null,"hoverBorderWidth":0,"data":[3,5],"label":null}]},"options":{"scales":null,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"title":{"display":true,"text":"Test Title"},"animation":{"onComplete":null}}} );
+            $Should = @'
+var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"radar","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"pointBackgroundColor":"rgba(0, 0, 0, 0.1)","pointBorderColor":"rgba(0, 0, 0, 0.1)","pointBorderWidth":[1],"pointRadius":2.0,"pointStyle":"circle","xAxisID":null,"yAxisID":null,"backgroundColor":"transparent","borderColor":"rgb(0,0,255)","borderSkipped":null,"hoverBackgroundColor":"rgb(0,128,0)","hoverBorderColor":null,"hoverBorderWidth":0,"pointRotation":null,"pointHitRadius":0.0,"PointHoverBackgroundColor":null,"pointHoverBorderColor":null,"pointHoverBorderWidth":0,"pointHoverRadius":0.0,"data":[17,25,18,17,22,30,35,44,4,1,6,12],"label":["2018"]}]},"options":{"scales":null,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"title":{"display":true,"text":"Test Title"},"animation":{"onComplete":null}}} );
 '@
 
-            #$Is | should be $Should
-            
             $Is | should be $Should
         }
             

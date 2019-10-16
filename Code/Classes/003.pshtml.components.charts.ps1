@@ -498,6 +498,66 @@ Class datasetbar : dataset {
     }
 }
 
+Class datasetRadar : dataset {
+    [String] $xAxisID
+    [String] $yAxisID
+    [string]  $backgroundColor
+    [string]  $borderColor
+    [int]    $borderWidth = 1
+    [String] $borderSkipped
+    [string]  $hoverBackgroundColor
+    [string]  $hoverBorderColor
+    [int]    $hoverBorderWidth
+
+    [String]$pointBackgroundColor = "rgba(0, 0, 0, 0.1)"
+    [String]$pointBorderColor = "rgba(0, 0, 0, 0.1)"
+    [Int[]]$pointBorderWidth = 1
+    [float]$pointRadius = 4
+    [ValidateSet("circle","cross","crossRot","dash","line","rect","rectRounded","rectRot","star","triangle")]
+    $pointStyle = "circle"
+
+    [int[]]$pointRotation
+    [float]$pointHitRadius
+
+    [String]  $PointHoverBackgroundColor
+    [String]  $pointHoverBorderColor
+    [int]    $pointHoverBorderWidth
+    [float] $pointHoverRadius
+
+    datasetRadar(){
+       
+    }
+
+    datasetRadar([Array]$Data,[Array]$Label){
+        
+        $this.SetLabel($Label)
+        $this.AddData($Data)
+        
+    }
+
+    SetPointSettings([float]$pointRadius,[float]$pointHitRadius,[float]$pointHoverRadius,[string]$pointBackgroundColor,[string]$pointBorderColor){
+        Write-Verbose "[DatasetLine][SetPointSettings] Start"
+        $this.pointRadius = $pointRadius
+        $this.pointHitRadius = $pointHitRadius
+        $this.pointHoverRadius = $pointHoverRadius
+        $this.pointBackgroundColor = $pointBackgroundColor
+        $this.pointBorderColor = $pointBorderColor
+        Write-Verbose "[DatasetLine][SetPointSettings] End"
+    }
+
+    [hashtable]GetPointSettings(){
+        Write-Verbose "[DatasetLine][GetPointSettings] Start"
+        return @{
+            PointRadius = $this.pointRadius
+            PointHitRadius = $this.pointHitRadius
+            PointHoverRadius = $this.pointHoverRadius
+            pointBackgroundColor = $this.pointBackgroundColor
+            pointBorderColor = $this.pointBorderColor
+        }
+        Write-Verbose "[DatasetLine][GetPointSettings] End"
+    }
+}
+
 Class datasetPolarArea : dataset {
     [Array]  $backgroundColor
     [Array]  $borderColor
