@@ -82,7 +82,8 @@ Write-Host "[BUILD][START][PSD1] Adding functions to export" -ForegroundColor RE
 
 $FunctionsToExport = $PublicFunctions.BaseName
 $Manifest = Join-Path -Path $ModuleFolderPath -ChildPath "$($ModuleName).psd1"
-Update-ModuleManifest -Path $Manifest -FunctionsToExport $FunctionsToExport
+$Tags = @( 'PSEdition_Core','PSEdition_Desktop','pshtml','html','web' )
+Update-ModuleManifest -Path $Manifest -FunctionsToExport $FunctionsToExport -Tags $Tags
 
 Write-Host "[BUILD][END][MAIN PSM1] building main PSM1 " -ForegroundColor RED -BackgroundColor White
 
