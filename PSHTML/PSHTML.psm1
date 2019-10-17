@@ -1,4 +1,4 @@
-﻿#Generated at 09/19/2019 19:01:41 by Stephane van Gulick
+#Generated at 10/17/2019 20:29:55 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -735,7 +735,7 @@ Class LogFile : LogDocument {
             }
         }else{
 
-            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
+            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         }
 
         $cp = $global:MyInvocation.MyCommand.Definition #fix for Ubuntu appveyor machines.
@@ -798,7 +798,7 @@ Class LogFile : LogDocument {
     }
 
     hidden [string] CreateFileName() {
-        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
+        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         if(!($cp)){
             $cp = (Get-PSCallStack)[-1].ScriptName 
         }
@@ -1672,11 +1672,11 @@ Class ChartAnimation {
 }
 
 Class ChartOptions  {
-    [int]$barPercentage = 0.9
+    # [int]$barPercentage = 0.9
     [Int]$categoryPercentage = 0.8
     [bool]$responsive = $false
-    [String]$barThickness
-    [Int]$maxBarThickness
+    # [String]$barThickness
+    # [Int]$maxBarThickness
     [Bool] $offsetGridLines = $true
     [scales]$scales = [scales]::New()
     [ChartTitle]$title = [ChartTitle]::New()
@@ -1704,6 +1704,9 @@ Class ChartOptions  {
 #region Charts
 
 Class BarChartOptions : ChartOptions {
+    [int]$barPercentage = 0.9
+    [String]$barThickness
+    [Int]$maxBarThickness
 
 }
 
@@ -2927,7 +2930,7 @@ Function base {
     base "woop1" -Class "class"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Current Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -3169,7 +3172,7 @@ Function button {
     </form>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -4209,7 +4212,7 @@ Function fieldset {
     fieldset {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4678,7 +4681,7 @@ function Get-PSHTMLAsset {
     .OUTPUTS
         Asset[]
     .Notes
-        Author: StÃ©phane van Gulick
+        Author: Stéphane van Gulick
     .Link
       https://github.com/Stephanevg/PSHTML
     #>
@@ -4929,7 +4932,7 @@ Function H1 {
     h1 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4983,7 +4986,7 @@ Function h2 {
     h2 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5035,7 +5038,7 @@ Function h3 {
     h3 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5087,7 +5090,7 @@ Function h4 {
     h4 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5139,7 +5142,7 @@ Function h5 {
     h5 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5191,7 +5194,7 @@ Function h6 {
     h6 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5419,7 +5422,7 @@ Function hr {
     <hr Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 2.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5882,7 +5885,7 @@ Function label {
     </form>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 1.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5938,7 +5941,7 @@ Function legend {
     </form>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6085,7 +6088,7 @@ Function Link {
     <link Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6324,7 +6327,7 @@ Function meta {
     <meta name="author" content="Stephane van Gulick"  >
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6516,7 +6519,7 @@ Function nav {
     </nav>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7020,7 +7023,7 @@ Function New-PSHTMLChartDataSet {
     .OUTPUTS
         [DataSet]
     .NOTES
-        Author: StÃ©phane van Gulick
+        Author: Stéphane van Gulick
     #>
     [CmdletBInding()]
     Param(
@@ -7939,7 +7942,7 @@ Function optgroup {
     
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8072,7 +8075,7 @@ function Out-PSHTMLDocument {
     .DESCRIPTION
         Output the html string into a file.
     .EXAMPLE
-        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imÃ©diatley.
+        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imédiatley.
 
         $o = Get-PRocess | select ProcessName,Handles | select -first 5
         $FilePath = "C:\temp\OutputFile.html"
@@ -8085,7 +8088,7 @@ function Out-PSHTMLDocument {
         None
     .NOTES
 
-        Author: StÃ©phane van Gulick
+        Author: Stéphane van Gulick
                 
         
     .LINK
@@ -8578,7 +8581,7 @@ Function selecttag {
         
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.2.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8638,7 +8641,7 @@ Function small {
     </small>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8753,7 +8756,7 @@ Function strong {
 
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8812,7 +8815,7 @@ Function style {
     style {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0

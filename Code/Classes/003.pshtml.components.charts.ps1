@@ -759,11 +759,11 @@ Class ChartAnimation {
 }
 
 Class ChartOptions  {
-    [int]$barPercentage = 0.9
+    # [int]$barPercentage = 0.9
     [Int]$categoryPercentage = 0.8
     [bool]$responsive = $false
-    [String]$barThickness
-    [Int]$maxBarThickness
+    # [String]$barThickness
+    # [Int]$maxBarThickness
     [Bool] $offsetGridLines = $true
     [scales]$scales = [scales]::New()
     [ChartTitle]$title = [ChartTitle]::New()
@@ -791,6 +791,9 @@ Class ChartOptions  {
 #region Charts
 
 Class BarChartOptions : ChartOptions {
+    [int]$barPercentage = 0.9
+    [String]$barThickness
+    [Int]$maxBarThickness
 
 }
 
