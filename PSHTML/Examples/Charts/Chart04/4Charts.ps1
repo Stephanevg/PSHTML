@@ -63,7 +63,10 @@ $HTMLPage = html {
             $dsb2 = New-PSHTMLChartBarDataSet -Data $data2 -label "April" -BackgroundColor ([Color]::red)
             $dsb3 = New-PSHTMLChartBarDataSet -Data $data3 -label "Mai" -BackgroundColor ([Color]::Green )
 
-            New-PSHTMLChart -type bar -DataSet $dsb1,$dsb2,$dsb3 -title "Bar Chart v2" -Labels $Labels -CanvasID $BarCanvasID -tobase64
+            $o = [ChartOptions]::new()
+
+            New-PSHTMLChart -type bar -DataSet $dsb1,$dsb2,$dsb3 -title "Bar Chart v2" -Labels $Labels -CanvasID $BarCanvasID -Options 
+             -tobase64
       
             $red = [Color]::red
             $dsl1 = New-PSHTMLChartLineDataSet -lineColor "cyan" -Data $data1 -label "March" 

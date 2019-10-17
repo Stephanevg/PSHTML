@@ -14,7 +14,6 @@ import-module .\PSHTML -Force
 
 InModuleScope PSHTML {
 
-
         Describe "BarChartOptions"{
             it "[Constructor][Parameterless] Should not throw"{
                 {[BarChartOptions]::New()} | should not throw
