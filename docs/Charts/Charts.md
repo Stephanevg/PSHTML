@@ -130,4 +130,4 @@ start $outpath
 
 ## Result
 
-![Chart](../PSHTML/Examples/Charts/Chart01/BarChartExample.png)
+![Chart](../../PSHTML/Examples/Charts/Chart01/BarChartExample.png)

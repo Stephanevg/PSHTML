@@ -92,7 +92,7 @@ Which represents data from a ticketing system:
 
 This would result in the following graph:
 
-![BasicDoughnutChar](./Images/DoughnutChart_basic_01.png)
+![BasicDoughnutChar](../Images/DoughnutChart_basic_01.png)
 
 > Nota: The function must be called within a '-content' block of a 'script' section (See script listing below)
 
