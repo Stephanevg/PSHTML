@@ -1,4 +1,4 @@
-function New-PSHTMLMenu {
+function Write-PSHTMLMenu {
     <#
     .SYNOPSIS
         Generate a New Menu.
@@ -33,7 +33,7 @@ function New-PSHTMLMenu {
         $arr += $Hash2
 
     #Create a Menublock
-        New-PSHTMLMenu -InputValues $arr -NavClass "JustAClass" -NavId "Menu_top" -NavStyle "display:block;"
+        Write-PSHTMLMenu -InputValues $arr -NavClass "JustAClass" -NavId "Menu_top" -NavStyle "display:block;"
     .INPUTS
         Inputs (if any)
     .OUTPUTS
@@ -81,8 +81,6 @@ function New-PSHTMLMenu {
     }
     
     process {
-
-        $BoundParameters = $PSBoundParameters
 
         nav -Content {
 
