@@ -22,7 +22,7 @@ function New-PSHTMLChartLineDataSet {
     param (
         [String]$LineColor,
         [String]$label,
-        [Color]  $FillbackgroundColor,
+        $FillbackgroundColor,
         [int]    $LineWidth = 1,
         [int[]]    $LineDash = 0,
         [int]    $LineDashOffSet = 0,

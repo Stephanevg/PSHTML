@@ -125,22 +125,22 @@ Function New-PSHTMLChartDataSet {
         $dataSet = [dataSet]::New($Data,$Name)
         if($BackgroundColor){
 
-            $dataSet.backgroundColor = [Color]::$BackgroundColor
+            $dataSet.backgroundColor = $BackgroundColor
         }
 
         if($HoverBackgroundColor){
 
-            $dataSet.HoverBackgroundColor = [Color]::$HoverBackgroundColor
+            $dataSet.HoverBackgroundColor = $HoverBackgroundColor
         }
 
         if($hoverBorderColor){
 
-            $dataSet.hoverBorderColor = [Color]::$hoverBorderColor
+            $dataSet.hoverBorderColor = $hoverBorderColor
         }
 
         if($BorderColor){
 
-            $dataSet.BorderColor = [Color]::$BorderColor
+            $dataSet.BorderColor = $BorderColor
         }
 
         if($yAxisID){
