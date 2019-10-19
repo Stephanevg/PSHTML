@@ -13,7 +13,7 @@ Write-Verbose "Importing module"
 import-module .\PSHTML -Force
 
 Context "Testing PSHTML"{
-    Describe "Testing New-PSHTMLMenu" {
+    Describe "Testing Write-PSHTMLMenu" {
 
 
         $Hash1 = @{
@@ -42,7 +42,7 @@ Context "Testing PSHTML"{
         $arr += $Hash1
         $arr += $Hash2
 
-        $String = New-PSHTMLMenu -InputValues $arr -NavId "Menu_top" -NavClass "JustAClass"  -NavStyle "display:block;"
+        $String = Write-PSHTMLMenu -InputValues $arr -NavId "Menu_top" -NavClass "JustAClass"  -NavStyle "display:block;"
 
         if($string -is [array]){
             $string = $String -join ""

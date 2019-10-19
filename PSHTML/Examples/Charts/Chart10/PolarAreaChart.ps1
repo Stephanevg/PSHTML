@@ -17,7 +17,7 @@ $HTMLDocument = html {
             p {
                 "This is a polarArea graph"
             }
-            canvas -Height 400px -Width 400px -Id $BarCanvasID {
+            canvas -Height 400px -Width 400px -Id $PolarCanvasID {
     
             }
 
@@ -32,9 +32,9 @@ $HTMLDocument = html {
             $HoverColors = @('DarkGreen', 'yellow',   'Orange',   'grey',  'DarkGrey',  'blue',   'Magenta', 'DarkMagenta', 'red',       'Cyan',    'DarkCyan', 'green' )
             $Data1       = @(17,          25,         18,         17,      10,           28,      35,         50,           44,          10,        32,         72)
             
-            $dsb1 = New-PSHTMLChartPolarAreaDataSet -Data $data1 -BackgroundColor $Colors -hoverBackgroundColor $HoverColors
+            $dsb1 = New-PSHTMLChartPolarAreaDataSet -Data $data1 -BackgroundColor $Colors -hoverBackgroundColor $HoverColors -PointRadius
 
-            New-PSHTMLChart -type polarArea -DataSet $dsb1 -title  'PolarArea Chart Example' -Labels $Labels -CanvasID $BarCanvasID
+            New-PSHTMLChart -type polarArea -DataSet $dsb1 -title  'PolarArea Chart Example' -Labels $Labels -CanvasID $PolarCanvasID
         }
     }
 }
