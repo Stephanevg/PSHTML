@@ -1,4 +1,4 @@
-﻿#Generated at 09/19/2019 19:01:41 by Stephane van Gulick
+#Generated at 10/16/2019 09:11:33 by Stephane van Gulick
 
 Enum SettingType {
     General
@@ -735,7 +735,7 @@ Class LogFile : LogDocument {
             }
         }else{
 
-            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
+            $cp = (Get-PSCallStack)[-1].ScriptName #$PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         }
 
         $cp = $global:MyInvocation.MyCommand.Definition #fix for Ubuntu appveyor machines.
@@ -798,7 +798,7 @@ Class LogFile : LogDocument {
     }
 
     hidden [string] CreateFileName() {
-        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(ï¿½.\ï¿½) #$PSCommandPath
+        $cp = $PSCommandPath #Split-Path -parent $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(�.\�) #$PSCommandPath
         if(!($cp)){
             $cp = (Get-PSCallStack)[-1].ScriptName 
         }
@@ -1408,6 +1408,66 @@ Class datasetbar : dataset {
         $this.SetLabel($Label)
         $this.AddData($Data)
         
+    }
+}
+
+Class datasetRadar : dataset {
+    [String] $xAxisID
+    [String] $yAxisID
+    [string]  $backgroundColor
+    [string]  $borderColor
+    [int]    $borderWidth = 1
+    [String] $borderSkipped
+    [string]  $hoverBackgroundColor
+    [string]  $hoverBorderColor
+    [int]    $hoverBorderWidth
+
+    [String]$pointBackgroundColor = "rgba(0, 0, 0, 0.1)"
+    [String]$pointBorderColor = "rgba(0, 0, 0, 0.1)"
+    [Int[]]$pointBorderWidth = 1
+    [float]$pointRadius = 4
+    [ValidateSet("circle","cross","crossRot","dash","line","rect","rectRounded","rectRot","star","triangle")]
+    $pointStyle = "circle"
+
+    [int[]]$pointRotation
+    [float]$pointHitRadius
+
+    [String]  $PointHoverBackgroundColor
+    [String]  $pointHoverBorderColor
+    [int]    $pointHoverBorderWidth
+    [float] $pointHoverRadius
+
+    datasetRadar(){
+       
+    }
+
+    datasetRadar([Array]$Data,[Array]$Label){
+        
+        $this.SetLabel($Label)
+        $this.AddData($Data)
+        
+    }
+
+    SetPointSettings([float]$pointRadius,[float]$pointHitRadius,[float]$pointHoverRadius,[string]$pointBackgroundColor,[string]$pointBorderColor){
+        Write-Verbose "[DatasetLine][SetPointSettings] Start"
+        $this.pointRadius = $pointRadius
+        $this.pointHitRadius = $pointHitRadius
+        $this.pointHoverRadius = $pointHoverRadius
+        $this.pointBackgroundColor = $pointBackgroundColor
+        $this.pointBorderColor = $pointBorderColor
+        Write-Verbose "[DatasetLine][SetPointSettings] End"
+    }
+
+    [hashtable]GetPointSettings(){
+        Write-Verbose "[DatasetLine][GetPointSettings] Start"
+        return @{
+            PointRadius = $this.pointRadius
+            PointHitRadius = $this.pointHitRadius
+            PointHoverRadius = $this.pointHoverRadius
+            pointBackgroundColor = $this.pointBackgroundColor
+            pointBorderColor = $this.pointBorderColor
+        }
+        Write-Verbose "[DatasetLine][GetPointSettings] End"
     }
 }
 
@@ -2927,7 +2987,7 @@ Function base {
     base "woop1" -Class "class"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Current Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -3169,7 +3229,7 @@ Function button {
     </form>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1
     History:
         2018.11.1; Stephanevg;Updated to version 3.1
@@ -4209,7 +4269,7 @@ Function fieldset {
     fieldset {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4678,7 +4738,7 @@ function Get-PSHTMLAsset {
     .OUTPUTS
         Asset[]
     .Notes
-        Author: StÃ©phane van Gulick
+        Author: Stéphane van Gulick
     .Link
       https://github.com/Stephanevg/PSHTML
     #>
@@ -4929,7 +4989,7 @@ Function H1 {
     h1 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -4983,7 +5043,7 @@ Function h2 {
     h2 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5035,7 +5095,7 @@ Function h3 {
     h3 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5087,7 +5147,7 @@ Function h4 {
     h4 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5139,7 +5199,7 @@ Function h5 {
     h5 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5191,7 +5251,7 @@ Function h6 {
     h6 {"woop3"} -Class "class" -Id "MaintTitle" -Style "color:red;"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5419,7 +5479,7 @@ Function hr {
     <hr Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 2.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5882,7 +5942,7 @@ Function label {
     </form>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 1.0.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -5938,7 +5998,7 @@ Function legend {
     </form>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6085,7 +6145,7 @@ Function Link {
     <link Style="font-family: arial; text-align: center;"  >
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6324,7 +6384,7 @@ Function meta {
     <meta name="author" content="Stephane van Gulick"  >
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -6516,7 +6576,7 @@ Function nav {
     </nav>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -7020,7 +7080,7 @@ Function New-PSHTMLChartDataSet {
     .OUTPUTS
         [DataSet]
     .NOTES
-        Author: StÃ©phane van Gulick
+        Author: Stéphane van Gulick
     #>
     [CmdletBInding()]
     Param(
@@ -7524,6 +7584,140 @@ function New-PSHTMLChartPolarAreaDataSet {
 
     return $Datachart
 }
+function New-PSHTMLChartRadarDataSet {
+    <#
+    .SYNOPSIS
+        Create a dataset object for a Radar chart
+    .DESCRIPTION
+        Use this function to generate a Dataset for a Radar chart. 
+        It allows to specify options such as, the label name, Background / border / hover colors etc..
+    .EXAMPLE
+       
+    .PARAMETER Data
+        Specify an array of values.
+        ex: @(3,5,42,69)
+    .PARAMETER Label
+        Name of the dataset
+    .PARAMETER xAxisID
+        X axis ID 
+    .PARAMETER yAxisID
+        Y axis ID 
+    .PARAMETER BackgroundColor
+        The background color of the bar chart values.
+        Use either: [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+    .PARAMETER BorderColor
+        The border color of the bar chart values.
+        Use either: [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+    .PARAMETER BorderWidth
+        expressed in px's
+    .PARAMETER BorderSkipped
+        border is skipped
+
+    .PARAMETER HoverBorderColor
+        The HoverBorder color of the bar chart values.
+        Use either: 
+        [Color] to generate a color,
+        Or specify directly one of the following formats:
+        RGB(120,240,50)
+        RGBA(120,240,50,0.4)
+    .EXAMPLE
+            $Data1 = @(34,7,11,19)
+            $dsb1 = New-PSHTMLChartBarDataSet -Data $data1 -label "March" -BackgroundColor ([Color]::Orange)
+
+            #Dataset containg data from 'March'
+            
+    .EXAMPLE
+
+            $Data2 = @(40,2,13,17)
+            $dsb2 = New-PSHTMLChartBarDataSet -Data $data2 -label "April" -BackgroundColor ([Color]::red)
+
+            #DataSet Containg data from 'April'
+    
+    .OUTPUTS
+        DataSetBar
+    .NOTES
+        Made with love by Stephanevg
+    .LINK
+        https://github.com/Stephanevg/PSHTML
+    #>
+    [CmdletBinding()]
+    [OutputType([datasetBar])]
+    param (
+        [Array]$Data,
+        [String]$label,
+        [String] $xAxisID,
+        [String] $yAxisID,
+        [string]  $backgroundColor,
+        [string]  $borderColor,
+        [int]    $borderWidth = 1,
+        [String] $borderSkipped,
+        [string]  $hoverBackgroundColor,
+        [string]  $hoverBorderColor,
+        [int]    $hoverBorderWidth,
+        [float]$PointRadius = 4,
+        [float]$PointHitRadius = 0,
+        [float]$PointHoverRadius = 0,
+        [String]$pointBackgroundColor = "rgba(0, 0, 0, 0.1)",
+        [String]$pointBorderColor = "rgba(0, 0, 0, 0.1)"
+    )
+    
+    $Datachart = [datasetRadar]::New()
+
+    if($Data){
+        $null = $Datachart.AddData($Data)
+    }
+
+    If($Label){
+        $Datachart.label = $label
+    }
+
+    if($xAxisID){
+        $Datachart.xAxisID = $xAxisID
+    }
+
+    if($yAxisID){
+        $Datachart.yAxisID = $yAxisID
+    }
+
+    if($backgroundColor){
+        $Datachart.backgroundColor = $backgroundColor
+    }
+
+    If($borderColor){
+        $Datachart.borderColor = $borderColor
+    }
+    else {
+        $Datachart.borderColor = ''
+    }
+    if ($borderWidth){
+        $Datachart.borderWidth = $borderWidth
+    }
+
+    if($borderSkipped){
+        $Datachart.borderSkipped = $borderSkipped
+    }
+
+    If($hoverBackgroundColor){
+        $Datachart.hoverBackgroundColor = $hoverBackgroundColor
+    }
+    
+    If($HoverBorderColor){
+        $Datachart.hoverBorderColor = $HoverBorderColor
+    }
+    if($HoverBorderWidth){
+        $Datachart.HoverBorderWidth = $HoverBorderWidth
+    }
+
+    $Datachart.SetPointSettings($PointRadius,$PointHitRadius,$PointHoverRadius,$pointBackgroundColor,$pointBorderColor)
+    
+    return $Datachart
+}
 function New-PSHTMLDropDownList {
     <#
     .SYNOPSIS
@@ -7939,7 +8133,7 @@ Function optgroup {
     
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8072,7 +8266,7 @@ function Out-PSHTMLDocument {
     .DESCRIPTION
         Output the html string into a file.
     .EXAMPLE
-        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imÃ©diatley.
+        The following example gets the list of first 5 processes. Converts it into an HTML Table. It outputs the results in a file, and opens the results imédiatley.
 
         $o = Get-PRocess | select ProcessName,Handles | select -first 5
         $FilePath = "C:\temp\OutputFile.html"
@@ -8085,7 +8279,7 @@ function Out-PSHTMLDocument {
         None
     .NOTES
 
-        Author: StÃ©phane van Gulick
+        Author: Stéphane van Gulick
                 
         
     .LINK
@@ -8578,7 +8772,7 @@ Function selecttag {
         
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.2.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8638,7 +8832,7 @@ Function small {
     </small>
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8753,7 +8947,7 @@ Function strong {
 
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
@@ -8812,7 +9006,7 @@ Function style {
     style {$css} -media "print" -type "text/css"
 
     .Notes
-    Author: StÃ©phane van Gulick
+    Author: Stéphane van Gulick
     Version: 3.1.0
     History:
     2018.10.30;@ChristopheKumor;Updated to version 3.0
