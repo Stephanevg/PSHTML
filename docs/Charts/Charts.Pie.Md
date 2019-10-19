@@ -92,7 +92,7 @@ Which represents data from a ticketing system:
 
 This would result in the following graph:
 
-![BasicPieChar](./Images/PieChart_basic_01.png)
+![BasicPieChar](../Images/PieChart_basic_01.png)
 
 > Nota: The function must be called within a '-content' block of a 'script' section (See script listing below)
 

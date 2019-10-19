@@ -92,7 +92,7 @@ Which, actually represented from a ticketing system example, the following data:
 
 This would result in the following graph:
 
-![BasicBarChar](./Images/BarChart_basic_01.png)
+![BasicBarChar](../Images/BarChart_basic_01.png)
 
 > Nota: The function must be called within a '-content' block of a 'script' section (See script listing below)
 

@@ -6,7 +6,6 @@
 ## Dataset
 
 ```powershell
-
 $Labels = @("January","February","Mars","April","Mai","June","July","August","September","October","November","december")
 
 $dsb1 = @()
@@ -15,7 +14,6 @@ $Data2 = @(4,1,6,12,17,25,18,17,22,30,35,44)
 
 $dsb1 += New-PSHTMLChartBarDataSet -Data $data1 -label "2018" -borderColor (get-pshtmlColor -color blue) -backgroundColor "transparent" -hoverBackgroundColor (get-pshtmlColor -color green)
 $dsb1 += New-PSHTMLChartBarDataSet -Data $data2 -label "2019" -borderColor (get-pshtmlColor -color red) -backgroundColor "transparent" -hoverBackgroundColor (get-pshtmlColor -color yellow)
-
 ```
 
 > Use `Get-PSHTMLColor -Color` and tab through the results 
@@ -23,17 +21,13 @@ $dsb1 += New-PSHTMLChartBarDataSet -Data $data2 -label "2019" -borderColor (get-
 ## Creating a chart
 
 ```powershell
-
 New-PSHTMLChart -type radar -DataSet $dsb1 -title "Radar Chart Example" -Labels $Labels -CanvasID $radarCanvasID
-
 ```
 
 ## Combining everything together
 
 ```powershell
-
 import-module PSHTML
-
 
 $radarCanvasID = "radarcanvas"
 $HTMLDocument = html { 
@@ -71,14 +65,9 @@ $HTMLDocument = html {
             New-PSHTMLChart -type radar -DataSet $dsb1 -title "Radar Chart Example" -Labels $Labels -CanvasID $radarCanvasID
 
         }
-
-            
     }
 }
 
-
 $OutPath = "$Home/RadarChart1.html"
 Out-PSHTMLDocument -HTMLDocument $HTMLDocument -OutPath $OutPath -Show
-
-
 ```
