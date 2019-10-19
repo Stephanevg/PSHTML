@@ -2,7 +2,15 @@
 
 The latest version of the help documentation is directly available [Here](https://pshtml.readthedocs.io/en/latest/)
 
-## v0.8.0 (in progress)
+## v0.8.1
+Added the following functions:
+-> Write-PSHTMLMenu
+-> Added Enum PSHTMLCOLOR
+-> Renamed [COLOR] to [COLORFACTORY]
+-> Plenty of Minor fixes
+-> Increased code coverage to 75%
+
+## v0.8.0
 
 ### General
 - Added support for MacOS (yay!)
