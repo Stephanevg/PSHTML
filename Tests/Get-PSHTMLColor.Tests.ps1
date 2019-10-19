@@ -8,7 +8,8 @@ Set-Location -Path $RootFolder.FullName
 
 #Hack to load the [System.Drawing.Color] ahead of time
 #read more here -> https://github.com/PowerShell/vscode-powershell/issues/219
-Microsoft.PowerShell.Management\Get-Clipboard | Out-Null
+#Microsoft.PowerShell.Management\Get-Clipboard | Out-Null
+Add-Type -Assembly System.Drawing
 #Could also be loaded directly via Add-Type -Assembly System.Drawing but apperently, Get-ClipBoard thingy is better..
 
 Write-Verbose "Importing module"

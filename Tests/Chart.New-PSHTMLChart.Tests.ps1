@@ -170,8 +170,8 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
         
         #Hack to load the [System.Drawing.Color] ahead of time needed for Get-PSHTMLColor
         #read more here -> https://github.com/PowerShell/vscode-powershell/issues/219
-        Microsoft.PowerShell.Management\Get-Clipboard | Out-Null
-
+        #Microsoft.PowerShell.Management\Get-Clipboard | Out-Null
+        Add-Type -Assembly System.Drawing
         $bds = New-PSHTMLChartRadarDataSet -Data $data1 -label "2018" -borderColor (get-pshtmlColor -color blue) -backgroundColor "transparent" -hoverBackgroundColor (get-pshtmlColor -color green) -PointRadius 2 
             
         it '[New-PSHTMLChart][-Type Radar][-DataSet BarDataSet][Label][Title][CanvasId] Should not throw' {
