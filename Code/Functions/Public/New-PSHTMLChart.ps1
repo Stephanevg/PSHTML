@@ -46,8 +46,8 @@ Function New-PSHTMLChart {
             [Parameter(Mandatory=$False)]
             [String]$Title,
     
-            [ChartOptions]$Options
-            #[switch]$tobase64 = $false
+            [ChartOptions]$Options,
+            [switch]$tobase64 = $false
 
         )
     
@@ -133,8 +133,18 @@ Function New-PSHTMLChart {
                 $ChartOptions.animation.onComplete = 'RemoveCanvasAndCreateBase64Image'
             }
             $Chart.SetOptions($ChartOptions)
-            $Chart.GetDefinition($CanvasID)
+            #$Chart.GetDefinition($CanvasID)
     
+            if ($tobase64) {
+                
+                    $Chart.GetDefinition($CanvasID,$true)
+                
+            } else {
+                
+                    $Chart.GetDefinition($CanvasID)
+                
+            }
+
             <#
             Chunk ready for 8.1
 
