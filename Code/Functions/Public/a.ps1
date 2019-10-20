@@ -88,9 +88,13 @@ Function a {
         $PSBoundParameters.Target = "_self"
     }
 
-    Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid
+    Set-htmltag -TagName $tagName -Parameters $PSBoundParameters -TagType NonVoid -ErrorAction stop
+    Try{
+
+    }CAtch{
+        $_.TargetObject.ToString()
+    }
     
     
 
 }
- 

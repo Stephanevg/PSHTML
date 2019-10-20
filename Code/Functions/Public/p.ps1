@@ -74,6 +74,11 @@ Function p {
     
     $tagname = "p"
  
-    Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType NonVoid
+    Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType NonVoid -ErrorAction stop
+    try{
+
+    }CAtch{
+        $_.ScriptStackTrace | Out-String
+    }
 
 }

@@ -49,7 +49,13 @@ Function Div {
 
         $tagname = "div"
 
-        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid
+        Set-HtmlTag -TagName $tagname -Parameters $PSBoundParameters -TagType nonVoid -ErrorAction Stop
+        Try{
+
+        }Catch{
+            $_.ScriptStackTrace | Out-String
+
+        }
     }
 
 

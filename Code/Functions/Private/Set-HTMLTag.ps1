@@ -85,11 +85,20 @@ Function Set-HtmlTag {
             switch ($PostKey) {
                 'Content' { 
                     if ($Parameters[$($PostKey)] -is [System.Management.Automation.ScriptBlock]) {
-                        $outcontent = $Parameters[$($PostKey)].Invoke()
+                        Try{
+
+                            $outcontent = $Parameters[$($PostKey)].Invoke()
+                        }Catch{
+                            $_.Exception.Message, $_.ScriptStackTrace
+                        }
                         break
                     }
                     else {
-                        $outcontent = $Parameters[$($PostKey)]
+                        Try{
+                            $outcontent = $Parameters[$($PostKey)]
+                        }Catch{
+                            $_.Exception.Message, $_.ScriptStackTrace
+                        }
                         break
                     }
                 }
