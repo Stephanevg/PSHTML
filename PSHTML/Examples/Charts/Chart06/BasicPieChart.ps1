@@ -45,6 +45,6 @@ $HTMLPage = html {
 }
 
 
-$OutPath = $Home\BasicPieChart.html"
+$OutPath = "$Home\BasicPieChart.html"
 $HTMLPage | out-file -FilePath $OutPath -Encoding utf8
 start $outpath

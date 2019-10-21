@@ -35,7 +35,7 @@ $HTMLPage = html {
             $Data3 = @(4,1,6,12,17,25,18,17,22,30,35,44)
             $Labels = @("January","February","Mars","April","Mai","June","July","August","September","October","November","december")
 
-            $dsb3 = New-PSHTMLChartBarDataSet -Data $data3 -label "2018" -BackgroundColor ([Color]::blue )
+            $dsb3 = New-PSHTMLChartBarDataSet -Data $data3 -label "2018" -BackgroundColor "blue"
 
             New-PSHTMLChart -type bar -DataSet $dsb3 -title "Bar Chart Example" -Labels $Labels -CanvasID $BarCanvasID
 

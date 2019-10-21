@@ -9,7 +9,6 @@
 
 In the following example, we create a Polar Area chart dataset, with labels, specific colors, and the data of course.
 
-
 ```powershell
 
 $Labels      = @('January',   'February', 'Mars',     'April', 'Mai',       'June',   'July',    'August',      'September', 'October', 'November', 'december')
@@ -19,8 +18,6 @@ $HoverColors = @('DarkGreen', 'yellow',   'Orange',   'grey',  'DarkGrey',  'blu
 
 
 $dsb1 = New-PSHTMLChartPolarAreaDataSet -Data $data1 -BackgroundColor $Colors -hoverBackgroundColor $HoverColors
-
-
 ```
 
 > It is important to keep in mind, that the array of values which are past through each parameter going hand in hand together.
