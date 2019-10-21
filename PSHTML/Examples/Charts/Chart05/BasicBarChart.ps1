@@ -33,7 +33,7 @@ $HTMLPage = html {
             $Labels = @("Closed","Unresolved","Pending","Open")
 
         
-            $dsb1 = New-PSHTMLChartBarDataSet -Data $data1 -label "March" -BackgroundColor ([Color]::blue)
+            $dsb1 = New-PSHTMLChartBarDataSet -Data $data1 -label "March" -BackgroundColor "blue"
 
             New-PSHTMLChart -type bar -DataSet $dsb1 -title "Ticket Statistics" -Labels $Labels -CanvasID $BarCanvasID
 
