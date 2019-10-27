@@ -1,20 +1,20 @@
 
-<img src="Logos/logo_rectangle_fond_bleu.jpg" alt="PSHTML logo" width="300" height="200">
+
 
 
 PSHTML is a cross platform Powershell module to generate HTML markup language within a DSL on Windows and Linux.
 
 # Summary
 
-`PSHTML` allow people to write a HTML document(s) using `powershell-like` syntax, which makes building webpages easier, and less cumbersome for 'native' PowerSheller's.
+<img align="left" src="Logos/logo_rectangle_fond_bleu.jpg" alt="PSHTML logo" width="300" height="200">  `PSHTML` allow people to write a HTML document(s) using `powershell-like` syntax, which makes building webpages easier, and less cumbersome for 'native' PowerSheller's.
 
-`PSHTML` offers the flexibility of the PowerShell language, and allows to add logic in ```powershell``` directly in the ```HTML``` structure. This open the possibility to add loops, conditional statements, switches, functions, classes, calling external modules etc.. all that directly from the same editor.
+ `PSHTML` offers the flexibility of the PowerShell language, and allows to add logic in ```powershell``` directly in the ```HTML``` structure. This open the possibility to add loops, conditional statements, switches, functions, classes, calling external modules etc.. all that directly from the same editor.
 
-`PSHTML` comes with template functionality which allows one to `include` parts of webpages that are identical throughout the web page Eg: footer, Header,Menu etc..
+ `PSHTML` comes with template functionality which allows one to `include` parts of webpages that are identical throughout the web page Eg: footer, Header,Menu etc..
 
-Using PSHTML, offers code completion and syntax highlighting from the the default powershell language. As PSHTML respects the W3C standards, any HTML errors, will be spotted immediately.
+ Using PSHTML, offers code completion and syntax highlighting from the the default powershell language. As PSHTML respects the W3C standards, any HTML errors, will be spotted immediately.
 
-Since version `0.7.0` PSHTML supports the creation of charts.
+ Since version `0.7.0` PSHTML supports the creation of charts.
 
 
 -----
