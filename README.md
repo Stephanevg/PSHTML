@@ -1,3 +1,7 @@
+
+<img src="Logos/logo_rectangle_fond_bleu.jpg" alt="PSHTML logo" width="300" height="200">
+
+
 PSHTML is a cross platform Powershell module to generate HTML markup language within a DSL on Windows and Linux.
 
 # Summary
