@@ -4,7 +4,7 @@ Class Htmltag {
     #[Object]$Content
     [String]$id
     [String]$Class
-    [System.Collections.ArrayList] $Children = [System.Collections.ArrayList]::new()
+    [System.Collections.ArrayList] $Children = [System.Collections.ArrayList]@()
 
     
     htmltag(){
@@ -37,7 +37,7 @@ Class Htmltag {
             $StartTag = $StartTag + " class='{0}'" -f $this.class
         }
 
-        return  $StartTag + " {0}" -f '/>'
+        return  $StartTag + " {0}" -f '>'
 
         
     }
@@ -68,15 +68,20 @@ Class Htmltag {
 
 Class htmlParentElement : Htmltag {
 
-
-    [object] GetChildren(){
-        return $this.Children.GetEnumerator()
+    [object[]] GetChildren(){
+        $a = @()
+        foreach( $child in $this.Children ) {
+            $a+=$child
+            If ( !($child -is [String]) ) {
+                $a+=$child.GetChildren()
+            }
+            
+        }
+        return $a
     }
 
     AddChild($Child){
         $this.Children.Add($Child)
-        #$this.Children += $Child
-    
     }
 
     RemoveChild([htmltag]$Child){
@@ -85,7 +90,10 @@ Class htmlParentElement : Htmltag {
 
     [htmltag]SetContent($Content){
         #$this.Content = $Content
-        $this.AddChild($Content.invoke())
+        #$this.AddChild($Content.invoke())
+        $Content.Invoke().foreach({
+            $this.AddChild($_)
+        })
         return $this
     }
 
@@ -140,6 +148,22 @@ Class htmlParentElement : Htmltag {
         return $html
 
 
+    }
+    
+    ## New Method to return HTML
+    [String]GetHtml(){
+        $html = $this.SetStartTag()
+        Foreach( $child in $this.Children ){
+            If ( $child -is [String] ) {
+                If ( $html -match '\>$') {
+                    $html = $html + $child
+                }
+            } Else {
+                $html = $html+$child.gethtml()
+            }
+        }
+        $html = $html + $this.SetEndTag()
+        return $html
     }
 }
 
@@ -269,6 +293,8 @@ $e
 $e.GetChildren()
 $e.generatehtml()
 
+## TRY NEW METHOD
+$e.GetHtml()
 
 $array = @(1,2,3,5,67,88,32,33,76)
 $a = div -id 'TopheaderDiv' -Class "class1 class2" -Content {
