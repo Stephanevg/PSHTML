@@ -1,12 +1,12 @@
-# To contribute, please follow these rules
+# To contribute please follow these rules
 
 ## What can I do?
 
-To determine what you could help you can:
+To determine what you could help with, you can:
 
 - Open an issue if you have an idea for improvement.
-- Check in the Issues if something needs to be fixed.
-- Are you a beginner? Search for issues with the 'Beginner friendly' label
+- Check in the Issues if anything needs to be fixed.
+- Are you a beginner? Search for issues with the 'Beginner friendly' label!
 
 ## Name your branch
 
@@ -16,11 +16,11 @@ According to the type of submission you are planning to make, create a branch ca
 - BugFix: "BugFix_<Description>"
 - Minor: "Minor_<Description>"
 
-## Developement
+## Development
 
 Functions and classes should be written in a seperate files.
 
-> Exception to this rules apply. Sometimes it makes more sense to group things by 'theme' (EG: The charts classes and functions). That is also ok. The thing to keep in mind, is to **not** write your code directly in the `pshtml.psm1` file.
+> Exceptions to this rule apply. Sometimes it makes more sense to group things by 'theme' (e.g. the charts classes and functions). That is also OK. The thing to keep in mind is **not** to write your code directly in the `pshtml.psm1` file.
 
 
 ### Functions
