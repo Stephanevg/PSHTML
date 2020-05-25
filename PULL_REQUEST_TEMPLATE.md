@@ -17,7 +17,7 @@ Write one or two sentences explaining what you have modified.
 -->
 
 
-### Please tell us , the type of Change you are submiting:
+### Please tell us , the type of Change you are submitting:
 Select one of the following: 
 
 - [ ] Bug
