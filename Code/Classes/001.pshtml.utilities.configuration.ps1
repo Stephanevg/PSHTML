@@ -11,6 +11,11 @@ Enum AssetType {
     cdn
 }
 
+Enum OutputPreference {
+    static # Generating the pshtml object
+    dynamic #old way of outputting
+}
+
 Class ConfigurationDocument {
 
     [System.IO.FileInfo]$Path = "$PSScriptRoot/pshtml.configuration.json"
@@ -90,6 +95,8 @@ Class ConfigurationDocument {
                     $This.Includes += $modinc
                 }
             }
+
+            $this.SetOutputPreferenceVariable()
     }
 
     [void]Load([System.IO.FileInfo]$Path){
@@ -147,6 +154,14 @@ Class ConfigurationDocument {
 
     [Include[]]GetInclude([String]$Name){
         Return $this.Includes | ? {$_.Name -eq $Name}
+    }
+
+    [OutputPreference]GetOutPreference(){
+        return $this.GetSetting("general").GetOutPreference()
+    }
+
+    hidden [void]SetOutputPreferenceVariable(){
+        Set-Variable -Name OutputPreference -Value $this.GetOutPreference() -Description "Controls pshtml output preference." -Force -Option ReadOnly -Scope Script
     }
 
 }
@@ -233,9 +248,11 @@ Class GeneralSettings : Setting{
     [String]$Verbosity
     [Version]$Version
     [SettingType]$Type = "General"
+    [OutputPreference]$OutputPreference
     GeneralSettings([PsCustomObject]$Object){
         $this.Verbosity = $Object.Verbosity
         $this.Version = $Object.Version
+        $this.OutputPreference = $Object.OutputPreference
         $this.SetSettingType("General")
     }
 
@@ -243,6 +260,10 @@ Class GeneralSettings : Setting{
         $this.Verbosity = $Verbosity
         $This.Version = $Version
         $this.SetSettingType("General")
+    }
+
+    [OutputPreference]GetOutPreference(){
+        return $this.OutputPreference
     }
 }
 

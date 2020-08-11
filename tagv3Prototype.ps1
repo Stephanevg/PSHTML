@@ -187,7 +187,9 @@ Class HtmlElement : Htmltag {
     }
 }
 
-
+function Get-pshtmlOutputPreference {
+    return 'static'
+}
 function div {
     Param(
         
@@ -221,8 +223,14 @@ function div {
         $tag = $tag.SetContent($Content)
     }
 
+    If((Get-pshtmlOutputPreference) -eq 'dynamic'){
+        return $tag.getHtml()
+    }Else{
+        #Is static
+        return $tag
+    }
 
-    return $tag
+    
 
     
 }
@@ -268,6 +276,12 @@ function p {
 
 
 
+#Prototype with OutputPreference
+
+$b = div -id "test dynamic" -Class "dynamic" -Content {"Plop"}
+
+$b
+
 $e = div -id 'TopheaderDiv' -Class "class1 class2" -Content {
 
         div -id "niv2.0" -Class "aaa bbb" -Content {
@@ -291,7 +305,7 @@ $e = div -id 'TopheaderDiv' -Class "class1 class2" -Content {
 
 $e
 $e.GetChildren()
-$e.generatehtml()
+#$e.generatehtml()
 
 ## TRY NEW METHOD
 $e.GetHtml()
@@ -326,3 +340,4 @@ $e.Children # Contains two entries but it is not an array: Why??
 
 
 #>
+
