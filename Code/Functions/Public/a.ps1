@@ -65,6 +65,8 @@ Function a {
         $Content,
 
         [Parameter(Mandatory = $true)]
+        [AllowEmptyString()]
+        [AllowNull()]
         [String]$href,
 
         [ValidateSet("_self", "_blank", "_parent", "_top")]
