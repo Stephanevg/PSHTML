@@ -15,6 +15,11 @@ Enum AssetType {
 Class ConfigurationDocument {
 
     [System.IO.FileInfo]$Path = "$PSScriptRoot/pshtml.configuration.json"
+    [system.Io.FileInfo]$ModuleFolder = $PSScriptRoot
+    [System.IO.DirectoryInfo]$IncludesProjectFolderPath
+    [System.IO.DirectoryInfo]$AssetsProjectFolderPath
+    [System.IO.DirectoryInfo]$IncludesModuleFolderPath
+    [System.IO.DirectoryInfo]$AssetsModuleFolderPath
     [Setting[]]$Settings
     [Asset[]]$Assets
     [Include[]]$Includes
@@ -37,6 +42,11 @@ Class ConfigurationDocument {
         $EC = Get-Variable ExecutionContext -ValueOnly
         $ProjectRootFolder = $ec.SessionState.Path.CurrentLocation.Path 
         $ModuleFolder = $This.Path.Directory
+
+
+        $pfp = [System.IO.FileInfo]$script:MyInvocation.PSCommandPath
+        $this.SetIncludesProjectFolderPath($pfp.Directory)
+        
 
         #Assets
             $ModuleAssetsFolder = Join-Path $ModuleFolder -ChildPath "Assets"
@@ -69,7 +79,7 @@ Class ConfigurationDocument {
             $this.Includes = [IncludeFactory]::Create($IncludesFolder)
 
             $ModuleIncludesFolder = Join-Path $ModuleFolder -ChildPath "Includes"
-            $ProjectIncludesFolder = Join-Path $ProjectRootFolder -ChildPath "Assets"
+            $ProjectIncludesFolder = Join-Path $ProjectRootFolder -ChildPath "Includes"
 
             $ModuleIncludes = [IncludeFactory]::Create($ModuleIncludesFolder)
             $ProjectIncludes = [IncludeFactory]::Create($ProjectIncludesFolder)
@@ -134,9 +144,6 @@ Class ConfigurationDocument {
 
     }
 
-    [void]hidden LoadLogSettings(){
-
-    }
 
     [String]GetDefaultLogFilePath(){
         return $this.GetSetting("Log").GetLogfilePath()
@@ -150,6 +157,21 @@ Class ConfigurationDocument {
         Return $this.Includes | ? {$_.Name -eq $Name}
     }
 
+    [void]SetIncludesProjectFolderPath([System.IO.DirectoryInfo]$IncludesProjectFolderPath){
+        $this.IncludesProjectFolderPath = $IncludesProjectFolderPath
+    }
+
+    [void]SetIncludesModuleFolderPath([System.IO.DirectoryInfo]$IncludesModuleFolderPath){
+        $this.IncludesModuleFolderPath = $IncludesModuleFolderPath
+    }
+
+    [void]SetAssetsProjectFolderPath([System.IO.DirectoryInfo]$AssetsProjectFolderPath){
+        $this.AssetsProjectFolderPath = $AssetsProjectFolderPath
+    }
+
+    [void]SetIncludesModuleFolderPath([System.IO.DirectoryInfo]$AssetsModuleFolderPath){
+        $this.AssetsModuleFolderPath = $AssetsModuleFolderPath
+    }
 }
 
 Class Setting{
@@ -1635,11 +1657,11 @@ Class polarAreaChart : Chart{
 #endregion
 
 
-Class IncludeFile {
+Class Include {
 
 }
 
-Class Include : IncludeFile {
+Class IncludeFile : Include {
     [String]$Name
     [System.IO.DirectoryInfo]$FolderPath
     [System.IO.FileInfo]$FilePath
@@ -1652,6 +1674,15 @@ Class Include : IncludeFile {
 
     [String]ToString(){
 
+        #Tostring() shouold not execute code in a tostring methode. shall be replaced by render()
+        $Rawcontent = [IO.File]::ReadAllText($this.FilePath.FullName)
+        $Content = [scriptBlock]::Create($Rawcontent).Invoke()
+        return $content
+
+    }
+
+    [String]Render(){
+        
         $Rawcontent = [IO.File]::ReadAllText($this.FilePath.FullName)
         $Content = [scriptBlock]::Create($Rawcontent).Invoke()
         return $content
@@ -1662,12 +1693,12 @@ Class Include : IncludeFile {
 Class IncludeFactory {
     
     Static [Include[]] Create([System.IO.DirectoryInfo]$Path){
-        If(test-Path $Path){
+        If(test-Path $Path.FullName){
 
             $Items = Get-ChildItem $Path.FullName -Filter "*.ps1"
             $AllIncludes = @()
             Foreach($Item in $Items){
-                $AllIncludes += [Include]::New($Item)
+                $AllIncludes += [IncludeFile]::New($Item)
                 
             }
     
