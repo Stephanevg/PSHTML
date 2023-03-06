@@ -16,6 +16,7 @@ Class ConfigurationDocument {
 
     [System.IO.FileInfo]$Path = "$PSScriptRoot/pshtml.configuration.json"
     [system.Io.FileInfo]$ModuleFolder = $PSScriptRoot
+    [System.IO.DirectoryInfo]$ProjectFolderPath
     [System.IO.DirectoryInfo]$IncludesProjectFolderPath
     [System.IO.DirectoryInfo]$AssetsProjectFolderPath
     [System.IO.DirectoryInfo]$IncludesModuleFolderPath
@@ -41,19 +42,30 @@ Class ConfigurationDocument {
 
         $EC = Get-Variable ExecutionContext -ValueOnly
         $ProjectRootFolder = $ec.SessionState.Path.CurrentLocation.Path 
-        $ModuleFolder = $This.Path.Directory
+        $mf = $This.Path.Directory
 
 
         $pfp = [System.IO.FileInfo]$script:MyInvocation.PSCommandPath
-        $this.SetIncludesProjectFolderPath($pfp.Directory)
+        $this.ProjectFolderPath = $pfp.Directory
+        $this.LoadIncludes()
+        $this.loadAssets()
+        <#
         
-
+        [System.IO.DirectoryInfo]$IncludesFP = join-PAth -Path  $this.ProjectFolderPath -ChildPath "Includes"
+        if($IncludesFP.Exists){
+            $this.SetIncludesProjectFolderPath($IncludesFP)
+        }
+        
+        [System.IO.DirectoryInfo]$AssetsFP = join-Path -Path  $this.ProjectFolderPath -ChildPath "Assets"
+        if($AssetsFP.Exists){
+            $this.SetAssetsProjectFolderPath($AssetsFP)
+        }
         #Assets
-            $ModuleAssetsFolder = Join-Path $ModuleFolder -ChildPath "Assets"
+            $ModuleAssetsFolder = Join-Path $mf -ChildPath "Assets"
             $ProjectAssetsFolder = Join-Path $ProjectRootFolder -ChildPath "Assets"
 
             $ModuleAssets = [AssetsFactory]::CreateAsset($ModuleAssetsFolder)
-            $ProjectAssets = [AssetsFactory]::CreateAsset($ProjectAssetsFolder)
+            $ProjectAssets = [AssetsFactory]::CreateAsset($this.AssetsProjectFolderPath)
 
             $this.Assets += $ProjectAssets
 
@@ -78,11 +90,11 @@ Class ConfigurationDocument {
             $IncludesFolder = Join-Path -Path $ProjectRootFolder -ChildPath "Includes"
             $this.Includes = [IncludeFactory]::Create($IncludesFolder)
 
-            $ModuleIncludesFolder = Join-Path $ModuleFolder -ChildPath "Includes"
+            $ModuleIncludesFolder = Join-Path $mf -ChildPath "Includes"
             $ProjectIncludesFolder = Join-Path $ProjectRootFolder -ChildPath "Includes"
 
             $ModuleIncludes = [IncludeFactory]::Create($ModuleIncludesFolder)
-            $ProjectIncludes = [IncludeFactory]::Create($ProjectIncludesFolder)
+            $ProjectIncludes = [IncludeFactory]::Create($this.IncludesProjectFolderPath)
 
             $this.Includes += $ProjectIncludes
 
@@ -101,6 +113,83 @@ Class ConfigurationDocument {
                     $This.Includes += $modinc
                 }
             }
+            #>
+    }
+
+    [void]LoadIncludes(){
+        
+
+        $ModuleIncludesFolder = Join-Path $this.Path.Directory -ChildPath "Includes"
+        $ModuleIncludes = [IncludeFactory]::Create($ModuleIncludesFolder)
+
+        if($ModuleIncludes){
+            #At the moment the configuration object is created BEFORE the logobject. 
+            #write-verbose "[ConfigurationOBject][LoadIncludes()] Project includes found at $($this.IncludesProjectFolderPath)"
+            #$this.Includes = $ModuleIncludes
+        }
+
+        [System.IO.DirectoryInfo]$IncludesFP = join-PAth -Path  $this.ProjectFolderPath -ChildPath "Includes"
+        
+        if($IncludesFP.Exists){
+            $this.SetIncludesProjectFolderPath($IncludesFP)
+            $projectIncludes = [IncludeFactory]::Create($this.IncludesProjectFolderPath)
+            if($projectIncludes){
+                #write-verbose "[ConfigurationOBject][LoadIncludes()] Project includes found at $($this.IncludesProjectFolderPath)"
+                $this.Includes = $projectIncludes
+            }
+        }
+
+        
+
+        foreach ($modinc in $ModuleIncludes){
+            if($this.Includes.name -contains $modinc.name){
+                
+                $PotentialConflictingInclude = $this.Includes | ? {$_.Name -eq $modinc.Name}
+                if($PotentialConflictingInclude.Type -eq $modinc.type){
+
+                    #write-verbose "Identical asset found at $($modinc.name). Keeping project asset."
+                    Continue
+                }
+                
+                Continue
+            }else{
+                $This.Includes += $modinc
+            }
+        }
+    
+        
+
+    }
+
+    [Void]LoadAssets(){
+        
+        $ModuleAssetsFolder = Join-Path $this.Path.Directory -ChildPath "Assets"
+        
+            $ProjectAssetsFolder = Join-Path $this.ProjectFolderPath -ChildPath "Assets"
+
+            $ModuleAssets = [AssetsFactory]::CreateAsset($ModuleAssetsFolder)
+
+            if(Test-Path $ProjectAssetsFolder){
+
+                $this.Assets = [AssetsFactory]::CreateAsset($ProjectAssetsFolder)
+            }
+            
+            foreach ($modass in $ModuleAssets){
+                if($this.Assets.name -contains $modass.name){
+                    
+                    $PotentialConflictingAsset = $this.Assets | ? {$_.Name -eq $modass.Name}
+                    if($PotentialConflictingAsset.Type -eq $modass.type){
+
+                        #write-verbose "Identical asset found at $($modass.name). Keeping project asset."
+                        Continue
+                    }else{
+                        $This.Assets += $modass
+                    }
+                }else{
+                    $This.Assets += $modass
+                }
+            }
+        #>
     }
 
     [void]Load([System.IO.FileInfo]$Path){
@@ -169,8 +258,16 @@ Class ConfigurationDocument {
         $this.AssetsProjectFolderPath = $AssetsProjectFolderPath
     }
 
-    [void]SetIncludesModuleFolderPath([System.IO.DirectoryInfo]$AssetsModuleFolderPath){
+    [void]SetAssetsModuleFolderPath([System.IO.DirectoryInfo]$AssetsModuleFolderPath){
         $this.AssetsModuleFolderPath = $AssetsModuleFolderPath
+    }
+
+    [bool]HasAssetsProjectFolder(){
+        return $this.AssetsProjectFolderPath.Exists
+    }
+
+    [bool] HasIncludesProjectFolder(){
+        return $this.IncludesProjectFolderPath.Exists
     }
 }
 
@@ -1666,7 +1763,7 @@ Class IncludeFile : Include {
     [System.IO.DirectoryInfo]$FolderPath
     [System.IO.FileInfo]$FilePath
 
-    Include([System.IO.FileInfo]$FilePath){
+    IncludeFile([System.IO.FileInfo]$FilePath){
         $this.FilePath = $FilePath
         $this.FolderPath = $FilePath.Directory
         $this.Name = $FilePath.BaseName
