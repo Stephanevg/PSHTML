@@ -174,11 +174,11 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
         Add-Type -Assembly System.Drawing
         $bds = New-PSHTMLChartRadarDataSet -Data $data1 -label "2018" -borderColor (get-pshtmlColor -color blue) -backgroundColor "transparent" -hoverBackgroundColor (get-pshtmlColor -color green) -PointRadius 2 
             
-        it '[New-PSHTMLChart][-Type Radar][-DataSet BarDataSet][Label][Title][CanvasId] Should not throw' {
+        it '[New-PSHTMLChart][-Type Radar][-DataSet ChartRadarDataSet][Label][Title][CanvasId] Should not throw' {
             {New-PSHTMLChart -Type Radar -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID} | should not throw
         }
 
-        it '[New-PSHTMLChart][-Type Radar][-DataSet BarDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
+        it '[New-PSHTMLChart][-Type Radar][-DataSet ChartRadarDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
             $Is = New-PSHTMLChart -Type radar -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID
 
             If($PSVersionTable.PsEdition -eq 'Core'){
@@ -217,11 +217,11 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
         }
         $bds = New-PSHTMLChartPolarAreaDataSet -Data $Data -BackgroundColor $BackgroundColor -label $Labels
 
-        it '[New-PSHTMLChart][-Type polarArea][-DataSet BarDataSet][Label][Title][CanvasId] Should not throw' {
+        it '[New-PSHTMLChart][-Type polarArea][-DataSet PolarAreaDataSet][Label][Title][CanvasId] Should not throw' {
             {New-PSHTMLChart -Type polarArea -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID} | should not throw
         }
 
-        it '[New-PSHTMLChart][-Type polarArea][-DataSet BarDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
+        it '[New-PSHTMLChart][-Type polarArea][-DataSet PolarAreaDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
             $Is = New-PSHTMLChart -Type polarArea -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID
 <#
 
@@ -355,11 +355,11 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
         
         $TestData = New-PSHTMLChartDoughnutDataSet -Data $data1 -label "March" -backgroundcolor $colors
 
-        it '[New-PSHTMLChart][-Type Doughnut][-DataSet PieDataSet][Label][Title][CanvasId] Should not throw' {
+        it '[New-PSHTMLChart][-Type Doughnut][-DataSet DoughnutDataSet][Label][Title][CanvasId] Should not throw' {
             {New-PSHTMLChart -Type Doughnut -DataSet $TestData -Labels $Labels -Title $Title -CanvasID $CanvasID} | should not throw
         }
 
-        it '[New-PSHTMLChart][-Type Doughnut][-DataSet PieDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
+        it '[New-PSHTMLChart][-Type Doughnut][-DataSet DoughnutDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
             $Is = New-PSHTMLChart -Type Doughnut -DataSet $TestData -Labels $Labels -Title $Title -CanvasID $CanvasID
 
             #$Is = $Is.Trim()
