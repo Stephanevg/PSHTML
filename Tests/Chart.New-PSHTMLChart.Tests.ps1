@@ -207,10 +207,7 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
         $Title = "Test Title"
         $CanvasID = "TestCanvasID"
         $BackgroundColor = @('red', 'green', 'yellow', 'grey', 'blue')
-        #$bds = 
-        <# mock -CommandName New-PSHTMLChartBarDataSet -MockWith {
-                New-MockObject -Type "datasetbar"
-            } #>
+
 
         it '[New-PSHTMLChartPolarAreaDataSet][-Data $Data][-BackgroundColor $BackgroundColor][-label $Labels] Should not throw' {
             { New-PSHTMLChartPolarAreaDataSet -Data $Data -BackgroundColor $BackgroundColor -label $Labels } | should not throw
@@ -223,12 +220,7 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
 
         it '[New-PSHTMLChart][-Type polarArea][-DataSet PolarAreaDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
             $Is = New-PSHTMLChart -Type polarArea -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID
-<#
 
-$Should = @'
-<script Id="pshtml_script_chart_TestCanvasID"  >var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"polarArea","data":{"labels":["red","green","yellow","grey","blue"],"datasets":[{"borderWidth":1,"backgroundColor":["red","green","yellow","grey","blue"],"borderColor":[""],"borderSkipped":null,"hoverBackgroundColor":[""],"hoverBorderColor":[""],"hoverBorderWidth":0,"data":[3,5,7,2,9],"label":["red","green","yellow","grey","blue"]}]},"options":{"scales":null,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"title":{"display":true,"text":"Test Title"},"animation":{"onComplete":null}}} );</script>
-'@
-#>
 
 $Should = @'
 var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"polarArea","data":{"labels":["red","green","yellow","grey","blue"],"datasets":[{"borderWidth":1,"backgroundColor":["red","green","yellow","grey","blue"],"borderColor":[""],"borderSkipped":null,"hoverBackgroundColor":[""],"hoverBorderColor":[""],"hoverBorderWidth":0,"data":[3,5,7,2,9],"label":["red","green","yellow","grey","blue"]}]},"options":{"scales":null,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"title":{"display":true,"text":"Test Title"},"animation":{"onComplete":null}}} );
@@ -250,10 +242,7 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
         $Data = @(3, 5)
         $Title = "Test Title"
         $CanvasID = "TestCanvasID"
-        #$bds = 
-        <# mock -CommandName New-PSHTMLChartBarDataSet -MockWith {
-            New-MockObject -Type "datasetbar"
-        } #>
+
         $TestData = New-PSHTMLChartPieDataSet -Data $Data
         
         it '[New-PSHTMLChart][-Type Pie][-DataSet PieDataSet][Label][Title][CanvasId] Should not throw' {
@@ -471,94 +460,9 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
         it '[New-PSHTMLChart][-Type Line][-DataSet LineDataSet][Label][Title][CanvasId] Should create ChartJS javascript Code' {
             $Is = New-PSHTMLChart -Type Line -DataSet $bds -Labels $Labels -Title $Title -CanvasID $CanvasID
             #don't touche this part, as the regex is very 'fragile'
-<#
-$Should = @'
-var ctx = document.getElementById("TestCanvasID").getContext('2d');
-var myChart = new Chart(ctx, {
-    "type":  "line",
-    "data":  {
-                 "labels":  [
-                                "january",
-                                "february"
-                            ],
-                 "datasets":  [
-                                  {
-                                      "borderWidth":  1,
-                                      "borderDash":  [
-                                                         0
-                                                     ],
-                                      "borderDashOffSet":  0,
-                                      "cubicInterpolationMode":  "default",
-                                      "fill":  false,
-                                      "lineTension":  0.5,
-                                      "pointBackgroundColor":  "rgb(255,255,255)",
-                                      "pointBorderColor":  "rgb(0,0,0)",
-                                      "pointBorderWidth":  [
-                                                               1
-                                                           ],
-                                      "pointRadius":  4,
-                                      "pointStyle":  "circle",
-                                      "showLine":  true,
-                                      "backgroundColor":  null,
-                                      "borderColor":  null,
-                                      "borderCapStyle":  null,
-                                      "borderJoinStyle":  null,
-                                      "pointRotation":  null,
-                                      "pointHitRadius":  null,
-                                      "PointHoverBackgroundColor":  null,
-                                      "pointHoverBorderColor":  null,
-                                      "pointHoverBorderWidth":  0,
-                                      "pointHoverRadius":  null,
-                                      "spanGaps":  false,
-                                      "data":  [
-
-                                               ],
-                                      "label":  null
-                                  }
-                              ]
-             },
-    "options":  {
-                    "showLines":  true,
-                    "spanGaps":  false,
-                    "barPercentage":  1,
-                    "categoryPercentage":  1,
-                    "responsive":  false,
-                    "barThickness":  null,
-                    "maxBarThickness":  0,
-                    "offsetGridLines":  true,
-                    "scales":  {
-                                   "yAxes":  [
-                                                 {
-                                                     "ticks":  {
-                                                                   "beginAtZero":  true
-                                                               }
-                                                 }
-                                             ],
-                                   "xAxes":  [
-
-                                             ]
-                               },
-                    "title":  {
-                                  "display":  true,
-                                  "text":  "Test Title"
-                              },
-                    "animation": {
-                        "onComplete":null
-                    }
-                }
-}
-);
-'@
-#>
 
 If($PSVersionTable.PsEdition -eq 'Core'){
 
-    <#
-    
-    $Should = @'
-<script Id="pshtml_script_chart_TestCanvasID"  >var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"line","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"borderDash":[0],"borderDashOffSet":0,"cubicInterpolationMode":"default","fill":false,"lineTension":0.5,"pointBackgroundColor":"rgb(255,255,255)","pointBorderColor":"rgb(0,0,0)","pointBorderWidth":[1],"pointRadius":4.0,"pointStyle":"circle","showLine":true,"backgroundColor":null,"borderColor":null,"borderCapStyle":null,"borderJoinStyle":null,"pointRotation":null,"pointHitRadius":0.0,"PointHoverBackgroundColor":null,"pointHoverBorderColor":null,"pointHoverBorderWidth":0,"pointHoverRadius":0.0,"spanGaps":false,"data":[3,5],"label":null}]},"options":{"showLines":true,"spanGaps":false,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"},"animation":{"onComplete":null}}} );</script>
-'@
-    #>
 
 $Should = @'
 var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"line","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"borderDash":[0],"borderDashOffSet":0,"cubicInterpolationMode":"default","fill":false,"lineTension":0.5,"pointBackgroundColor":"rgb(255,255,255)","pointBorderColor":"rgb(0,0,0)","pointBorderWidth":[1],"pointRadius":4.0,"pointStyle":"circle","showLine":true,"backgroundColor":null,"borderColor":null,"borderCapStyle":null,"borderJoinStyle":null,"pointRotation":null,"pointHitRadius":0.0,"PointHoverBackgroundColor":null,"pointHoverBorderColor":null,"pointHoverBorderWidth":0,"pointHoverRadius":0.0,"spanGaps":false,"data":[3,5],"label":null}]},"options":{"showLines":true,"spanGaps":false,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"},"animation":{"onComplete":null}}} );
@@ -566,12 +470,7 @@ var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart 
 
 }else{
 
-    <#
-    
-    $Should = @'
-<script Id="pshtml_script_chart_TestCanvasID"  >var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"line","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"borderDash":[0],"borderDashOffSet":0,"cubicInterpolationMode":"default","fill":false,"lineTension":0.5,"pointBackgroundColor":"rgb(255,255,255)","pointBorderColor":"rgb(0,0,0)","pointBorderWidth":[1],"pointRadius":4,"pointStyle":"circle","showLine":true,"backgroundColor":null,"borderColor":null,"borderCapStyle":null,"borderJoinStyle":null,"pointRotation":null,"pointHitRadius":0,"PointHoverBackgroundColor":null,"pointHoverBorderColor":null,"pointHoverBorderWidth":0,"pointHoverRadius":0,"spanGaps":false,"data":[3,5],"label":null}]},"options":{"showLines":true,"spanGaps":false,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"},"animation":{"onComplete":null}}} );</script>
-'@
-    #>
+
 
 $Should = @'
 var ctx = document.getElementById("TestCanvasID").getContext('2d'); var myChart = new Chart(ctx, {"type":"line","data":{"labels":["january","february"],"datasets":[{"borderWidth":1,"borderDash":[0],"borderDashOffSet":0,"cubicInterpolationMode":"default","fill":false,"lineTension":0.5,"pointBackgroundColor":"rgb(255,255,255)","pointBorderColor":"rgb(0,0,0)","pointBorderWidth":[1],"pointRadius":4,"pointStyle":"circle","showLine":true,"backgroundColor":null,"borderColor":null,"borderCapStyle":null,"borderJoinStyle":null,"pointRotation":null,"pointHitRadius":0,"PointHoverBackgroundColor":null,"pointHoverBorderColor":null,"pointHoverBorderWidth":0,"pointHoverRadius":0,"spanGaps":false,"data":[3,5],"label":null}]},"options":{"showLines":true,"spanGaps":false,"barPercentage":1,"categoryPercentage":1,"responsive":false,"barThickness":null,"maxBarThickness":0,"offsetGridLines":true,"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}],"xAxes":[""]},"title":{"display":true,"text":"Test Title"},"animation":{"onComplete":null}}} );
