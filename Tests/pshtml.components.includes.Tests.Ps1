@@ -12,64 +12,75 @@ Write-Verbose "Importing module"
 
 import-module .\PSHTML -Force
 
-InModuleScope -ModuleName 'PSHTML'{
+InModuleScope -ModuleName 'PSHTML' {
 
-    Describe '[IncludeFile]-[Constructors]'{
+    Describe '[IncludeFile]-[Constructors]' {
+    
+        It '[IncludeFile]-[Constructor]([System.IO.FileInfo]FilePath) should Not Throw' {
+    
+            # -- Arrange
+    
+            $FilePath = Join-Path -Path $TestDrive -ChildPath "plop.txt"
+            $Null = New-Item -Path $FilePath -Force -Value "eee"
+            [System.IO.FileInfo]$FilePath = $FilePath
+    
+            # -- Act
+    
+            # -- Assert
+    
+            { [IncludeFile]::New($FilePath) } | Should Not Throw 
+    
+        }# end of it block
+    }# end of Describe block
+    Describe '[Include]-[Constructors]' {
+    
+        It '[Include]-[Constructor] Parameterless constructor should be able to instantiate and not throw' {
+    
+            # -- Arrange
+    
+            
+            # -- Act
+    
+            # -- Assert
+    
+            { [IncludeFile]::New() } | Should Not Throw 
+    
+        }# end of it block
     
     }# end of Describe block
-    Describe '[Include]-[Constructors]'{
-    
-    It '[Include]-[Constructor]([System.IO.FileInfo]FilePath) should Not Throw' {
-    
-    # -- Arrange
-    
-    $FilePath = Join-Path -Path $TestDrive -ChildPath "plop.txt"
-    $Null = New-Item -Path $FilePath -Force -Value "eee"
-    [System.IO.FileInfo]$FilePath=$FilePath
-    
-    # -- Act
-    
-    # -- Assert
-    
-    {[Include]::New($FilePath)} | Should Not Throw 
-    
-    }# end of it block
-    
+    Describe '[IncludeFactory]-[Constructors]' {
     
     }# end of Describe block
-    Describe '[IncludeFactory]-[Constructors]'{
+    Describe '[IncludeFactory]-[Methods]' {
     
-    }# end of Describe block
-    Describe '[IncludeFactory]-[Methods]'{
+        #Public Method
+        It '[IncludeFactory] --> Create($Path) : [Include[]] - should Not Throw' {
     
-    #Public Method
-    It '[IncludeFactory] --> Create($Path) : [Include[]] - should Not Throw' {
+            # -- Arrange
     
-    # -- Arrange
+            [System.IO.DirectoryInfo]$Path = $TestDrive
     
-    [System.IO.DirectoryInfo]$Path = $TestDrive
+            # -- Act
     
-    # -- Act
+            # -- Assert
     
-    # -- Assert
+            { [IncludeFactory]::Create($Path) } | Should Not Throw
     
-    {[IncludeFactory]::Create($Path)} | Should Not Throw
+        } #End It Block
     
-    } #End It Block
+        #Public Method
+        It '[IncludeFactory] --> Create($Path) : [Include[]] - should return type [Include[]]' {
     
-    #Public Method
-    It '[IncludeFactory] --> Create($Path) : [Include[]] - should return type [Include[]]' {
+            # -- Arrange
+            [System.IO.DirectoryInfo]$Path = $TestDrive
     
-    # -- Arrange
-    [System.IO.DirectoryInfo]$Path = $TestDrive
+            # -- Act
     
-    # -- Act
-    
-    # -- Assert
+            # -- Assert
     
     ([IncludeFactory]::Create($Path)).GetType().Name | should be Include[]
     
-    } #End It Block
+        } #End It Block
     
     }#EndDescribeBlock
 
