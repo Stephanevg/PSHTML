@@ -12,9 +12,20 @@ Enum AssetType {
     cdn
 }
 
+Enum LocationType {
+    Module
+    Project
+}
+
 Class ConfigurationDocument {
 
     [System.IO.FileInfo]$Path = "$PSScriptRoot/pshtml.configuration.json"
+    [system.Io.FileInfo]$ModuleFolder = $PSScriptRoot
+    [System.IO.DirectoryInfo]$ProjectFolderPath
+    [System.IO.DirectoryInfo]$IncludesProjectFolderPath
+    [System.IO.DirectoryInfo]$AssetsProjectFolderPath
+    [System.IO.DirectoryInfo]$IncludesModuleFolderPath
+    [System.IO.DirectoryInfo]$AssetsModuleFolderPath
     [Setting[]]$Settings
     [Asset[]]$Assets
     [Include[]]$Includes
@@ -31,21 +42,107 @@ Class ConfigurationDocument {
 
     #Methods
     [void]Load(){
+        #Reminder: Logger CANNOT be used during the load process.(This includes the LoadIncludes() and LoadAssets() methods)
         #Read data from json
         $this.Settings = [SettingFactory]::Parse($This.Path)
 
+        <#
         $EC = Get-Variable ExecutionContext -ValueOnly
         $ProjectRootFolder = $ec.SessionState.Path.CurrentLocation.Path 
-        $ModuleFolder = $This.Path.Directory
+        #>
 
-        #Assets
-            $ModuleAssetsFolder = Join-Path $ModuleFolder -ChildPath "Assets"
-            $ProjectAssetsFolder = Join-Path $ProjectRootFolder -ChildPath "Assets"
+        $ScriptCaller = $Script:MyInvocation.PSCommandPath
 
+        if($null -ne $ScriptCaller){
+            $ProjectRootFolder = Split-Path -Parent -Path $ScriptCaller
+            $this.ProjectFolderPath = $ProjectRootFolder
+            #Write-Verbose "[ConfiguratinDocument][Load()] Project folder found at $($this.ProjectFolderPath.FullName)"
+        }
+
+        $this.LoadIncludes()
+        $this.loadAssets()
+    }
+
+    [void]LoadIncludes(){
+        #Reminder: Logger CANNOT be used during the load process.(This includes LoadAssets() and Load() methods)
+        $ModuleIncludes = $null
+        [System.IO.DirectoryInfo]$IncludeModuleFolder = Join-Path $this.Path.Directory -ChildPath "Includes"
+        if($IncludeModuleFolder.Exists){
+            $This.IncludesModuleFolderPath = $IncludeModuleFolder
+            $ModuleIncludes = [IncludeFactory]::Create($this.IncludesModuleFolderPath)
+
+            foreach($ModInc in $ModuleIncludes){
+                $ModInc.LocationType = [LocationType]::Module
+                #write-verbose "[ConfigurationOBject][LoadIncludes()] -> Module includes $($ModInc.Name)"
+            }
+        }
+
+
+        if($this.ProjectFolderPath.Exists){
+
+            [System.IO.DirectoryInfo]$IncludesFP = Join-Path -Path  $this.ProjectFolderPath -ChildPath "Includes"
+            
+            if($IncludesFP.Exists){
+                $this.SetIncludesProjectFolderPath($IncludesFP)
+                #write-verbose "[ConfigurationObject][LoadIncludes()] Project includes folder found at $($IncludesFP.FullName)"
+                $projectIncludes = [IncludeFactory]::Create($IncludesFP)
+                if($projectIncludes){
+                    foreach($ProjInc in $projectIncludes){
+                        $ProjInc.LocationType = [LocationType]::Project
+                        #write-verbose "[ConfigurationOBject][LoadIncludes()] -> Project includes $($ProjInc.Name)"
+                    }
+                    $this.Includes += $projectIncludes
+                }
+            }
+        }
+
+        foreach ($modinc in $ModuleIncludes){
+            if($this.Includes.name -contains $modinc.name){
+                
+                $PotentialConflictingInclude = $this.Includes | ? {$_.Name -eq $modinc.Name}
+                if($PotentialConflictingInclude){
+
+                    #write-verbose "Identical asset found $($modinc.name) at $($modinc.FolderPath.FullName). Keeping project asset."
+                    Continue
+                }
+                
+                Continue
+            }else{
+                $This.Includes += $modinc
+            }
+        }
+ 
+
+    }
+
+    [Void]LoadAssets(){
+        #Reminder: Logger CANNOT be used during the load process.(This includes LoadIncludes() and Load() methods)
+        
+            if($this.ProjectFolderPath){
+
+                $ProjectAssetsFolder = Join-Path $this.ProjectFolderPath -ChildPath "Assets"
+                $this.Assets = [AssetsFactory]::CreateAsset($ProjectAssetsFolder)
+
+                foreach($ProjAss in $this.Assets){
+                    $ProjAss.LocationType = [LocationType]::Project
+                    #write-verbose "[ConfigurationObject][LoadAssets()] -> Project asset $($ProjAss.Name)"
+                }
+            }
+            
+
+            $ModuleAssetsFolder = Join-Path $this.Path.Directory -ChildPath "Assets"
+        
+        
             $ModuleAssets = [AssetsFactory]::CreateAsset($ModuleAssetsFolder)
-            $ProjectAssets = [AssetsFactory]::CreateAsset($ProjectAssetsFolder)
 
-            $this.Assets += $ProjectAssets
+            if(-not $ModuleAssets){
+                return
+            }
+
+            foreach($ModAss in $ModuleAssets){
+                $ModAss.LocationType = [LocationType]::Module
+                #write-verbose "[ConfigurationObject][LoadAssets()] -> Module asset $($ModAss.Name)"
+            }
 
             foreach ($modass in $ModuleAssets){
                 if($this.Assets.name -contains $modass.name){
@@ -62,38 +159,11 @@ Class ConfigurationDocument {
                     $This.Assets += $modass
                 }
             }
-
-        #Includes
-            #$IncludesFolder = Join-Path -Path $ExecutionContext.SessionState.Path.CurrentLocation.Path -ChildPath "Includes" #Join-Path $this.Path.Directory -ChildPath 'Includes'
-            $IncludesFolder = Join-Path -Path $ProjectRootFolder -ChildPath "Includes"
-            $this.Includes = [IncludeFactory]::Create($IncludesFolder)
-
-            $ModuleIncludesFolder = Join-Path $ModuleFolder -ChildPath "Includes"
-            $ProjectIncludesFolder = Join-Path $ProjectRootFolder -ChildPath "Assets"
-
-            $ModuleIncludes = [IncludeFactory]::Create($ModuleIncludesFolder)
-            $ProjectIncludes = [IncludeFactory]::Create($ProjectIncludesFolder)
-
-            $this.Includes += $ProjectIncludes
-
-            foreach ($modinc in $ModuleIncludes){
-                if($this.Includes.name -contains $modinc.name){
-                    
-                    $PotentialConflictingInclude = $this.Includes | ? {$_.Name -eq $modinc.Name}
-                    if($PotentialConflictingInclude.Type -eq $modinc.type){
-
-                        #write-verbose "Identical asset found at $($modinc.name). Keeping project asset."
-                        Continue
-                    }
-                    
-                    Continue
-                }else{
-                    $This.Includes += $modinc
-                }
-            }
+        #>
     }
 
     [void]Load([System.IO.FileInfo]$Path){
+        #Reminder: Logger CANNOT be used during the load process.(This includes LoadAssets() LoadIncludes() and Load() methods)
         $this.Path = $Path
         $this.Load()
     }
@@ -134,9 +204,6 @@ Class ConfigurationDocument {
 
     }
 
-    [void]hidden LoadLogSettings(){
-
-    }
 
     [String]GetDefaultLogFilePath(){
         return $this.GetSetting("Log").GetLogfilePath()
@@ -150,6 +217,29 @@ Class ConfigurationDocument {
         Return $this.Includes | ? {$_.Name -eq $Name}
     }
 
+    [void]SetIncludesProjectFolderPath([System.IO.DirectoryInfo]$IncludesProjectFolderPath){
+        $this.IncludesProjectFolderPath = $IncludesProjectFolderPath
+    }
+
+    [void]SetIncludesModuleFolderPath([System.IO.DirectoryInfo]$IncludesModuleFolderPath){
+        $this.IncludesModuleFolderPath = $IncludesModuleFolderPath
+    }
+
+    [void]SetAssetsProjectFolderPath([System.IO.DirectoryInfo]$AssetsProjectFolderPath){
+        $this.AssetsProjectFolderPath = $AssetsProjectFolderPath
+    }
+
+    [void]SetAssetsModuleFolderPath([System.IO.DirectoryInfo]$AssetsModuleFolderPath){
+        $this.AssetsModuleFolderPath = $AssetsModuleFolderPath
+    }
+
+    [bool]HasAssetsProjectFolder(){
+        return $this.AssetsProjectFolderPath.Exists
+    }
+
+    [bool] HasIncludesProjectFolder(){
+        return $this.IncludesProjectFolderPath.Exists
+    }
 }
 
 Class Setting{
@@ -428,25 +518,31 @@ Class AssetsFactory{
     }
 
     hidden Static [Asset[]] CreateAssets([System.IO.DirectoryInfo]$AssetsFolderPath) {
+        <#
+            Assets MUST be located in a folder named 'Assets/NAME_OF_ASSET'
+            Example: C:\WoopiDoopy\WebSiteReportTool\Assets\ContosoCommon
+            Contains a file named Woop.js which contains all the "woop's company" specific javascript code.
 
+            PSHTML Will create the following asset:
+
+            Name         : ContosoCommon
+            FolderPath   : C:\WoopiDoopy\WebSiteReportTool\Assets\ContosoCommon
+            FilePath     : C:\WoopiDoopy\WebSiteReportTool\Assets\ContosoCommon\Woop.js
+            RelativePath : Assets/ContosoCommon/Woop.js
+            Type         : Script
+            LocationType : Project
+
+        #>
         $Directories = Get-ChildItem $AssetsFolderPath -Directory
         $AllItems = @()
 
-        Foreach($Directory in $Directories){
-            $Items = $Directory | Get-ChildItem  -File | ? {$_.Extension -eq ".js" -or $_.Extension -eq ".css" -or $_.Extension -eq ".cdn"} #If performance becomes important. Change this to -Filter
+        Foreach ($Directory in $Directories) {
+            $Items = $Directory.FullName | Get-ChildItem -Recurse -File | ? { $_.Extension -eq ".js" -or $_.Extension -eq ".css" -or $_.Extension -eq ".cdn" } #If performance becomes important. Change this to -Filter
             Foreach($Item in $Items){
                 if(!($Item)){
                     Continue
                 }
-                <#
-                try{
 
-                    $Type = [AssetsFactory]::GetAssetType($Item)
-                }Catch{
-                    
-                    continue
-                }
-                #>
                  $AllItems += [AssetsFactory]::CreateAsset($Item)
                 
             }
@@ -515,6 +611,7 @@ Class Asset{
     [System.IO.FileInfo]$FilePath
     [String]$RelativePath
     [AssetType]$Type
+    [LocationType]$LocationType
 
     Asset(){}
     
@@ -569,6 +666,16 @@ Class ScriptAsset : Asset {
         $S = "<{0} src='{1}'></{0}>" -f "Script",$this.GetFullFilePath()
         Return $S
     }
+
+    [String] ToStringAsContent(){
+        $TagName = "Script"
+        $FileContents = Get-Content -Path $this.GetFullFilePath() -Raw -Encoding utf8
+        $StringBuilder = [System.Text.StringBuilder]::new()
+        $StringBuilder.AppendLine("<$TagName>")
+        $StringBuilder.AppendLine($FileContents)
+        $StringBuilder.Append("</$TagName>")
+        Return $StringBuilder
+    }
 }
 
 Class StyleAsset : Asset {
@@ -584,6 +691,16 @@ Class StyleAsset : Asset {
          #rel="stylesheet"
         $S = "<{0} rel='{1}' type={2} href='{3}' >" -f "Link","stylesheet","text/css",$this.GetFullFilePath()
         Return $S
+    }
+
+    [String] ToStringAsContent() {
+        $TagName = "Style"
+        $FileContents = Get-Content -Path $this.GetFullFilePath() -Raw -Encoding utf8
+        $StringBuilder = [System.Text.StringBuilder]::new()
+        $StringBuilder.AppendLine("<$TagName>")
+        $StringBuilder.AppendLine($FileContents)
+        $StringBuilder.Append("</$TagName>")
+        Return $StringBuilder
     }
 }
 
@@ -638,6 +755,10 @@ Class CDNAsset : Asset {
         }
         $S = "<{0} {1}='{2}' {3} {4}></{0}>" -f $t,$p,$this.raw.source,$full_CrossOrigin,$full_Integrity
         Return $S
+    }
+
+    [String] ToStringAsContent(){
+        return $this.ToString()
     }
 }
 
@@ -1635,23 +1756,45 @@ Class polarAreaChart : Chart{
 #endregion
 
 
-Class IncludeFile {
+Class Include {
 
 }
 
-Class Include : IncludeFile {
+Class IncludeFile : Include {
     [String]$Name
     [System.IO.DirectoryInfo]$FolderPath
     [System.IO.FileInfo]$FilePath
+    [LocationType]$LocationType
 
-    Include([System.IO.FileInfo]$FilePath){
+    IncludeFile(){}
+
+    IncludeFile([System.IO.FileInfo]$FilePath){
         $this.FilePath = $FilePath
         $this.FolderPath = $FilePath.Directory
         $this.Name = $FilePath.BaseName
+        #If the parent folder of the includes folder is the PSHTML repository, then the include file is a of locationType 'Module'
+        if($this.FolderPath.Parent.Name -eq 'PSHTML'){
+            $this.LocationType = [LocationType]::Module
+        }else{
+            $this.LocationType = [LocationType]::Project
+        }
+    }
+
+    [void] SetLocationType([LocationType]$LocationType){
+        $this.LocationType = $LocationType
     }
 
     [String]ToString(){
 
+        #Tostring() shouold not execute code in a tostring methode. shall be replaced by render()
+        $Rawcontent = [IO.File]::ReadAllText($this.FilePath.FullName)
+        $Content = [scriptBlock]::Create($Rawcontent).Invoke()
+        return $content
+
+    }
+
+    [String]Render(){
+        
         $Rawcontent = [IO.File]::ReadAllText($this.FilePath.FullName)
         $Content = [scriptBlock]::Create($Rawcontent).Invoke()
         return $content
@@ -1662,12 +1805,12 @@ Class Include : IncludeFile {
 Class IncludeFactory {
     
     Static [Include[]] Create([System.IO.DirectoryInfo]$Path){
-        If(test-Path $Path){
+        If(test-Path $Path.FullName){
 
             $Items = Get-ChildItem $Path.FullName -Filter "*.ps1"
             $AllIncludes = @()
             Foreach($Item in $Items){
-                $AllIncludes += [Include]::New($Item)
+                $AllIncludes += [IncludeFile]::New($Item)
                 
             }
     
@@ -9452,6 +9595,10 @@ function Write-PSHTMLAsset {
 
     The CDN file type must have a specifiy structure, which can be obtained by using the cmdlet New-CDNAssetFile
 
+    .PARAMETER AsContent
+    Use this switch to generate the content of the asset, instead of the link to the asset.
+    Use this switch to allow dynamic content to be directly integrated in your HTML pages (Allows to have no internet access / send per email.)
+
     .EXAMPLE
         Write-PSHTMLAsset
 
@@ -9482,7 +9629,8 @@ function Write-PSHTMLAsset {
     #>
     [CmdletBinding()]
     param (
-        [ValidateSet("Script","Style","CDN")]$Type
+        [ValidateSet("Script","Style","CDN")]$Type,
+        [Switch]$AsContent
 
     )
 
@@ -9534,7 +9682,11 @@ function Write-PSHTMLAsset {
         }
 
         Foreach($A in $Asset){
-            $A.ToString()
+            if($AsContent){
+                $A.ToStringAsContent()
+            }else{
+                $A.ToString()
+            }
         }
         
     }
@@ -9875,16 +10027,14 @@ function Write-PSHTMLSymbol {
 }
 #Post Content
 
-$ScriptPath = Split-Path -Path $MyInvocation.MyCommand.Path
-$ScriptPath = Split-Path -Path $PSScriptRoot
 New-Alias -Name Include -Value 'Write-PSHTMLInclude' -Description "Include parts of PSHTML documents using include files" -Force
 function Get-ScriptDirectory {
     Split-Path -Parent $PSCommandPath
 }
 $ScriptPath = Get-ScriptDirectory
-$CF = Join-Path -Path $ScriptPath -ChildPath "pshtml.configuration.json"
-#Write-host "loading config file: $($CF)" -ForegroundColor Blue
+$ConfigFile = Join-Path -Path $ScriptPath -ChildPath "pshtml.configuration.json"
+
 #Setting module variables
-    $Script:PSHTML_CONFIGURATION = Get-ConfigurationDocument -Path $CF -Force
+    $Script:PSHTML_CONFIGURATION = Get-ConfigurationDocument -Path $ConfigFile -Force
     $Script:Logfile = $Script:PSHTML_CONFIGURATION.GetDefaultLogFilePath()
     $Script:Logger = [Logger]::New($Script:LogFile)

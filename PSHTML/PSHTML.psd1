@@ -12,7 +12,7 @@
 RootModule = 'PSHTML.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.8.2'
+ModuleVersion = '0.9.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -128,7 +128,7 @@ PrivateData = @{
         ReleaseNotes = 'https://github.com/Stephanevg/PSHTML/blob/master/Change_Log.md'
 
         # Prerelease string of this module
-        # Prerelease = ''
+        Prerelease = 'alpha'
 
         # Flag to indicate whether the module requires explicit user acceptance for install/update/save
         # RequireLicenseAcceptance = $false

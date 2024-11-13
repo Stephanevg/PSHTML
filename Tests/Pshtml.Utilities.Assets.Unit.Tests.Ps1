@@ -48,25 +48,25 @@ InModuleScope PSHTML {
 
             It '[Styles] Bootstrap'{
                 $var | ? {$_.Type -eq 'Style' -and $_.Name -eq 'Bootstrap'} | Should not BeNullOrEmpty
-                ($var | ? {$_.Type -eq 'Style' -and $_.Name -eq 'Bootstrap'} | Measure).Count | Should be 1
+                ($var | ? {$_.Type -eq 'Style' -and $_.Name -eq 'Bootstrap'} | Measure-Object).Count | Should be 1
                 Test-Path ($var | ? {$_.Type -eq 'Style' -and $_.Name -eq 'Bootstrap'}).GetFullfilePath() | Should be $true
             }
 
             It '[Javascript] Bootstrap'{
                 $var | ? {$_.Type -eq 'Script' -and $_.Name -eq 'Bootstrap'} | Should not BeNullOrEmpty
-                ($var | ? {$_.Type -eq 'Script' -and $_.Name -eq 'Bootstrap'} | Measure).Count | Should be 1
+                ($var | ? {$_.Type -eq 'Script' -and $_.Name -eq 'Bootstrap'} | Measure-Object).Count | Should be 1
                 Test-Path ($var | ? {$_.Type -eq 'Script' -and $_.Name -eq 'Bootstrap'}).GetFullfilePath() | Should be $true
             }
 
             It '[Javascript] Jquery'{
                 $var | ? {$_.Type -eq 'Script' -and $_.Name -eq 'Jquery'} | Should not BeNullOrEmpty
-                ($var | ? {$_.Type -eq 'Script' -and $_.Name -eq 'Jquery'} | Measure).Count | Should be 1
+                ($var | ? {$_.Type -eq 'Script' -and $_.Name -eq 'Jquery'} | Measure-Object).Count | Should be 1
                 Test-Path ($var | ? {$_.Type -eq 'Script' -and $_.Name -eq 'Jquery'}).GetFullfilePath() | Should be $true
             }
 
             It '[Javascript] ChartJs'{
                 $var | ? {$_.Type -eq 'Script' -and $_.Name -eq 'ChartJS'} | Should not BeNullOrEmpty
-                ($var | ? {$_.Type -eq 'Script' -and $_.Name -eq 'ChartJS'} | Measure).Count | Should be 1
+                ($var | ? {$_.Type -eq 'Script' -and $_.Name -eq 'ChartJS'} | Measure-Object).Count | Should be 1
                 Test-Path ($var | ? {$_.Type -eq 'Script' -and $_.Name -eq 'ChartJS'}).GetFullfilePath() | Should be $true
             }
             
@@ -182,7 +182,7 @@ InModuleScope PSHTML {
                 
                 #If no type is specified, and that the Asset has one or several script / style tags. All of them should be printed out.
                 $HtmlScripts = Write-PSHTMLAsset -Name BootStrap
-                ($HtmlScripts | Measure).Count | Should be 2 # Bootstrap has one .js file and .css file.
+                ($HtmlScripts | Measure-Object).Count | Should be 2 # Bootstrap has one .js file and .css file.
                 $HasScript = $false
                 $HasStyle = $False
                 Foreach($sci in $HtmlScripts){
@@ -200,6 +200,24 @@ InModuleScope PSHTML {
 
                 $HasScript -and $HasStyle | Should be $true
 
+            }
+
+            It '[-Name BootStrap -Type Script -AsContent] Should write asset as content in HTML document in Script tags ' {
+                
+                $Assets = Write-PSHTMLAsset -Name BootStrap -Type Style -AsContent
+                Foreach ($Asset in $Assets) {
+                    $Regex = "^<Style>[\s\S]*<\/Style>$"
+                    $Asset | Should -match $Regex 
+                }
+            }
+
+            It '[-Name ChartJs -Type Script -AsContent] Should write asset as content in HTML document in Script tags ' {
+                
+                $Assets = Write-PSHTMLAsset -Name Chartjs -Type Script -AsContent
+                Foreach ($Asset in $Assets) {
+                    $Regex = "^<Script>[\s\S]*<\/Script>$"
+                    $Asset | Should -match $Regex 
+                }
             }
 
         }
